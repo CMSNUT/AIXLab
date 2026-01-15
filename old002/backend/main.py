@@ -62,6 +62,7 @@ async def health_check():
     
     return services_status
 
+
 @app.post("/api/plot")
 async def create_plot(request: PlotRequest):
     """创建图表"""

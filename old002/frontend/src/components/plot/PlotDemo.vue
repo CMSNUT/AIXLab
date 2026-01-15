@@ -13,7 +13,7 @@
           <div v-if="loading" class="loading-container">
             <el-icon class="loading-icon"><Loading /></el-icon>
             <p>正在生成图表...</p>
-            <p class="loading-desc">使用 {{ currentLanguage === 'python' ? 'Python Matplotlib' : 'R ggplot2' }} 生成 {{ currentPlotType }} 图表</p>
+            <p class="loading-desc">使用 {{ currentLanguage === 'python' ? 'Python Matplotlib' : 'R ggplot2' }} 生成 {{ plotTypeNames[currentPlotType] }} 图表</p>
           </div>
           
           <div v-else-if="plotResult && plotResult.success" class="plot-result">
@@ -217,7 +217,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
@@ -278,10 +278,11 @@ const generatePlot = async () => {
     }
     
   } catch (error) {
-    ElMessage.error('请求失败: ' + error.message)
+    console.error('请求错误:', error)
+    ElMessage.error('请求失败: ' + (error.response?.data?.message || error.message))
     plotResult.value = {
       success: false,
-      error: error.message
+      error: error.response?.data?.message || error.message
     }
   } finally {
     loading.value = false
@@ -300,7 +301,7 @@ const runTest = async (language) => {
   
   try {
     const endpoint = language === 'python' ? '/api/test/python-plot' : '/api/test/r-plot'
-    const response = await axios.get(endpoint)
+    const response = await axios.get(endpoint, { timeout: 15000 })
     
     plotResult.value = response.data
     currentLanguage.value = language
@@ -312,7 +313,12 @@ const runTest = async (language) => {
     }
     
   } catch (error) {
-    ElMessage.error(`${language} 测试请求失败: ` + error.message)
+    console.error('测试错误:', error)
+    ElMessage.error(`${language} 测试请求失败: ` + (error.response?.data?.message || error.message))
+    plotResult.value = {
+      success: false,
+      error: error.response?.data?.message || error.message
+    }
   } finally {
     if (language === 'python') {
       testingPython.value = false

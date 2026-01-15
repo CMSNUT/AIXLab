@@ -5,8 +5,9 @@ from typing import Optional, Dict, Any
 import uvicorn
 import pandas as pd
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # 使用非交互式后端
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 import numpy as np
 import io
 import base64
@@ -78,6 +79,112 @@ def create_sample_data():
         'species': np.repeat(['setosa', 'versicolor', 'virginica'], n//3)
     }
     return pd.DataFrame(data)
+
+# 设置中文字体
+def setup_chinese_font():
+    """
+    设置中文字体，支持 Windows、Linux、macOS
+    """
+    try:
+        # 尝试多种字体，按优先级排序
+        font_options = [
+            # Windows 字体
+            'Microsoft YaHei',      # 微软雅黑
+            'SimHei',               # 黑体
+            'SimSun',               # 宋体
+            # macOS 字体
+            'PingFang SC',          # 苹方
+            'Heiti SC',             # 黑体-简
+            # Linux 字体
+            'DejaVu Sans',          # 常用开源字体
+            'WenQuanYi Micro Hei',  # 文泉驿微米黑
+            'Noto Sans CJK SC',     # Google Noto 字体
+            'AR PL UMing CN',       # 文鼎明体
+        ]
+        
+        # 首先尝试使用系统字体
+        for font_name in font_options:
+            try:
+                # 检查字体是否存在
+                font_path = matplotlib.font_manager.findfont(font_name)
+                if font_path:
+                    print(f"找到字体: {font_name}, 路径: {font_path}")
+                    
+                    # 设置 matplotlib 默认字体
+                    plt.rcParams['font.sans-serif'] = [font_name]
+                    plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+                    
+                    # 设置全局字体属性
+                    matplotlib.rcParams['font.family'] = font_name
+                    matplotlib.rcParams['font.sans-serif'] = [font_name]
+                    
+                    print(f"成功设置中文字体为: {font_name}")
+                    return font_name
+            except Exception as e:
+                print(f"字体 {font_name} 设置失败: {e}")
+                continue
+        
+        # 如果系统字体都不行，尝试下载并添加字体
+        print("未找到合适的中文字体，尝试下载字体...")
+        setup_custom_font()
+        
+    except Exception as e:
+        print(f"字体设置过程中出错: {e}")
+        traceback.print_exc()
+
+def setup_custom_font():
+    """
+    下载并安装中文字体
+    """
+    try:
+        import requests
+        import tempfile
+        
+        # 字体下载URL（开源字体）
+        font_urls = {
+            'SimHei': 'https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf',
+            'SourceHanSansSC': 'https://github.com/adobe-fonts/source-han-sans/raw/release/OTF/SimplifiedChinese/SourceHanSansSC-Regular.otf'
+        }
+        
+        # 创建临时目录
+        temp_dir = tempfile.mkdtemp()
+        font_path = os.path.join(temp_dir, 'chinese_font.otf')
+        
+        # 下载字体
+        for font_name, url in font_urls.items():
+            try:
+                print(f"正在下载字体: {font_name}")
+                response = requests.get(url, timeout=10)
+                if response.status_code == 200:
+                    with open(font_path, 'wb') as f:
+                        f.write(response.content)
+                    
+                    # 添加字体到 matplotlib
+                    font_prop = FontProperties(fname=font_path)
+                    font_name = font_prop.get_name()
+                    
+                    # 设置全局字体
+                    matplotlib.font_manager.fontManager.addfont(font_path)
+                    plt.rcParams['font.sans-serif'] = [font_name]
+                    plt.rcParams['axes.unicode_minus'] = False
+                    matplotlib.rcParams['font.family'] = font_name
+                    
+                    print(f"成功添加自定义字体: {font_name}")
+                    return font_name
+            except Exception as e:
+                print(f"下载字体 {font_name} 失败: {e}")
+                continue
+        
+        print("所有字体下载尝试都失败了")
+        return None
+        
+    except Exception as e:
+        print(f"自定义字体设置失败: {e}")
+        traceback.print_exc()
+        return None
+
+# 初始化字体
+chinese_font = setup_chinese_font()
 
 def plot_to_base64():
     """将当前图表转换为base64"""

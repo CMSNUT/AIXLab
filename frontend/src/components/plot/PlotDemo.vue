@@ -1,5 +1,4 @@
-<!-- 绘图相关组件 -->
- <template>
+<template>
   <div class="plot-demo">
     <el-row :gutter="20">
       <el-col :span="16">
@@ -14,7 +13,7 @@
           <div v-if="loading" class="loading-container">
             <el-icon class="loading-icon"><Loading /></el-icon>
             <p>正在生成图表...</p>
-            <p class="loading-desc">使用 {{ currentLanguage === 'python' ? 'Python Matplotlib' : 'R ggplot2' }} 生成 {{ plotTypeNames[currentPlotType] || currentPlotType }} 图表</p>
+            <p class="loading-desc">使用 {{ currentLanguage === 'python' ? 'Python Matplotlib' : 'R ggplot2' }} 生成 {{ plotTypeNames[currentPlotType] }} 图表</p>
           </div>
           
           <div v-else-if="plotResult && plotResult.success" class="plot-result">
@@ -23,7 +22,7 @@
             </div>
             
             <div class="plot-info">
-              <el-tag :type="getLanguageTagType(plotResult.language)" size="large">
+              <el-tag :type="plotResult.language === 'python' ? 'primary' : 'success'" size="large">
                 <el-icon>
                   <component :is="plotResult.language === 'python' ? 'Platform' : 'Monitor'" />
                 </el-icon>
@@ -83,7 +82,7 @@
             <h3><el-icon><Monitor /></el-icon> 选择语言</h3>
             <div class="language-buttons">
               <el-button 
-                :type="isPythonSelected ? 'primary' : ''" 
+                :type="currentLanguage === 'python' ? 'primary' : ''" 
                 @click="selectLanguage('python')"
                 size="large"
                 class="language-btn"
@@ -92,7 +91,7 @@
                 Python
               </el-button>
               <el-button 
-                :type="isRSelected ? 'success' : ''" 
+                :type="currentLanguage === 'r' ? 'success' : ''" 
                 @click="selectLanguage('r')"
                 size="large"
                 class="language-btn"
@@ -218,40 +217,41 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import { usePlotStore } from '@/stores/plot'
-import { getLanguageTagType } from '@/utils/helpers'
 
-// 使用 plot store
-const plotStore = usePlotStore()
+const currentLanguage = ref('python')
+const currentPlotType = ref('scatter')
+const loading = ref(false)
+const testingPython = ref(false)
+const testingR = ref(false)
+const plotResult = ref(null)
 
-// 从 store 中获取状态
-const {
-  currentLanguage,
-  currentPlotType,
-  loading,
-  testingPython,
-  testingR,
-  plotResult,
-  plotTypes,
-  plotTypeNames
-} = plotStore
+const plotTypes = reactive([
+  { value: 'scatter', label: '散点图', icon: 'ScatterPlot' },
+  { value: 'line', label: '折线图', icon: 'TrendCharts' },
+  { value: 'histogram', label: '直方图', icon: 'Histogram' },
+  { value: 'boxplot', label: '箱线图', icon: 'BoxPlot' }
+])
 
-// 从 store 中获取计算属性
-const {
-  isPythonSelected,
-  isRSelected,
-  hasPlotResult
-} = plotStore
+const plotTypeNames = {
+  scatter: '散点图',
+  line: '折线图',
+  histogram: '直方图',
+  boxplot: '箱线图'
+}
 
-// 从 store 中获取 actions
-const {
-  selectLanguage,
-  selectPlotType,
-  generatePlotAsync,
-  runTestAsync
-} = plotStore
+// 选择语言
+const selectLanguage = (language) => {
+  currentLanguage.value = language
+  plotResult.value = null
+}
+
+// 选择绘图类型
+const selectPlotType = (type) => {
+  currentPlotType.value = type
+}
 
 // 生成图表
 const generatePlot = async () => {
@@ -260,31 +260,71 @@ const generatePlot = async () => {
     return
   }
   
+  loading.value = true
+  plotResult.value = null
+  
   try {
-    const result = await generatePlotAsync()
+    const response = await axios.post('/api/plot', {
+      language: currentLanguage.value,
+      plot_type: currentPlotType.value
+    })
     
-    if (result && result.success) {
-      ElMessage.success(`${currentLanguage.value.toUpperCase()} ${plotTypeNames[currentPlotType.value] || currentPlotType.value} 生成成功！`)
-    } else if (result && !result.success) {
-      ElMessage.error('图表生成失败: ' + (result.error || '未知错误'))
+    plotResult.value = response.data
+    
+    if (response.data.success) {
+      ElMessage.success(`${currentLanguage.value.toUpperCase()} ${plotTypeNames[currentPlotType.value]} 生成成功！`)
+    } else {
+      ElMessage.error('图表生成失败: ' + (response.data.error || '未知错误'))
     }
+    
   } catch (error) {
-    ElMessage.error('请求失败: ' + error.message)
+    console.error('请求错误:', error)
+    ElMessage.error('请求失败: ' + (error.response?.data?.message || error.message))
+    plotResult.value = {
+      success: false,
+      error: error.response?.data?.message || error.message
+    }
+  } finally {
+    loading.value = false
   }
 }
 
 // 测试服务
 const runTest = async (language) => {
+  if (language === 'python') {
+    testingPython.value = true
+  } else {
+    testingR.value = true
+  }
+  
+  plotResult.value = null
+  
   try {
-    const result = await runTestAsync(language)
+    const endpoint = language === 'python' ? '/api/test/python-plot' : '/api/test/r-plot'
+    const response = await axios.get(endpoint, { timeout: 15000 })
     
-    if (result && result.success) {
+    plotResult.value = response.data
+    currentLanguage.value = language
+    
+    if (response.data.success) {
       ElMessage.success(`${language.toUpperCase()} 服务测试成功！`)
-    } else if (result && !result.success) {
-      ElMessage.error(`${language.toUpperCase()} 测试失败: ` + (result.error || '未知错误'))
+    } else {
+      ElMessage.error(`${language.toUpperCase()} 测试失败: ` + (response.data.error || '未知错误'))
     }
+    
   } catch (error) {
-    ElMessage.error(`${language} 测试请求失败: ` + error.message)
+    console.error('测试错误:', error)
+    ElMessage.error(`${language} 测试请求失败: ` + (error.response?.data?.message || error.message))
+    plotResult.value = {
+      success: false,
+      error: error.response?.data?.message || error.message
+    }
+  } finally {
+    if (language === 'python') {
+      testingPython.value = false
+    } else {
+      testingR.value = false
+    }
   }
 }
 </script>
@@ -488,45 +528,5 @@ const runTest = async (language) => {
 
 .instructions li {
   margin: 5px 0;
-}
-
-/* 响应式设计 */
-@media (max-width: 992px) {
-  .el-col {
-    width: 100% !important;
-  }
-  
-  .el-col-16, .el-col-8 {
-    max-width: 100%;
-    flex: 0 0 100%;
-  }
-  
-  .result-card {
-    min-height: 400px;
-    margin-bottom: 20px;
-  }
-  
-  .loading-container {
-    height: 300px;
-  }
-  
-  .empty-result {
-    height: 300px;
-  }
-}
-
-@media (max-width: 768px) {
-  .plot-type-buttons {
-    grid-template-columns: 1fr;
-  }
-  
-  .language-buttons {
-    flex-direction: column;
-  }
-  
-  .plot-info {
-    flex-direction: column;
-    align-items: center;
-  }
 }
 </style>
