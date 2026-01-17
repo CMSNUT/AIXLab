@@ -1,4 +1,0 @@
-# R包依赖
-plumber
-jsonlite
-dplyr
