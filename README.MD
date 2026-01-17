@@ -1,4 +1,12 @@
-# 一、配置anaconda虚拟环境
+# AIXLab（巴莱侠）项目技术架构设计
+## 一、项目概述
+- 项目名称：AIXLab（巴莱侠）
+- 核心功能：基于人工智能的数据分析、药物设计和材料设计平台
+- 项目定位：提供多语言（Python/R）分析能力集成的科研计算平台
+
+AIXLab 巴莱侠是一个AI驱动的科学计算平台，专注于药物发现（如分子靶点预测、药物毒性分析）和材料设计（如新型合金/电池材料的性能优化）领域的数据分析与智能设计。平台通过整合Python（机器学习/深度学习）和R（统计分析/生物信息学）的生态优势，提供端到端的AI分析流程，支持科研人员高效完成从数据输入到设计输出的闭环。
+
+# 二、配置anaconda虚拟环境
 ## 1. conda 创建环境
 ```bash
 conda create -n ipac-env python=3.12
@@ -24,11 +32,11 @@ pip freeze > requirements.txt
 }
 ```
 
-# 二、全栈项目架构
+# 三、全栈项目架构
 ## 1. 基础架构
 - 前端：vue3 + vite + element-plus + axios + pinia + router + nprogress + JavaScript
 - 后端：主后端 fastAPI + python分析后端 fastAPI + R后端 plumber
-- 数据库：MySQL
+- 数据库：MySQL 
 
 ## 2. 项目整体架构
 ```text
