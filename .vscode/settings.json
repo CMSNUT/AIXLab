@@ -1,5 +1,11 @@
 {
-    "python.defaultInterpreterPath": "D:/anaconda3/envs/ipac-env",
+    "python.defaultInterpreterPath": "D:/anaconda3/envs/py314_fastapi",
     "python.terminal.activateEnvironment": true,
-    "python.terminal.activateEnvInCurrentTerminal": true
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "editor.formatOnSave": true,
+    // 忽略无关文件，减少VSCode索引负担
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true
+    }
 }
