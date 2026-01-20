@@ -44,7 +44,7 @@ conda activate py314_fastapi
 pip install "fastapi[all]" "uvicorn[standard]" sqlalchemy aiomysql passlib[bcrypt] python-jose[cryptography] python-multipart email-validator tzdata celery redis databases loguru
 
 conda env export -n py314_aix > G:\\AIXLAB\\backend\\env_exports\\py314_fastapi_env.yaml
-pip freeze > G:\\AIXLAB\\backend\\main_service\\requirements.txt
+pip freeze > G:\\AIXLAB\\backend\\main_backend\\requirements.txt
 conda deactivate
 ```
 
@@ -255,11 +255,9 @@ pip install shap lime eli5 captum interpret
 
 
 conda env export -n py314_aix > G:\\AIXLAB\\backend\\env_exports\\py314_aix_env.yaml
-pip freeze > G:\\AIXLAB\\backend\\sub_services\\py314_service\\requirements.txt
+pip freeze > G:\\AIXLAB\\backend\\python_services\\py314_service\\requirements.txt
 conda deactivate
 ```
-
-
 
 
 

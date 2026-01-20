@@ -35,7 +35,7 @@ async def root():
 async def health_check():
     """健康检查"""
     services_status = {
-        "main_backend": "healthy",
+        "main_service": "healthy",
         "python_service": "unknown",
         "r_service": "unknown"
     }
