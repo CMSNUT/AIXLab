@@ -40,10 +40,10 @@ AIXLAB\
 
 ## 安装
 ```bash
-conda activate py314_fastapi
+conda activate py314
 pip install "fastapi[all]" "uvicorn[standard]" sqlalchemy aiomysql passlib[bcrypt] python-jose[cryptography] python-multipart email-validator tzdata celery redis databases loguru
 
-conda env export -n py314_aix > G:\\AIXLAB\\backend\\env_exports\\py314_fastapi_env.yaml
+conda env export -n py314 > G:\\AIXLAB\\backend\\env_exports\\py314.yaml
 pip freeze > G:\\AIXLAB\\backend\\main_backend\\requirements.txt
 conda deactivate
 ```

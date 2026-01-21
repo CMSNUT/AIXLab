@@ -1,5 +1,5 @@
 {
-    "python.defaultInterpreterPath": "D:/anaconda3/envs/py314_fastapi",
+    "python.defaultInterpreterPath": "D:/anaconda3/envs/py314",
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
     "editor.formatOnSave": true,

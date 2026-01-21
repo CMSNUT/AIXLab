@@ -19,17 +19,22 @@ app.add_middleware(
 )
 
 # 数据模型
+
+
 class PlotRequest(BaseModel):
     language: str  # "python" 或 "r"
     plot_type: str = "scatter"
     parameters: Optional[Dict[str, Any]] = None
 
+
 # 数据集路径
 IRIS_PATH = os.path.join(os.path.dirname(__file__), "data", "iris.csv")
+
 
 @app.get("/")
 async def root():
     return {"message": "AIXLab API 运行中", "version": "1.0"}
+
 
 @app.get("/api/health")
 async def health_check():
@@ -39,45 +44,47 @@ async def health_check():
         "python_service": "unknown",
         "r_service": "unknown"
     }
-    
+
     # 检查Python分析服务
     try:
-        response = requests.get("http://localhost:8001/api/python/health", timeout=3)
+        response = requests.get(
+            "http://localhost:8001/api/python/health", timeout=3)
         if response.status_code == 200:
             services_status["python_service"] = "healthy"
         else:
             services_status["python_service"] = "unhealthy"
     except:
         services_status["python_service"] = "unreachable"
-    
+
     # 检查R分析服务
     try:
-        response = requests.get("http://localhost:8002/api/r/health", timeout=3)
+        response = requests.get(
+            "http://localhost:8002/api/r/health", timeout=3)
         if response.status_code == 200:
             services_status["r_service"] = "healthy"
         else:
             services_status["r_service"] = "unhealthy"
     except:
         services_status["r_service"] = "unreachable"
-    
+
     return services_status
 
 
 @app.post("/api/plot")
 async def create_plot(request: PlotRequest):
     """创建图表"""
-    
+
     # 检查语言支持
     if request.language.lower() not in ["python", "r"]:
         raise HTTPException(status_code=400, detail="只支持 'python' 或 'r' 语言")
-    
+
     # 构建请求数据
     plot_data = {
         "dataset_path": IRIS_PATH,
         "plot_type": request.plot_type,
         "parameters": request.parameters or {}
     }
-    
+
     try:
         # 调用相应的分析服务
         if request.language.lower() == "python":
@@ -86,10 +93,10 @@ async def create_plot(request: PlotRequest):
         else:
             service_url = "http://localhost:8002"
             endpoint = f"{service_url}/api/r/plot"
-        
+
         # 发送请求
         response = requests.post(endpoint, json=plot_data, timeout=30)
-        
+
         if response.status_code == 200:
             result = response.json()
             result["language"] = request.language
@@ -99,14 +106,15 @@ async def create_plot(request: PlotRequest):
                 status_code=response.status_code,
                 detail=f"分析服务错误: {response.text[:200]}"
             )
-            
+
     except requests.exceptions.ConnectionError:
         raise HTTPException(
-            status_code=503, 
+            status_code=503,
             detail=f"{request.language} 分析服务未启动，请先启动分析服务"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"请求失败: {str(e)}")
+
 
 @app.get("/api/test/python-plot")
 async def test_python_plot():
@@ -130,6 +138,7 @@ async def test_python_plot():
             "error": f"Python分析服务未启动或错误: {str(e)}",
             "language": "python"
         }
+
 
 @app.get("/api/test/r-plot")
 async def test_r_plot():
@@ -159,7 +168,7 @@ if __name__ == "__main__":
     if not os.path.exists(IRIS_PATH):
         print(f"警告: 数据集文件不存在: {IRIS_PATH}")
         print("将使用内置示例数据")
-    
+
     print("=" * 60)
     print("AIXLab 主后端服务启动")
     print("API地址: http://localhost:8000")
@@ -168,6 +177,6 @@ if __name__ == "__main__":
     print("R分析服务: http://localhost:8002")
     print("前端: http://localhost:5173")
     print("=" * 60)
-    
+
     # 使用字符串模块名启动，以支持reload
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8000, reload=True)

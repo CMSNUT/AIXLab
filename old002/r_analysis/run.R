@@ -14,4 +14,4 @@ cat("健康检查: http://localhost:8002/api/r/health\n")
 cat("测试绘图: http://localhost:8002/api/r/test\n")
 cat("========================================\n")
 
-pr$run(host = "0.0.0.0", port = 8002)
+pr$run(host = "localhost", port = 8002)
