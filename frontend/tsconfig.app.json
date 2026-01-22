@@ -1,0 +1,49 @@
+// {
+//   "extends": "@vue/tsconfig/tsconfig.dom.json",
+//   "compilerOptions": {
+//     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+//     "types": ["vite/client"],
+
+//     /* Linting */
+//     "strict": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     "erasableSyntaxOnly": true,
+//     "noFallthroughCasesInSwitch": true,
+//     "noUncheckedSideEffectImports": true
+//   },
+//   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+// }
+
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    // 保留你原有核心配置
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom"],
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] }, // 保留路径别名
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "useDefineForClassFields": true,
+    "allowJs": true, // 保留允许混合 JS/TS
+    "types": ["vite/client", "element-plus/global"], // 保留 Vite 客户端 + Element Plus 全局类型
+    
+    // 严格检查（继承 Vue 官方配置的 strict: true，同时保留你原有的约束）
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": [
+    "src/types/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.vue" // 仅包含浏览器端业务代码
+  ],
+  "exclude": ["node_modules", "dist"]
+}
