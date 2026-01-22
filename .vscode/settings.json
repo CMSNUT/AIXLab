@@ -1,11 +1,11 @@
-{
-    "python.defaultInterpreterPath": "D:/anaconda3/envs/py314",
-    "python.terminal.activateEnvironment": true,
-    "python.terminal.activateEnvInCurrentTerminal": true,
-    "editor.formatOnSave": true,
-    // 忽略无关文件，减少VSCode索引负担
-    "files.exclude": {
-        "**/__pycache__": true,
-        "**/.pytest_cache": true
-    }
-}
+// {
+//     "python.defaultInterpreterPath": "D:/anaconda3/envs/py314",
+//     "python.terminal.activateEnvironment": true,
+//     "python.terminal.activateEnvInCurrentTerminal": true,
+//     "editor.formatOnSave": true,
+//     // 忽略无关文件，减少VSCode索引负担
+//     "files.exclude": {
+//         "**/__pycache__": true,
+//         "**/.pytest_cache": true
+//     }
+// }
