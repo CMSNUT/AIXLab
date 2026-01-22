@@ -1,14 +1,13 @@
 // https://unocss.nodejs.cn/guide/config-file
-import {
-  defineConfig,
-  presetAttributify,
-  presetIcons,
-  presetTypography,
-  presetUno,
-  presetWebFonts,
-  transformerDirectives,
-  transformerVariantGroup,
-} from "unocss";
+import { defineConfig } from "unocss"; // 仅保留 defineConfig 从 unocss 导入
+// 1. 替换所有废弃的预设/转换器导入路径（核心修改点）
+import presetUno from "@unocss/preset-uno";
+import presetAttributify from "@unocss/preset-attributify";
+import presetIcons from "@unocss/preset-icons";
+import presetTypography from "@unocss/preset-typography";
+import presetWebFonts from "@unocss/preset-web-fonts";
+import transformerDirectives from "@unocss/transformer-directives";
+import transformerVariantGroup from "@unocss/transformer-variant-group";
 
 import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
 import fs from "fs";
@@ -30,7 +29,7 @@ const generateSafeList = () => {
 };
 
 export default defineConfig({
-  // 自定义快捷类
+  // 自定义快捷类（保留不变）
   shortcuts: {
     "wh-full": "w-full h-full",
     "flex-center": "flex justify-center items-center",
@@ -53,16 +52,16 @@ export default defineConfig({
     ),
   },
   presets: [
-    presetUno(),
+    presetUno(), // 调用方式不变，仅导入路径改了
     presetAttributify(),
     presetIcons({
-      // 额外属性
+      // 额外属性（保留不变）
       extraProperties: {
         display: "inline-block",
         width: "1em",
         height: "1em",
       },
-      // 图表集合
+      // 图表集合（保留不变）
       collections: {
         // svg 是图标集合名称，使用 `i-svg:图标名` 调用
         svg: FileSystemIconLoader(iconsDir, (svg) => {
@@ -74,10 +73,10 @@ export default defineConfig({
     presetTypography(),
     presetWebFonts({
       fonts: {
-        // ...
+        // ...（保留不变）
       },
     }),
   ],
   safelist: generateSafeList(),
-  transformers: [transformerDirectives(), transformerVariantGroup()],
+  transformers: [transformerDirectives(), transformerVariantGroup()], // 调用方式不变
 });
