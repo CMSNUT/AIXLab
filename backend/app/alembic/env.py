@@ -1,4 +1,3 @@
-# 模块1：依赖导入与基础路径准备（工具/场地准备）
 import asyncio
 from logging.config import fileConfig
 
@@ -27,7 +26,7 @@ if hasattr(MappedBase, "metadata") and MappedBase.metadata.tables:
 # 自动查找所有模型
 print("🔍 开始查找模型...")
 found_models = ImportUtil.find_models(MappedBase)
-print(f"📊 找到 {len(found_models)} 个有效模型")    
+print(f"📊 找到 {len(found_models)} 个有效模型")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

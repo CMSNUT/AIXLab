@@ -1,12 +1,8 @@
-# 模块1：基础导入（路径工具准备）
 from pathlib import Path
 
-
-# 模块2：项目根目录（所有路径的“基准点”）
 # 项目根目录
 BASE_DIR = Path(__file__).parent.parent.parent
 
-# 模块3：各功能路径定义（大楼的“功能房间”）
 # alembic 迁移文件存放路径
 ALEMBIC_VERSION_DIR = BASE_DIR / "app" / "alembic" / "versions"
 

@@ -1,4 +1,3 @@
-# 模块1：依赖导入（工具准备阶段）
 import os
 from typing import Annotated
 
@@ -10,13 +9,10 @@ from fastapi import FastAPI
 
 from app.common.enums import EnvironmentEnum
 
-
-# 模块2：CLI与Alembic初始化（基础配置）
-aixlabapi_cli = typer.Typer()
+aixlab_cli = typer.Typer()
 alembic_cfg = Config("alembic.ini")
 
 
-# 模块3：FastAPI应用工厂（create_app函数）
 def create_app() -> FastAPI:
     """创建 FastAPI 应用实例"""
     from app.config.setting import settings
@@ -50,11 +46,10 @@ def create_app() -> FastAPI:
     return app
 
 
-# 模块4：CLI命令 - run（启动Web服务）
 # typer.Option是非必填；typer.Argument是必填
-@aixlabapi_cli.command(
+@aixlab_cli.command(
     name="run",
-    help="启动 AIXLab API 服务, 运行 python main.py run --env=dev 不加参数默认 dev 环境",
+    help="启动 AIXLab 服务, 运行 python main.py run --env=dev 不加参数默认 dev 环境",
 )
 def run(
     env: Annotated[
@@ -100,8 +95,7 @@ def run(
         cleanup_logging()
 
 
-# 模块5：CLI命令 - revision（生成迁移脚本）
-@aixlabapi_cli.command(
+@aixlab_cli.command(
     name="revision",
     help="生成新的 Alembic 迁移脚本, 运行 python main.py revision --env=dev",
 )
@@ -116,8 +110,7 @@ def revision(
     typer.echo("迁移脚本已生成")
 
 
-# 模块6：CLI命令 - upgrade（应用迁移脚本
-@aixlabapi_cli.command(
+@aixlab_cli.command(
     name="upgrade",
     help="应用最新的 Alembic 迁移, 运行 python main.py upgrade --env=dev",
 )
@@ -132,6 +125,5 @@ def upgrade(
     typer.echo("所有迁移已应用。")
 
 
-# 模块7：主入口（CLI总开关）
 if __name__ == "__main__":
-    aixlabapi_cli()
+    aixlab_cli()

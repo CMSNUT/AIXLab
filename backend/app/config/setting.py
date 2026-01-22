@@ -1,4 +1,3 @@
-# 模块1：依赖导入（配置工具准备）
 import os
 from functools import lru_cache
 from pathlib import Path
@@ -10,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from app.common.enums import EnvironmentEnum
 from app.config.path_conf import BASE_DIR, ENV_DIR
 
-# 模块2：配置类基础规则（中控室读取规则
+
 class Settings(BaseSettings):
     """系统配置类"""
 
@@ -30,16 +29,16 @@ class Settings(BaseSettings):
     # ******************* 服务器配置 ****************** #
     # ================================================= #
     SERVER_HOST: str = "127.0.0.1"  # 允许访问的IP地址
-    SERVER_PORT: int = 8000  # 服务端口
+    SERVER_PORT: int = 8001  # 服务端口
 
     # ================================================= #
     # ******************* API文档配置 ****************** #
     # ================================================= #
     DEBUG: bool = True  # 调试模式
-    TITLE: str = "🎉 AIXLab API 🎉 "  # 文档标题
+    TITLE: str = "🎉 巴莱侠 AIXLab API 🎉 "  # 文档标题
     VERSION: str = "0.1.0"  # 版本号
     DESCRIPTION: str = (
-        "基于FastAPI和SQLAlchemy的Python Web服务框架，支持多用户角色、异步任务调度和多计算环境集成，实现前后端分离的全栈平台。"  # 文档描述
+        "该项目是一个基于python的web服务框架，基于fastapi和sqlalchemy实现。"  # 文档描述
     )
     SUMMARY: str = "接口汇总"  # 文档概述
     DOCS_URL: str = "/docs"  # Swagger UI路径
@@ -149,16 +148,16 @@ class Settings(BaseSettings):
     UPLOAD_FILE_PATH: Path = Path("static/upload")  # 上传目录
     UPLOAD_MACHINE: str = "A"  # 上传机器标识
     ALLOWED_EXTENSIONS: list[str] = [  # 允许的文件类型
-        # ".gif",
-        # ".jpg",
-        # ".jpeg",
-        # ".png",
-        # ".ico",
-        # ".svg",
-        # ".xls",
-        # ".xlsx",
+        ".gif",
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".ico",
+        ".svg",
+        ".xls",
+        ".xlsx",
     ]
-    MAX_FILE_SIZE: int = 1 * 1024 * 1024 * 1024  # 最大文件大小(1GB)
+    MAX_FILE_SIZE: int = 100 * 1024 * 1024  # 最大文件大小(100MB)
 
     # ================================================= #
     # ***************** Swagger配置 ***************** #
@@ -178,7 +177,7 @@ class Settings(BaseSettings):
     # ================================================= #
     # ******************* 请求限制配置 ****************** #
     # ================================================= #
-    REQUEST_LIMITER_REDIS_PREFIX: str = "aixlabapi:request_limiter:"
+    REQUEST_LIMITER_REDIS_PREFIX: str = "aixlab:request_limiter:"
 
     # ================================================= #
     # ******************* 重构配置 ******************* #
@@ -211,7 +210,7 @@ class Settings(BaseSettings):
             )
         db_connect: str = ""
         if self.DATABASE_TYPE == "mysql":
-            db_connect = f"mysql+aiomysql://{self.DATABASE_USER}:{quote_plus(self.DATABASE_PASSWORD)}@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}?charset=utf8mb4"
+            db_connect = f"mysql+asyncmy://{self.DATABASE_USER}:{quote_plus(self.DATABASE_PASSWORD)}@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}?charset=utf8mb4"
         elif self.DATABASE_TYPE == "postgres":
             db_connect = f"postgresql+asyncpg://{self.DATABASE_USER}:{quote_plus(self.DATABASE_PASSWORD)}@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
         else:

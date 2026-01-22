@@ -1,139 +1,74 @@
-// 核心：导入 Vue 编译插件，支持 .vue 文件解析
 import vue from "@vitejs/plugin-vue";
-
-// Vite 类型 + 工具函数：
-// ConfigEnv：约束配置环境的类型（如 mode 字段）
-// UserConfig：约束 Vite 配置对象的类型（TS 类型提示）
-// loadEnv：加载 .env 环境变量文件（如 .env.dev）
-// defineConfig：Vite 配置定义函数（提供类型提示 + 支持函数式配置）
 import { type ConfigEnv, type UserConfig, loadEnv, defineConfig } from "vite";
 
-// 自动导入插件：
-// AutoImport：自动导入 Vue/Element Plus 等的 API（如 ref、ElMessage）
-// Components：自动导入 Vue 组件（无需手动注册）
-// ElementPlusResolver：Element Plus 自动导入解析器（识别组件/API）
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
-// UnoCSS Vite 插件（集成原子化 CSS）
 import UnoCSS from "unocss/vite";
-
-// Node.js 路径工具：解析绝对路径（避免相对路径混乱）
 import { resolve } from "path";
-
-// 导入 package.json 信息：用于构建全局 APP_INFO 变量
 import { name, version, engines, dependencies, devDependencies } from "./package.json";
 
-// 定义全局 APP_INFO 变量（前端代码可直接访问 __APP_INFO__）
-// 包含包信息 + 构建时间，提供 TS 类型提示
 // 平台的名称、版本、运行所需的 node 版本、依赖、构建时间的类型提示
 const __APP_INFO__ = {
   pkg: { name, version, engines, dependencies, devDependencies },
   buildTimestamp: Date.now(),
 };
 
-// 解析 src 目录的绝对路径（统一路径别名 @ 的指向）
 const pathSrc = resolve(__dirname, "src");
 
-// 函数式配置：接收环境参数（mode），返回 Vite 配置对象
 // Vite配置  https://cn.vitejs.dev/config
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
-  // 加载对应环境的 .env 文件：
-  // mode = development → 加载 .env.development
-  // process.cwd()：项目根目录（确保加载正确的 .env 文件）
   const env = loadEnv(mode, process.cwd());
-
-  // 判断是否为生产环境（用于区分构建/开发配置）
   const isProduction = mode === "production";
 
   return {
-    // 部署基础路径：项目打包后部署在域名的 / 子路径下（如 https://xxx.com/）
     base: "/",
-
-    // 路径解析配置
     resolve: {
-      // 路径别名：@ 指向 src 目录（对应 TS 配置的 paths）
       alias: {
         "@": pathSrc,
       },
     },
-
-    // CSS 预处理器配置
     css: {
       preprocessorOptions: {
         // 定义全局 SCSS 变量
         scss: {
-          // api: "modern-compiler",
-          // 全局注入 SCSS 变量：所有 SCSS 文件无需手动 import 就能用 variables.scss 的变量
+          api: "modern-compiler",
           additionalData: `@use "@/styles/variables.scss" as *;`,
         },
       },
     },
-
-    // 开发服务器配置
     server: {
-      // 允许外部访问（等价于 0.0.0.0，局域网其他设备可访问）
       host: true,
-
-      // 开发服务器端口：从环境变量读取，转为数字
       port: Number(env.VITE_APP_PORT),
-
-      // 启动后自动打开浏览器
       open: true,
-
-      // 接口代理（解决跨域问题）
       proxy: {
         // 代理 /dev-api 的请求
         [env.VITE_APP_BASE_API]: {
-          // 后端接口目标地址：从环境变量读取（如 https://api.xxx.com）
           target: env.VITE_API_BASE_URL, // 代理目标地址：https://后端地址
-
-          // 不验证 HTTPS 证书（适配后端自签证书场景）
           secure: false, // 请求是否https
-
-          // 开启跨域（修改请求头的 Origin 为目标地址）
           changeOrigin: true, // 是否跨域
-          // 注释掉的路径重写：原本用于移除代理前缀（如 /dev-api/user → /user）
           // rewrite: (path: string) => path.replace(new RegExp("^" + env.VITE_APP_BASE_API), ""),
         },
       },
     },
-
-    // 插件列表（核心功能扩展）
     plugins: [
-      // 启用 Vue 编译插件（必选）
       vue(),
-
-      // 启用 UnoCSS（原子化 CSS）
       UnoCSS(),
-
-      // 自动导入 API 插件配置
       // API 自动导入
       AutoImport({
-        // 自动导入这些库的 API（无需手动 import）：
-        // Vue（ref/reactive）、VueUse（useStorage）、Pinia（defineStore）、Vue Router、Vue I18n
         // 导入 Vue 函数，如：ref, reactive, toRef 等
         imports: ["vue", "@vueuse/core", "pinia", "vue-router", "vue-i18n"],
-
         resolvers: [
           // 导入 Element Plus函数，如：ElMessage, ElMessageBox 等
-          // 自动导入 Element Plus 的 API（如 ElMessage、ElMessageBox）
-          // importStyle: "sass"：导入 Sass 样式（支持主题定制）
           ElementPlusResolver({ importStyle: "sass" }),
         ],
         eslintrc: {
-          // 关闭自动生成 ESLint 配置文件（避免覆盖现有配置）
           enabled: false,
-          // 生成的 ESLint 配置路径（enabled: false 时无效，冗余配置）
           filepath: "./.eslintrc-auto-import.json",
-          // 全局变量属性值（enabled: false 时无效，冗余配置）
           globalsPropValue: true,
         },
-
-        // 支持在 Vue 模板中自动导入 API（如模板中用 ref 无需 import）
         vueTemplate: true,
-        // 生成自动导入的 TS 类型声明文件（让 TS 识别全局 API）
         // 导入函数类型声明文件路径 (false:关闭自动生成)
         dts: "src/types/auto-imports.d.ts",
       }),
@@ -274,7 +209,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
               pure_funcs: ["console.log", "console.info"], // 移除指定的函数调用
             },
             format: {
-              comments: true, // 保留注释
+              comments: true, // 删除注释
             },
           }
         : {},
@@ -334,4 +269,3 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
   };
 });
-

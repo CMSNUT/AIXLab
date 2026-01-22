@@ -55,7 +55,7 @@ async def login_for_access_token_controller(
 
     log.info(f"用户{login_form.username}登录成功")
 
-    # 如果是文档请求，则不记录日志:http://localhost:8000/api/v1/docs
+    # 如果是文档请求，则不记录日志:http://localhost:8001/api/v1/docs
     if settings.DOCS_URL in request.headers.get("referer", ""):
         return login_token.model_dump()
     return SuccessResponse(data=login_token.model_dump(), msg="登录成功")

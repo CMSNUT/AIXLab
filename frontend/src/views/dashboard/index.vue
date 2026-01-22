@@ -46,15 +46,15 @@
                 仓库
               </div>
               <div class="mt-3 whitespace-nowrap">
-                <el-link href="https://gitee.com/fastapiadmin/FastapiAdmin" target="_blank">
+                <el-link href="https://gitee.com/aixlab/AIXLab" target="_blank">
                   <div class="i-svg:gitee text-lg color-#F76560" />
                 </el-link>
                 <el-divider direction="vertical" />
-                <el-link href="https://github.com/fastapiadmin/FastapiAdmin" target="_blank">
+                <el-link href="https://github.com/aixlab/AIXLab" target="_blank">
                   <div class="i-svg:github text-lg color-#4080FF" />
                 </el-link>
                 <el-divider direction="vertical" />
-                <el-link href="https://gitcode.com/qq_36002987/FastapiAdmin" target="_blank">
+                <el-link href="https://gitcode.com/qq_36002987/AIXLab" target="_blank">
                   <div class="i-svg:gitcode text-lg color-#FF9A2E" />
                 </el-link>
               </div>
@@ -66,15 +66,15 @@
         <div class="w-full sm:hidden mt-3">
           <div class="flex justify-end space-x-4 overflow-x-auto">
             <!-- 仓库图标 -->
-            <el-link href="https://gitee.com/fastapiadmin/FastapiAdmin" target="_blank">
+            <el-link href="https://gitee.com/aixlab/AIXLab" target="_blank">
               <div class="i-svg:gitee text-lg color-#F76560" />
             </el-link>
             <el-divider direction="vertical" />
-            <el-link href="https://github.com/fastapiadmin/FastapiAdmin" target="_blank">
+            <el-link href="https://github.com/aixlab/AIXLab" target="_blank">
               <div class="i-svg:github text-lg color-#4080FF" />
             </el-link>
             <el-divider direction="vertical" />
-            <el-link href="https://gitcode.com/qq_36002987/FastapiAdmin" target="_blank">
+            <el-link href="https://gitcode.com/qq_36002987/AIXLab" target="_blank">
               <div class="i-svg:gitcode text-lg color-#FF9A2E" />
             </el-link>
           </div>
@@ -266,7 +266,7 @@
               <el-link
                 type="primary"
                 underline="never"
-                href="https://gitee.com/fastapiadmin/FastapiAdmin/releases"
+                href="https://gitee.com/aixlab/AIXLab/releases"
                 target="_blank"
               >
                 完整记录
@@ -355,7 +355,7 @@ const vesionList = ref<VersionItem[]>([
     title: "v3.2.1",
     date: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     content: "优化性能，修复若干小bug。",
-    link: "https://gitee.com/fastapiadmin/FastapiAdmin/releases",
+    link: "https://gitee.com/aixlab/AIXLab/releases",
     tag: "更新",
   },
   {
@@ -363,7 +363,7 @@ const vesionList = ref<VersionItem[]>([
     title: "v3.2.0",
     date: dayjs().subtract(1, "day").format("YYYY-MM-DD HH:mm:ss"),
     content: "新增用户行为分析功能。",
-    link: "https://gitee.com/fastapiadmin/FastapiAdmin/releases",
+    link: "https://gitee.com/aixlab/AIXLab/releases",
     tag: "新功能",
   },
   {
@@ -371,7 +371,7 @@ const vesionList = ref<VersionItem[]>([
     title: "v3.1.0",
     date: dayjs().subtract(3, "day").format("YYYY-MM-DD HH:mm:ss"),
     content: "优化权限管理系统。",
-    link: "https://gitee.com/fastapiadmin/FastapiAdmin/releases",
+    link: "https://gitee.com/aixlab/AIXLab/releases",
     tag: "优化",
   },
 ]);

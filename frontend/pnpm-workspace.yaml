@@ -1,4 +1,4 @@
-ignoredBuiltDependencies:
+onlyBuiltDependencies:
   - '@parcel/watcher'
   - core-js
   - es5-ext

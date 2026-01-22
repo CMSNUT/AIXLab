@@ -78,7 +78,7 @@ def console_close() -> None:
     """显示关闭信息"""
     shutdown_content = Text()
     shutdown_content.append("🛑 ", style="bold red")
-    shutdown_content.append("FastapiAdmin 服务关闭")
+    shutdown_content.append("AIXLab 服务关闭")
     shutdown_content.append(f"\n⏰ {datetime.now().strftime('%H:%M:%S')}")
     shutdown_content.append("\n👋 感谢使用！", style="dim")
 
