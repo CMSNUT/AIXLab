@@ -164,12 +164,12 @@ class UserService:
         if data.mobile:
             exist_mobile_user = await UserCRUD(auth).get_by_mobile_crud(mobile=data.mobile)
             if exist_mobile_user and exist_mobile_user.id != id:
-                raise CustomException(msg="更新失败，手机号已存在")
+                raise CustomException(msg="更新失败, 手机号已存在")
         # 新增: 检查邮箱是否重复
         if data.email:
             exist_email_user = await UserCRUD(auth).get(email=data.email)
             if exist_email_user and exist_email_user.id != id:
-                raise CustomException(msg="更新失败，邮箱已存在")
+                raise CustomException(msg="更新失败, 邮箱已存在")
         # 检查部门是否存在且可用
         if data.dept_id:
             dept = await DeptCRUD(auth).get_by_id_crud(id=data.dept_id)
@@ -224,7 +224,7 @@ class UserService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败，删除对象不能为空")
+            raise CustomException(msg="删除失败, 删除对象不能为空")
         for id in ids:
             user = await UserCRUD(auth).get_by_id_crud(id=id)
             if not user:
@@ -266,7 +266,7 @@ class UserService:
 
         # 获取菜单权限
         if auth.user and auth.user.is_superuser:
-            # 使用树形结构查询，预加载children关系
+            # 使用树形结构查询, 预加载children关系
             menu_all = await MenuCRUD(auth).get_tree_list_crud(
                 search={"type": ("in", [1, 2, 4]), "status": "0"},
                 order_by=[{"order": "asc"}],
@@ -274,7 +274,7 @@ class UserService:
             menus = [MenuOutSchema.model_validate(menu).model_dump() for menu in menu_all]
 
         else:
-            # 收集用户所有角色的菜单ID，使用列表推导式优化代码
+            # 收集用户所有角色的菜单ID, 使用列表推导式优化代码
             menu_ids = {
                 menu.id
                 for role in auth.user.roles or []
@@ -282,7 +282,7 @@ class UserService:
                 if menu.status == "0" and menu.type in [1, 2, 4]
             }
 
-            # 使用树形结构查询，预加载children关系
+            # 使用树形结构查询, 预加载children关系
             menus = (
                 [
                     MenuOutSchema.model_validate(menu).model_dump()
@@ -322,12 +322,12 @@ class UserService:
         if data.mobile:
             exist_mobile_user = await UserCRUD(auth).get_by_mobile_crud(mobile=data.mobile)
             if exist_mobile_user and exist_mobile_user.id != auth.user.id:
-                raise CustomException(msg="更新失败，手机号已存在")
+                raise CustomException(msg="更新失败, 手机号已存在")
         # 新增: 检查邮箱是否重复
         if data.email:
             exist_email_user = await UserCRUD(auth).get(email=data.email)
             if exist_email_user and exist_email_user.id != auth.user.id:
-                raise CustomException(msg="更新失败，邮箱已存在")
+                raise CustomException(msg="更新失败, 邮箱已存在")
         user_update_data = UserUpdateSchema(**data.model_dump())
         new_user = await UserCRUD(auth).update(id=auth.user.id, data=user_update_data)
         return UserOutSchema.model_validate(new_user).model_dump()
@@ -550,7 +550,7 @@ class UserService:
                 if missing_rows:
                     field_name = next(k for k, v in header_dict.items() if v == field)
                     rows_str = "、".join([str(i + 1) for i in missing_rows])
-                    errors.append(f"{field_name}不能为空，第{rows_str}行")
+                    errors.append(f"{field_name}不能为空, 第{rows_str}行")
 
             if errors:
                 raise CustomException(msg="；".join(errors))

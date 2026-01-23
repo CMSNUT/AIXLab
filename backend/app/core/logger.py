@@ -30,7 +30,7 @@ class InterceptHandler(logging.Handler):
         except ValueError:
             level = record.levelno
 
-        # 获取调用帧信息，增加None检查
+        # 获取调用帧信息, 增加None检查
         frame, depth = logging.currentframe(), 2
         while frame and frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back
@@ -76,7 +76,7 @@ def setup_logging() -> None:
     log_format = (
         # 时间信息
         "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
-        # 日志级别，居中对齐
+        # 日志级别, 居中对齐
         "<level>{level: <8}</level> | "
         # 文件、函数和行号
         "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - "
@@ -99,7 +99,7 @@ def setup_logging() -> None:
         format=log_format,
         level="INFO",
         rotation="00:00",  # 每天午夜轮转
-        retention=30,  # 日志保留天数，超过此天数的日志文件将被自动清理
+        retention=30,  # 日志保留天数, 超过此天数的日志文件将被自动清理
         compression="gz",
         encoding="utf-8",
     )
@@ -111,7 +111,7 @@ def setup_logging() -> None:
         format=log_format,
         level="ERROR",
         rotation="00:00",  # 每天午夜轮转
-        retention=30,  # 日志保留天数，超过此天数的日志文件将被自动清理
+        retention=30,  # 日志保留天数, 超过此天数的日志文件将被自动清理
         compression="gz",
         encoding="utf-8",
         backtrace=True,

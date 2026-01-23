@@ -25,7 +25,7 @@ class MenuCreateSchema(BaseModel):
     title: str | None = Field(default=None, max_length=50, description="菜单标题")
     params: list[dict[str, str]] | None = Field(
         default=None,
-        description="路由参数，格式为[{key: string, value: string}]",
+        description="路由参数, 格式为[{key: string, value: string}]",
     )
     affix: bool = Field(default=False, description="是否固定标签页(True:是 False:否)")
     parent_id: int | None = Field(default=None, ge=1, description="父菜单ID")

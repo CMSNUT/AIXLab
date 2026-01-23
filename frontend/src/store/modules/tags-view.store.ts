@@ -9,18 +9,18 @@ export const useTagsViewStore = defineStore("tagsView", () => {
    * 添加已访问视图到已访问视图列表中
    */
   function addVisitedView(view: TagView) {
-    // 如果已经存在于已访问的视图列表中或者是重定向地址，则不再添加
+    // 如果已经存在于已访问的视图列表中或者是重定向地址, 则不再添加
     if (view.path.startsWith("/redirect")) {
       return;
     }
     if (visitedViews.value.some((v) => v.name === view.name)) {
       return;
     }
-    // 如果视图是固定的(affix)，则在已访问的视图列表的开头添加
+    // 如果视图是固定的(affix), 则在已访问的视图列表的开头添加
     if (view.affix) {
       visitedViews.value.unshift(view);
     } else {
-      // 如果视图不是固定的，则在已访问的视图列表的末尾添加
+      // 如果视图不是固定的, 则在已访问的视图列表的末尾添加
       visitedViews.value.push(view);
     }
   }
@@ -30,12 +30,12 @@ export const useTagsViewStore = defineStore("tagsView", () => {
    */
   function addCachedView(view: TagView) {
     const viewName = view.name;
-    // 如果缓存视图名称已经存在于缓存视图列表中，则不再添加
+    // 如果缓存视图名称已经存在于缓存视图列表中, 则不再添加
     if (cachedViews.value.includes(viewName)) {
       return;
     }
 
-    // 如果视图需要缓存(keepAlive)，则将其路由名称添加到缓存视图列表中
+    // 如果视图需要缓存(keepAlive), 则将其路由名称添加到缓存视图列表中
     if (view.keepAlive) {
       cachedViews.value.push(viewName);
     }
@@ -47,7 +47,7 @@ export const useTagsViewStore = defineStore("tagsView", () => {
   function delVisitedView(view: TagView) {
     return new Promise((resolve) => {
       for (const [i, v] of visitedViews.value.entries()) {
-        // 找到与指定视图路径匹配的视图，在已访问视图列表中删除该视图
+        // 找到与指定视图路径匹配的视图, 在已访问视图列表中删除该视图
         if (v.path === view.path) {
           visitedViews.value.splice(i, 1);
           break;

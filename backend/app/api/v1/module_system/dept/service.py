@@ -61,7 +61,7 @@ class DeptService:
         返回:
         - list[dict]: 部门树形列表对象。
         """
-        # 使用树形结构查询，预加载children关系
+        # 使用树形结构查询, 预加载children关系
         dept_list = await DeptCRUD(auth).get_tree_list_crud(
             search=search.__dict__, order_by=order_by
         )
@@ -87,10 +87,10 @@ class DeptService:
         """
         dept = await DeptCRUD(auth).get(name=data.name)
         if dept:
-            raise CustomException(msg="创建失败，该部门已存在")
+            raise CustomException(msg="创建失败, 该部门已存在")
         obj = await DeptCRUD(auth).get(code=data.code)
         if obj:
-            raise CustomException(msg="创建失败，编码已存在")
+            raise CustomException(msg="创建失败, 编码已存在")
         dept = await DeptCRUD(auth).create(data=data)
         return DeptOutSchema.model_validate(dept).model_dump()
 
@@ -112,10 +112,10 @@ class DeptService:
         """
         dept = await DeptCRUD(auth).get_by_id_crud(id=id)
         if not dept:
-            raise CustomException(msg="更新失败，该部门不存在")
+            raise CustomException(msg="更新失败, 该部门不存在")
         exist_dept = await DeptCRUD(auth).get(name=data.name)
         if exist_dept and exist_dept.id != id:
-            raise CustomException(msg="更新失败，部门名称重复")
+            raise CustomException(msg="更新失败, 部门名称重复")
         dept = await DeptCRUD(auth).update(id=id, data=data)
         return DeptOutSchema.model_validate(dept).model_dump()
 
@@ -135,15 +135,15 @@ class DeptService:
         - CustomException: 当删除对象为空时抛出。
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败，删除对象不能为空")
+            raise CustomException(msg="删除失败, 删除对象不能为空")
 
-        # 获取所有部门列表，用于构建树形关系
+        # 获取所有部门列表, 用于构建树形关系
         all_depts = await DeptCRUD(auth).get_list_crud()
 
         # 构建子部门ID映射
         child_id_map = get_child_id_map(model_list=all_depts)
 
-        # 收集所有需要删除的部门ID，包括直接指定的ID和它们的所有子部门ID
+        # 收集所有需要删除的部门ID, 包括直接指定的ID和它们的所有子部门ID
         delete_ids_set = set()
 
         for id in ids:

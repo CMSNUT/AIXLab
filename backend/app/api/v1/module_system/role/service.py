@@ -68,10 +68,10 @@ class RoleService:
         """
         role = await RoleCRUD(auth).get(name=data.name)
         if role:
-            raise CustomException(msg="创建失败，该角色已存在")
+            raise CustomException(msg="创建失败, 该角色已存在")
         obj = await RoleCRUD(auth).get(code=data.code)
         if obj:
-            raise CustomException(msg="创建失败，编码已存在")
+            raise CustomException(msg="创建失败, 编码已存在")
         new_role = await RoleCRUD(auth).create(data=data)
         return RoleOutSchema.model_validate(new_role).model_dump()
 
@@ -90,10 +90,10 @@ class RoleService:
         """
         role = await RoleCRUD(auth).get_by_id_crud(id=id)
         if not role:
-            raise CustomException(msg="更新失败，该角色不存在")
+            raise CustomException(msg="更新失败, 该角色不存在")
         exist_role = await RoleCRUD(auth).get(name=data.name)
         if exist_role and exist_role.id != id:
-            raise CustomException(msg="更新失败，角色名称重复")
+            raise CustomException(msg="更新失败, 角色名称重复")
         updated_role = await RoleCRUD(auth).update(id=id, data=data)
         return RoleOutSchema.model_validate(updated_role).model_dump()
 
@@ -110,11 +110,11 @@ class RoleService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败，删除对象不能为空")
+            raise CustomException(msg="删除失败, 删除对象不能为空")
         for id in ids:
             role = await RoleCRUD(auth).get_by_id_crud(id=id)
             if not role:
-                raise CustomException(msg="删除失败，该角色不存在")
+                raise CustomException(msg="删除失败, 该角色不存在")
         await RoleCRUD(auth).delete(ids=ids)
 
     @classmethod

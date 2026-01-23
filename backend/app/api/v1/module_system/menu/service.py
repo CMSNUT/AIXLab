@@ -63,7 +63,7 @@ class MenuService:
         返回:
         - list[dict]: 菜单树形列表对象。
         """
-        # 使用树形结构查询，预加载children关系
+        # 使用树形结构查询, 预加载children关系
         menu_list = await MenuCRUD(auth).get_tree_list_crud(
             search=search.__dict__, order_by=order_by
         )
@@ -86,7 +86,7 @@ class MenuService:
         """
         menu = await MenuCRUD(auth).get(name=data.name)
         if menu:
-            raise CustomException(msg="创建失败，该菜单已存在")
+            raise CustomException(msg="创建失败, 该菜单已存在")
 
         new_menu = await MenuCRUD(auth).create(data=data)
         new_menu_dict = MenuOutSchema.model_validate(new_menu).model_dump()
@@ -107,15 +107,15 @@ class MenuService:
         """
         menu = await MenuCRUD(auth).get_by_id_crud(id=id)
         if not menu:
-            raise CustomException(msg="更新失败，该菜单不存在")
+            raise CustomException(msg="更新失败, 该菜单不存在")
         exist_menu = await MenuCRUD(auth).get(name=data.name)
         if exist_menu and exist_menu.id != id:
-            raise CustomException(msg="更新失败，菜单名称重复")
+            raise CustomException(msg="更新失败, 菜单名称重复")
 
         if data.parent_id:
             parent_menu = await MenuCRUD(auth).get_by_id_crud(id=data.parent_id)
             if not parent_menu:
-                raise CustomException(msg="更新失败，父级菜单不存在")
+                raise CustomException(msg="更新失败, 父级菜单不存在")
             data.parent_name = parent_menu.name
         new_menu = await MenuCRUD(auth).update(id=id, data=data)
 
@@ -139,15 +139,15 @@ class MenuService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败，删除对象不能为空")
+            raise CustomException(msg="删除失败, 删除对象不能为空")
 
-        # 获取所有菜单列表，用于构建树形关系
+        # 获取所有菜单列表, 用于构建树形关系
         all_menus = await MenuCRUD(auth).get_list_crud()
 
         # 构建子菜单ID映射
         child_id_map = get_child_id_map(model_list=all_menus)
 
-        # 收集所有需要删除的菜单ID，包括直接指定的ID和它们的所有子菜单ID
+        # 收集所有需要删除的菜单ID, 包括直接指定的ID和它们的所有子菜单ID
         delete_ids_set = set()
 
         for id in ids:
@@ -164,7 +164,7 @@ class MenuService:
     @classmethod
     async def set_menu_available_service(cls, auth: AuthSchema, data: BatchSetAvailable) -> None:
         """
-        递归获取所有父、子级菜单，然后批量修改菜单可用状态。
+        递归获取所有父、子级菜单, 然后批量修改菜单可用状态。
 
         参数:
         - auth (AuthSchema): 认证对象。
@@ -177,13 +177,13 @@ class MenuService:
         total_ids = []
 
         if data.status == "0":
-            # 激活，则需要把所有父级菜单都激活
+            # 激活, 则需要把所有父级菜单都激活
             id_map = get_parent_id_map(model_list=menu_list)
             for menu_id in data.ids:
                 enable_ids = get_parent_recursion(id=menu_id, id_map=id_map)
                 total_ids.extend(enable_ids)
         else:
-            # 禁止，则需要把所有子级菜单都禁止
+            # 禁止, 则需要把所有子级菜单都禁止
             id_map = get_child_id_map(model_list=menu_list)
             for menu_id in data.ids:
                 disable_ids = get_child_recursion(id=menu_id, id_map=id_map)

@@ -39,7 +39,7 @@
             <el-option value="1" label="停用" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围，收起状态下隐藏 -->
+        <!-- 时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -762,7 +762,7 @@ const curdContentConfig = {
   exportsAction: async (params: any) => {
     const query: any = { ...params };
     if (typeof query.status === "string") query.status = query.status === "true";
-    // notice_type 为字符串，无需转换；如果后端需要数字，可在此转换
+    // notice_type 为字符串, 无需转换；如果后端需要数字, 可在此转换
     query.page_no = 1;
     query.page_size = 1000;
     const all: any[] = [];

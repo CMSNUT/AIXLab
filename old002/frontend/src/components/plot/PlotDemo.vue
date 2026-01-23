@@ -59,7 +59,7 @@
           </div>
           
           <div v-else class="empty-result">
-            <el-empty description="请选择语言和绘图类型，然后点击生成图表" />
+            <el-empty description="请选择语言和绘图类型, 然后点击生成图表" />
             <div style="text-align: center; margin-top: 20px;">
               <el-button type="success" @click="generatePlot" :disabled="!currentLanguage">
                 快速示例
@@ -202,13 +202,13 @@
             
             <h3>服务说明:</h3>
             <ul>
-              <li><strong>主后端服务</strong>: 端口 8000，协调所有服务</li>
-              <li><strong>Python分析服务</strong>: 端口 8001，使用Matplotlib绘图</li>
-              <li><strong>R分析服务</strong>: 端口 8002，使用ggplot2绘图</li>
+              <li><strong>主后端服务</strong>: 端口 8000, 协调所有服务</li>
+              <li><strong>Python分析服务</strong>: 端口 8001, 使用Matplotlib绘图</li>
+              <li><strong>R分析服务</strong>: 端口 8002, 使用ggplot2绘图</li>
             </ul>
             
             <h3>数据源:</h3>
-            <p>使用鸢尾花(Iris)数据集进行演示，包含150个样本，5个特征。</p>
+            <p>使用鸢尾花(Iris)数据集进行演示, 包含150个样本, 5个特征。</p>
           </div>
         </el-card>
       </el-col>

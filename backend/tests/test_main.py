@@ -1,7 +1,7 @@
 """
 测试文件
 
-注意: 使用普通的 def 定义测试函数，不要使用 async def
+注意: 使用普通的 def 定义测试函数, 不要使用 async def
 执行命令: pytest tests/test.py
 """
 

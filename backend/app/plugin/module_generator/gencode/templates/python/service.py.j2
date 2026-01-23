@@ -55,7 +55,7 @@ class {{ class_name }}Service:
         {% if column.is_unique == '1' %}
         obj = await {{ class_name }}CRUD(auth).get({{ column.column_name }}=data.{{ column.column_name }})
         if obj:
-            raise CustomException(msg='创建失败，{{ column.column_comment }}已存在')
+            raise CustomException(msg='创建失败, {{ column.column_comment }}已存在')
         {% endif %}
         {% endfor %}
         obj = await {{ class_name }}CRUD(auth).create_{{ business_name }}_crud(data=data)
@@ -67,14 +67,14 @@ class {{ class_name }}Service:
         # 检查数据是否存在
         obj = await {{ class_name }}CRUD(auth).get_by_id_{{ business_name }}_crud(id=id)
         if not obj:
-            raise CustomException(msg='更新失败，该数据不存在')
+            raise CustomException(msg='更新失败, 该数据不存在')
         
         # 检查唯一性约束
         {% for column in columns %}
         {% if column.is_unique == '1' %}
         exist_obj = await {{ class_name }}CRUD(auth).get({{ column.column_name }}=data.{{ column.column_name }})
         if exist_obj and exist_obj.id != id:
-            raise CustomException(msg='更新失败，{{ column.column_comment }}重复')
+            raise CustomException(msg='更新失败, {{ column.column_comment }}重复')
         {% endif %}
         {% endfor %}
             
@@ -85,11 +85,11 @@ class {{ class_name }}Service:
     async def delete_{{ business_name }}_service(cls, auth: AuthSchema, ids: list[int]) -> None:
         """删除"""
         if len(ids) < 1:
-            raise CustomException(msg='删除失败，删除对象不能为空')
+            raise CustomException(msg='删除失败, 删除对象不能为空')
         for id in ids:
             obj = await {{ class_name }}CRUD(auth).get_by_id_{{ business_name }}_crud(id=id)
             if not obj:
-                raise CustomException(msg=f'删除失败，ID为{id}的数据不存在')
+                raise CustomException(msg=f'删除失败, ID为{id}的数据不存在')
         await {{ class_name }}CRUD(auth).delete_{{ business_name }}_crud(ids=ids)
     
     @classmethod
@@ -152,9 +152,9 @@ class {{ class_name }}Service:
             if missing_rows:
                 field_name = [k for k,v in header_dict.items() if v == field][0]
                 rows_str = "、".join([str(i+1) for i in missing_rows])
-                errors.append(f"{field_name}不能为空，第{rows_str}行")
+                errors.append(f"{field_name}不能为空, 第{rows_str}行")
             if errors:
-                raise CustomException(msg=f"导入失败，以下行缺少必要字段: \n{'; '.join(errors)}")
+                raise CustomException(msg=f"导入失败, 以下行缺少必要字段: \n{'; '.join(errors)}")
             {% endif %}
             {% endfor %}
             

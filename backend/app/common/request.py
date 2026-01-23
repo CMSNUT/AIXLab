@@ -12,8 +12,8 @@ class PageResultSchema(BaseModel):
 
     model_config = ConfigDict(alias_generator=to_camel, from_attributes=True)
 
-    page_no: int | None = Field(default=None, ge=1, description="页码，默认为1")
-    page_size: int | None = Field(default=None, ge=1, description="页面大小，默认为10")
+    page_no: int | None = Field(default=None, ge=1, description="页码, 默认为1")
+    page_size: int | None = Field(default=None, ge=1, description="页面大小, 默认为10")
     total: int = Field(default=0, ge=0, description="总记录数")
     has_next: bool | None = Field(default=False, description="是否有下一页")
     items: list[Any] = Field(default_factory=list, description="分页后的数据列表")
@@ -30,13 +30,13 @@ class PaginationService:
     ) -> dict[str, Any]:
         """
         分页数据处理。
-        输入数据列表和分页信息，返回分页数据列表结果。
-        未传入 page_no 和 page_size 时，使用默认值进行分页。
+        输入数据列表和分页信息, 返回分页数据列表结果。
+        未传入 page_no 和 page_size 时, 使用默认值进行分页。
 
         参数:
         - data_list (list[Any]): 原始数据列表。
-        - page_no (int | None): 当前页码，默认 None。
-        - page_size (int | None): 每页数据量，默认 None。
+        - page_no (int | None): 当前页码, 默认 None。
+        - page_size (int | None): 每页数据量, 默认 None。
 
         返回:
         - dict[str, Any]: 分页数据对象。

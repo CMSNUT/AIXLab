@@ -19,7 +19,7 @@ def http_limit_callback(request: Request, response: Response, expire: int) -> No
     expires = ceil(expire / 30)
     raise CustomException(
         status_code=429,
-        msg="请求过于频繁，请稍后重试！",
+        msg="请求过于频繁, 请稍后重试！",
         data={"Retry-After": str(expires)},
     )
 
@@ -33,4 +33,4 @@ async def ws_limit_callback(ws: WebSocket, expire: int) -> None:
     :return:
     """
     expires = ceil(expire / 30)
-    await ws.close(code=1008, reason=f"请求过于频繁，请稍后重试！{expires} 秒后重试")
+    await ws.close(code=1008, reason=f"请求过于频繁, 请稍后重试！{expires} 秒后重试")

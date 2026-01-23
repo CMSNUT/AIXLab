@@ -29,7 +29,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
 
         参数:
         - id (int): MCP服务器ID
-        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - McpModel | None: MCP服务器模型实例(如果存在)
@@ -44,7 +44,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
 
         参数:
         - name (str): MCP服务器名称
-        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Optional[McpModel]: MCP服务器模型实例(如果存在)
@@ -63,7 +63,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
         参数:
         - search (dict | None): 查询参数字典
         - order_by (list[dict[str, str]] | None): 排序参数列表
-        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[McpModel]: MCP服务器模型实例序列

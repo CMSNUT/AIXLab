@@ -100,7 +100,7 @@
 
             <el-tooltip placement="bottom">
               <template #content>
-                如果只需勾选菜单权限，不需要勾选子菜单或者按钮权限，请关闭父子联动
+                如果只需勾选菜单权限, 不需要勾选子菜单或者按钮权限, 请关闭父子联动
               </template>
               <el-icon class="ml-1 color-[--el-color-primary] inline-block cursor-pointer">
                 <QuestionFilled />
@@ -233,9 +233,9 @@ const init = async () => {
       await permTreeRef.value.setCheckedKeys(permissionState.value.menu_ids);
     }
 
-    // 修改: 增加对 deptTreeRef.value 的存在性判断，并添加日志
+    // 修改: 增加对 deptTreeRef.value 的存在性判断, 并添加日志
     if (permissionState.value.data_scope === 5 && deptTreeRef.value) {
-      // await 一定不能丢，否则到导致初始化时候deptTreeRef.value 为 undefined
+      // await 一定不能丢, 否则到导致初始化时候deptTreeRef.value 为 undefined
       await deptTreeRef.value.setCheckedKeys(permissionState.value.dept_ids);
     }
   } catch (error: any) {
@@ -255,7 +255,7 @@ function handleCancel() {
 async function handleDrawerSave() {
   try {
     if (props.roleId === 1) {
-      ElMessage.warning("系统默认角色，不可操作");
+      ElMessage.warning("系统默认角色, 不可操作");
       return;
     }
     loading.value = true;
@@ -270,7 +270,7 @@ async function handleDrawerSave() {
 
     await RoleAPI.setPermission(submitData);
 
-    // 更新全局用户状态，刷新权限信息
+    // 更新全局用户状态, 刷新权限信息
     const userStore = useUserStore();
     await userStore.getUserInfo();
 
@@ -346,24 +346,24 @@ function checkParentChildLinked(menuIds: number[], menuTreeData: permissionMenuT
     const menu = menuMap.get(menuId);
     if (!menu) continue;
 
-    // 如果选中了父菜单，检查是否有子菜单未被选中
+    // 如果选中了父菜单, 检查是否有子菜单未被选中
     if (menu.children && menu.children.length > 0) {
       const hasUnselectedChildren = menu.children.some((child) => !menuIds.includes(child.id));
       if (hasUnselectedChildren) {
         hasParentChildConflict = true;
-        break; // 发现冲突，直接返回false
+        break; // 发现冲突, 直接返回false
       }
     }
 
-    // 如果选中了子菜单，检查父菜单是否也被选中
+    // 如果选中了子菜单, 检查父菜单是否也被选中
     const parentMenu = findParentMenu(menuId, menuTreeData);
     if (parentMenu && !menuIds.includes(parentMenu.id)) {
       hasParentChildConflict = true;
-      break; // 发现冲突，直接返回false
+      break; // 发现冲突, 直接返回false
     }
   }
 
-  // 如果没有发现父子冲突，说明是父子联动模式
+  // 如果没有发现父子冲突, 说明是父子联动模式
   return !hasParentChildConflict;
 }
 

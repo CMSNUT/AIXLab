@@ -24,7 +24,7 @@
             <el-option value="1" label="停用" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围，收起状态下隐藏 -->
+        <!-- 时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -433,7 +433,7 @@
                 路由名称
                 <el-tooltip placement="bottom" effect="light">
                   <template #content>
-                    如果需要开启缓存，需保证页面 defineOptions 中的 name 与此处一致，建议使用驼峰。
+                    如果需要开启缓存, 需保证页面 defineOptions 中的 name 与此处一致, 建议使用驼峰。
                   </template>
                   <el-icon class="ml-1 cursor-pointer">
                     <QuestionFilled />
@@ -453,8 +453,8 @@
                 路由路径
                 <el-tooltip placement="bottom" effect="light">
                   <template #content>
-                    定义应用中不同页面对应的 URL 路径，目录需以 /
-                    开头，菜单项不用。例如: 系统管理目录 /system，系统管理下的用户管理菜单 user。
+                    定义应用中不同页面对应的 URL 路径, 目录需以 /
+                    开头, 菜单项不用。例如: 系统管理目录 /system, 系统管理下的用户管理菜单 user。
                   </template>
                   <el-icon class="ml-1 cursor-pointer">
                     <QuestionFilled />
@@ -471,7 +471,7 @@
                 组件路径
                 <el-tooltip placement="bottom" effect="light">
                   <template #content>
-                    组件页面完整路径，相对于 src/views/，如 system/user/index，缺省后缀 .vue
+                    组件页面完整路径, 相对于 src/views/, 如 system/user/index, 缺省后缀 .vue
                   </template>
                   <el-icon class="ml-1 cursor-pointer">
                     <QuestionFilled />
@@ -482,7 +482,7 @@
 
             <el-input
               v-model="formData.component_path"
-              placeholder="请输入组件路径，如system/user/index"
+              placeholder="请输入组件路径, 如system/user/index"
               style="width: 95%"
             >
               <template v-if="formData.type == MenuTypeEnum.MENU" #prepend>src/views/</template>
@@ -550,7 +550,7 @@
                   <template #content>
                     选择"是", 菜单中隐藏
                     <br />
-                    选择"否"，菜单中显示。
+                    选择"否", 菜单中显示。
                     <br />
                   </template>
                   <el-icon class="ml-1 cursor-pointer">
@@ -574,11 +574,11 @@
                 始终显示
                 <el-tooltip placement="bottom" effect="light">
                   <template #content>
-                    选择"是"，即使目录或菜单下只有一个子节点，也会显示父节点。
+                    选择"是", 即使目录或菜单下只有一个子节点, 也会显示父节点。
                     <br />
-                    选择"否"，如果目录或菜单下只有一个子节点，则只显示该子节点，隐藏父节点。
+                    选择"否", 如果目录或菜单下只有一个子节点, 则只显示该子节点, 隐藏父节点。
                     <br />
-                    如果是叶子节点，请选择"否"。
+                    如果是叶子节点, 请选择"否"。
                   </template>
                   <el-icon class="ml-1 cursor-pointer">
                     <QuestionFilled />
@@ -610,7 +610,7 @@
             label="权限标识"
             prop="perm"
           >
-            <el-input v-model="formData.permission" placeholder="请输入权限标识，如sys:user:add" />
+            <el-input v-model="formData.permission" placeholder="请输入权限标识, 如sys:user:add" />
           </el-form-item>
 
           <el-form-item v-if="formData.type !== MenuTypeEnum.BUTTON" label="图标" prop="icon">
@@ -805,7 +805,7 @@ async function handleRefresh() {
   }
 }
 
-// 修改菜单选项过滤逻辑，添加递归过滤函数
+// 修改菜单选项过滤逻辑, 添加递归过滤函数
 const filterMenuTypes = (nodes: MenuTable[]) => {
   return nodes
     .filter((node) => node.type === MenuTypeEnum.CATALOG || node.type === MenuTypeEnum.MENU)
@@ -821,7 +821,7 @@ async function loadingData() {
   try {
     const response = await MenuAPI.listMenu(queryFormData);
     pageTableData.value = response.data.data;
-    // 加载菜单选项，只显示目录、菜单
+    // 加载菜单选项, 只显示目录、菜单
     menuOptions.value = formatTree(filterMenuTypes(response.data.data));
   } catch (error: any) {
     console.error(error);
@@ -926,7 +926,7 @@ function handleMenuTypeChange() {
   // 如果菜单类型改变
   if (formData.type !== formData.type) {
     if (formData.type === MenuTypeEnum.MENU) {
-      // 目录切换到菜单时，清空组件路径
+      // 目录切换到菜单时, 清空组件路径
       formData.component_path = "";
     }
   }

@@ -53,12 +53,12 @@ export const useUserStore = defineStore("user", {
     setPermissions(menus: MenuTable[]) {
       this.prems = []; // 先清空现有权限
 
-      // 确保 basicInfo.roles 存在，避免空值错误
+      // 确保 basicInfo.roles 存在, 避免空值错误
       if (!this.basicInfo.roles) {
         return;
       }
 
-      // 合并所有角色的菜单列表，使用数组扁平化方法简化代码并过滤undefined
+      // 合并所有角色的菜单列表, 使用数组扁平化方法简化代码并过滤undefined
       const roleMenus = this.basicInfo.roles
         .filter((role) => role.menus && role.menus.length > 0)
         .flatMap((role) => role.menus)
@@ -75,7 +75,7 @@ export const useUserStore = defineStore("user", {
             permissionSet.add(item.permission);
           }
 
-          // 递归收集子菜单的权限，确保子菜单不包含undefined
+          // 递归收集子菜单的权限, 确保子菜单不包含undefined
           if (item.children && item.children.length > 0) {
             collect(item.children.filter((child): child is MenuTable => child !== undefined));
           }
@@ -153,7 +153,7 @@ export const useUserStore = defineStore("user", {
       return new Promise<void>((resolve, reject) => {
         AuthAPI.refreshToken({ refresh_token: refreshToken })
           .then((response) => {
-            // 更新令牌，保持当前记住我状态
+            // 更新令牌, 保持当前记住我状态
             Auth.setTokens(
               response.data.data.access_token,
               response.data.data.refresh_token,

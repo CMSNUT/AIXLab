@@ -26,7 +26,7 @@ class NoticeCRUD(CRUDBase[NoticeModel, NoticeCreateSchema, NoticeUpdateSchema]):
 
         参数:
         - id (int): 公告ID。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - NoticeModel | None: 公告模型实例。
@@ -45,7 +45,7 @@ class NoticeCRUD(CRUDBase[NoticeModel, NoticeCreateSchema, NoticeUpdateSchema]):
         参数:
         - search (dict | None): 查询参数。
         - order_by (list[dict] | None): 排序参数。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[NoticeModel]: 公告模型实例列表。

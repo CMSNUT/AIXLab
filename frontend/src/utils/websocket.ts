@@ -51,12 +51,12 @@ export function getWebSocketInstance(key: string) {
  */
 export function setupWebSocket() {
   if (isInitialized) {
-    console.warn("[WebSocket] 已初始化，跳过重复初始化");
+    console.warn("[WebSocket] 已初始化, 跳过重复初始化");
     return;
   }
 
   if (!Auth.getAccessToken()) {
-    console.warn("[WebSocket] 未登录，跳过 WebSocket 初始化");
+    console.warn("[WebSocket] 未登录, 跳过 WebSocket 初始化");
     return;
   }
 

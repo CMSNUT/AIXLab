@@ -35,7 +35,7 @@ class DictTypeCreateSchema(BaseModel):
             raise ValueError("字典类型不能为空")
         regexp = r"^[a-z][a-z0-9_]*$"
         if not re.match(regexp, value):
-            raise ValueError("字典类型必须以字母开头，且只能为(小写字母，数字，下滑线)")
+            raise ValueError("字典类型必须以字母开头, 且只能为(小写字母, 数字, 下滑线)")
         return value.strip()
 
 

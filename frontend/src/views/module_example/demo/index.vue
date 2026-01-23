@@ -38,7 +38,7 @@
             @clear-click="handleQuery"
           />
         </el-form-item>
-        <!-- 时间范围，收起状态下隐藏 -->
+        <!-- 时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
           <DatePicker
             v-model="createdDateRange"
@@ -974,7 +974,7 @@ const handleUpload = async (formData: FormData) => {
   try {
     const response = await DemoAPI.importDemo(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
-      ElMessage.success(`${response.data.msg}，${response.data.data}`);
+      ElMessage.success(`${response.data.msg}, ${response.data.data}`);
       importDialogVisible.value = false;
       await handleQuery();
     }

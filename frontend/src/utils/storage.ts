@@ -17,7 +17,7 @@ export class Storage {
     try {
       return JSON.parse(value);
     } catch {
-      // 如果解析失败，返回原始字符串
+      // 如果解析失败, 返回原始字符串
       return value as unknown as T;
     }
   }
@@ -47,7 +47,7 @@ export class Storage {
     try {
       return JSON.parse(value);
     } catch {
-      // 如果解析失败，返回原始字符串
+      // 如果解析失败, 返回原始字符串
       return value as unknown as T;
     }
   }

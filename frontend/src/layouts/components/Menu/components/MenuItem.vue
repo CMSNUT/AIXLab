@@ -3,11 +3,11 @@
     <!--【叶子节点】显示叶子节点或唯一子节点且父节点未配置始终显示 -->
     <template
       v-if="
-        // 未配置始终显示，使用唯一子节点替换父节点显示为叶子节点
+        // 未配置始终显示, 使用唯一子节点替换父节点显示为叶子节点
         (hasOneShowingChild(item.children, item) &&
           !item.meta?.alwaysShow &&
           (!onlyOneChild.children || onlyOneChild.noShowingChildren)) ||
-        // 即使配置了始终显示，但无子节点，也显示为叶子节点
+        // 即使配置了始终显示, 但无子节点, 也显示为叶子节点
         (item.meta?.alwaysShow && !item.children)
       "
     >
@@ -31,7 +31,7 @@
       </AppLink>
     </template>
 
-    <!--【非叶子节点】显示含多个子节点的父菜单，或始终显示的单子节点 -->
+    <!--【非叶子节点】显示含多个子节点的父菜单, 或始终显示的单子节点 -->
     <el-sub-menu v-else :index="resolvePath(item.path)" :data-path="item.path" teleported>
       <template #title>
         <MenuItemContent v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
@@ -114,7 +114,7 @@ function hasOneShowingChild(children: RouteRecordRaw[] = [], parent: RouteRecord
 
   // 无子节点时
   if (showingChildren.length === 0) {
-    // 父节点设置为唯一显示节点，并标记为无子节点
+    // 父节点设置为唯一显示节点, 并标记为无子节点
     onlyOneChild.value = { ...parent, path: "", noShowingChildren: true };
     return true;
   }
@@ -122,7 +122,7 @@ function hasOneShowingChild(children: RouteRecordRaw[] = [], parent: RouteRecord
 }
 
 /**
- * 获取完整路径，适配外部链接
+ * 获取完整路径, 适配外部链接
  *
  * @param routePath 路由路径
  * @returns 绝对路径
@@ -191,7 +191,7 @@ html.sidebar-color-blue {
   }
 }
 
-// 父菜单激活状态样式 - 当子菜单激活时，父菜单显示激活状态
+// 父菜单激活状态样式 - 当子菜单激活时, 父菜单显示激活状态
 .el-sub-menu {
   // 当父菜单包含激活子菜单时的样式
   &.has-active-child .el-sub-menu__title {

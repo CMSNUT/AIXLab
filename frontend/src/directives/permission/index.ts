@@ -20,7 +20,7 @@ export const hasPerm: Directive = {
     const { roles } = useUserStore().basicInfo;
     const userPrems = useUserStore().prems;
 
-    // 超级管理员拥有所有权限，如果是"*:*:*"权限标识，则不需要进行权限校验
+    // 超级管理员拥有所有权限, 如果是"*:*:*"权限标识, 则不需要进行权限校验
     if (
       (roles && roles.map((role) => role.code).includes(ROLE_ROOT)) ||
       requiredPerms.includes("*:*:*")
@@ -33,7 +33,7 @@ export const hasPerm: Directive = {
       ? requiredPerms.some((perm) => userPrems.includes(perm))
       : userPrems.includes(requiredPerms);
 
-    // 如果没有权限，移除该元素
+    // 如果没有权限, 移除该元素
     if (!hasAuth && el.parentNode) {
       el.parentNode.removeChild(el);
     }
@@ -65,7 +65,7 @@ export const hasRole: Directive = {
         ? roles.map((role) => role.code).includes(requiredRoles)
         : false;
 
-    // 如果没有权限，移除元素
+    // 如果没有权限, 移除元素
     if (!hasAuth && el.parentNode) {
       el.parentNode.removeChild(el);
     }

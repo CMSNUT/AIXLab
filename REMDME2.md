@@ -9,7 +9,7 @@ cd backend
 ```bash
 alembic init alembic
 ```
-- 创建 `backend/app` 文件夹，
+- 创建 `backend/app` 文件夹, 
 - 将 `alembic` 文件夹 复制到 `app` 文件夹中
 - 修改 根目录下 `alembic.ini` 文件中 `%(here)s/alembic` 为 `app/alembic`
 
@@ -249,7 +249,7 @@ ruff==0.14.13                           # Rust编写的Python代码检查器
 ```
 
 
-# 一键安装所有依赖的最高版本(不指定具体版本)，可以使用以下方法: 
+# 一键安装所有依赖的最高版本(不指定具体版本), 可以使用以下方法: 
 
 ## 方法1: 生成并安装最新版依赖文件
 ```bash
@@ -459,7 +459,7 @@ python install_latest.py
 # 1. 安装 pip-tools
 pip install pip-tools
 
-# 2. 创建 requirements.in 文件，只写包名
+# 2. 创建 requirements.in 文件, 只写包名
 - requirements.in
 ```text
 anyio
@@ -607,7 +607,7 @@ pip-compile --upgrade requirements.in -o requirements_latest.txt
 pip install -r requirements_latest.txt
 ```
 
-**推荐使用方法4**，因为它会: 
+**推荐使用方法4**, 因为它会: 
 1. 自动解析依赖关系
 2. 安装最新的兼容版本
 3. 生成带有精确版本号的 requirements.txt 文件

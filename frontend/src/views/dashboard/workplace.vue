@@ -7,7 +7,7 @@
             <ElAvatar size="large" :src="currentUser.avatar" class="mr-20px" />
             <div>
               <div class="text-20px font-bold">
-                {{ timefix }}{{ currentUser.name }}，{{ welcome }}
+                {{ timefix }}{{ currentUser.name }}, {{ welcome }}
               </div>
               <el-text>
                 {{ currentUser.username }} | {{ currentUser.dept_name }} |
@@ -162,7 +162,7 @@
               <div class="flex justify-between items-center">
                 <div class="flex items-center gap-2">
                   <el-tooltip
-                    content="快速访问常用功能，标签右键收藏可添加快捷栏菜单。"
+                    content="快速访问常用功能, 标签右键收藏可添加快捷栏菜单。"
                     placement="top"
                   >
                     <el-icon class="cursor-help" size="16">
@@ -280,7 +280,7 @@ const formatTime = (time: string | undefined) => {
 // 跳转通知公告详情页
 const goToNotice = () => {
   router.push({ name: "Notice" }).catch(() => {
-    ElMessage.warning(`公告通知跳转失败，请检查路由配置`);
+    ElMessage.warning(`公告通知跳转失败, 请检查路由配置`);
   });
 };
 
@@ -329,7 +329,7 @@ const handleQuickLinkClick = (item: QuickLink) => {
   if (item.href) {
     // 内部路由跳转
     router.push(item.href).catch(() => {
-      ElMessage.warning(`路由 ${item.href} 不存在，请检查配置`);
+      ElMessage.warning(`路由 ${item.href} 不存在, 请检查配置`);
     });
     ElMessage.success(`进入: ${item.title}`);
   } else {
@@ -509,5 +509,5 @@ const chartOptions = reactive<EChartsOption>({
 </script>
 
 <style scoped>
-/* 最小化自定义样式，主要使用UnoCSS和Element Plus内置样式 */
+/* 最小化自定义样式, 主要使用UnoCSS和Element Plus内置样式 */
 </style>

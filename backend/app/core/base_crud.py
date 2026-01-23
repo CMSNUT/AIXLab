@@ -44,7 +44,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         根据条件获取单个对象
 
         参数:
-        - preload (Optional[List[Union[str, Any]]]): 预加载关系，支持关系名字符串或SQLAlchemy loader option
+        - preload (Optional[List[Union[str, Any]]]): 预加载关系, 支持关系名字符串或SQLAlchemy loader option
         - **kwargs: 查询条件
 
         返回:
@@ -80,7 +80,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         参数:
         - search (Optional[Dict]): 查询条件,格式为 {'id': value, 'name': value}
         - order_by (Optional[List[Dict[str, str]]]): 排序字段,格式为 [{'id': 'asc'}, {'name': 'desc'}]
-        - preload (Optional[List[Union[str, Any]]]): 预加载关系，支持关系名字符串或SQLAlchemy loader option
+        - preload (Optional[List[Union[str, Any]]]): 预加载关系, 支持关系名字符串或SQLAlchemy loader option
 
         返回:
         - Sequence[ModelType]: 对象列表
@@ -115,7 +115,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         - search (Optional[Dict]): 查询条件
         - order_by (Optional[List[Dict[str, str]]]): 排序字段
         - children_attr (str): 子节点属性名
-        - preload (Optional[List[Union[str, Any]]]): 额外预加载关系，若为None则默认包含children_attr
+        - preload (Optional[List[Union[str, Any]]]): 额外预加载关系, 若为None则默认包含children_attr
 
         返回:
         - Sequence[ModelType]: 树形结构数据列表
@@ -130,7 +130,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
             # 处理预加载选项
             final_preload = preload
-            # 如果没有提供preload且children_attr存在，则添加到预加载选项中
+            # 如果没有提供preload且children_attr存在, 则添加到预加载选项中
             if preload is None and children_attr and hasattr(self.model, children_attr):
                 # 获取模型默认预加载选项
                 model_defaults = getattr(self.model, "__loader_options__", [])
@@ -186,7 +186,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             mapper = sa_inspect(self.model)
             pk_cols = list(getattr(mapper, "primary_key", []))
             if pk_cols:
-                # 使用主键的第一列进行计数(主键必定非NULL，性能更好)
+                # 使用主键的第一列进行计数(主键必定非NULL, 性能更好)
                 count_sql = select(func.count(pk_cols[0])).select_from(self.model)
             else:
                 # 降级方案: 使用count(*)
@@ -263,7 +263,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 if isinstance(data, dict)
                 else data.model_dump(exclude_unset=True, exclude={"id"})
             )
-            # 获取对象时不自动预加载关系，避免循环依赖
+            # 获取对象时不自动预加载关系, 避免循环依赖
             obj = await self.get(id=id, preload=[])
             if not obj:
                 raise CustomException(msg="更新对象不存在")
@@ -286,7 +286,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             verify_obj = await self.get(id=id, preload=[])
             if not verify_obj:
                 # 对象已被删除或权限已失效
-                raise CustomException(msg="更新失败，对象不存在或无权限访问")
+                raise CustomException(msg="更新失败, 对象不存在或无权限访问")
 
             return obj
         except Exception as e:
@@ -306,7 +306,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             mapper = sa_inspect(self.model)
             pk_cols = list(getattr(mapper, "primary_key", []))
             if not pk_cols:
-                raise CustomException(msg="模型缺少主键，无法删除")
+                raise CustomException(msg="模型缺少主键, 无法删除")
             if len(pk_cols) > 1:
                 raise CustomException(msg="暂不支持复合主键的批量删除")
 
@@ -346,7 +346,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             mapper = sa_inspect(self.model)
             pk_cols = list(getattr(mapper, "primary_key", []))
             if not pk_cols:
-                raise CustomException(msg="模型缺少主键，无法更新")
+                raise CustomException(msg="模型缺少主键, 无法更新")
             if len(pk_cols) > 1:
                 raise CustomException(msg="暂不支持复合主键的批量更新")
 
@@ -444,7 +444,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         构建预加载选项
 
         参数:
-        - preload (Optional[List[Union[str, Any]]]): 预加载关系，支持关系名字符串或SQLAlchemy loader option
+        - preload (Optional[List[Union[str, Any]]]): 预加载关系, 支持关系名字符串或SQLAlchemy loader option
 
         返回:
         - List[Any]: 预加载选项列表
@@ -460,7 +460,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 if isinstance(opt, str):
                     all_preloads.add(opt)
         elif preload == []:
-            # 如果明确指定空列表，则不使用任何预加载
+            # 如果明确指定空列表, 则不使用任何预加载
             all_preloads = set()
 
         # 处理所有预加载选项

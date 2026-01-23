@@ -25,9 +25,9 @@ export const defaultSettings: AppSettings = {
   showTagsView: true,
   // 是否显示应用Logo
   showAppLogo: true,
-  // 布局方式，默认为左侧布局
+  // 布局方式, 默认为左侧布局
   layout: LayoutMode.LEFT,
-  // 主题，根据操作系统的色彩方案自动选择
+  // 主题, 根据操作系统的色彩方案自动选择
   theme: prefersDark ? ThemeMode.DARK : ThemeMode.LIGHT,
   // 组件大小 default | medium | small | large
   size: ComponentSize.DEFAULT,
@@ -52,7 +52,7 @@ export const defaultSettings: AppSettings = {
 };
 
 // 主题色预设 - 现代化配色方案
-// 注意: 修改默认主题色时，需要同步修改 src/styles/variables.scss 中的 primary.base 值
+// 注意: 修改默认主题色时, 需要同步修改 src/styles/variables.scss 中的 primary.base 值
 export const themeColorPresets = [
   // === 精选常用颜色 - 多样化色系 ===
   "#4080FF", // Arco Design 蓝 - 现代感强

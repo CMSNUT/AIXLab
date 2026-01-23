@@ -13,9 +13,9 @@
           />
           <div class="ml-5">
             <div class="text-20px font-bold mb-5px">
-              {{ timefix }}{{ userStore.basicInfo.name }}，{{ welcome }}
+              {{ timefix }}{{ userStore.basicInfo.name }}, {{ welcome }}
             </div>
-            <p class="text-sm text-gray">今日天气晴朗，气温在15℃至25℃之间，东南风。</p>
+            <p class="text-sm text-gray">今日天气晴朗, 气温在15℃至25℃之间, 东南风。</p>
           </div>
         </div>
 
@@ -354,7 +354,7 @@ const vesionList = ref<VersionItem[]>([
     id: "1",
     title: "v3.2.1",
     date: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-    content: "优化性能，修复若干小bug。",
+    content: "优化性能, 修复若干小bug。",
     link: "https://gitee.com/aixlab/AIXLab/releases",
     tag: "更新",
   },
@@ -522,7 +522,7 @@ const computeGrowthRateClass = (growthRate?: number): string => {
   }
 };
 
-// 监听访问趋势日期范围的变化，重新获取趋势数据
+// 监听访问趋势日期范围的变化, 重新获取趋势数据
 watch(
   () => visitTrendDateRange.value,
   () => {

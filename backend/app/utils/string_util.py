@@ -197,7 +197,7 @@ class StringUtil:
         - key (str): 字典的键。
 
         返回:
-        - str: 字典键对应的值，未匹配则返回空字符串。
+        - str: 字典键对应的值, 未匹配则返回空字符串。
         """
         for k, v in mapping.items():
             if key.lower() == k.lower():

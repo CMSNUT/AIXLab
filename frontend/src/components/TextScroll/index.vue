@@ -28,7 +28,7 @@
         :class="{ scrolling: shouldScroll }"
         :style="scrollStyle"
       >
-        <!-- 滚动内容，复制两份以实现无缝滚动 -->
+        <!-- 滚动内容, 复制两份以实现无缝滚动 -->
         <div class="scroll-item" v-html="sanitizedContent" />
         <div class="scroll-item" v-html="sanitizedContent" />
       </div>
@@ -42,7 +42,7 @@
 
 <!-- 使用案例 -->
 <!-- <div class="app-container">
-  <TextScroll text="这是一条基础的滚动公告，默认向左滚动。" typewriter />
+  <TextScroll text="这是一条基础的滚动公告, 默认向左滚动。" typewriter />
 
   <TextScroll type="success" text="这是一条成功类型的滚动公告" typewriter />
 
@@ -63,7 +63,7 @@ const emit = defineEmits(["close"]);
 interface Props {
   /** 滚动文本内容(必填) */
   text: string;
-  /** 滚动速度，数值越小滚动越慢 */
+  /** 滚动速度, 数值越小滚动越慢 */
   speed?: number;
   /** 滚动方向: 左侧或右侧 */
   direction?: "left" | "right";
@@ -73,7 +73,7 @@ interface Props {
   showClose?: boolean;
   /** 是否启用打字机效果 */
   typewriter?: boolean;
-  /** 打字机效果的速度，数值越小打字越快 */
+  /** 打字机效果的速度, 数值越小打字越快 */
   typewriterSpeed?: number;
 }
 
@@ -101,7 +101,7 @@ const animationDuration = ref(0);
  */
 // 当前已显示的文本内容
 const currentText = ref("");
-// 打字机定时器引用，用于清理
+// 打字机定时器引用, 用于清理
 let typewriterTimer: ReturnType<typeof setTimeout> | null = null;
 // 打字机效果是否已完成
 const isTypewriterComplete = ref(false);
@@ -110,7 +110,7 @@ const isTypewriterComplete = ref(false);
  * 计算是否应该滚动
  * 条件: 
  * 1. 鼠标未悬停在组件上
- * 2. 如果启用了打字机效果，则需要等待打字效果完成
+ * 2. 如果启用了打字机效果, 则需要等待打字效果完成
  */
 const shouldScroll = computed(() => {
   if (props.typewriter) {
@@ -121,9 +121,9 @@ const shouldScroll = computed(() => {
 
 /**
  * 计算最终显示的内容
- * 如果启用了打字机效果，则显示当前已打出的文本
+ * 如果启用了打字机效果, 则显示当前已打出的文本
  * 否则直接显示完整文本
- * 注意: 内容支持 HTML，使用时需注意 XSS 风险
+ * 注意: 内容支持 HTML, 使用时需注意 XSS 风险
  */
 const sanitizedContent = computed(() => (props.typewriter ? currentText.value : props.text));
 
@@ -141,7 +141,7 @@ const scrollStyle = computed(() => ({
 /**
  * 计算动画持续时间
  * 根据内容宽度和设定的速度计算出合适的动画持续时间
- * 内容越长或速度值越小，动画持续时间越长
+ * 内容越长或速度值越小, 动画持续时间越长
  */
 const calculateDuration = () => {
   if (scrollContent.value) {
@@ -152,7 +152,7 @@ const calculateDuration = () => {
 
 /**
  * 处理关闭按钮点击事件
- * 触发 close 事件，并直接销毁当前组件
+ * 触发 close 事件, 并直接销毁当前组件
  */
 const handleRightIconClick = () => {
   emit("close");
@@ -165,14 +165,14 @@ const handleRightIconClick = () => {
 
 /**
  * 启动打字机效果
- * 逐字显示文本内容，完成后设置状态以开始滚动
+ * 逐字显示文本内容, 完成后设置状态以开始滚动
  */
 const startTypewriter = () => {
   let index = 0;
   currentText.value = "";
   isTypewriterComplete.value = false; // 重置状态
 
-  // 递归函数，逐字添加文本
+  // 递归函数, 逐字添加文本
   const type = () => {
     if (index < props.text.length) {
       // 添加一个字符
@@ -181,7 +181,7 @@ const startTypewriter = () => {
       // 设置下一个字符的延迟
       typewriterTimer = setTimeout(type, props.typewriterSpeed);
     } else {
-      // 所有字符都已添加，设置完成状态
+      // 所有字符都已添加, 设置完成状态
       isTypewriterComplete.value = true;
     }
   };
@@ -193,10 +193,10 @@ const startTypewriter = () => {
 onMounted(() => {
   // 计算初始动画持续时间
   calculateDuration();
-  // 监听窗口大小变化，重新计算动画持续时间
+  // 监听窗口大小变化, 重新计算动画持续时间
   window.addEventListener("resize", calculateDuration);
 
-  // 如果启用了打字机效果，开始打字
+  // 如果启用了打字机效果, 开始打字
   if (props.typewriter) {
     startTypewriter();
   }
@@ -213,7 +213,7 @@ onUnmounted(() => {
 
 /**
  * 监听文本内容变化
- * 当文本内容变化时，如果启用了打字机效果，重新开始打字
+ * 当文本内容变化时, 如果启用了打字机效果, 重新开始打字
  */
 watch(
   () => props.text,

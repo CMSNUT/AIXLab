@@ -76,11 +76,11 @@ class UserRegisterSchema(BaseModel):
         v = value.strip()
         if not v:
             raise ValueError("账号不能为空")
-        # 字母开头，允许字母数字_.-
+        # 字母开头, 允许字母数字_.-
         import re
 
         if not re.match(r"^[A-Za-z][A-Za-z0-9_.-]{2,31}$", v):
-            raise ValueError("账号需字母开头，3-32位，仅含字母/数字/_ . -")
+            raise ValueError("账号需字母开头, 3-32位, 仅含字母/数字/_ . -")
         return v
 
     @model_validator(mode="after")

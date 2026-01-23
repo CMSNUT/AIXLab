@@ -32,7 +32,7 @@ const showWatermark = computed(() => settingsStore.showWatermark);
 const watermarkContent = defaultSettings.watermarkContent;
 
 // 只有在启用 AI 助手且用户已登录时才显示
-// 使用 userInfo 作为响应式依赖，当用户退出登录时会自动更新
+// 使用 userInfo 作为响应式依赖, 当用户退出登录时会自动更新
 const enableAiAssistant = computed(() => {
   const isEnabled = settingsStore.userEnableAi;
   const isLoggedIn = userStore.basicInfo && Object.keys(userStore.basicInfo).length > 0;

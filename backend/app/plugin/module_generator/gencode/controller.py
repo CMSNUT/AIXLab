@@ -128,7 +128,7 @@ async def gen_table_detail_controller(
 
 @GenRouter.post("/create", summary="创建表结构", description="创建表结构")
 async def create_table_controller(
-    sql: Annotated[str, Body(description="SQL语句，用于创建表结构")],
+    sql: Annotated[str, Body(description="SQL语句, 用于创建表结构")],
     auth: Annotated[
         AuthSchema,
         Depends(AuthPermission(["module_generator:gencode:create"])),
@@ -138,7 +138,7 @@ async def create_table_controller(
     创建表结构
 
     参数:
-    - sql (str): SQL语句，用于创建表结构
+    - sql (str): SQL语句, 用于创建表结构
     - auth (AuthSchema): 认证信息模型
 
     返回:

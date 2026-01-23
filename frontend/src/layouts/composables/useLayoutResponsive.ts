@@ -5,7 +5,7 @@ import { DeviceEnum } from "@/enums/settings/device.enum";
 
 /**
  * 设备检测和响应式处理
- * 监听屏幕尺寸变化，自动调整设备类型和侧边栏状态
+ * 监听屏幕尺寸变化, 自动调整设备类型和侧边栏状态
  */
 export function useLayoutResponsive() {
   const appStore = useAppStore();

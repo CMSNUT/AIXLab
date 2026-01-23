@@ -15,7 +15,7 @@
       <div class="i-svg:ai ai-icon" />
     </el-button>
 
-    <!-- 收缩态: 贴边小标签，避免遮挡表单控件 -->
+    <!-- 收缩态: 贴边小标签, 避免遮挡表单控件 -->
     <div
       v-if="!dialogVisible && fabCollapsed"
       class="ai-fab-tab"
@@ -346,7 +346,7 @@ const handleExecute = async () => {
     // 解析 AI 返回的操作类型
     const action = parseAction(result.data, rawCommand);
     response.value = {
-      explanation: result.data.msg ?? "命令解析成功，准备执行操作",
+      explanation: result.data.msg ?? "命令解析成功, 准备执行操作",
       action,
     };
 
@@ -406,13 +406,13 @@ const extractKeywordFromCommand = (cmd: string): string => {
   const keywordsPattern = allKeywords.join("|");
 
   const patterns = [
-    new RegExp(`(?:查询|获取|搜索|查找|找).*?([^\\s，。]+?)(?:的)?(?:${keywordsPattern})`, "i"),
-    new RegExp(`(?:${keywordsPattern}).*?([^\\s，。]+?)(?:的|信息|详情)?`, "i"),
+    new RegExp(`(?:查询|获取|搜索|查找|找).*?([^\\s, 。]+?)(?:的)?(?:${keywordsPattern})`, "i"),
+    new RegExp(`(?:${keywordsPattern}).*?([^\\s, 。]+?)(?:的|信息|详情)?`, "i"),
     new RegExp(
-      `(?:姓名为|名字叫|叫做|名称为|名是|为)([^\\s，。]+?)(?:的)?(?:${keywordsPattern})?`,
+      `(?:姓名为|名字叫|叫做|名称为|名是|为)([^\\s, 。]+?)(?:的)?(?:${keywordsPattern})?`,
       "i"
     ),
-    new RegExp(`([^\\s，。]+?)(?:的)?(?:${keywordsPattern})(?:信息|详情)?`, "i"),
+    new RegExp(`([^\\s, 。]+?)(?:的)?(?:${keywordsPattern})(?:信息|详情)?`, "i"),
   ];
 
   for (const pattern of patterns) {
@@ -467,7 +467,7 @@ const tryDirectNavigate = (rawCommand: string): AiResponse | null => {
   };
 
   return {
-    explanation: `检测到跳转命令，正在前往 ${routeInfo.name}`,
+    explanation: `检测到跳转命令, 正在前往 ${routeInfo.name}`,
     action,
   };
 };
@@ -478,7 +478,7 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
   const primaryCall = result.functionCalls?.[0];
   const functionName = primaryCall?.name;
 
-  // 优先从函数名推断路由，其次从命令文本匹配
+  // 优先从函数名推断路由, 其次从命令文本匹配
   let routeInfo = functionName ? inferRouteFromFunction(functionName) : null;
   if (!routeInfo) {
     routeInfo = matchRouteFromCommand(cmd);
@@ -537,7 +537,7 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
       };
     }
 
-    // 3) 其他未匹配的函数，如果有路由则跳转，否则执行
+    // 3) 其他未匹配的函数, 如果有路由则跳转, 否则执行
     if (routePath) {
       return {
         type: "navigate-and-execute",
@@ -554,7 +554,7 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
     };
   }
 
-  // 4) 无函数调用，仅跳转
+  // 4) 无函数调用, 仅跳转
   if (routePath) {
     return {
       type: "navigate",
@@ -596,7 +596,7 @@ const executeAction = async (action: AiAction) => {
         ),
       };
 
-      // 如果有查询关键字，也一并传递
+      // 如果有查询关键字, 也一并传递
       if (action.query) {
         queryParams.keywords = action.query;
         queryParams.autoSearch = "true";
@@ -620,10 +620,10 @@ const executeAction = async (action: AiAction) => {
     if (currentPath === action.path) {
       // 如果已经在目标页面
       if (action.query) {
-        // 有查询关键字，直接在当前页面执行搜索
-        ElMessage.info(`您已在 ${action.pageName} 页面，为您执行搜索: ${action.query}`);
+        // 有查询关键字, 直接在当前页面执行搜索
+        ElMessage.info(`您已在 ${action.pageName} 页面, 为您执行搜索: ${action.query}`);
 
-        // 触发路由更新，让页面执行搜索
+        // 触发路由更新, 让页面执行搜索
         router.replace({
           path: action.path,
           query: {
@@ -633,7 +633,7 @@ const executeAction = async (action: AiAction) => {
           },
         });
       } else {
-        // 没有查询关键字，只是跳转，给出提示
+        // 没有查询关键字, 只是跳转, 给出提示
         ElMessage.warning(`您已经在 ${action.pageName} 页面了`);
       }
 
@@ -642,7 +642,7 @@ const executeAction = async (action: AiAction) => {
       return;
     }
 
-    // 不在目标页面，正常跳转
+    // 不在目标页面, 正常跳转
     ElMessage.success(`正在跳转到 ${action.pageName}...`);
 
     // 清理之前的定时器
@@ -669,7 +669,7 @@ const executeAction = async (action: AiAction) => {
     }, 1000);
   } else if (action.type === "execute") {
     // 执行函数调用
-    ElMessage.info("功能开发中，请前往 AI 命令助手页面体验完整功能");
+    ElMessage.info("功能开发中, 请前往 AI 命令助手页面体验完整功能");
 
     // 清理之前的定时器
     if (executeTimer) {

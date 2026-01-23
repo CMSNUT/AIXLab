@@ -31,7 +31,7 @@
             >
               <el-icon class="el-icon--upload"><upload-filled /></el-icon>
               <div class="el-upload__text">
-                {{ props.dropText || "将文件拖到此处，或" }}
+                {{ props.dropText || "将文件拖到此处, 或" }}
                 <em>{{ props.browseText || "点击上传" }}</em>
               </div>
               <template #tip>
@@ -173,7 +173,7 @@ const props = withDefaults(defineProps<ImportModalProps>(), {
   limit: 1,
   showTemplateDownload: true,
   note: "注意事项: ",
-  fileTypeWarning: "格式为*.xlsx / *.xls，文件不超过 5MB",
+  fileTypeWarning: "格式为*.xlsx / *.xls, 文件不超过 5MB",
   uploadFileName: "file",
   uploadData: () => ({}),
 });
@@ -280,7 +280,7 @@ const handleUpload = async () => {
       formData.append(key, props.uploadData[key]);
     });
 
-    // 触发上传事件，由父组件处理具体上传逻辑
+    // 触发上传事件, 由父组件处理具体上传逻辑
     emit("upload", formData, file);
   } catch (error: any) {
     console.error("上传失败:", error);

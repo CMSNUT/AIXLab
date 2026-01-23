@@ -62,7 +62,7 @@ class ResourceService:
         if not path:
             return resource_root
 
-        # 支持前端传递的完整URL或以STATIC_URL/ROOT_PATH+STATIC_URL开头的URL路径，转换为相对资源路径
+        # 支持前端传递的完整URL或以STATIC_URL/ROOT_PATH+STATIC_URL开头的URL路径, 转换为相对资源路径
         if isinstance(path, str):
             static_prefix = settings.STATIC_URL.rstrip("/")
             root_prefix = (
@@ -84,7 +84,7 @@ class ResourceService:
             else:
                 path = strip_prefix(path)
 
-        # 清理路径，移除危险字符
+        # 清理路径, 移除危险字符
         path = path.strip().replace("..", "").replace("//", "/")
 
         # 规范化路径
@@ -116,7 +116,7 @@ class ResourceService:
         - path (str): 要检查的路径。
 
         返回:
-        - bool: 如果路径存在则返回True，否则返回False。
+        - bool: 如果路径存在则返回True, 否则返回False。
         """
         try:
             safe_path = cls._get_safe_path(path)
@@ -131,7 +131,7 @@ class ResourceService:
 
         参数:
         - file_path (str): 文件的绝对路径。
-        - base_url (str | None): 基础URL，用于生成完整URL。
+        - base_url (str | None): 基础URL, 用于生成完整URL。
 
         返回:
         - str: 文件的HTTP URL。
@@ -142,10 +142,10 @@ class ResourceService:
             # 确保路径使用正斜杠(URL格式)
             url_path = relative_path.replace(os.sep, "/")
         except ValueError:
-            # 如果无法计算相对路径，使用文件名
+            # 如果无法计算相对路径, 使用文件名
             url_path = os.path.basename(file_path)
 
-        # 如果提供了base_url，使用它生成完整URL，否则使用settings.STATIC_URL
+        # 如果提供了base_url, 使用它生成完整URL, 否则使用settings.STATIC_URL
         if base_url:
             # 修复URL生成逻辑
             base_part = base_url.rstrip("/")
@@ -164,11 +164,11 @@ class ResourceService:
     @classmethod
     def _get_file_info(cls, file_path: str, base_url: str | None = None) -> dict:
         """
-        获取文件或目录的详细信息，如名称、大小、创建时间、修改时间、路径、深度、HTTP URL、是否隐藏、是否为目录等。
+        获取文件或目录的详细信息, 如名称、大小、创建时间、修改时间、路径、深度、HTTP URL、是否隐藏、是否为目录等。
 
         参数:
         - file_path (str): 文件或目录的路径。
-        - base_url (str | None): 基础URL，用于生成完整URL。
+        - base_url (str | None): 基础URL, 用于生成完整URL。
 
         返回:
         - dict: 文件或目录的详细信息字典。
@@ -200,10 +200,10 @@ class ResourceService:
             # 检查是否为隐藏文件(文件名以点开头)
             is_hidden = path_obj.name.startswith(".")
 
-            # 对于目录，设置is_directory字段(兼容前端)
+            # 对于目录, 设置is_directory字段(兼容前端)
             is_directory = os.path.isdir(safe_path)
 
-            # 将datetime对象转换为ISO格式的字符串，确保JSON序列化成功
+            # 将datetime对象转换为ISO格式的字符串, 确保JSON序列化成功
             created_time = datetime.fromtimestamp(stat.st_ctime).isoformat()
             modified_time = datetime.fromtimestamp(stat.st_mtime).isoformat()
 
@@ -233,15 +233,15 @@ class ResourceService:
         获取目录列表
 
         参数:
-        - path (str | None): 目录路径。如果未指定，将使用静态文件根目录。
+        - path (str | None): 目录路径。如果未指定, 将使用静态文件根目录。
         - include_hidden (bool): 是否包含隐藏文件。
-        - base_url (str | None): 基础URL，用于生成完整URL。
+        - base_url (str | None): 基础URL, 用于生成完整URL。
 
         返回:
         - dict: 包含目录列表和统计信息的字典。
         """
         try:
-            # 如果没有指定路径，使用静态文件根目录
+            # 如果没有指定路径, 使用静态文件根目录
             if path is None:
                 safe_path = cls._get_resource_root()
                 display_path = cls._generate_http_url(safe_path, base_url)
@@ -309,7 +309,7 @@ class ResourceService:
         参数:
         - search (ResourceSearchQueryParam | None): 查询参数模型。
         - order_by (str | None): 排序参数。
-        - base_url (str | None): 基础URL，用于生成完整URL。
+        - base_url (str | None): 基础URL, 用于生成完整URL。
 
         返回:
         - list[dict]: 资源详情字典列表。
@@ -454,7 +454,7 @@ class ResourceService:
             if not order_by:
                 return sorted(results, key=lambda x: x.get("name", ""), reverse=False)
 
-            # 解析order_by参数，格式: [{'field':'asc/desc'}]
+            # 解析order_by参数, 格式: [{'field':'asc/desc'}]
 
             sort_conditions = eval(order_by)
             if isinstance(sort_conditions, list):
@@ -464,9 +464,9 @@ class ResourceService:
                     for cond in sort_conditions:
                         field = cond.get("field", "name")
                         cond.get("direction", "asc")
-                        # 获取字段值，默认为空字符串
+                        # 获取字段值, 默认为空字符串
                         value = item.get(field, "")
-                        # 如果是日期字段，转换为可比较的格式
+                        # 如果是日期字段, 转换为可比较的格式
                         if (
                             field
                             in [
@@ -480,7 +480,7 @@ class ResourceService:
                         keys.append(value)
                     return keys
 
-                # 确定排序方向(这里只支持单一方向，多个条件时使用第一个条件的方向)
+                # 确定排序方向(这里只支持单一方向, 多个条件时使用第一个条件的方向)
                 reverse = False
                 if sort_conditions and isinstance(sort_conditions[0], dict):
                     direction = sort_conditions[0].get("direction", "").lower()
@@ -504,7 +504,7 @@ class ResourceService:
         参数:
         - file (UploadFile): 上传的文件对象。
         - target_path (str | None): 目标目录路径。
-        - base_url (str | None): 基础URL，用于生成完整URL。
+        - base_url (str | None): 基础URL, 用于生成完整URL。
 
         返回:
         - dict: 包含文件信息的字典。
@@ -521,10 +521,10 @@ class ResourceService:
             content = await file.read()
             if len(content) > cls.MAX_UPLOAD_SIZE:
                 raise CustomException(
-                    msg=f"文件太大，最大支持{cls.MAX_UPLOAD_SIZE // (1024 * 1024)}MB"
+                    msg=f"文件太大, 最大支持{cls.MAX_UPLOAD_SIZE // (1024 * 1024)}MB"
                 )
 
-            # 确定上传目录，如果没有指定目标路径，使用静态文件根目录
+            # 确定上传目录, 如果没有指定目标路径, 使用静态文件根目录
             safe_dir = (
                 cls._get_resource_root() if target_path is None else cls._get_safe_path(target_path)
             )
@@ -576,7 +576,7 @@ class ResourceService:
 
         参数:
         - file_path (str): 文件路径(可为相对路径、绝对路径或完整URL)。
-        - base_url (str | None): 基础URL，用于生成完整URL(不再直接返回URL)。
+        - base_url (str | None): 基础URL, 用于生成完整URL(不再直接返回URL)。
 
         返回:
         - str: 本地文件系统路径。
@@ -612,14 +612,14 @@ class ResourceService:
         - None
         """
         if not paths:
-            raise CustomException(msg="删除失败，删除路径不能为空")
+            raise CustomException(msg="删除失败, 删除路径不能为空")
 
         for path in paths:
             try:
                 safe_path = cls._get_safe_path(path)
 
                 if not os.path.exists(safe_path):
-                    log.error(f"路径不存在，跳过: {path}")
+                    log.error(f"路径不存在, 跳过: {path}")
                     continue
 
                 if os.path.isfile(safe_path):
@@ -645,7 +645,7 @@ class ResourceService:
         - Dict[str, List[str]]: 包含成功删除路径和失败删除路径的字典。
         """
         if not paths:
-            raise CustomException(msg="删除失败，删除路径不能为空")
+            raise CustomException(msg="删除失败, 删除路径不能为空")
 
         success_paths = []
         failed_paths = []

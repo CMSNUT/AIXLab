@@ -35,7 +35,7 @@
                 <el-option value="1" label="停用" />
               </el-select>
             </el-form-item>
-            <!-- 时间范围，收起状态下隐藏 -->
+            <!-- 时间范围, 收起状态下隐藏 -->
             <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
               <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
             </el-form-item>
@@ -807,7 +807,7 @@ function hancleResetPassword(row: UserInfo) {
   }).then(
     async ({ value }) => {
       if (!value || value.length < 6) {
-        ElMessage.warning("密码至少需要6位字符，请重新输入");
+        ElMessage.warning("密码至少需要6位字符, 请重新输入");
         return false;
       }
       await UserAPI.resetUserPassword({ id: row.id!, password: value });
@@ -894,7 +894,7 @@ async function handleSubmit() {
         dialogVisible.visible = false;
         resetForm();
         handleResetQuery();
-        // 如果当前编辑的是登录用户，更新全局用户状态
+        // 如果当前编辑的是登录用户, 更新全局用户状态
         const userStore = useUserStore();
         if (id === userStore.basicInfo.id) {
           await userStore.getUserInfo();
@@ -975,7 +975,7 @@ const handleUpload = async (formData: FormData) => {
   try {
     const response = await UserAPI.importUser(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
-      ElMessage.success(`${response.data.msg}，${response.data.data}`);
+      ElMessage.success(`${response.data.msg}, ${response.data.data}`);
       importDialogVisible.value = false;
       await handleQuery();
       emit("import-success");

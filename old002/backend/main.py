@@ -110,7 +110,7 @@ async def create_plot(request: PlotRequest):
     except requests.exceptions.ConnectionError:
         raise HTTPException(
             status_code=503,
-            detail=f"{request.language} 分析服务未启动，请先启动分析服务"
+            detail=f"{request.language} 分析服务未启动, 请先启动分析服务"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"请求失败: {str(e)}")
@@ -178,5 +178,5 @@ if __name__ == "__main__":
     print("前端: http://localhost:5173")
     print("=" * 60)
 
-    # 使用字符串模块名启动，以支持reload
+    # 使用字符串模块名启动, 以支持reload
     uvicorn.run("main:app", host="localhost", port=8000, reload=True)

@@ -863,7 +863,7 @@ const handleUpload = async (formData: FormData) => {
   try {
     const response = await {{ class_name }}API.import{{ class_name }}(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
-      ElMessage.success(`${response.data.msg}，${response.data.data}`);
+      ElMessage.success(`${response.data.msg}, ${response.data.data}`);
       importDialogVisible.value = false;
       await handleQuery();
     }

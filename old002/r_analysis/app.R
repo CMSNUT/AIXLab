@@ -34,10 +34,10 @@ function(dataset_path = NULL, plot_type = "scatter", parameters = list()) {
     # 读取数据
     if (!is.null(dataset_path) && file.exists(dataset_path)) {
       df <- read.csv(dataset_path)
-      cat("  从文件读取数据，行数:", nrow(df), "列数:", ncol(df), "\n")
+      cat("  从文件读取数据, 行数:", nrow(df), "列数:", ncol(df), "\n")
     } else {
       # 使用内置iris数据集
-      cat("  文件不存在或未指定，使用内置iris数据集\n")
+      cat("  文件不存在或未指定, 使用内置iris数据集\n")
       df <- iris
       # 重命名列以匹配预期
       names(df) <- c("sepal_length", "sepal_width", "petal_length", "petal_width", "species")

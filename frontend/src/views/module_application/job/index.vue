@@ -24,14 +24,14 @@
             <el-option value="1" label="暂停" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围，收起状态下隐藏 -->
+        <!-- 时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
           <DatePicker
             v-model="createdDateRange"
             @update:model-value="handleCreatedDateRangeChange"
           />
         </el-form-item>
-        <!-- 更新时间范围，收起状态下隐藏 -->
+        <!-- 更新时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
           <DatePicker
             v-model="updatedDateRange"

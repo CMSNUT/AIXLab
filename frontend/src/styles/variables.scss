@@ -30,12 +30,12 @@
 
 :root {
   --menu-background: #fff; // 菜单背景色
-  --menu-text: #212121; // 菜单文字颜色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
+  --menu-text: #212121; // 菜单文字颜色 浅色主题-白色侧边栏配色下仅占位, 实际颜色由 el-menu-item 组件决定
   --menu-active-text: var(
     --el-menu-active-color
-  ); // 菜单激活文字颜色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
+  ); // 菜单激活文字颜色 浅色主题-白色侧边栏配色下仅占位, 实际颜色由 el-menu-item 组件决定
 
-  --menu-hover: #e6f4ff; // 菜单悬停背景色 浅色主题-白色侧边栏配色下仅占位，实际颜色由 el-menu-item 组件决定
+  --menu-hover: #e6f4ff; // 菜单悬停背景色 浅色主题-白色侧边栏配色下仅占位, 实际颜色由 el-menu-item 组件决定
   --sidebar-logo-background: #fff; // 侧边栏 Logo 背景色
   --sidebar-logo-text-color: #333; // 侧边栏 Logo 文字颜色
 }
@@ -65,7 +65,7 @@ html.dark {
   --w-e-textarea-color: var(--el-text-color-primary); /* 浅色文字 */
   --w-e-textarea-border-color: var(--el-border-color); /* 较深的边框颜色 */
   --w-e-textarea-slight-border-color: var(--el-border-color-lighter); /* 更淡一些的边框颜色 */
-  --w-e-textarea-slight-color: var(--el-text-color-secondary); /* 浅灰色，用于不那么重要的元素 */
+  --w-e-textarea-slight-color: var(--el-text-color-secondary); /* 浅灰色, 用于不那么重要的元素 */
   --w-e-textarea-slight-bg-color: var(--el-bg-color-overlay); /* 稍微亮一点的背景色 */
   --w-e-textarea-selected-border-color: var(--el-color-info-light-5); /* 选中元素时的高亮边框 */
   --w-e-textarea-handler-bg-color: var(--el-color-primary); /* 工具按钮或交互元素的背景色 */

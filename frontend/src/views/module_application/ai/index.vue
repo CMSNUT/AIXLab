@@ -35,7 +35,7 @@
             </div>
             <h1>FA智能助手</h1>
             <p class="welcome-subtitle">
-              我是您的专属AI助手，可以帮您回答问题、处理任务和进行智能对话
+              我是您的专属AI助手, 可以帮您回答问题、处理任务和进行智能对话
             </p>
 
             <div class="example-prompts">
@@ -162,7 +162,7 @@
             </el-button>
           </div>
           <div class="input-footer">
-            <span class="input-hint">按 Enter 发送消息，Shift + Enter 换行</span>
+            <span class="input-hint">按 Enter 发送消息, Shift + Enter 换行</span>
           </div>
         </div>
       </div>
@@ -213,7 +213,7 @@ const md: MarkdownIt = new MarkdownIt({
       try {
         return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value}</code></pre>`;
       } catch {
-        // 忽略错误，使用默认渲染
+        // 忽略错误, 使用默认渲染
       }
     }
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -287,7 +287,7 @@ const connectWebSocket = () => {
     };
 
     ws.onmessage = (event) => {
-      // 直接处理文本消息，因为后端发送的是流式文本而不是JSON
+      // 直接处理文本消息, 因为后端发送的是流式文本而不是JSON
       handleWebSocketMessage({ content: event.data });
     };
 
@@ -310,7 +310,7 @@ const connectWebSocket = () => {
       console.error("WebSocket 错误:", error);
       isConnected.value = false;
       connectionStatus.value = "disconnected";
-      ElMessage.error("连接失败，请检查服务器状态");
+      ElMessage.error("连接失败, 请检查服务器状态");
 
       // 结束所有加载中的助手消息
       messages.value.forEach((message) => {
@@ -361,11 +361,11 @@ const handleWebSocketMessage = (data: any) => {
   const lastMessage = messages.value[messages.value.length - 1];
 
   if (lastMessage && lastMessage.type === "assistant" && lastMessage.loading) {
-    // 累积流式响应内容，而不是替换
+    // 累积流式响应内容, 而不是替换
     lastMessage.content += data.content || data.message || "";
 
-    // 保持加载状态，直到收到完整响应
-    // 注意: 如果后端会发送特定的结束信号，需要根据实际情况调整
+    // 保持加载状态, 直到收到完整响应
+    // 注意: 如果后端会发送特定的结束信号, 需要根据实际情况调整
     // 例如: if (data.finish_reason || data.is_complete) { lastMessage.loading = false; }
   } else {
     // 添加新的助手消息(仅当没有加载中的助手消息时)
@@ -408,7 +408,7 @@ const sendMessage = async () => {
   try {
     // 发送消息到 WebSocket
     if (ws?.readyState === WebSocket.OPEN) {
-      // 直接发送纯文本消息，因为后端期望接收纯文本
+      // 直接发送纯文本消息, 因为后端期望接收纯文本
       ws.send(message);
     } else {
       throw new Error("WebSocket 连接未建立");
@@ -417,7 +417,7 @@ const sendMessage = async () => {
     console.error("发送消息失败:", err);
     // 移除加载消息并显示错误
     messages.value.pop();
-    error.value = "发送消息失败，请检查连接状态";
+    error.value = "发送消息失败, 请检查连接状态";
     ElMessage.error("发送失败");
   } finally {
     sending.value = false;

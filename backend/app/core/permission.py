@@ -14,7 +14,7 @@ class Permission:
     为业务模型提供数据权限过滤功能
     """
 
-    # 数据权限常量定义，提高代码可读性
+    # 数据权限常量定义, 提高代码可读性
     DATA_SCOPE_SELF = 1  # 仅本人数据
     DATA_SCOPE_DEPT = 2  # 本部门数据
     DATA_SCOPE_DEPT_AND_CHILD = 3  # 本部门及以下数据
@@ -62,7 +62,7 @@ class Permission:
         权限处理原则: 
         - 多个角色的权限取并集(最宽松原则)
         - 优先级: 全部数据 > 部门权限(2、3、5的并集)> 仅本人
-        - 构造权限过滤表达式，返回None表示不限制
+        - 构造权限过滤表达式, 返回None表示不限制
         """
         # 如果不需要检查数据权限,则不限制
         if not self.auth.user:
@@ -129,13 +129,13 @@ class Permission:
                 # 查询失败时降级到本部门
                 accessible_dept_ids.add(user_dept_id)
 
-        # 如果有部门权限(2、3、5任一)，使用部门过滤
+        # 如果有部门权限(2、3、5任一), 使用部门过滤
         if accessible_dept_ids:
             creator_rel = getattr(self.model, "created_by", None)
             # 优先使用关系过滤(性能更好)
             if creator_rel is not None and hasattr(UserModel, "dept_id"):
                 return creator_rel.has(UserModel.dept_id.in_(list(accessible_dept_ids)))
-            # 降级方案: 如果模型没有created_by关系但有created_id，则只能查看自己的数据
+            # 降级方案: 如果模型没有created_by关系但有created_id, 则只能查看自己的数据
             created_id_attr = getattr(self.model, "created_id", None)
             if created_id_attr is not None:
                 return created_id_attr == self.auth.user.id
@@ -148,7 +148,7 @@ class Permission:
                 return created_id_attr == self.auth.user.id
             return None
 
-        # 默认情况: 如果用户有角色但没有任何有效权限范围，只能查看自己的数据
+        # 默认情况: 如果用户有角色但没有任何有效权限范围, 只能查看自己的数据
         created_id_attr = getattr(self.model, "created_id", None)
         if created_id_attr is not None:
             return created_id_attr == self.auth.user.id

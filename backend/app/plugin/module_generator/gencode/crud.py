@@ -41,7 +41,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
 
         参数:
         - table_id (int): 业务表ID。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - GenTableModel | None: 业务表信息对象。
@@ -56,7 +56,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
 
         参数:
         - table_name (str): 业务表名称。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - GenTableModel | None: 业务表信息对象。
@@ -68,7 +68,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
         获取所有业务表信息。
 
         参数:
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[GenTableModel]: 所有业务表信息列表。
@@ -85,7 +85,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
 
         参数:
         - search (GenTableQueryParam | None): 查询参数对象。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[GenTableModel]: 业务表列表信息。
@@ -119,7 +119,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
         返回:
         - GenTableSchema: 修改后的业务表信息模型。
         """
-        # 排除嵌套对象字段，避免SQLAlchemy尝试直接将字典设置到模型实例上
+        # 排除嵌套对象字段, 避免SQLAlchemy尝试直接将字典设置到模型实例上
         return await self.update(
             id=table_id,
             data=edit_model.model_dump(exclude_unset=True, exclude={"columns"}),
@@ -166,12 +166,12 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
                 log.warning(f"获取表 {table_name} 的注释失败: {e}")
                 table_comment = ""
 
-            # 统一处理 search 为 None 的情况，避免重复判断
+            # 统一处理 search 为 None 的情况, 避免重复判断
             if search:
-                # 表名过滤: 忽略大小写，支持模糊匹配
+                # 表名过滤: 忽略大小写, 支持模糊匹配
                 if search.table_name and search.table_name.lower() not in table_name.lower():
                     continue
-                # 表注释过滤: 忽略大小写，支持模糊匹配；table_comment 为 None 时视为空字符串
+                # 表注释过滤: 忽略大小写, 支持模糊匹配；table_comment 为 None 时视为空字符串
                 if search.table_comment and search.table_comment not in table_comment:
                     continue
 
@@ -220,7 +220,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
         - table_name (str): 要检查的表名。
 
         返回:
-        - bool: 如果表存在返回True，否则返回False。
+        - bool: 如果表存在返回True, 否则返回False。
         """
         from app.core.database import engine
 
@@ -238,7 +238,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
         - bool: 是否执行成功。
         """
         try:
-            # 执行SQL但不手动提交事务，由框架管理事务生命周期
+            # 执行SQL但不手动提交事务, 由框架管理事务生命周期
             await self.auth.db.execute(text(sql))
             return True
         except Exception as e:
@@ -311,7 +311,7 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
             is_increment = column.get("autoincrement", False) in (True, "auto")
             # 获取列长度(如果适用)
             column_length = None
-            # 使用getattr安全地获取length属性，避免访问不存在时抛出AttributeError
+            # 使用getattr安全地获取length属性, 避免访问不存在时抛出AttributeError
             column_length = getattr(column["type"], "length", None)
             if column_length is not None:
                 column_length = str(getattr(column["type"], "length", ""))
@@ -341,7 +341,7 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
 
         参数:
         - id (int): 业务表字段ID。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - GenTableColumnModel | None: 业务表字段信息对象。
@@ -355,7 +355,7 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
 
         参数:
         - table_id (int): 业务表ID。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - GenTableColumnModel | None: 业务表字段列表信息对象。
@@ -372,8 +372,8 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
 
         参数:
         - table_id (int): 业务表ID。
-        - order_by (list | None): 排序字段列表，每个元素为{"field": "字段名", "order": "asc" | "desc"}。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - order_by (list | None): 排序字段列表, 每个元素为{"field": "字段名", "order": "asc" | "desc"}。
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[GenTableColumnModel]: 业务表字段列表信息对象序列。
@@ -420,9 +420,9 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
         """根据业务表字段查询业务表字段列表。
 
         参数:
-        - search (dict | None): 查询参数，例如{"table_id": 1}。
-        - order_by (list | None): 排序字段列表，每个元素为{"field": "字段名", "order": "asc" | "desc"}。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - search (dict | None): 查询参数, 例如{"table_id": 1}。
+        - order_by (list | None): 排序字段列表, 每个元素为{"field": "字段名", "order": "asc" | "desc"}。
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[GenTableColumnModel]: 业务表字段列表信息对象序列。
@@ -454,7 +454,7 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
         返回:
         - GenTableColumnModel | None: 业务表字段列表信息对象。
         """
-        # 将对象转换为字典，避免SQLAlchemy直接操作对象时出现的状态问题
+        # 将对象转换为字典, 避免SQLAlchemy直接操作对象时出现的状态问题
         data_dict = data.model_dump(exclude_unset=True)
         return await self.update(id=id, data=data_dict)
 
@@ -472,7 +472,7 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
         result = await self.auth.db.execute(query)
         column_ids = [row[0] for row in result.fetchall()]
 
-        # 如果有字段ID，则删除这些字段
+        # 如果有字段ID, 则删除这些字段
         if column_ids:
             await self.delete(ids=column_ids)
 

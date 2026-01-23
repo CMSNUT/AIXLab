@@ -46,7 +46,7 @@ class ApplicationService:
         参数:
         - auth (AuthSchema): 认证信息模型
         - search (ApplicationQueryParam | None): 查询参数模型
-        - order_by (list[dict[str, str]] | None): 排序参数，支持字符串或字典列表
+        - order_by (list[dict[str, str]] | None): 排序参数, 支持字符串或字典列表
 
         返回:
         - list[dict]: 应用详情字典列表
@@ -71,7 +71,7 @@ class ApplicationService:
         # 检查名称是否重复
         obj = await ApplicationCRUD(auth).get(name=data.name)
         if obj:
-            raise CustomException(msg="创建失败，应用名称已存在")
+            raise CustomException(msg="创建失败, 应用名称已存在")
 
         obj = await ApplicationCRUD(auth).create_crud(data=data)
         return ApplicationOutSchema.model_validate(obj).model_dump()
@@ -91,12 +91,12 @@ class ApplicationService:
         """
         obj = await ApplicationCRUD(auth).get_by_id_crud(id=id)
         if not obj:
-            raise CustomException(msg="更新失败，该应用不存在")
+            raise CustomException(msg="更新失败, 该应用不存在")
 
         # 检查名称重复
         exist_obj = await ApplicationCRUD(auth).get(name=data.name)
         if exist_obj and exist_obj.id != id:
-            raise CustomException(msg="更新失败，应用名称重复")
+            raise CustomException(msg="更新失败, 应用名称重复")
 
         obj = await ApplicationCRUD(auth).update_crud(id=id, data=data)
         return ApplicationOutSchema.model_validate(obj).model_dump()
@@ -114,11 +114,11 @@ class ApplicationService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败，删除对象不能为空")
+            raise CustomException(msg="删除失败, 删除对象不能为空")
         for id in ids:
             obj = await ApplicationCRUD(auth).get_by_id_crud(id=id)
             if not obj:
-                raise CustomException(msg=f"删除失败，应用 {id} 不存在")
+                raise CustomException(msg=f"删除失败, 应用 {id} 不存在")
         await ApplicationCRUD(auth).delete_crud(ids=ids)
 
     @classmethod

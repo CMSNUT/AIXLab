@@ -41,7 +41,7 @@ class OperationLogCRUD(
 
         参数:
         - id (int): 操作日志ID。
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - OperationLogModel | None: 操作日志记录。
@@ -60,7 +60,7 @@ class OperationLogCRUD(
         参数:
         - search (Dict | None): 搜索条件字典。
         - order_by (List[Dict[str, str]] | None): 排序字段列表。
-        - preload (Optional[List[Union[str, Any]]]): 预加载关系，未提供时使用模型默认项
+        - preload (Optional[List[Union[str, Any]]]): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[OperationLogModel]: 操作日志列表。

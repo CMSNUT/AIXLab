@@ -601,7 +601,7 @@ class GenConstant:
             "SET": "String",
             # JSON 类型
             "JSON": "JSON",
-            # 空间数据类型(需要扩展支持，如 GeoAlchemy2)
+            # 空间数据类型(需要扩展支持, 如 GeoAlchemy2)
             "GEOMETRY": "Geometry",  # 需要安装 geoalchemy2
             "POINT": "Geometry",
             "LINESTRING": "Geometry",
@@ -699,7 +699,7 @@ class GenConstant:
             "TINYINT UNSIGNED": "int",  # 无符号小整数类型
             # 布尔类型
             "BOOLEAN": "bool",
-            "BOOL": "bool",  # 布尔类型，通常与 BOOLEAN 相同
+            "BOOL": "bool",  # 布尔类型, 通常与 BOOLEAN 相同
             # UUID
             "UUID": "str",  # UUID 一般作为字符串
             # 字符串类型
@@ -721,7 +721,7 @@ class GenConstant:
             # JSON 类型
             "JSON": "dict",
             # 空间数据类型(通常需要特殊处理)
-            "GEOMETRY": "bytes",  # 空间数据类型，通常存储为字节流
+            "GEOMETRY": "bytes",  # 空间数据类型, 通常存储为字节流
             "POINT": "bytes",  # 点数据类型
             "LINESTRING": "bytes",  # 线数据类型
             "POLYGON": "bytes",  # 多边形数据类型

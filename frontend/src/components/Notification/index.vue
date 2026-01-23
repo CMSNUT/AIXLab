@@ -108,7 +108,7 @@ function handleViewMoreNotice() {
   router.push({ name: "Notice" });
 }
 
-// 全部已读: 将这些公告禁用(status=false)，刷新后不再出现
+// 全部已读: 将这些公告禁用(status=false), 刷新后不再出现
 function handleMarkAllAsRead() {
   const ids = noticeList.value
     .map((item) => item.id)

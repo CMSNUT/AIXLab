@@ -22,7 +22,7 @@ export function useLayoutMenu() {
   const activeMenu = computed(() => {
     const { meta, path } = route;
 
-    // 如果设置了activeMenu，则使用
+    // 如果设置了activeMenu, 则使用
     if (meta?.activeMenu) {
       return meta.activeMenu;
     }

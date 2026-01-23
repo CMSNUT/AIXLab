@@ -6,7 +6,7 @@ bracketSameLine: false
 bracketSpacing: true
 # 自动格式化嵌入的代码(如 Markdown 和 HTML 内的代码)
 embeddedLanguageFormatting: "auto"
-# 忽略 HTML 空白敏感度，将空白视为非重要内容
+# 忽略 HTML 空白敏感度, 将空白视为非重要内容
 htmlWhitespaceSensitivity: "ignore"
 # 不插入 @prettier 的 pragma 注释
 insertPragma: false

@@ -137,10 +137,10 @@ class LoginService:
         request_ip = None
         x_forwarded_for = request.headers.get("X-Forwarded-For")
         if x_forwarded_for:
-            # 取第一个 IP 地址，通常为客户端真实 IP
+            # 取第一个 IP 地址, 通常为客户端真实 IP
             request_ip = x_forwarded_for.split(",")[0].strip()
         else:
-            # 若没有 X-Forwarded-For 头，则使用 request.client.host
+            # 若没有 X-Forwarded-For 头, 则使用 request.client.host
             request_ip = request.client.host if request.client else "127.0.0.1"
 
         login_location = await IpLocalUtil.get_ip_location(request_ip)
@@ -231,7 +231,7 @@ class LoginService:
         """
         token_payload: JWTPayloadSchema = decode_access_token(token=refresh_token.refresh_token)
         if not token_payload.is_refresh:
-            raise CustomException(msg="非法凭证，请传入刷新令牌")
+            raise CustomException(msg="非法凭证, 请传入刷新令牌")
 
         # 去 Redis 查完整信息
         session_info = json.loads(token_payload.sub)
@@ -245,7 +245,7 @@ class LoginService:
         auth = AuthSchema(db=db)
         user = await UserCRUD(auth).get_by_id_crud(id=user_id)
         if not user:
-            raise CustomException(msg="刷新token失败，用户不存在")
+            raise CustomException(msg="刷新token失败, 用户不存在")
 
         # 记录刷新令牌时的租户信息
         log.info(f"用户ID: {user.id}, 用户名: {user.username} 正在刷新JWT令牌")

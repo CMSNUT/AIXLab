@@ -83,12 +83,12 @@ async def get_current_user(
     if not online_ok:
         raise CustomException(msg="认证已失效", code=10401, status_code=401)
 
-    # 关闭数据权限过滤，避免当前用户查询被拦截
+    # 关闭数据权限过滤, 避免当前用户查询被拦截
     auth = AuthSchema(db=db, check_data_scope=False)
     username = user_info.get("user_name")
     if not username:
         raise CustomException(msg="认证已失效", code=10401, status_code=401)
-    # 获取用户信息，使用深层预加载确保RoleModel.creator被正确加载
+    # 获取用户信息, 使用深层预加载确保RoleModel.creator被正确加载
     user = await UserCRUD(auth).get_by_username_crud(
         username=username,
         preload=[

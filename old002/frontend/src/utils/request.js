@@ -42,7 +42,7 @@ service.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          ElMessage.error('未授权，请重新登录')
+          ElMessage.error('未授权, 请重新登录')
           break
         case 403:
           ElMessage.error('拒绝访问')
@@ -57,7 +57,7 @@ service.interceptors.response.use(
           ElMessage.error(error.message)
       }
     } else if (error.request) {
-      ElMessage.error('网络异常，请检查网络连接')
+      ElMessage.error('网络异常, 请检查网络连接')
     } else {
       ElMessage.error(error.message)
     }

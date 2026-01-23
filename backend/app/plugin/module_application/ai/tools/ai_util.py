@@ -11,7 +11,7 @@ from app.core.logger import log
 
 class AIClient:
     """
-    AI客户端类，用于与OpenAI API交互。
+    AI客户端类, 用于与OpenAI API交互。
     """
 
     def __init__(self) -> None:
@@ -35,7 +35,7 @@ class AIClient:
         - AsyncGenerator[str, Any]: 流式响应内容。
         """
         system_prompt = (
-            """你是一个有用的AI助手，可以帮助用户回答问题和提供帮助。请用中文回答用户的问题。"""
+            """你是一个有用的AI助手, 可以帮助用户回答问题和提供帮助。请用中文回答用户的问题。"""
         )
 
         try:
@@ -50,7 +50,7 @@ class AIClient:
                 yield chunk.text
 
         except Exception as e:
-            # 记录详细错误，返回友好提示
+            # 记录详细错误, 返回友好提示
             log.error(f"AI处理查询失败: {e!s}")
             yield self._friendly_error_message(e)
 
@@ -81,16 +81,16 @@ class AIClient:
             or (error_type == "Arrearage")
             or ("in good standing" in (msg or ""))
         ):
-            return "账户欠费或结算异常，访问被拒绝。请检查账号状态或更换有效的 API Key。"
+            return "账户欠费或结算异常, 访问被拒绝。请检查账号状态或更换有效的 API Key。"
         # 鉴权失败
         if status_code == 401 or "invalid api key" in msg.lower():
-            return "鉴权失败，API Key 无效或已过期。请检查系统配置中的 API Key。"
+            return "鉴权失败, API Key 无效或已过期。请检查系统配置中的 API Key。"
         # 权限不足或被拒绝
         if status_code == 403 or error_type in {
             "PermissionDenied",
             "permission_denied",
         }:
-            return "访问被拒绝，权限不足或账号受限。请检查账户权限设置。"
+            return "访问被拒绝, 权限不足或账号受限。请检查账户权限设置。"
         # 配额不足或限流
         if status_code == 429 or error_type in {
             "insufficient_quota",
@@ -102,7 +102,7 @@ class AIClient:
             return f"请求参数错误或服务拒绝: {message or '请检查输入内容。'}"
         # 服务端错误
         if status_code in {500, 502, 503, 504}:
-            return "服务暂时不可用，请稍后重试。"
+            return "服务暂时不可用, 请稍后重试。"
 
         # 默认兜底
         return f"处理您的请求时出现错误: {msg}"

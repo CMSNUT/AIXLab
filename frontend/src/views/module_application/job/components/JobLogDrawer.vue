@@ -25,7 +25,7 @@
             <el-option :value="false" label="失败" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围，收起状态下隐藏 -->
+        <!-- 时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="执行时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -70,7 +70,7 @@
         <div class="card-header">
           <span>
             <el-tooltip
-              content="任务执行日志记录每次定时任务的执行情况，包括成功、失败状态及错误信息。"
+              content="任务执行日志记录每次定时任务的执行情况, 包括成功、失败状态及错误信息。"
             >
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
@@ -399,7 +399,7 @@ async function handleResetQuery() {
 
 // 行复选框选中项变化
 async function handleSelectionChange(selection: any) {
-  // 提取有效的数字ID，过滤掉 null/undefined 并转为 number
+  // 提取有效的数字ID, 过滤掉 null/undefined 并转为 number
   selectIds.value = selection
     .map((item: any) => item?.id)
     .filter((id: any) => id !== null && id !== undefined)
@@ -426,7 +426,7 @@ async function handleOpenDialog(type: "detail", id?: number) {
 
 // 删除、批量删除
 async function handleDelete(ids: number[]) {
-  // 如果没有有效ID，直接返回
+  // 如果没有有效ID, 直接返回
   const validIds = ids.filter((id) => id !== null && id !== undefined) as number[];
   if (validIds.length === 0) return;
 

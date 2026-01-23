@@ -25,7 +25,7 @@ class DemoCRUD(CRUDBase[DemoModel, DemoCreateSchema, DemoUpdateSchema]):
 
         参数:
         - id (int): 示例ID
-        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - DemoModel | None: 示例模型实例或None
@@ -44,7 +44,7 @@ class DemoCRUD(CRUDBase[DemoModel, DemoCreateSchema, DemoUpdateSchema]):
         参数:
         - search (dict | None): 查询参数
         - order_by (list[dict] | None): 排序参数
-        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[DemoModel]: 示例模型实例序列
@@ -117,7 +117,7 @@ class DemoCRUD(CRUDBase[DemoModel, DemoCreateSchema, DemoUpdateSchema]):
         - limit (int): 每页数量
         - order_by (list[dict] | None): 排序参数
         - search (dict | None): 查询参数
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - dict: 分页数据

@@ -27,7 +27,7 @@
             <el-option value="false" label="否" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围，收起状态下隐藏 -->
+        <!-- 时间范围, 收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -70,7 +70,7 @@
       <template #header>
         <div class="card-header">
           <span>
-            <el-tooltip content="配置管理，包括系统名称、系统描述、系统版本、系统logo等。">
+            <el-tooltip content="配置管理, 包括系统名称、系统描述、系统版本、系统logo等。">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
             系统配置列表

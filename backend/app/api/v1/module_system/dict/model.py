@@ -52,7 +52,7 @@ class DictDataModel(ModelMixin):
     )
     dict_type: Mapped[str] = mapped_column(String(255), nullable=False, comment="字典类型")
 
-    # 添加外键关系，同时保留dict_type字段用于业务查询
+    # 添加外键关系, 同时保留dict_type字段用于业务查询
     dict_type_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("sys_dict_type.id", ondelete="CASCADE"),

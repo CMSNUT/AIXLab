@@ -26,7 +26,7 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         
         参数:
         - id (int): 对象ID
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
         
         返回:
         - {{ class_name }}Model | None: 模型实例或None
@@ -39,8 +39,8 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         
         参数:
         - search (dict | None): 查询参数
-        - order_by (list[dict] | None): 排序参数，未提供时使用模型默认项
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - order_by (list[dict] | None): 排序参数, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
         
         返回:
         - Sequence[{{ class_name }}Model]: 模型实例序列
@@ -104,9 +104,9 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         参数:
         - offset (int): 偏移量
         - limit (int): 每页数量
-        - order_by (list[dict] | None): 排序参数，未提供时使用模型默认项
-        - search (dict | None): 查询参数，未提供时查询所有
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - order_by (list[dict] | None): 排序参数, 未提供时使用模型默认项
+        - search (dict | None): 查询参数, 未提供时查询所有
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
         
         返回:
         - Dict: 分页数据

@@ -48,9 +48,9 @@ class ImportUtil:
     @lru_cache(maxsize=256)
     def find_models(cls, base_class: type) -> list[Any]:
         """
-        查找并过滤有效的模型类，避免重复和无效定义
+        查找并过滤有效的模型类, 避免重复和无效定义
 
-        :param base_class: SQLAlchemy的Base类，用于验证模型类
+        :param base_class: SQLAlchemy的Base类, 用于验证模型类
         :return: 有效模型类列表
         """
         models = []
@@ -99,7 +99,7 @@ class ImportUtil:
                     relative_path = file_path.relative_to(project_root)
                     model_files.append((file_path, relative_path))
 
-        # 按模块路径排序，确保先导入基础模块
+        # 按模块路径排序, 确保先导入基础模块
         model_files.sort(key=lambda x: str(x[1]))
 
         for file_path, relative_path in model_files:

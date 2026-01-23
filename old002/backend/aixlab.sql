@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS builtin_datasets (
     INDEX idx_created_at (created_at),
     INDEX idx_is_featured (is_featured),
     INDEX idx_is_active (is_active),
-    -- 修正: 移除全文索引中的JSON类型字段tags，仅保留字符类型的字段
+    -- 修正: 移除全文索引中的JSON类型字段tags, 仅保留字符类型的字段
     FULLTEXT INDEX ft_search (dataset_name, description) COMMENT '全文搜索索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='内置数据集表';
 
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS dataset_usage_stats (
     INDEX idx_user_dataset (user_id, dataset_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='数据集使用统计表';
 
--- 插入初始管理员用户(密码: Admin123!，实际生产环境必须使用BCrypt哈希)
+-- 插入初始管理员用户(密码: Admin123!, 实际生产环境必须使用BCrypt哈希)
 -- 生成真实哈希示例: PHP的password_hash("Admin123!", PASSWORD_BCRYPT) 或 Python的bcrypt.hashpw
 INSERT INTO users (username, email, password_hash, display_name, role, storage_quota_mb) 
 VALUES 
@@ -186,7 +186,7 @@ VALUES
 -- 插入数据集分类
 INSERT INTO dataset_categories (category_name, category_slug, description, icon_class, display_order) 
 VALUES 
-('统计学', 'statistics', '统计学相关数据集，包括各种统计分布、检验数据等', 'fas fa-chart-bar', 1),
+('统计学', 'statistics', '统计学相关数据集, 包括各种统计分布、检验数据等', 'fas fa-chart-bar', 1),
 ('机器学习', 'machine-learning', '机器学习算法训练和测试数据集', 'fas fa-robot', 2),
 ('金融经济', 'finance-economics', '股票、汇率、宏观经济指标等金融经济数据', 'fas fa-chart-line', 3),
 ('社交网络', 'social-network', '社交网络关系、用户行为数据', 'fas fa-users', 4),
@@ -197,7 +197,7 @@ VALUES
 ('图像数据', 'image-data', '图像分类、目标检测等计算机视觉数据', 'fas fa-image', 9),
 ('地理空间', 'geospatial', '地图、GPS轨迹、地理信息数据', 'fas fa-globe', 10);
 
--- 插入内置数据集示例(修正: 用子查询获取分类ID，指定创建者为admin用户)
+-- 插入内置数据集示例(修正: 用子查询获取分类ID, 指定创建者为admin用户)
 INSERT INTO builtin_datasets (
     dataset_name, 
     dataset_slug, 
@@ -207,7 +207,7 @@ INSERT INTO builtin_datasets (
     data_type,
     row_count,
     column_count,
-    file_size_mb, -- 补充默认值，避免空值
+    file_size_mb, -- 补充默认值, 避免空值
     file_path,
     column_schema,
     tags,
@@ -217,7 +217,7 @@ VALUES
 (
     '鸢尾花数据集', 
     'iris', 
-    '经典的鸢尾花数据集，包含三种鸢尾花的萼片和花瓣的长度和宽度测量数据。常用于分类算法演示。', 
+    '经典的鸢尾花数据集, 包含三种鸢尾花的萼片和花瓣的长度和宽度测量数据。常用于分类算法演示。', 
     (SELECT category_id FROM dataset_categories WHERE category_slug = 'machine-learning'), -- 替换硬编码ID
     'UCI Machine Learning Repository',
     'tabular',
@@ -232,7 +232,7 @@ VALUES
 (
     '波士顿房价数据集', 
     'boston-housing', 
-    '波士顿地区房价数据集，包含房屋的各种特征和对应的房价。常用于回归分析。', 
+    '波士顿地区房价数据集, 包含房屋的各种特征和对应的房价。常用于回归分析。', 
     (SELECT category_id FROM dataset_categories WHERE category_slug = 'machine-learning'),
     'UCI Machine Learning Repository',
     'tabular',
@@ -240,14 +240,14 @@ VALUES
     14,
     0.02,
     '/data/builtin/boston_housing.csv',
-    '[{"name":"crim","type":"float","description":"城镇人均犯罪率"},{"name":"zn","type":"float","description":"占地面积超过25,000平方英尺的住宅用地比例"},{"name":"indus","type":"float","description":"非零售业务用地比例"},{"name":"chas","type":"int","description":"查尔斯河虚拟变量(1=河边，0=其他)"},{"name":"nox","type":"float","description":"氮氧化物浓度"},{"name":"rm","type":"float","description":"每户平均房间数"},{"name":"age","type":"float","description":"1940年以前建造的自住房比例"},{"name":"dis","type":"float","description":"到波士顿五个就业中心的加权距离"},{"name":"rad","type":"int","description":"放射状公路可达性指数"},{"name":"tax","type":"float","description":"每万美元的全额财产税税率"},{"name":"ptratio","type":"float","description":"城镇师生比例"},{"name":"b","type":"float","description":"黑人比例"},{"name":"lstat","type":"float","description":"低收入人口比例"},{"name":"medv","type":"float","description":"自住房中位数价格(千美元)"}]',
+    '[{"name":"crim","type":"float","description":"城镇人均犯罪率"},{"name":"zn","type":"float","description":"占地面积超过25,000平方英尺的住宅用地比例"},{"name":"indus","type":"float","description":"非零售业务用地比例"},{"name":"chas","type":"int","description":"查尔斯河虚拟变量(1=河边, 0=其他)"},{"name":"nox","type":"float","description":"氮氧化物浓度"},{"name":"rm","type":"float","description":"每户平均房间数"},{"name":"age","type":"float","description":"1940年以前建造的自住房比例"},{"name":"dis","type":"float","description":"到波士顿五个就业中心的加权距离"},{"name":"rad","type":"int","description":"放射状公路可达性指数"},{"name":"tax","type":"float","description":"每万美元的全额财产税税率"},{"name":"ptratio","type":"float","description":"城镇师生比例"},{"name":"b","type":"float","description":"黑人比例"},{"name":"lstat","type":"float","description":"低收入人口比例"},{"name":"medv","type":"float","description":"自住房中位数价格(千美元)"}]',
     '["回归","房价预测","经典"]',
     1
 ),
 (
     '泰坦尼克号乘客数据', 
     'titanic', 
-    '泰坦尼克号乘客信息及生存状态数据集，常用于生存分析和分类预测。', 
+    '泰坦尼克号乘客信息及生存状态数据集, 常用于生存分析和分类预测。', 
     (SELECT category_id FROM dataset_categories WHERE category_slug = 'statistics'),
     'Kaggle',
     'tabular',
@@ -255,14 +255,14 @@ VALUES
     12,
     0.03,
     '/data/builtin/titanic.csv',
-    '[{"name":"passenger_id","type":"int","description":"乘客ID"},{"name":"survived","type":"int","description":"是否幸存(0=否，1=是)"},{"name":"pclass","type":"int","description":"船舱等级(1=头等舱，2=二等舱，3=三等舱)"},{"name":"name","type":"string","description":"乘客姓名"},{"name":"sex","type":"string","description":"性别"},{"name":"age","type":"float","description":"年龄"},{"name":"sibsp","type":"int","description":"同船兄弟姐妹/配偶数量"},{"name":"parch","type":"int","description":"同船父母/子女数量"},{"name":"ticket","type":"string","description":"船票编号"},{"name":"fare","type":"float","description":"船票价格"},{"name":"cabin","type":"string","description":"船舱号"},{"name":"embarked","type":"string","description":"登船港口"}]',
+    '[{"name":"passenger_id","type":"int","description":"乘客ID"},{"name":"survived","type":"int","description":"是否幸存(0=否, 1=是)"},{"name":"pclass","type":"int","description":"船舱等级(1=头等舱, 2=二等舱, 3=三等舱)"},{"name":"name","type":"string","description":"乘客姓名"},{"name":"sex","type":"string","description":"性别"},{"name":"age","type":"float","description":"年龄"},{"name":"sibsp","type":"int","description":"同船兄弟姐妹/配偶数量"},{"name":"parch","type":"int","description":"同船父母/子女数量"},{"name":"ticket","type":"string","description":"船票编号"},{"name":"fare","type":"float","description":"船票价格"},{"name":"cabin","type":"string","description":"船舱号"},{"name":"embarked","type":"string","description":"登船港口"}]',
     '["生存分析","分类","数据挖掘"]',
     1
 ),
 (
     '每日温度时间序列', 
     'daily-temperatures', 
-    '某城市多年每日平均温度时间序列数据，适合时间序列分析和预测。', 
+    '某城市多年每日平均温度时间序列数据, 适合时间序列分析和预测。', 
     (SELECT category_id FROM dataset_categories WHERE category_slug = 'time-series'),
     'NOAA',
     'timeseries',
@@ -275,7 +275,7 @@ VALUES
     1
 );
 
--- 插入数据集示例代码(修正: 转义特殊字符，指定创建者)
+-- 插入数据集示例代码(修正: 转义特殊字符, 指定创建者)
 INSERT INTO dataset_examples (
     dataset_id, 
     language, 
@@ -291,7 +291,7 @@ VALUES
     (SELECT dataset_id FROM builtin_datasets WHERE dataset_slug = 'iris'), 
     'python', 
     '鸢尾花数据集分类分析', 
-    '使用逻辑回归对鸢尾花数据集进行分类，并评估模型性能。', 
+    '使用逻辑回归对鸢尾花数据集进行分类, 并评估模型性能。', 
     'import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression

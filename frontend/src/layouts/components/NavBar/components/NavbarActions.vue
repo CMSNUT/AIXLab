@@ -172,15 +172,15 @@ function handleGiteeClick() {
 /**
  * 项目引导
  */
-// 使用ref而不是computed，以便可以修改引导可见性
-// 使用 computed 实现双向绑定，减少 watch 的使用
+// 使用ref而不是computed, 以便可以修改引导可见性
+// 使用 computed 实现双向绑定, 减少 watch 的使用
 const guideVisible = computed({
   get: () => appStore.guideVisible,
   set: (newValue) => appStore.showGuide(newValue),
 });
 
 function handleTourClick() {
-  // 如果是移动端，直接跳转到引导页面
+  // 如果是移动端, 直接跳转到引导页面
   if (appStore.device === DeviceEnum.MOBILE) {
     router.push({ name: "Guide" });
   } else {
@@ -188,13 +188,13 @@ function handleTourClick() {
   }
 }
 
-// 引导结束(点击跳过或最后一步完成关闭)后，自动关闭下次登录的自动展示
+// 引导结束(点击跳过或最后一步完成关闭)后, 自动关闭下次登录的自动展示
 function handleGuideExit() {
-  // 关闭自动展示开关，确保下次登录不再自动开启
+  // 关闭自动展示开关, 确保下次登录不再自动开启
   settingStore.updateSetting("showGuide", false);
 }
 
-// 监听引导关闭(从 true -> false)，也同步关闭自动展示开关
+// 监听引导关闭(从 true -> false), 也同步关闭自动展示开关
 watch(
   () => guideVisible.value,
   (val, oldVal) => {
@@ -219,7 +219,7 @@ const handlelockScreen = () => {
 const navbarActionsClass = computed(() => {
   const { theme, sidebarColorScheme, layout } = settingStore;
 
-  // 暗黑主题下，所有布局都使用白色文字
+  // 暗黑主题下, 所有布局都使用白色文字
   if (theme === ThemeMode.DARK) {
     return "navbar-actions--white-text";
   }
@@ -227,8 +227,8 @@ const navbarActionsClass = computed(() => {
   // 明亮主题下
   if (theme === ThemeMode.LIGHT) {
     // 顶部布局和混合布局的顶部区域: 
-    // - 如果侧边栏是经典蓝色，使用白色文字
-    // - 如果侧边栏是极简白色，使用深色文字
+    // - 如果侧边栏是经典蓝色, 使用白色文字
+    // - 如果侧边栏是极简白色, 使用深色文字
     if (layout === LayoutMode.TOP || layout === LayoutMode.MIX) {
       if (sidebarColorScheme === SidebarColor.CLASSIC_BLUE) {
         return "navbar-actions--white-text";
@@ -273,7 +273,7 @@ function logout() {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px; /* 增加最小点击区域到44px，符合人机交互标准 */
+    min-width: 44px; /* 增加最小点击区域到44px, 符合人机交互标准 */
     height: 100%;
     padding: 0 8px;
     text-align: center;

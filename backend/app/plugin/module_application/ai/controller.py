@@ -47,7 +47,7 @@ async def chat_controller(
                     yield (chunk.encode("utf-8") if isinstance(chunk, str) else chunk)
         except Exception as e:
             log.error(f"流式响应出错: {e!s}")
-            yield f"抱歉，处理您的请求时出现了错误: {e!s}".encode()
+            yield f"抱歉, 处理您的请求时出现了错误: {e!s}".encode()
 
     return StreamResponse(generate_response(), media_type="text/plain; charset=utf-8")
 

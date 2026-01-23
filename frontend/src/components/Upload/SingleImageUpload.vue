@@ -41,7 +41,7 @@
       </template>
     </el-upload>
     <div v-if="props.showTip" class="el-upload__tip">
-      {{ props.tipText || `支持 ${props.accept} 格式，文件大小不超过 ${props.maxFileSize}MB` }}
+      {{ props.tipText || `支持 ${props.accept} 格式, 文件大小不超过 ${props.maxFileSize}MB` }}
     </div>
   </div>
 </template>
@@ -77,7 +77,7 @@ const props = defineProps({
   },
 
   /**
-   * 上传图片格式，默认支持所有图片(image/*)，指定格式示例: '.png,.jpg,.jpeg,.gif,.bmp'
+   * 上传图片格式, 默认支持所有图片(image/*), 指定格式示例: '.png,.jpg,.jpeg,.gif,.bmp'
    */
   accept: {
     type: String,
@@ -85,7 +85,7 @@ const props = defineProps({
   },
 
   /**
-   * 自定义样式，用于设置组件的宽度和高度等其他样式
+   * 自定义样式, 用于设置组件的宽度和高度等其他样式
    */
   style: {
     type: Object,
@@ -130,7 +130,7 @@ const props = defineProps({
   },
 });
 
-// 接收字符串类型的modelValue，保持与现有代码的兼容性
+// 接收字符串类型的modelValue, 保持与现有代码的兼容性
 const modelValue = defineModel<string>({
   default: "",
 });
@@ -138,7 +138,7 @@ const modelValue = defineModel<string>({
 // 内部使用的文件列表
 const internalFileList = ref<UploadUserFile[]>([]);
 
-// 监听modelValue变化，同步到internalFileList
+// 监听modelValue变化, 同步到internalFileList
 watch(
   () => modelValue.value,
   (newVal) => {
@@ -156,7 +156,7 @@ watch(
   { immediate: true }
 );
 
-// 监听internalFileList变化，同步到modelValue
+// 监听internalFileList变化, 同步到modelValue
 watch(
   () => internalFileList.value,
   (newVal) => {
@@ -183,25 +183,25 @@ const emit = defineEmits<{
  * 限制用户上传文件的格式和大小
  */
 function handleBeforeUpload(file: UploadRawFile) {
-  // 校验文件类型: 虽然 accept 属性限制了用户在文件选择器中可选的文件类型，但仍需在上传时再次校验文件实际类型，确保符合 accept 的规则
+  // 校验文件类型: 虽然 accept 属性限制了用户在文件选择器中可选的文件类型, 但仍需在上传时再次校验文件实际类型, 确保符合 accept 的规则
   const acceptTypes = props.accept.split(",").map((type) => type.trim());
 
   // 检查文件格式是否符合 accept
   const isValidType = acceptTypes.some((type) => {
     if (type === "image/*") {
-      // 如果是 image/*，检查 MIME 类型是否以 "image/" 开头
+      // 如果是 image/*, 检查 MIME 类型是否以 "image/" 开头
       return file.type.startsWith("image/");
     } else if (type.startsWith(".")) {
-      // 如果是扩展名 (.png, .jpg)，检查文件名是否以指定扩展名结尾
+      // 如果是扩展名 (.png, .jpg), 检查文件名是否以指定扩展名结尾
       return file.name.toLowerCase().endsWith(type);
     } else {
-      // 如果是具体的 MIME 类型 (image/png, image/jpeg)，检查是否完全匹配
+      // 如果是具体的 MIME 类型 (image/png, image/jpeg), 检查是否完全匹配
       return file.type === type;
     }
   });
 
   if (!isValidType) {
-    ElMessage.warning(`上传文件的格式不正确，仅支持: ${props.accept}`);
+    ElMessage.warning(`上传文件的格式不正确, 仅支持: ${props.accept}`);
     return false;
   }
 
@@ -256,13 +256,13 @@ function handleDelete() {
 
 /**
  * 图片点击处理
- * 阻止事件冒泡到上传组件，避免触发上传
+ * 阻止事件冒泡到上传组件, 避免触发上传
  */
 function handleImageClick(event: Event) {
   // 阻止事件冒泡
   event.stopPropagation();
 
-  // 如果启用了预览功能，则触发预览
+  // 如果启用了预览功能, 则触发预览
   if (
     props.enablePreview &&
     internalFileList.value &&
@@ -301,7 +301,7 @@ const onSuccess = (fileInfo: UploadFilePath) => {
  */
 const onError = (error: any) => {
   console.error("图片上传失败:", error);
-  ElMessage.error("图片上传失败，请重试");
+  ElMessage.error("图片上传失败, 请重试");
   emit("error", error);
 };
 </script>

@@ -193,7 +193,7 @@ const formItems = reactive(props.searchConfig?.formItems ?? []);
 const isExpandable = ref(props.searchConfig?.isExpandable ?? true);
 // 是否已展开
 const isExpand = ref(false);
-// 表单项展示数量，若可展开，超出展示数量的表单项隐藏
+// 表单项展示数量, 若可展开, 超出展示数量的表单项隐藏
 const showNumber = computed(() =>
   isExpandable.value ? (props.searchConfig?.showNumber ?? 3) : formItems.length
 );
@@ -245,7 +245,7 @@ const handleDateRangeChange = (
 
 // 处理自定义按钮点击
 const handleCustomButtonClick = (button: any) => {
-  // 如果配置了自定义处理器，优先使用
+  // 如果配置了自定义处理器, 优先使用
   if (button.handler && typeof button.handler === "function") {
     button.handler(queryParams, getCurrentInstance());
   }
@@ -257,7 +257,7 @@ const handleCustomButtonClick = (button: any) => {
 const hasPermission = (perm: string | string[]): boolean => {
   if (!perm || !props.searchConfig?.permPrefix) return true;
   // 这里应该根据实际的权限系统来实现
-  // 暂时返回 true，实际项目中需要对接权限系统
+  // 暂时返回 true, 实际项目中需要对接权限系统
   return true;
 };
 

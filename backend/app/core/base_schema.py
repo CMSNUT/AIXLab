@@ -13,7 +13,7 @@ class CommonSchema(BaseModel):
 
 
 class BaseSchema(BaseModel):
-    """通用输出模型，包含基础字段和审计字段"""
+    """通用输出模型, 包含基础字段和审计字段"""
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -26,7 +26,7 @@ class BaseSchema(BaseModel):
 
 
 class UserBySchema(BaseModel):
-    """通用创建模型，包含基础字段和审计字段"""
+    """通用创建模型, 包含基础字段和审计字段"""
 
     model_config = ConfigDict(from_attributes=True)
 

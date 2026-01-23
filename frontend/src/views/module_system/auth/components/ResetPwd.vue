@@ -148,7 +148,7 @@ const submit = async () => {
     loading.value = true;
 
     await UserAPI.forgetPassword(model.value);
-    // 重置成功后，双向绑定回写父容器的用户名和新密码，并切回登录
+    // 重置成功后, 双向绑定回写父容器的用户名和新密码, 并切回登录
     presetUsername.value = model.value.username;
     presetPassword.value = model.value.new_password;
     toLogin();

@@ -16,7 +16,7 @@
                 type="info"
                 show-icon
                 :closable="false"
-                title="头像上传，点击“保存更改”按钮使其生效"
+                title="头像上传, 点击“保存更改”按钮使其生效"
               />
             </div>
 
@@ -383,7 +383,7 @@ const handleUpload = async (options: UploadRequestOptions) => {
       const fileUrl = response.data.data.file_url;
       updateAvatar(fileUrl);
       options.onSuccess(response);
-      // 重置上传组件状态，允许再次选择上传
+      // 重置上传组件状态, 允许再次选择上传
       if (uploadRef.value) {
         uploadRef.value.clearFiles();
       }
@@ -399,7 +399,7 @@ const handleUpload = async (options: UploadRequestOptions) => {
       });
     }
   } catch (error) {
-    ElMessage.error("头像上传失败，请重试");
+    ElMessage.error("头像上传失败, 请重试");
     const errorObj = error instanceof Error ? error : new Error(String(error));
     options.onError({
       ...errorObj,
@@ -563,7 +563,7 @@ async function redirectToLogin(message: string = "请重新登录"): Promise<voi
 
     await useUserStoreHook().resetAllState();
 
-    // 跳转到登录页，保留当前路由用于登录后跳转
+    // 跳转到登录页, 保留当前路由用于登录后跳转
     const currentPath = router.currentRoute.value.fullPath;
     await router.push(`/login?redirect=${encodeURIComponent(currentPath)}`);
   } catch (error: any) {

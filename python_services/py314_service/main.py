@@ -20,14 +20,14 @@ app = FastAPI(
     version="0.1.0"
 )
 
-# 挂载静态文件目录(用于存放本地Swagger UI资源，若不需要可跳过)
-# 如果你不想手动下载资源，方案2更简单
+# 挂载静态文件目录(用于存放本地Swagger UI资源, 若不需要可跳过)
+# 如果你不想手动下载资源, 方案2更简单
 # app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # CORS配置
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有源，实际生产环境应限制
+    allow_origins=["*"],  # 允许所有源, 实际生产环境应限制
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

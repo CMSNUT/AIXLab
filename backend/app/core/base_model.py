@@ -136,7 +136,7 @@ class UserMixin(MappedBase):
     @declared_attr
     def created_by(self) -> Mapped[Optional["UserModel"]]:
         """
-        创建人关联关系(延迟加载，避免循环依赖)
+        创建人关联关系(延迟加载, 避免循环依赖)
         """
         return relationship(
             "UserModel",
@@ -148,7 +148,7 @@ class UserMixin(MappedBase):
     @declared_attr
     def updated_by(self) -> Mapped[Optional["UserModel"]]:
         """
-        更新人关联关系(延迟加载，避免循环依赖)
+        更新人关联关系(延迟加载, 避免循环依赖)
         """
         return relationship(
             "UserModel",

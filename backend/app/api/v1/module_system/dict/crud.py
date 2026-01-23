@@ -32,7 +32,7 @@ class DictTypeCRUD(CRUDBase[DictTypeModel, DictTypeCreateSchema, DictTypeUpdateS
 
         参数:
         - id (int): 数据字典类型ID
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - DictTypeModel | None: 数据字典类型模型,如果不存在则为None
@@ -54,7 +54,7 @@ class DictTypeCRUD(CRUDBase[DictTypeModel, DictTypeCreateSchema, DictTypeUpdateS
         参数:
         - search (dict | None): 查询参数,默认值为None
         - order_by (list[dict] | None): 排序参数,默认值为None
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[DictTypeModel]: 数据字典类型模型序列
@@ -149,7 +149,7 @@ class DictDataCRUD(CRUDBase[DictDataModel, DictDataCreateSchema, DictDataUpdateS
 
         参数:
         - id (int): 数据字典数据ID
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - DictDataModel | None: 数据字典数据模型,如果不存在则为None
@@ -171,7 +171,7 @@ class DictDataCRUD(CRUDBase[DictDataModel, DictDataCreateSchema, DictDataUpdateS
         参数:
         - search (dict | None): 查询参数,默认值为None
         - order_by (list[dict] | None): 排序参数,默认值为None
-        - preload (list | None): 预加载关系，未提供时使用模型默认项
+        - preload (list | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[DictDataModel]: 数据字典数据模型序列
@@ -237,12 +237,12 @@ class DictDataCRUD(CRUDBase[DictDataModel, DictDataCreateSchema, DictDataUpdateS
 
         参数:
         - ids (List[int]): 数据字典数据ID列表
-        - exclude_system (bool): 是否排除系统默认数据，默认为True
+        - exclude_system (bool): 是否排除系统默认数据, 默认为True
 
         返回:
         - int: 删除的记录数量
         """
-        # 如果需要排除系统默认数据，可以在这里添加过滤逻辑
+        # 如果需要排除系统默认数据, 可以在这里添加过滤逻辑
         # 假设系统默认数据在remark字段中包含"系统默认"字符串
         if exclude_system:
             # 获取非系统默认数据的ID
@@ -267,7 +267,7 @@ class DictDataCRUD(CRUDBase[DictDataModel, DictDataCreateSchema, DictDataUpdateS
 
         参数:
         - dict_type (str): 字典类型
-        - status (str | None): 状态过滤，None表示不过滤
+        - status (str | None): 状态过滤, None表示不过滤
 
         返回:
         - Sequence[DictDataModel]: 数据字典数据模型序列

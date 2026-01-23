@@ -16,7 +16,7 @@ import fs from "fs";
 // 本地SVG图标目录
 const iconsDir = "./src/assets/icons";
 
-// 读取本地 SVG 目录，自动生成 safelist
+// 读取本地 SVG 目录, 自动生成 safelist
 const generateSafeList = () => {
   try {
     return fs
@@ -64,9 +64,9 @@ export default defineConfig({
       },
       // 图表集合
       collections: {
-        // svg 是图标集合名称，使用 `i-svg:图标名` 调用
+        // svg 是图标集合名称, 使用 `i-svg:图标名` 调用
         svg: FileSystemIconLoader(iconsDir, (svg) => {
-          // 如果 `fill` 没有定义，则添加 `fill="currentColor"`
+          // 如果 `fill` 没有定义, 则添加 `fill="currentColor"`
           return svg.includes('fill="') ? svg : svg.replace(/^<svg /, '<svg fill="currentColor" ');
         }),
       },

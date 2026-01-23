@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     TITLE: str = "🎉 巴莱侠 AIXLab API 🎉 "  # 文档标题
     VERSION: str = "0.1.0"  # 版本号
     DESCRIPTION: str = (
-        "该项目是一个基于python的web服务框架，基于fastapi和sqlalchemy实现。"  # 文档描述
+        "该项目是一个基于python的web服务框架, 基于fastapi和sqlalchemy实现。"  # 文档描述
     )
     SUMMARY: str = "接口汇总"  # 文档概述
     DOCS_URL: str = "/docs"  # Swagger UI路径

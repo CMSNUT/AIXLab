@@ -21,7 +21,7 @@ class GenDBTableSchema(BaseModel):
 
 class GenTableColumnSchema(BaseModel):
     """代码生成业务表字段创建模型(原始字段+生成配置)。
-    - 从根本上解决问题: 所有字段都设置了合理的默认值，避免None值问题
+    - 从根本上解决问题: 所有字段都设置了合理的默认值, 避免None值问题
     """
 
     model_config = ConfigDict(from_attributes=True)
@@ -69,7 +69,7 @@ class GenTableSchema(BaseModel):
     """
 
     """代码生成业务表基础模型(创建/更新共享字段)。
-    - 说明: `params`为前端结构体，后端持久化为`options`的JSON。
+    - 说明: `params`为前端结构体, 后端持久化为`options`的JSON。
     """
     model_config = ConfigDict(from_attributes=True)
 
@@ -112,7 +112,7 @@ class GenTableOutSchema(GenTableSchema, BaseSchema):
 class GenTableQueryParam:
     """代码生成业务表查询参数
     - 支持按`table_name`、`table_comment`进行模糊检索(由CRUD层实现like)。
-    - 空值将被忽略，不参与过滤。
+    - 空值将被忽略, 不参与过滤。
     """
 
     def __init__(
@@ -134,5 +134,5 @@ class GenTableColumnQueryParam:
         self,
         column_name: str | None = Query(None, description="列名称"),
     ) -> None:
-        # 模糊查询字段: 约定("like", 值)格式，便于CRUD解析
+        # 模糊查询字段: 约定("like", 值)格式, 便于CRUD解析
         self.column_name = ("like", column_name)

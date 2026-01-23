@@ -136,7 +136,7 @@ class GenTableService:
         - gen_table_list (list[GenTableOutSchema]): 包含业务表详细信息的模型列表。
 
         返回:
-        - bool: 成功时返回True，失败时抛出异常。
+        - bool: 成功时返回True, 失败时抛出异常。
         """
         # 检查是否有表需要导入
         if not gen_table_list:
@@ -147,7 +147,7 @@ class GenTableService:
                 # 检查表是否已存在
                 existing_table = await GenTableCRUD(auth).get_gen_table_by_name(table_name)
                 if existing_table:
-                    raise CustomException(msg=f"以下表已存在，不能重复导入: {table_name}")
+                    raise CustomException(msg=f"以下表已存在, 不能重复导入: {table_name}")
                 GenUtils.init_table(table)
                 if not table.columns:
                     table.columns = []
@@ -191,7 +191,7 @@ class GenTableService:
         - sql (str): 包含`CREATE TABLE`语句的SQL字符串。
 
         返回:
-        - bool | None: 成功时返回True，失败时抛出异常。
+        - bool | None: 成功时返回True, 失败时抛出异常。
         """
         # 验证SQL非空
         if not sql or not sql.strip():
@@ -200,7 +200,7 @@ class GenTableService:
             # 解析SQL语句
             sql_statements = sqlglot.parse(sql, dialect=settings.DATABASE_TYPE)
             if not sql_statements:
-                raise CustomException(msg="无法解析SQL语句，请检查SQL语法")
+                raise CustomException(msg="无法解析SQL语句, 请检查SQL语法")
 
             # 校验sql语句是否为合法的建表语句
             validate_create = [
@@ -232,23 +232,23 @@ class GenTableService:
             for table_name in table_names:
                 # 检查数据库中是否已存在该表
                 if await gen_table_crud.check_table_exists(table_name):
-                    raise CustomException(msg=f"表 {table_name} 已存在，请检查并修改表名后重试")
+                    raise CustomException(msg=f"表 {table_name} 已存在, 请检查并修改表名后重试")
 
                 # 检查代码生成模块中是否已导入该表
                 existing_table = await gen_table_crud.get_gen_table_by_name(table_name)
                 if existing_table:
                     raise CustomException(
-                        msg=f"表 {table_name} 已在代码生成模块中存在，请检查并修改表名后重试"
+                        msg=f"表 {table_name} 已在代码生成模块中存在, 请检查并修改表名后重试"
                     )
 
-            # 表不存在，执行SQL语句创建表
+            # 表不存在, 执行SQL语句创建表
             for sql_statement in sql_statements:
                 if not isinstance(sql_statement, Create):
                     continue
                 exc_sql = sql_statement.sql(dialect=settings.DATABASE_TYPE)
                 log.info(f"执行SQL语句: {exc_sql}")
                 if not await gen_table_crud.execute_sql(exc_sql):
-                    raise CustomException(msg=f"执行SQL语句 {exc_sql} 失败，请检查数据库")
+                    raise CustomException(msg=f"执行SQL语句 {exc_sql} 失败, 请检查数据库")
             return True
 
         except Exception as e:
@@ -273,7 +273,7 @@ class GenTableService:
         gen_table_info = await cls.get_gen_table_by_id_service(auth, table_id)
         if gen_table_info.id:
             try:
-                # 直接调用edit_gen_table方法，它会在内部处理排除嵌套字段的逻辑
+                # 直接调用edit_gen_table方法, 它会在内部处理排除嵌套字段的逻辑
                 result = await GenTableCRUD(auth).edit_gen_table(table_id, data)
 
                 # 处理data.columns为None的情况
@@ -294,7 +294,7 @@ class GenTableService:
     @classmethod
     @handle_service_exception
     async def delete_gen_table_service(cls, auth: AuthSchema, ids: list[int]) -> None:
-        """删除业务表信息(先删字段，再删表)。
+        """删除业务表信息(先删字段, 再删表)。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -385,7 +385,7 @@ class GenTableService:
                 preview_code_result[template] = render_content
             except Exception as e:
                 log.error(f"渲染模板 {template} 时出错: {e!s}")
-                # 即使某个模板渲染失败，也继续处理其他模板
+                # 即使某个模板渲染失败, 也继续处理其他模板
                 preview_code_result[template] = f"渲染错误: {e!s}"
         return preview_code_result
 
@@ -426,10 +426,10 @@ class GenTableService:
         # 1. 先检查并创建菜单(目录菜单、功能菜单、按钮权限)
         # 检查是否需要创建目录菜单
         if gen_table_schema.parent_menu_id:
-            # 如果传了上级菜单ID(菜单类型=1)，则不创建目录菜单，直接使用该ID作为功能菜单的父ID
+            # 如果传了上级菜单ID(菜单类型=1), 则不创建目录菜单, 直接使用该ID作为功能菜单的父ID
             dir_menu_id = gen_table_schema.parent_menu_id
         else:
-            # 如果没传上级菜单ID，则需要创建新的模块目录菜单(类型=1: 目录)
+            # 如果没传上级菜单ID, 则需要创建新的模块目录菜单(类型=1: 目录)
             existing_dir_menu = await menu_crud.get(name=gen_table_schema.business_name)
             if existing_dir_menu:
                 dir_menu_id = existing_dir_menu.id
@@ -451,18 +451,18 @@ class GenTableService:
                         title=gen_table_schema.package_name,
                         params=None,
                         affix=False,
-                        parent_id=gen_table_schema.parent_menu_id,  # 这里应该是None，因为上面已经判断过了
+                        parent_id=gen_table_schema.parent_menu_id,  # 这里应该是None, 因为上面已经判断过了
                         status="0",
                         description=f"{gen_table_schema.business_name}目录",
                     )
                 )
                 dir_menu_id = dir_parent_menu.id
 
-        # 检查功能菜单是否已存在，如果存在则抛出错误
+        # 检查功能菜单是否已存在, 如果存在则抛出错误
         existing_func_menu = await menu_crud.get(name=gen_table_schema.function_name, type=2)
         if existing_func_menu:
             raise CustomException(
-                msg=f"功能菜单名称 '{gen_table_schema.function_name}' 已存在，不能重复创建"
+                msg=f"功能菜单名称 '{gen_table_schema.function_name}' 已存在, 不能重复创建"
             )
         # 创建功能菜单(类型=2: 菜单)
         parent_menu = await menu_crud.create(
@@ -562,7 +562,7 @@ class GenTableService:
             log.info(f"成功创建按钮权限: {button['name']}")
         log.info(f"成功创建{gen_table_schema.function_name}菜单及按钮权限")
 
-        # 2. 菜单创建成功后，再生成页面代码
+        # 2. 菜单创建成功后, 再生成页面代码
         for template in render_info[0]:
             try:
                 render_content = await env.get_template(template).render_async(**render_info[2])
@@ -590,7 +590,7 @@ class GenTableService:
                     )
             except Exception as e:
                 raise CustomException(
-                    msg=f"渲染模板失败，表名: {gen_table_schema.table_name}，详细错误信息: {e!s}"
+                    msg=f"渲染模板失败, 表名: {gen_table_schema.table_name}, 详细错误信息: {e!s}"
                 )
 
         return True
@@ -600,7 +600,7 @@ class GenTableService:
     async def batch_gen_code_service(cls, auth: AuthSchema, table_names: list[str]) -> bytes:
         """
         批量生成代码并打包为ZIP。
-        - 备注: 内存生成并压缩，兼容多模板类型；供下载使用。
+        - 备注: 内存生成并压缩, 兼容多模板类型；供下载使用。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -629,7 +629,7 @@ class GenTableService:
                         zip_file.writestr(output_file, render_content)
                 except Exception as e:
                     log.error(f"批量生成代码时处理表 {table_name} 出错: {e!s}")
-                    # 继续处理其他表，不中断整个过程
+                    # 继续处理其他表, 不中断整个过程
                     continue
         zip_data = zip_buffer.getvalue()
         zip_buffer.close()
@@ -659,7 +659,7 @@ class GenTableService:
             raise CustomException(msg="业务表ID不能为空")
         table_columns = table.columns or []
         table_column_map = {column.column_name: column for column in table_columns}
-        # 确保db_table_columns始终是列表类型，避免None值
+        # 确保db_table_columns始终是列表类型, 避免None值
         db_table_columns = (
             await GenTableColumnCRUD(auth).get_gen_db_table_columns_by_name(table_name) or []
         )
@@ -730,7 +730,7 @@ class GenTableService:
                 if getattr(column, "pk", False) or getattr(column, "is_pk", "") == "1":
                     gen_table.pk_column = column
                     break
-        # 如果没有找到主键列且有列存在，使用第一个列作为主键
+        # 如果没有找到主键列且有列存在, 使用第一个列作为主键
         if gen_table.pk_column is None and gen_table.columns:
             gen_table.pk_column = gen_table.columns[0]
 
@@ -778,7 +778,7 @@ class GenTableColumnService:
         - table_id (int): 业务表ID。
 
         返回:
-        - list[dict[str, Any]]: 业务表字段列表，每个元素为字段详细信息字典。
+        - list[dict[str, Any]]: 业务表字段列表, 每个元素为字段详细信息字典。
         """
         gen_table_column_list_result = await GenTableColumnCRUD(auth).list_gen_table_column_crud({
             "table_id": table_id

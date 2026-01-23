@@ -151,7 +151,7 @@ class UploadUtil:
 
         参数:
         - filepath (Path): 文件路径。
-        - chunk_size (int): 分块大小，默认 8192 字节。
+        - chunk_size (int): 分块大小, 默认 8192 字节。
 
         返回:
         - Iterator[bytes]: 文件二进制数据分块迭代器。
@@ -241,7 +241,7 @@ class UploadUtil:
     @classmethod
     async def download_file(cls, file_path: str) -> str:
         """
-        下载文件，生成新的文件名。
+        下载文件, 生成新的文件名。
 
         参数:
         - file_path (str): 文件路径。

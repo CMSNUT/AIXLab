@@ -19,7 +19,7 @@ app = FastAPI(title="AIXLab Python分析服务")
 # CORS配置
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有源，实际生产环境应限制
+    allow_origins=["*"],  # 允许所有源, 实际生产环境应限制
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,7 +56,7 @@ def read_dataset(file_path: str):
                 if os.path.exists(alt_path2):
                     file_path = alt_path2
                 else:
-                    print(f"文件不存在: {file_path}，使用示例数据")
+                    print(f"文件不存在: {file_path}, 使用示例数据")
                     return create_sample_data()
 
         # 读取文件
@@ -91,10 +91,10 @@ def create_sample_data():
 
 def setup_chinese_font():
     """
-    设置中文字体，支持 Windows、Linux、macOS
+    设置中文字体, 支持 Windows、Linux、macOS
     """
     try:
-        # 尝试多种字体，按优先级排序
+        # 尝试多种字体, 按优先级排序
         font_options = [
             # Windows 字体
             'Microsoft YaHei',      # 微软雅黑
@@ -132,8 +132,8 @@ def setup_chinese_font():
                 print(f"字体 {font_name} 设置失败: {e}")
                 continue
 
-        # 如果系统字体都不行，尝试下载并添加字体
-        print("未找到合适的中文字体，尝试下载字体...")
+        # 如果系统字体都不行, 尝试下载并添加字体
+        print("未找到合适的中文字体, 尝试下载字体...")
         setup_custom_font()
 
     except Exception as e:
@@ -325,7 +325,7 @@ async def create_plot(request: PlotRequest):
             # 折线图
             plt.figure(figsize=(10, 6))
 
-            # 如果有数值列，绘制折线
+            # 如果有数值列, 绘制折线
             numeric_cols = df.select_dtypes(include=[np.number]).columns
             if len(numeric_cols) > 0:
                 for i, col in enumerate(numeric_cols[:3]):  # 最多绘制3列
@@ -338,7 +338,7 @@ async def create_plot(request: PlotRequest):
                 plt.ylabel('值')
                 plt.grid(True, alpha=0.3)
             else:
-                # 如果没有数值列，创建简单图表
+                # 如果没有数值列, 创建简单图表
                 plt.text(0.5, 0.5, '没有数值数据可绘制',
                          ha='center', va='center', fontsize=14)
                 plt.title('Python - 数据不可用')

@@ -15,7 +15,7 @@ class RoleMenusModel(MappedBase):
     """
     角色菜单关联表
 
-    定义角色与菜单的多对多关系，用于权限控制
+    定义角色与菜单的多对多关系, 用于权限控制
     """
 
     __tablename__: str = "sys_role_menus"
@@ -39,7 +39,7 @@ class RoleDeptsModel(MappedBase):
     """
     角色部门关联表
 
-    定义角色与部门的多对多关系，用于数据权限控制
+    定义角色与部门的多对多关系, 用于数据权限控制
     仅当角色的data_scope=5(自定义数据权限)时使用此表
     """
 

@@ -13,7 +13,7 @@ const pinia = createPinia()
 pinia.use(({ store }) => {
   // 添加自定义方法到所有 store
   store.$reset = () => {
-    // 如果 store 有 reset 方法，则调用
+    // 如果 store 有 reset 方法, 则调用
     if (typeof store.reset === 'function') {
       store.reset()
     } else {

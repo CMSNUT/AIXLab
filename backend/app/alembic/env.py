@@ -14,9 +14,9 @@ from app.utils.import_util import ImportUtil
 # 确保 alembic 版本目录存在
 ALEMBIC_VERSION_DIR.mkdir(parents=True, exist_ok=True)
 
-# 清除MappedBase.metadata中的表定义，避免重复注册
+# 清除MappedBase.metadata中的表定义, 避免重复注册
 if hasattr(MappedBase, "metadata") and MappedBase.metadata.tables:
-    print(f"🧹 清除已存在的表定义，当前有 {len(MappedBase.metadata.tables)} 个表")
+    print(f"🧹 清除已存在的表定义, 当前有 {len(MappedBase.metadata.tables)} 个表")
     # 创建一个新的空metadata对象
     from sqlalchemy import MetaData
 
@@ -65,7 +65,7 @@ def run_migrations_offline() -> None:
     url = alembic_config.get_main_option("sqlalchemy.url")
     # 确保URL不为None
     if url is None:
-        raise ValueError("数据库URL未正确配置，请检查环境配置文件")
+        raise ValueError("数据库URL未正确配置, 请检查环境配置文件")
 
     context.configure(
         url=url,
@@ -88,7 +88,7 @@ def run_migrations_online() -> None:
     url = alembic_config.get_main_option("sqlalchemy.url")
     # 确保URL不为None
     if url is None:
-        raise ValueError("数据库URL未正确配置，请检查环境配置文件")
+        raise ValueError("数据库URL未正确配置, 请检查环境配置文件")
 
     connectable = create_async_engine(url, poolclass=pool.NullPool)
 
@@ -105,11 +105,11 @@ def run_migrations_online() -> None:
             all_empty = all(ops.is_empty() for ops in script.upgrade_ops_list)
 
             if all_empty:
-                # 如果没有实际变更，不生成迁移文件
+                # 如果没有实际变更, 不生成迁移文件
                 directives[:] = []
-                print("❎️ 未检测到模型变更，不生成迁移文件")
+                print("❎️ 未检测到模型变更, 不生成迁移文件")
             else:
-                print("✅️ 检测到模型变更，生成迁移文件")
+                print("✅️ 检测到模型变更, 生成迁移文件")
 
         context.configure(
             connection=connection,

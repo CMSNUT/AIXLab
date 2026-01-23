@@ -6,7 +6,7 @@ import McpAPI from "@/api/module_application/mcp";
 /**
  * AI 操作处理器(简化版)
  *
- * 可以是简单函数，也可以是配置对象
+ * 可以是简单函数, 也可以是配置对象
  */
 export type AiActionHandler<T = any> =
   | ((args: T) => Promise<void> | void)
@@ -19,7 +19,7 @@ export type AiActionHandler<T = any> =
       confirmMessage?: string | ((args: T) => string);
       /** 成功消息(支持函数或字符串) */
       successMessage?: string | ((args: T) => string);
-      /** 是否调用后端 API(默认 false，如果为 true 则自动调用 executeCommand) */
+      /** 是否调用后端 API(默认 false, 如果为 true 则自动调用 executeCommand) */
       callBackendApi?: boolean;
     };
 
@@ -40,7 +40,7 @@ export interface UseAiActionOptions {
 /**
  * AI 操作 Composable
  *
- * 统一处理 AI 助手传递的操作，支持: 
+ * 统一处理 AI 助手传递的操作, 支持: 
  * - 自动搜索(通过 keywords + autoSearch 参数)
  * - 执行 AI 操作(通过 aiAction 参数)
  * - 配置化的操作处理器
@@ -49,7 +49,7 @@ export function useAiAction(options: UseAiActionOptions = {}) {
   const route = useRoute();
   const { actionHandlers = {}, onRefresh, onAutoSearch, currentRoute = route.path } = options;
 
-  // 用于跟踪是否已卸载，防止在卸载后执行回调
+  // 用于跟踪是否已卸载, 防止在卸载后执行回调
   let isUnmounted = false;
 
   /**
@@ -157,7 +157,7 @@ export function useAiAction(options: UseAiActionOptions = {}) {
       confirmMessage,
     } = options;
 
-    // 如果需要确认，先显示确认对话框
+    // 如果需要确认, 先显示确认对话框
     if (needConfirm && confirmMessage) {
       try {
         await ElMessageBox.confirm(confirmMessage, "AI 助手操作确认", {
@@ -199,7 +199,7 @@ export function useAiAction(options: UseAiActionOptions = {}) {
   /**
    * 初始化: 处理 URL 参数中的 AI 操作
    *
-   * 注意: 此方法只处理 AI 相关参数，不负责页面数据的初始加载
+   * 注意: 此方法只处理 AI 相关参数, 不负责页面数据的初始加载
    * 页面数据加载应由组件的 onMounted 钩子自行处理
    */
   async function init() {
@@ -210,12 +210,12 @@ export function useAiAction(options: UseAiActionOptions = {}) {
     const autoSearch = route.query.autoSearch as string;
     const aiActionParam = route.query.aiAction as string;
 
-    // 如果没有任何 AI 参数，直接返回
+    // 如果没有任何 AI 参数, 直接返回
     if (!keywords && !autoSearch && !aiActionParam) {
       return;
     }
 
-    // 在 nextTick 中执行，确保页面数据已加载
+    // 在 nextTick 中执行, 确保页面数据已加载
     nextTick(async () => {
       if (isUnmounted) return;
 

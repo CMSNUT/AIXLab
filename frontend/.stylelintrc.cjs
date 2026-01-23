@@ -8,7 +8,7 @@ module.exports = {
   ],
 
   plugins: [
-    "stylelint-prettier", // 统一代码风格，格式冲突时以 Prettier 规则为准
+    "stylelint-prettier", // 统一代码风格, 格式冲突时以 Prettier 规则为准
   ],
   overrides: [
     {

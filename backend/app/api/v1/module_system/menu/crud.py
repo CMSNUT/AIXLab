@@ -21,10 +21,10 @@ class MenuCRUD(CRUDBase[MenuModel, MenuCreateSchema, MenuUpdateSchema]):
 
         参数:
         - id (int): 菜单 ID。
-        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
-        - MenuModel | None: 菜单信息，未找到返回 None。
+        - MenuModel | None: 菜单信息, 未找到返回 None。
         """
         obj = await self.get(id=id, preload=preload)
         if not obj:
@@ -43,7 +43,7 @@ class MenuCRUD(CRUDBase[MenuModel, MenuCreateSchema, MenuUpdateSchema]):
         参数:
         - search (dict | None): 搜索条件。
         - order_by (list[dict] | None): 排序字段列表。
-        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[MenuModel]: 菜单列表。
@@ -62,7 +62,7 @@ class MenuCRUD(CRUDBase[MenuModel, MenuCreateSchema, MenuUpdateSchema]):
         参数:
         - search (dict | None): 搜索条件。
         - order_by (list[dict] | None): 排序字段列表。
-        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
 
         返回:
         - Sequence[MenuModel]: 菜单树形列表。

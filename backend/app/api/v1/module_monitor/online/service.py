@@ -58,7 +58,7 @@ class OnlineService:
         - session_id (str): 在线用户会话ID。
 
         返回:
-        - bool: 如果操作成功则返回True，否则返回False。
+        - bool: 如果操作成功则返回True, 否则返回False。
         """
         # 删除 token
         await RedisCURD(redis).delete(f"{RedisInitKeyConfig.ACCESS_TOKEN.key}:{session_id}")
@@ -76,7 +76,7 @@ class OnlineService:
         - redis (Redis): Redis异步客户端实例。
 
         返回:
-        - bool: 如果操作成功则返回True，否则返回False。
+        - bool: 如果操作成功则返回True, 否则返回False。
         """
         # 删除 token
         await RedisCURD(redis).clear(f"{RedisInitKeyConfig.ACCESS_TOKEN.key}:*")
@@ -95,7 +95,7 @@ class OnlineService:
         - search (OnlineQueryParam | None): 查询参数模型。
 
         返回:
-        - bool: 如果匹配则返回True，否则返回False。
+        - bool: 如果匹配则返回True, 否则返回False。
         """
         if not search:
             return True

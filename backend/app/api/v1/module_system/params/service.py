@@ -120,7 +120,7 @@ class ParamsService:
         """
         exist_obj = await ParamsCRUD(auth).get(config_key=data.config_key)
         if exist_obj:
-            raise CustomException(msg="创建失败，该配置key已存在")
+            raise CustomException(msg="创建失败, 该配置key已存在")
         obj = await ParamsCRUD(auth).create_obj_crud(data=data)
 
         new_obj_dict = ParamsOutSchema.model_validate(obj).model_dump()
@@ -159,13 +159,13 @@ class ParamsService:
         """
         exist_obj = await ParamsCRUD(auth).get_obj_by_id_crud(id=id)
         if not exist_obj:
-            raise CustomException(msg="更新失败，该数系统配置不存在")
+            raise CustomException(msg="更新失败, 该数系统配置不存在")
         if exist_obj.config_key != data.config_key:
-            raise CustomException(msg="更新失败，系统配置key不允许修改")
+            raise CustomException(msg="更新失败, 系统配置key不允许修改")
 
         new_obj = await ParamsCRUD(auth).update_obj_crud(id=id, data=data)
         if not new_obj:
-            raise CustomException(msg="更新失败，系统配置不存在")
+            raise CustomException(msg="更新失败, 系统配置不存在")
         new_obj_dict = ParamsOutSchema.model_validate(new_obj).model_dump()
 
         # 同步redis
@@ -199,16 +199,16 @@ class ParamsService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败，删除对象不能为空")
+            raise CustomException(msg="删除失败, 删除对象不能为空")
         for id in ids:
             exist_obj = await ParamsCRUD(auth).get_obj_by_id_crud(id=id)
             if not exist_obj:
-                raise CustomException(msg="删除失败，该数据字典类型不存在")
+                raise CustomException(msg="删除失败, 该数据字典类型不存在")
             # 检查是否是否初始化类型
             if exist_obj.config_type:
-                # 如果有字典数据，不能删除
+                # 如果有字典数据, 不能删除
                 raise CustomException(
-                    msg=f"{exist_obj.config_name} 删除失败，系统初始化配置不可以删除"
+                    msg=f"{exist_obj.config_name} 删除失败, 系统初始化配置不可以删除"
                 )
 
         await ParamsCRUD(auth).delete_obj_crud(ids=ids)
@@ -297,7 +297,7 @@ class ParamsService:
         """
         async with async_db_session() as session:
             async with session.begin():
-                # 在初始化过程中，不需要检查数据权限
+                # 在初始化过程中, 不需要检查数据权限
                 auth = AuthSchema(db=session, check_data_scope=False)
                 config_obj = await ParamsCRUD(auth).get_obj_list_crud()
                 if not config_obj:

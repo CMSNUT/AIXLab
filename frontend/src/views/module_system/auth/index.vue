@@ -15,7 +15,7 @@
     </div>
     <!-- 登录页主体 -->
     <div class="auth-view__wrapper">
-      <!-- 可选: 左侧产品介绍区域，如不需要可整段删除，右侧登录表单会自动居中展示 -->
+      <!-- 可选: 左侧产品介绍区域, 如不需要可整段删除, 右侧登录表单会自动居中展示 -->
       <section class="auth-feature">
         <div class="auth-feature__badge">
           <span class="auth-feature__dot" />
@@ -23,7 +23,7 @@
         </div>
         <h1 class="auth-feature__title">企业级管理系统</h1>
         <p class="auth-feature__subtitle">
-          提供安全、高效、可扩展的管理解决方案，助力企业数字化转型与业务增长。
+          提供安全、高效、可扩展的管理解决方案, 助力企业数字化转型与业务增长。
         </p>
         <ul class="auth-feature__highlights">
           <li>
@@ -153,7 +153,7 @@ let notificationInstance: ReturnType<typeof ElNotification> | null = null;
 const showVoteNotification = () => {
   notificationInstance = ElNotification({
     title: "⭐ AIXLab 完全开源 · 期待您的 Star 支持 🙏",
-    message: `项目持续迭代中，若对您有所帮助，欢迎点亮 Star 支持！
+    message: `项目持续迭代中, 若对您有所帮助, 欢迎点亮 Star 支持！
     <br/><a href="https://github.com/aixlab/AIXLab" target="_blank" style="color: var(--el-color-primary); text-decoration: none; font-weight: 500;">Github仓库 →</a>
     <br/><a href="https://gitee.com/aixlab/AIXLab" target="_blank" style="color: var(--el-color-warning); text-decoration: none; font-weight: 500;">Gitee仓库 →</a>`,
     type: "success",
@@ -163,7 +163,7 @@ const showVoteNotification = () => {
   });
 };
 
-// 组件初始化时就加载配置，而不是在onMounted中
+// 组件初始化时就加载配置, 而不是在onMounted中
 configStore.getConfig();
 
 onMounted(() => {

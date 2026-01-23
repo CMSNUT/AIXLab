@@ -33,7 +33,7 @@ class CustomException(Exception):
         - code (int): 业务状态码。
         - status_code (int): HTTP 状态码。
         - data (Any | None): 附加数据。
-        - success (bool): 是否成功标记，默认 False。
+        - success (bool): 是否成功标记, 默认 False。
 
         返回:
         - None
@@ -119,11 +119,11 @@ def handle_exception(app: FastAPI) -> None:
         - JSONResponse: 包含错误信息的 JSON 响应。
         """
         error_mapping = {
-            "Field required": "请求失败，缺少必填项！",
-            "value is not a valid list": "类型错误，提交参数应该为列表！",
-            "value is not a valid int": "类型错误，提交参数应该为整数！",
-            "value could not be parsed to a boolean": "类型错误，提交参数应该为布尔值！",
-            "Input should be a valid list": "类型错误，输入应该是一个有效的列表！",
+            "Field required": "请求失败, 缺少必填项！",
+            "value is not a valid list": "类型错误, 提交参数应该为列表！",
+            "value is not a valid int": "类型错误, 提交参数应该为整数！",
+            "value could not be parsed to a boolean": "类型错误, 提交参数应该为布尔值！",
+            "Input should be a valid list": "类型错误, 输入应该是一个有效的列表！",
         }
         raw_msg = exc.errors()[0].get("msg")
         msg = error_mapping.get(raw_msg, raw_msg)
@@ -181,7 +181,7 @@ def handle_exception(app: FastAPI) -> None:
         error_msg = "数据库操作失败"
         exc_type = type(exc).__name__
 
-        # 对于生产环境，返回通用错误消息
+        # 对于生产环境, 返回通用错误消息
         log.error(
             f"[数据库异常] {request.method} {request.url.path} | 错误类型: {exc_type} | 错误详情: {exc!s}"
         )
@@ -239,7 +239,7 @@ def handle_exception(app: FastAPI) -> None:
         log.error(
             f"[未捕获异常] {request.method} {request.url.path} | 错误类型: {exc_type} | 错误详情: {exc!s}"
         )
-        # 对于未捕获的异常，返回通用错误信息
+        # 对于未捕获的异常, 返回通用错误信息
         return ErrorResponse(
             msg="服务器内部错误",
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

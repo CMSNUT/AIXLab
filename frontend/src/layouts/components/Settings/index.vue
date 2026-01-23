@@ -178,7 +178,7 @@
           <el-switch v-model="settingsStore.showNotification" />
         </div>
 
-        <!-- 修改此部分为引导开关，关闭以后登录以后不再启动引导 -->
+        <!-- 修改此部分为引导开关, 关闭以后登录以后不再启动引导 -->
         <div class="flex-x-between">
           <span class="text-xs">{{ t("settings.showGuide") }}</span>
           <el-switch v-model="settingsStore.showGuide" />
@@ -192,7 +192,7 @@
       <div class="action-card">
         <div class="action-buttons">
           <el-tooltip
-            content="复制配置将生成当前设置的代码，覆盖 src/settings.ts 下的 defaultSettings 变量"
+            content="复制配置将生成当前设置的代码, 覆盖 src/settings.ts 下的 defaultSettings 变量"
             placement="top"
           >
             <el-button
@@ -261,7 +261,7 @@ const settingsStore = useSettingsStore();
 
 // 主题颜色选择器相关
 const displayColorPresets = computed(() => themeColorPresets.slice(0, 7)); // 只显示前9个预设颜色
-const allColorPresets = themeColorPresets; // 所有颜色预设，用于自定义颜色选择器
+const allColorPresets = themeColorPresets; // 所有颜色预设, 用于自定义颜色选择器
 
 const isDark = ref<boolean>(settingsStore.theme === ThemeMode.DARK);
 const sidebarColor = ref(settingsStore.sidebarColorScheme);
