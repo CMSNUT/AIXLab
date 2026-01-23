@@ -3,7 +3,7 @@
 ## 项目结构
 
 ```sh
-AIXLab/frontend
+FastapiAdmin/frontend
 ├─ docs                 # 项目文档工程
 ├─ public               # 静态资源文件
 │  └─ docs              # 帮助文档模块
@@ -46,6 +46,6 @@ pnpm install
 pnpm run dev
 # 构建前端, 生成 `frontend/dist` 目录
 pnpm run build
-# 运行命令, 查看未用到的依赖
+# 运行命令，查看未用到的依赖
 depcheck
 ```

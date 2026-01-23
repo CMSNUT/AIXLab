@@ -1,6 +1,6 @@
 {
   "name": "aixlab",
-  "description": "巴莱侠 AIXLab 课题组计算平台",
+  "description": "巴莱侠 AIXLab 实验室",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -144,7 +144,7 @@
     "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^2.2.12"
   },
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@9.15.3",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=10.0.0",
@@ -152,12 +152,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CMSNUT/AIXLab.git"
+    "url": "https://gitee.com/fastapiadmin/FastapiAdmin.git"
   },
   "bugs": {
-    "url": "https://github.com/CMSNUT/AIXLab/issues"
+    "url": "https://gitee.com/fastapiadmin/FastapiAdmin/issues"
   },
-  "author": "Aikemi <30236021@qq.com>",
+  "author": "fastapiadmin <948080782@qq.com>",
   "license": "MIT",
-  "homepage": "https://github.com/CMSNUT/AIXLab"
+  "homepage": "https://gitee.com/fastapiadmin/FastapiAdmin"
 }
