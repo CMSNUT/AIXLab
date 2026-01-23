@@ -17,30 +17,30 @@ async def health_check() -> JSONResponse:
 
     services_status = {
         "main_service": "healthy",
-        "py310_service": "unknown",
+        "py314_service": "unknown",
         "r_service": "unknown"
     }
 
     # 检查Python分析服务
     try:
         response = requests.get(
-            "http://localhost:8001/api/py310_service/health", timeout=3)
+            "http://localhost:8001/api/py314/health", timeout=3)
         if response.status_code == 200:
-            services_status["py310_service"] = "healthy"
+            services_status["py314_service"] = "healthy"
         else:
-            services_status["py310_service"] = "unhealthy"
+            services_status["py314_service"] = "unhealthy"
     except:
-        services_status["py310_service"] = "unreachable"
+        services_status["py314_service"] = "unreachable"
 
     # 检查R分析服务
     try:
         response = requests.get(
-            "http://localhost:8002/api/r452_service/health", timeout=3)
+            "http://localhost:8002/api/r452/health", timeout=3)
         if response.status_code == 200:
-            services_status["r_service"] = "healthy"
+            services_status["r452_service"] = "healthy"
         else:
-            services_status["r_service"] = "unhealthy"
+            services_status["r452_service"] = "unhealthy"
     except:
-        services_status["r_service"] = "unreachable"
+        services_status["r452_service"] = "unreachable"
 
     return services_status

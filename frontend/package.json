@@ -1,6 +1,6 @@
 {
   "name": "aixlab",
-  "description": "巴莱侠 AIXLab 研究团队计算平台",
+  "description": "巴莱侠 AIXLab 课题组计算平台",
   "version": "0.1.0",
   "private": true,
   "type": "module",

@@ -39,20 +39,20 @@ class ExecuteRequest(BaseModel):
 @app.get("/")
 async def root():
     return {
-        "message": "AIXLab py310_service 运行中",
+        "message": "AIXLab py314_service 运行中",
         "version": "0.1.0",
         "endpoints": {
-            "health": "/api/py310_service/health (GET)"
+            "health": "/api/py314/health (GET)"
         }
     }
 
 
-@app.get("/api/py310_service/health")
+@app.get("/api/py314/health")
 async def health_check():
     """健康检查端点"""
     return {
         "status": "healthy",
-        "service": "py310_service",
+        "service": "py314_service",
         "version": "0.1.0",
         "timestamp": pd.Timestamp.now().isoformat()
     }
@@ -60,7 +60,7 @@ async def health_check():
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("AIXLab py310_service启动")
+    print("AIXLab py314_service启动")
     print("=" * 60)
     print("服务端口: 8001")
     print("API文档: http://localhost:8001/docs")

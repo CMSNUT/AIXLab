@@ -15,8 +15,6 @@ backend/.pytest_cache
 backend/logs
 backend/alembic/versions/*
 backend/*.db
-backend/env/.env.dev
-backend/env/.env.prod
 backend/.ruff_cache
 backend/.ruff.toml
 
