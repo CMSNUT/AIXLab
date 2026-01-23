@@ -44,7 +44,7 @@ class RequestLogMiddleware(BaseHTTPMiddleware):
     @staticmethod
     def _extract_session_id_from_request(request: Request) -> str | None:
         """
-        从请求中提取session_id（支持从Token或已设置的scope中获取）
+        从请求中提取session_id(支持从Token或已设置的scope中获取)
 
         参数:
         - request (Request): 请求对象
@@ -52,7 +52,7 @@ class RequestLogMiddleware(BaseHTTPMiddleware):
         返回:
         - str | None: 会话ID，如果无法提取则返回None
         """
-        # 1. 先检查 scope 中是否已经有 session_id（登录接口会设置）
+        # 1. 先检查 scope 中是否已经有 session_id(登录接口会设置)
         session_id = request.scope.get("session_id")
         if session_id:
             return session_id
@@ -81,7 +81,7 @@ class RequestLogMiddleware(BaseHTTPMiddleware):
 
             return session_id
         except Exception:
-            # 解析失败静默处理，返回None（可能是未认证请求）
+            # 解析失败静默处理，返回None(可能是未认证请求)
             return None
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
@@ -157,7 +157,7 @@ class RequestLogMiddleware(BaseHTTPMiddleware):
                     block_reason = f"演示模式下拦截非GET请求，IP: {request_ip}, 路径: {path}"
 
             if should_block:
-                # 增强安全审计：记录详细的拦截日志
+                # 增强安全审计: 记录详细的拦截日志
                 log.warning([
                     f"会话ID: {session_id or '未认证'}",
                     f"请求被拦截: {block_reason}",

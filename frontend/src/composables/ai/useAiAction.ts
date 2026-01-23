@@ -4,7 +4,7 @@ import { onMounted, onBeforeUnmount, nextTick } from "vue";
 import McpAPI from "@/api/module_application/mcp";
 
 /**
- * AI 操作处理器（简化版）
+ * AI 操作处理器(简化版)
  *
  * 可以是简单函数，也可以是配置对象
  */
@@ -13,13 +13,13 @@ export type AiActionHandler<T = any> =
   | {
       /** 执行函数 */
       execute: (args: T) => Promise<void> | void;
-      /** 是否需要确认（默认 true） */
+      /** 是否需要确认(默认 true) */
       needConfirm?: boolean;
-      /** 确认消息（支持函数或字符串） */
+      /** 确认消息(支持函数或字符串) */
       confirmMessage?: string | ((args: T) => string);
-      /** 成功消息（支持函数或字符串） */
+      /** 成功消息(支持函数或字符串) */
       successMessage?: string | ((args: T) => string);
-      /** 是否调用后端 API（默认 false，如果为 true 则自动调用 executeCommand） */
+      /** 是否调用后端 API(默认 false，如果为 true 则自动调用 executeCommand) */
       callBackendApi?: boolean;
     };
 
@@ -27,22 +27,22 @@ export type AiActionHandler<T = any> =
  * AI 操作配置
  */
 export interface UseAiActionOptions {
-  /** 操作映射表：函数名 -> 处理器 */
+  /** 操作映射表: 函数名 -> 处理器 */
   actionHandlers?: Record<string, AiActionHandler>;
-  /** 数据刷新函数（操作完成后调用） */
+  /** 数据刷新函数(操作完成后调用) */
   onRefresh?: () => Promise<void> | void;
   /** 自动搜索处理函数 */
   onAutoSearch?: (keywords: string) => void;
-  /** 当前路由路径（用于执行命令时传递） */
+  /** 当前路由路径(用于执行命令时传递) */
   currentRoute?: string;
 }
 
 /**
  * AI 操作 Composable
  *
- * 统一处理 AI 助手传递的操作，支持：
- * - 自动搜索（通过 keywords + autoSearch 参数）
- * - 执行 AI 操作（通过 aiAction 参数）
+ * 统一处理 AI 助手传递的操作，支持: 
+ * - 自动搜索(通过 keywords + autoSearch 参数)
+ * - 执行 AI 操作(通过 aiAction 参数)
  * - 配置化的操作处理器
  */
 export function useAiAction(options: UseAiActionOptions = {}) {
@@ -53,12 +53,12 @@ export function useAiAction(options: UseAiActionOptions = {}) {
   let isUnmounted = false;
 
   /**
-   * 执行 AI 操作（统一处理确认、执行、反馈流程）
+   * 执行 AI 操作(统一处理确认、执行、反馈流程)
    */
   async function executeAiAction(action: any) {
     if (isUnmounted) return;
 
-    // 兼容两种入参：{ functionName, arguments } 或 { functionCall: { name, arguments } }
+    // 兼容两种入参: { functionName, arguments } 或 { functionCall: { name, arguments } }
     const fnCall = action.functionCall ?? {
       name: action.functionName,
       arguments: action.arguments,
@@ -77,17 +77,17 @@ export function useAiAction(options: UseAiActionOptions = {}) {
     }
 
     try {
-      // 判断处理器类型（函数 or 配置对象）
+      // 判断处理器类型(函数 or 配置对象)
       const isSimpleFunction = typeof handler === "function";
 
       if (isSimpleFunction) {
-        // 简单函数形式：直接执行
+        // 简单函数形式: 直接执行
         await handler(fnCall.arguments);
       } else {
-        // 配置对象形式：统一处理确认、执行、反馈
+        // 配置对象形式: 统一处理确认、执行、反馈
         const config = handler;
 
-        // 1. 确认阶段（默认需要确认）
+        // 1. 确认阶段(默认需要确认)
         if (config.needConfirm !== false) {
           const confirmMsg =
             typeof config.confirmMessage === "function"
@@ -138,7 +138,7 @@ export function useAiAction(options: UseAiActionOptions = {}) {
   }
 
   /**
-   * 执行后端命令（通用方法）
+   * 执行后端命令(通用方法)
    */
   async function executeCommand(
     functionName: string,
@@ -192,14 +192,14 @@ export function useAiAction(options: UseAiActionOptions = {}) {
     if (onAutoSearch) {
       onAutoSearch(keywords);
     } else {
-      ElMessage.info(`AI 助手已为您自动搜索：${keywords}`);
+      ElMessage.info(`AI 助手已为您自动搜索: ${keywords}`);
     }
   }
 
   /**
-   * 初始化：处理 URL 参数中的 AI 操作
+   * 初始化: 处理 URL 参数中的 AI 操作
    *
-   * 注意：此方法只处理 AI 相关参数，不负责页面数据的初始加载
+   * 注意: 此方法只处理 AI 相关参数，不负责页面数据的初始加载
    * 页面数据加载应由组件的 onMounted 钩子自行处理
    */
   async function init() {

@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS builtin_datasets (
     file_path VARCHAR(500) NOT NULL COMMENT '文件存储路径',
     preview_file_path VARCHAR(500) COMMENT '预览数据文件路径',
     
-    -- 字段信息（JSON格式存储字段元数据）
+    -- 字段信息(JSON格式存储字段元数据)
     column_schema JSON COMMENT '列结构定义',
     
     -- 使用统计
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS builtin_datasets (
     INDEX idx_created_at (created_at),
     INDEX idx_is_featured (is_featured),
     INDEX idx_is_active (is_active),
-    -- 修正：移除全文索引中的JSON类型字段tags，仅保留字符类型的字段
+    -- 修正: 移除全文索引中的JSON类型字段tags，仅保留字符类型的字段
     FULLTEXT INDEX ft_search (dataset_name, description) COMMENT '全文搜索索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='内置数据集表';
 
@@ -176,11 +176,11 @@ CREATE TABLE IF NOT EXISTS dataset_usage_stats (
     INDEX idx_user_dataset (user_id, dataset_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='数据集使用统计表';
 
--- 插入初始管理员用户（密码：Admin123!，实际生产环境必须使用BCrypt哈希）
--- 生成真实哈希示例：PHP的password_hash("Admin123!", PASSWORD_BCRYPT) 或 Python的bcrypt.hashpw
+-- 插入初始管理员用户(密码: Admin123!，实际生产环境必须使用BCrypt哈希)
+-- 生成真实哈希示例: PHP的password_hash("Admin123!", PASSWORD_BCRYPT) 或 Python的bcrypt.hashpw
 INSERT INTO users (username, email, password_hash, display_name, role, storage_quota_mb) 
 VALUES 
-('admin', 'admin@aixlab.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '系统管理员', 'admin', 10240), -- 示例哈希值（密码：Admin123!）
+('admin', 'admin@aixlab.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '系统管理员', 'admin', 10240), -- 示例哈希值(密码: Admin123!)
 ('demo_user', 'demo@aixlab.org', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '演示用户', 'researcher', 2048);
 
 -- 插入数据集分类
@@ -197,7 +197,7 @@ VALUES
 ('图像数据', 'image-data', '图像分类、目标检测等计算机视觉数据', 'fas fa-image', 9),
 ('地理空间', 'geospatial', '地图、GPS轨迹、地理信息数据', 'fas fa-globe', 10);
 
--- 插入内置数据集示例（修正：用子查询获取分类ID，指定创建者为admin用户）
+-- 插入内置数据集示例(修正: 用子查询获取分类ID，指定创建者为admin用户)
 INSERT INTO builtin_datasets (
     dataset_name, 
     dataset_slug, 
@@ -211,7 +211,7 @@ INSERT INTO builtin_datasets (
     file_path,
     column_schema,
     tags,
-    created_by -- 指定创建者为admin（user_id=1）
+    created_by -- 指定创建者为admin(user_id=1)
 ) 
 VALUES 
 (
@@ -275,7 +275,7 @@ VALUES
     1
 );
 
--- 插入数据集示例代码（修正：转义特殊字符，指定创建者）
+-- 插入数据集示例代码(修正: 转义特殊字符，指定创建者)
 INSERT INTO dataset_examples (
     dataset_id, 
     language, 

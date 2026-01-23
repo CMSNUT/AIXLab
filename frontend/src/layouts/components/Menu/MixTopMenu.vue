@@ -96,7 +96,7 @@ const handleMenuSelect = (routePath: string) => {
 /**
  * 更新菜单状态 - 同时处理点击和路由变化情况
  * @param topMenuPath 顶级菜单路径
- * @param skipNavigation 是否跳过导航（路由变化时为true，点击菜单时为false）
+ * @param skipNavigation 是否跳过导航(路由变化时为true，点击菜单时为false)
  */
 const updateMenuState = (topMenuPath: string, skipNavigation = false) => {
   // 确保路径有效且不相同才更新，避免重复操作
@@ -157,7 +157,7 @@ watch(
       const topMenuPath =
         newPath.split("/").filter(Boolean).length > 1 ? newPath.match(/^\/[^/]+/)?.[0] || "/" : "/";
 
-      // 使用公共方法更新菜单状态，但跳过导航（因为路由已经变化）
+      // 使用公共方法更新菜单状态，但跳过导航(因为路由已经变化)
       updateMenuState(topMenuPath, true);
     }
   }

@@ -256,7 +256,7 @@
 
     <!-- 创建表 -->
     <el-dialog v-model="createTableVisible" title="创建表" append-to-body>
-      <span>创建表语句(支持多个建表sql语句)：</span>
+      <span>创建表语句(支持多个建表sql语句): </span>
       <el-button type="warning" size="small" class="ml-1 mb-1" @click="loadExampleMysql">
         加载MySQL示例
       </el-button>
@@ -403,7 +403,7 @@
       </el-steps>
 
       <div class="mt-5">
-        <!-- 第一步：基础配置 -->
+        <!-- 第一步: 基础配置 -->
         <el-form
           v-show="activeStep == 0"
           ref="basicInfo"
@@ -533,7 +533,7 @@
           </el-row>
         </el-form>
 
-        <!-- 第二步：字段配置 -->
+        <!-- 第二步: 字段配置 -->
         <div v-show="activeStep == 1" class="elTableCustom">
           <div class="mb-2 flex items-center gap-2">
             <el-tag size="small" type="info">批量设置</el-tag>
@@ -738,7 +738,7 @@
           </el-table>
         </div>
 
-        <!-- 第三步：预览代码 -->
+        <!-- 第三步: 预览代码 -->
         <el-row v-show="activeStep == 2">
           <el-col :span="24" class="mb-2">
             <div class="flex-y-center gap-3">
@@ -797,7 +797,7 @@
       </div>
 
       <template #footer>
-        <!-- 公共按钮：关闭 -->
+        <!-- 公共按钮: 关闭 -->
         <el-button :icon="Close" @click="close">关闭</el-button>
         <el-button v-if="activeStep != 0" type="success" :icon="Back" @click="prevStep">
           上一步
@@ -1043,7 +1043,7 @@ const filteredTreeData = computed<TreeNode[]>(() => {
 
   // 基于原树按 scope/types 过滤叶子节点
   const match = (label: string, parentPath: string[]): boolean => {
-    // scope 过滤：根据路径初步判断
+    // scope 过滤: 根据路径初步判断
     if (previewScope.value !== "all") {
       // 根据后端返回的格式，检查路径或文件名特征
       const isPythonBackend =
@@ -1057,7 +1057,7 @@ const filteredTreeData = computed<TreeNode[]>(() => {
       if (previewScope.value === "frontend" && !isVueFrontend) return false;
     }
 
-    // 类型过滤：根据文件内容特征判断类型
+    // 类型过滤: 根据文件内容特征判断类型
     if (label.endsWith(".py")) return previewTypes.value.includes("python");
     if (label.endsWith(".vue")) return previewTypes.value.includes("vue");
     if (label.endsWith(".ts")) return previewTypes.value.includes("ts");
@@ -1120,7 +1120,7 @@ function buildTree(data: FileData[]): TreeNode {
   const root: TreeNode = { label: "前后端代码", children: [] };
 
   data.forEach((item) => {
-    // 将路径分成数组（确保使用正斜杠）
+    // 将路径分成数组(确保使用正斜杠)
     const parts = item.path.split("/").filter((part) => part !== "");
 
     let currentNode = root;

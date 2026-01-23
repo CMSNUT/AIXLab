@@ -20,7 +20,7 @@ class DictTypeCreateSchema(BaseModel):
 
     dict_name: str = Field(..., min_length=1, max_length=64, description="字典名称")
     dict_type: str = Field(..., min_length=1, max_length=64, description="字典类型")
-    status: str = Field(default="0", description="状态（0正常 1停用）")
+    status: str = Field(default="0", description="状态(0正常 1停用)")
     description: str | None = Field(default=None, max_length=255, description="描述")
 
     @field_validator("dict_name")
@@ -35,7 +35,7 @@ class DictTypeCreateSchema(BaseModel):
             raise ValueError("字典类型不能为空")
         regexp = r"^[a-z][a-z0-9_]*$"
         if not re.match(regexp, value):
-            raise ValueError("字典类型必须以字母开头，且只能为（小写字母，数字，下滑线）")
+            raise ValueError("字典类型必须以字母开头，且只能为(小写字母，数字，下滑线)")
         return value.strip()
 
 
@@ -56,7 +56,7 @@ class DictTypeQueryParam:
         self,
         dict_name: str | None = Query(default=None, description="字典名称", max_length=100),
         dict_type: str | None = Query(default=None, description="字典类型", max_length=100),
-        status: str | None = Query(default=None, description="状态（0正常 1停用）"),
+        status: str | None = Query(default=None, description="状态(0正常 1停用)"),
         created_time: list[DateTimeStr] | None = Query(
             None,
             description="创建时间范围",
@@ -97,11 +97,11 @@ class DictDataCreateSchema(BaseModel):
     dict_type: str = Field(..., max_length=100, description="字典类型")
     dict_type_id: int = Field(..., description="字典类型ID")
     css_class: str | None = Field(
-        default=None, max_length=100, description="样式属性（其他样式扩展）"
+        default=None, max_length=100, description="样式属性(其他样式扩展)"
     )
     list_class: str | None = Field(default=None, description="表格回显样式")
-    is_default: bool = Field(default=False, description="是否默认（True是 False否）")
-    status: str = Field(default="0", description="状态（0正常 1停用）")
+    is_default: bool = Field(default=False, description="是否默认(True是 False否)")
+    status: str = Field(default="0", description="状态(0正常 1停用)")
     description: str | None = Field(default=None, max_length=255, description="描述")
 
     @model_validator(mode="after")
@@ -141,7 +141,7 @@ class DictDataQueryParam:
         dict_label: str | None = Query(default=None, description="字典标签", max_length=100),
         dict_type: str | None = Query(default=None, description="字典类型", max_length=100),
         dict_type_id: int | None = Query(default=None, description="字典类型ID"),
-        status: str | None = Query(default=None, description="状态（0正常 1停用）"),
+        status: str | None = Query(default=None, description="状态(0正常 1停用)"),
         created_time: list[DateTimeStr] | None = Query(
             default=None,
             description="创建时间范围",

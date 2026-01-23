@@ -1,6 +1,6 @@
-// 问候语：根据当前小时返回不同问候语
+// 问候语: 根据当前小时返回不同问候语
 export function greetings() {
-  // 当前时间（用于计算问候语）
+  // 当前时间(用于计算问候语)
   const currentDate = new Date();
   const hours = currentDate.getHours();
   if (hours >= 6 && hours < 8) {

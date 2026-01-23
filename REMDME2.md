@@ -1,4 +1,4 @@
-# 初始化项目（pyproject.toml）
+# 初始化项目(pyproject.toml)
 ```bash
 uv init backend
 
@@ -38,12 +38,12 @@ python main.py run --env=dev
 anyio==4.12.1                           # 异步IO支持库
 attrs==25.4.0                           # 类装饰器
 certifi==2026.1.4                       # SSL证书
-cffi==2.0.0                             # C外部函数接口（与已安装版本一致）
+cffi==2.0.0                             # C外部函数接口(与已安装版本一致)
 charset-normalizer==3.4.4               # 字符编码检测
 click==8.3.1                            # 命令行工具框架
-click-didyoumean==0.3.1                 # Click扩展：命令提示
-click-plugins==1.1.1.2                  # Click扩展：插件系统
-click-repl==0.3.0                       # Click扩展：REPL支持
+click-didyoumean==0.3.1                 # Click扩展: 命令提示
+click-plugins==1.1.1.2                  # Click扩展: 插件系统
+click-repl==0.3.0                       # Click扩展: REPL支持
 colorama==0.4.6                         # 跨平台彩色终端输出
 distro==1.9.0                           # Linux发行版信息
 greenlet==3.3.0                         # 协程支持
@@ -112,7 +112,7 @@ ormsgpack==1.12.2                       # msgpack序列化
 ## Web框架和服务器
 ```txt
 fastapi==0.128.0                        # FastAPI Web框架
-starlette==0.50.0                       # ASGI框架（FastAPI依赖）
+starlette==0.50.0                       # ASGI框架(FastAPI依赖)
 uvicorn==0.40.0                         # ASGI服务器
 gunicorn==23.0.0                        # WSGI HTTP服务器
 fastapi-cli==0.0.20                     # FastAPI命令行工具
@@ -130,7 +130,7 @@ databases==0.9.0                        # 异步数据库支持
 aiomysql==0.3.2                         # 异步MySQL客户端
 PyMySQL==1.1.2                          # MySQL Python驱动
 redis==7.1.0                            # Redis客户端
-Mako==1.3.10                            # 模板引擎（Alembic依赖）
+Mako==1.3.10                            # 模板引擎(Alembic依赖)
 ```
 
 ## 安全认证
@@ -149,9 +149,9 @@ email-validator==2.3.0                  # 邮箱验证
 ## 任务队列和定时任务
 ```txt
 celery==5.6.2                           # 分布式任务队列
-kombu==5.6.2                            # AMQP消息队列（Celery依赖）
+kombu==5.6.2                            # AMQP消息队列(Celery依赖)
 amqp==5.3.1                             # AMQP协议实现
-billiard==4.2.4                         # 多进程池（Celery依赖）
+billiard==4.2.4                         # 多进程池(Celery依赖)
 APScheduler==3.11.2                     # 定时任务调度
 croniter==6.0.0                         # Cron表达式解析
 ```
@@ -180,7 +180,7 @@ annotated-doc==0.0.4                    # 文档注解
 pandas==3.0.0                           # 数据分析库
 numpy==2.4.1                            # 数值计算
 openpyxl==3.1.5                         # Excel读写
-et_xmlfile==2.0.0                       # XML文件支持（openpyxl依赖）
+et_xmlfile==2.0.0                       # XML文件支持(openpyxl依赖)
 ```
 
 ## 模板引擎
@@ -249,11 +249,11 @@ ruff==0.14.13                           # Rust编写的Python代码检查器
 ```
 
 
-# 一键安装所有依赖的最高版本（不指定具体版本），可以使用以下方法：
+# 一键安装所有依赖的最高版本(不指定具体版本)，可以使用以下方法: 
 
-## 方法1：生成并安装最新版依赖文件
+## 方法1: 生成并安装最新版依赖文件
 ```bash
-# 1. 从当前项目依赖生成 requirements.txt（不指定版本）
+# 1. 从当前项目依赖生成 requirements.txt(不指定版本)
 echo "anyio
 attrs
 certifi
@@ -395,13 +395,13 @@ ruff" > requirements_latest.txt
 pip install --upgrade -r requirements_latest.txt
 ```
 
-## 方法2：直接安装所有包的最新版（一行命令）
+## 方法2: 直接安装所有包的最新版(一行命令)
 ```bash
 pip install --upgrade anyio attrs certifi cffi charset-normalizer click click-didyoumean click-plugins click-repl colorama distro greenlet h11 httpcore httptools httpx httpx-sse idna iniconfig itsdangerous jiter markdown-it-py mdurl orjson packaging pluggy prompt_toolkit psutil pycparser Pygments python-dateutil python-dotenv pytz PyYAML regex requests requests-toolbelt rich rich-toolkit rignore shellingham six sniffio sse-starlette tenacity tqdm typer typing-inspection typing_extensions tzdata tzlocal ujson urllib3 uuid_utils vine watchfiles wcwidth websockets win32_setctime xxhash zstandard fastapi starlette uvicorn fastapi-cli fastapi-cloud-cli fastapi-limiter fastar gunicorn python-multipart SQLAlchemy alembic databases aiomysql PyMySQL redis Mako bcrypt cryptography passlib PyJWT python-jose rsa ecdsa pyasn1 email-validator celery kombu amqp billiard APScheduler croniter openai anthropic langchain langchain-core langchain-openai langchain-anthropic langchain-mcp-adapters langgraph langgraph-checkpoint langgraph-prebuilt langgraph-sdk langsmith mcp tiktoken annotated-doc pandas numpy openpyxl et_xmlfile Jinja2 MarkupSafe pydantic pydantic-core pydantic-extra-types pydantic-settings pydantic-validation-decorator annotated-types docstring_parser jsonpatch jsonpointer jsonschema jsonschema-specifications referencing rpds-py aiofiles pillow user-agents ua-parser ua-parser-builtins sentry-sdk dnspython pytest pywin32 ruff
 ```
 
-## 方法3：使用脚本安装
-创建一个 `install_latest.py` 脚本：
+## 方法3: 使用脚本安装
+创建一个 `install_latest.py` 脚本: 
 ```python
 #!/usr/bin/env python3
 import subprocess
@@ -449,12 +449,12 @@ for i in range(0, len(packages), batch_size):
 print("所有包安装完成！")
 ```
 
-运行脚本：
+运行脚本: 
 ```bash
 python install_latest.py
 ```
 
-## 方法4：使用 pip-compile（最推荐）
+## 方法4: 使用 pip-compile(最推荐)
 ```bash
 # 1. 安装 pip-tools
 pip install pip-tools
@@ -607,7 +607,7 @@ pip-compile --upgrade requirements.in -o requirements_latest.txt
 pip install -r requirements_latest.txt
 ```
 
-**推荐使用方法4**，因为它会：
+**推荐使用方法4**，因为它会: 
 1. 自动解析依赖关系
 2. 安装最新的兼容版本
 3. 生成带有精确版本号的 requirements.txt 文件

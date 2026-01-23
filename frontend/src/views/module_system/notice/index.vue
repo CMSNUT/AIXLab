@@ -182,7 +182,7 @@
         </div>
       </div>
 
-      <!-- 表格区域：系统配置列表 -->
+      <!-- 表格区域: 系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -582,7 +582,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -654,7 +654,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
   dialogVisible.visible = true;
 }
 
-// 提交表单（防抖）
+// 提交表单(防抖)
 async function handleSubmit() {
   // 表单校验
   dataFormRef.value.validate(async (valid: any) => {
@@ -755,7 +755,7 @@ const exportColumns = [
   { prop: "updated_time", label: "更新时间" },
 ];
 
-// 导入/导出配置（用于导出弹窗）
+// 导入/导出配置(用于导出弹窗)
 const curdContentConfig = {
   permPrefix: "module_system:notice",
   cols: exportColumns as any,

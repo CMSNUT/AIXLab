@@ -86,7 +86,7 @@ const { sideMenuRoutes, activeTopMenuPath } = useLayoutMenu();
 // 响应式窗口尺寸
 const { width } = useWindowSize();
 
-// 只有在小屏设备（移动设备）时才折叠Logo（只显示图标，隐藏文字）
+// 只有在小屏设备(移动设备)时才折叠Logo(只显示图标，隐藏文字)
 const isLogoCollapsed = computed(() => width.value < 768);
 
 // 当前激活的菜单

@@ -204,7 +204,7 @@ def recursive_to_tree(
     nodes: list[dict[str, Any]], *, parent_id: int | None = None
 ) -> list[dict[str, Any]]:
     """
-    通过递归算法构造树形结构（性能影响较大）
+    通过递归算法构造树形结构(性能影响较大)
 
     参数:
     - nodes (list[dict[str, Any]]): 树节点列表。
@@ -257,7 +257,7 @@ def bytes2file_response(bytes_info: bytes) -> Generator[bytes, Any, None]:
 
 def get_filepath_from_url(url: str) -> Path:
     """
-    工具方法：根据请求参数获取文件路径
+    工具方法: 根据请求参数获取文件路径
 
     参数:
     - url (str): 请求参数中的 url 参数。

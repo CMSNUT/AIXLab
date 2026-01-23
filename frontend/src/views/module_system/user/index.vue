@@ -668,7 +668,7 @@ const rules = reactive({
 // 日期范围临时变量
 const dateRange = ref<[Date, Date] | []>([]);
 
-// 仅用于导出字段的列（排除非数据列及嵌套对象列）
+// 仅用于导出字段的列(排除非数据列及嵌套对象列)
 const exportColumns = [
   { prop: "username", label: "账号" },
   { prop: "name", label: "名称" },
@@ -741,7 +741,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -751,7 +751,7 @@ async function handleQuery() {
 async function handleResetQuery() {
   // 重置表单字段
   queryFormRef.value.resetFields();
-  // 额外清空不在 model 内的扩展查询项（如日期范围）
+  // 额外清空不在 model 内的扩展查询项(如日期范围)
   dateRange.value = [];
   queryFormData.created_time = undefined;
   // 清空部门并重置页码
@@ -877,7 +877,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
     .filter((opt) => !opt.disabled);
 }
 
-// 提交表单（防抖）
+// 提交表单(防抖)
 async function handleSubmit() {
   // 表单校验
   dataFormRef.value.validate(async (valid: any) => {
@@ -982,7 +982,7 @@ const handleUpload = async (formData: FormData) => {
     }
   } catch (error: any) {
     console.error(error);
-    ElMessage.error("上传失败：" + error);
+    ElMessage.error("上传失败: " + error);
   }
 };
 

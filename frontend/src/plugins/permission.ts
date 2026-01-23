@@ -33,7 +33,7 @@ export function setupPermission() {
         }
       }
     } catch (error) {
-      // 错误处理：重置状态并跳转登录
+      // 错误处理: 重置状态并跳转登录
       console.error("Route guard error:", error);
       await useUserStore().resetAllState();
       next("/login");

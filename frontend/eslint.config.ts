@@ -222,7 +222,7 @@ export default [
     },
   },
 
-  // Prettier 集成（必须放在最后）
+  // Prettier 集成(必须放在最后)
   {
     plugins: {
       prettier: prettierPlugin, // 将 Prettier 的输出作为 ESLint 的问题来报告

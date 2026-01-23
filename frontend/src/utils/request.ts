@@ -47,7 +47,7 @@ httpRequest.interceptors.request.use(
  */
 httpRequest.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => {
-    // 如果响应是二进制流，则直接返回（用于文件下载、Excel 导出等）
+    // 如果响应是二进制流，则直接返回(用于文件下载、Excel 导出等)
     if (response.config.responseType === "blob") {
       return response;
     }
@@ -72,7 +72,7 @@ httpRequest.interceptors.response.use(
     return response;
   },
   async (error: AxiosError<ApiResponse>) => {
-    // 处理网络错误（连接拒绝、超时等）
+    // 处理网络错误(连接拒绝、超时等)
     if (!error.response) {
       let errorMessage = "网络连接异常";
 

@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <!-- 表格区域：系统配置列表 -->
+      <!-- 表格区域: 系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -299,7 +299,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();

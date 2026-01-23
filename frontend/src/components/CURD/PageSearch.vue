@@ -176,7 +176,7 @@ const componentMap = new Map<ISearchComponent, any>([
   ["slider", markRaw(ElSlider)], // @ts-ignore
 ]);
 
-// 自定义组件映射（从searchConfig中获取）
+// 自定义组件映射(从searchConfig中获取)
 const getCustomComponent = (componentName: string) => {
   return props.searchConfig?.customComponents?.[componentName] || null;
 };
@@ -197,11 +197,11 @@ const isExpand = ref(false);
 const showNumber = computed(() =>
   isExpandable.value ? (props.searchConfig?.showNumber ?? 3) : formItems.length
 );
-// 卡片组件自定义属性（阴影、自定义边距样式等）
+// 卡片组件自定义属性(阴影、自定义边距样式等)
 const cardAttrs = computed<IObject>(() => {
   return { shadow: "never", style: { "margin-bottom": "12px" }, ...props.searchConfig?.cardAttrs };
 });
-// 表单组件自定义属性（label位置、宽度、对齐方式等）
+// 表单组件自定义属性(label位置、宽度、对齐方式等)
 const formAttrs = computed<IForm>(() => {
   return { inline: true, ...props.searchConfig?.form };
 });

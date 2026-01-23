@@ -1522,7 +1522,7 @@ COMMENT ON COLUMN public.sys_dict_data.dict_value IS '字典键值';
 -- Name: COLUMN sys_dict_data.css_class; Type: COMMENT; Schema: public; Owner: tao
 --
 
-COMMENT ON COLUMN public.sys_dict_data.css_class IS '样式属性（其他样式扩展）';
+COMMENT ON COLUMN public.sys_dict_data.css_class IS '样式属性(其他样式扩展)';
 
 
 --
@@ -1536,7 +1536,7 @@ COMMENT ON COLUMN public.sys_dict_data.list_class IS '表格回显样式';
 -- Name: COLUMN sys_dict_data.is_default; Type: COMMENT; Schema: public; Owner: tao
 --
 
-COMMENT ON COLUMN public.sys_dict_data.is_default IS '是否默认（True是 False否）';
+COMMENT ON COLUMN public.sys_dict_data.is_default IS '是否默认(True是 False否)';
 
 
 --

@@ -117,7 +117,7 @@ class GenTableService:
         """
         gen_db_table_list_result = await GenTableCRUD(auth).get_db_table_list_by_names(table_names)
 
-        # 修复：将GenDBTableSchema对象转换为字典后再传递给GenTableOutSchema
+        # 修复: 将GenDBTableSchema对象转换为字典后再传递给GenTableOutSchema
         result = [
             GenTableOutSchema(**gen_table.model_dump()) for gen_table in gen_db_table_list_result
         ]
@@ -294,7 +294,7 @@ class GenTableService:
     @classmethod
     @handle_service_exception
     async def delete_gen_table_service(cls, auth: AuthSchema, ids: list[int]) -> None:
-        """删除业务表信息（先删字段，再删表）。
+        """删除业务表信息(先删字段，再删表)。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -339,7 +339,7 @@ class GenTableService:
     @classmethod
     @handle_service_exception
     async def get_gen_table_all_service(cls, auth: AuthSchema) -> list[GenTableOutSchema]:
-        """获取所有业务表信息（列表）。
+        """获取所有业务表信息(列表)。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -362,7 +362,7 @@ class GenTableService:
     @handle_service_exception
     async def preview_code_service(cls, auth: AuthSchema, table_id: int) -> dict[str, Any]:
         """
-        预览代码（根据模板渲染内存结果）。
+        预览代码(根据模板渲染内存结果)。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -392,8 +392,8 @@ class GenTableService:
     @classmethod
     @handle_service_exception
     async def generate_code_service(cls, auth: AuthSchema, table_name: str) -> bool:
-        """生成代码至指定路径（安全写入+可跳过覆盖）。
-        - 安全：限制写入在项目根目录内；越界路径自动回退到项目根目录。
+        """生成代码至指定路径(安全写入+可跳过覆盖)。
+        - 安全: 限制写入在项目根目录内；越界路径自动回退到项目根目录。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -423,13 +423,13 @@ class GenTableService:
             raise CustomException(msg="功能名称不能为空")
         if not gen_table_schema.package_name:
             raise CustomException(msg="包名不能为空")
-        # 1. 先检查并创建菜单（目录菜单、功能菜单、按钮权限）
+        # 1. 先检查并创建菜单(目录菜单、功能菜单、按钮权限)
         # 检查是否需要创建目录菜单
         if gen_table_schema.parent_menu_id:
-            # 如果传了上级菜单ID（菜单类型=1），则不创建目录菜单，直接使用该ID作为功能菜单的父ID
+            # 如果传了上级菜单ID(菜单类型=1)，则不创建目录菜单，直接使用该ID作为功能菜单的父ID
             dir_menu_id = gen_table_schema.parent_menu_id
         else:
-            # 如果没传上级菜单ID，则需要创建新的模块目录菜单（类型=1：目录）
+            # 如果没传上级菜单ID，则需要创建新的模块目录菜单(类型=1: 目录)
             existing_dir_menu = await menu_crud.get(name=gen_table_schema.business_name)
             if existing_dir_menu:
                 dir_menu_id = existing_dir_menu.id
@@ -464,7 +464,7 @@ class GenTableService:
             raise CustomException(
                 msg=f"功能菜单名称 '{gen_table_schema.function_name}' 已存在，不能重复创建"
             )
-        # 创建功能菜单（类型=2：菜单）
+        # 创建功能菜单(类型=2: 菜单)
         parent_menu = await menu_crud.create(
             MenuCreateSchema(
                 name=gen_table_schema.function_name,
@@ -487,7 +487,7 @@ class GenTableService:
                 description=f"{gen_table_schema.function_name}功能菜单",
             )
         )
-        # 创建按钮权限（类型=3：按钮/权限）
+        # 创建按钮权限(类型=3: 按钮/权限)
         buttons = [
             {
                 "name": f"{gen_table_schema.function_name}查询",
@@ -590,7 +590,7 @@ class GenTableService:
                     )
             except Exception as e:
                 raise CustomException(
-                    msg=f"渲染模板失败，表名：{gen_table_schema.table_name}，详细错误信息：{e!s}"
+                    msg=f"渲染模板失败，表名: {gen_table_schema.table_name}，详细错误信息: {e!s}"
                 )
 
         return True
@@ -600,7 +600,7 @@ class GenTableService:
     async def batch_gen_code_service(cls, auth: AuthSchema, table_names: list[str]) -> bytes:
         """
         批量生成代码并打包为ZIP。
-        - 备注：内存生成并压缩，兼容多模板类型；供下载使用。
+        - 备注: 内存生成并压缩，兼容多模板类型；供下载使用。
 
         参数:
         - auth (AuthSchema): 认证信息。
@@ -715,8 +715,8 @@ class GenTableService:
 
     @classmethod
     async def set_pk_column(cls, gen_table: GenTableOutSchema) -> None:
-        """设置主键列信息（主表/子表）。
-        - 备注：同时兼容`pk`布尔与`is_pk == '1'`字符串两种标识。
+        """设置主键列信息(主表/子表)。
+        - 备注: 同时兼容`pk`布尔与`is_pk == '1'`字符串两种标识。
 
         参数:
         - gen_table (GenTableOutSchema): 业务表详细信息模型。
@@ -726,7 +726,7 @@ class GenTableService:
         """
         if gen_table.columns:
             for column in gen_table.columns:
-                # 修复：确保正确检查主键标识
+                # 修复: 确保正确检查主键标识
                 if getattr(column, "pk", False) or getattr(column, "is_pk", "") == "1":
                     gen_table.pk_column = column
                     break
@@ -771,7 +771,7 @@ class GenTableColumnService:
     async def get_gen_table_column_list_by_table_id_service(
         cls, auth: AuthSchema, table_id: int
     ) -> list[dict[str, Any]]:
-        """获取业务表字段列表信息（输出模型）。
+        """获取业务表字段列表信息(输出模型)。
 
         参数:
         - auth (AuthSchema): 认证信息。

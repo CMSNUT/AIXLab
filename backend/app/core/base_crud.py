@@ -182,14 +182,14 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
                 sql = sql.options(opt)
             sql = await self.__filter_permissions(sql)
 
-            # 优化count查询：使用主键计数而非全表扫描
+            # 优化count查询: 使用主键计数而非全表扫描
             mapper = sa_inspect(self.model)
             pk_cols = list(getattr(mapper, "primary_key", []))
             if pk_cols:
-                # 使用主键的第一列进行计数（主键必定非NULL，性能更好）
+                # 使用主键的第一列进行计数(主键必定非NULL，性能更好)
                 count_sql = select(func.count(pk_cols[0])).select_from(self.model)
             else:
-                # 降级方案：使用count(*)
+                # 降级方案: 使用count(*)
                 count_sql = select(func.count()).select_from(self.model)
 
             if conditions:
@@ -229,7 +229,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             obj_dict = data if isinstance(data, dict) else data.model_dump()
             obj = self.model(**obj_dict)
 
-            # 设置字段值（只检查一次current_user）
+            # 设置字段值(只检查一次current_user)
             if self.auth.user:
                 if hasattr(obj, "created_id"):
                     setattr(obj, "created_id", self.auth.user.id)
@@ -268,7 +268,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             if not obj:
                 raise CustomException(msg="更新对象不存在")
 
-            # 设置字段值（只检查一次current_user）
+            # 设置字段值(只检查一次current_user)
             if self.auth.user and hasattr(obj, "updated_id"):
                 setattr(obj, "updated_id", self.auth.user.id)
 
@@ -280,8 +280,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             # 刷新对象时不自动预加载关系
             await self.auth.db.refresh(obj)
 
-            # 权限二次确认：flush后再次验证对象仍在权限范围内
-            # 防止并发修改导致的权限逃逸（如其他事务修改了created_id）
+            # 权限二次确认: flush后再次验证对象仍在权限范围内
+            # 防止并发修改导致的权限逃逸(如其他事务修改了created_id)
             # 验证时也不自动预加载关系
             verify_obj = await self.get(id=id, preload=[])
             if not verify_obj:
@@ -361,7 +361,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def __filter_permissions(self, sql: Select) -> Select:
         """
-        过滤数据权限（仅用于Select）。
+        过滤数据权限(仅用于Select)。
         """
         filter = Permission(model=self.model, auth=self.auth)
         return await filter.filter_query(sql)

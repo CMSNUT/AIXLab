@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # AIXLab R分析服务
-# 注意：需要安装以下R包：plumber, jsonlite, ggplot2, base64enc
+# 注意: 需要安装以下R包: plumber, jsonlite, ggplot2, base64enc
 
 # 加载必要的库
 library(plumber)

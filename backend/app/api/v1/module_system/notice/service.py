@@ -171,7 +171,7 @@ class NoticeService:
         mapping_dict = {
             "id": "编号",
             "notice_title": "公告标题",
-            "notice_type": "公告类型（1通知 2公告）",
+            "notice_type": "公告类型(1通知 2公告)",
             "notice_content": "公告内容",
             "status": "状态",
             "description": "备注",

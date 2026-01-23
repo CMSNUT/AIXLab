@@ -142,7 +142,7 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
         - search (GenTableQueryParam | None): 查询参数对象。
 
         返回:
-        - list[dict]: 数据库表列表信息（已转为可序列化字典）。
+        - list[dict]: 数据库表列表信息(已转为可序列化字典)。
         """
         database_name = settings.DATABASE_NAME
         database_type = settings.DATABASE_TYPE
@@ -168,10 +168,10 @@ class GenTableCRUD(CRUDBase[GenTableModel, GenTableSchema, GenTableSchema]):
 
             # 统一处理 search 为 None 的情况，避免重复判断
             if search:
-                # 表名过滤：忽略大小写，支持模糊匹配
+                # 表名过滤: 忽略大小写，支持模糊匹配
                 if search.table_name and search.table_name.lower() not in table_name.lower():
                     continue
-                # 表注释过滤：忽略大小写，支持模糊匹配；table_comment 为 None 时视为空字符串
+                # 表注释过滤: 忽略大小写，支持模糊匹配；table_comment 为 None 时视为空字符串
                 if search.table_comment and search.table_comment not in table_comment:
                     continue
 
@@ -261,7 +261,7 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
     @staticmethod
     def _sync_get_table_columns(database_type: str, table_name: str) -> list[dict]:
         """
-        同步函数：获取数据库表的列信息
+        同步函数: 获取数据库表的列信息
 
         参数:
         - database_type: 数据库类型
@@ -301,15 +301,15 @@ class GenTableColumnCRUD(CRUDBase[GenTableColumnModel, GenTableColumnSchema, Gen
             column_type = str(column["type"])
             is_nullable = column.get("nullable", True)
             column_default = column.get("default", None)
-            # 获取列注释（如果有的话）
+            # 获取列注释(如果有的话)
             column_comment = column.get("comment", "")
             # 判断是否为主键
             is_pk = column_name in primary_keys
             # 判断是否为唯一约束
             is_unique = column_name in unique_columns
-            # 判断是否为自增列（基于数据库类型和列类型）
+            # 判断是否为自增列(基于数据库类型和列类型)
             is_increment = column.get("autoincrement", False) in (True, "auto")
-            # 获取列长度（如果适用）
+            # 获取列长度(如果适用)
             column_length = None
             # 使用getattr安全地获取length属性，避免访问不存在时抛出AttributeError
             column_length = getattr(column["type"], "length", None)

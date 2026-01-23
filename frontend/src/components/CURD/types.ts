@@ -59,7 +59,7 @@ export type IToolsButton = {
   attrs?: Partial<ButtonProps> & { style?: CSSProperties };
   /** 条件渲染 */
   render?: (row: IObject) => boolean;
-  /** 按钮提示（支持字符串或Tooltip属性对象） */
+  /** 按钮提示(支持字符串或Tooltip属性对象) */
   tooltip?: string | IObject;
 };
 
@@ -88,13 +88,13 @@ export interface IOperateData {
 export interface ISearchConfig {
   /** 权限前缀(如sys:user，用于组成权限标识)，不提供则不进行权限校验 */
   permPrefix?: string;
-  /** 标签冒号(默认：false) */
+  /** 标签冒号(默认: false) */
   colon?: boolean;
-  /** 表单项(默认：[]) */
+  /** 表单项(默认: []) */
   formItems?: IFormItems<ISearchComponent>;
-  /** 是否开启展开和收缩(默认：true) */
+  /** 是否开启展开和收缩(默认: true) */
   isExpandable?: boolean;
-  /** 默认展示的表单项数量(默认：3) */
+  /** 默认展示的表单项数量(默认: 3) */
   showNumber?: number;
   /** 卡片属性 */
   cardAttrs?: Partial<CardProps> & { style?: CSSProperties };
@@ -104,15 +104,15 @@ export interface ISearchConfig {
   grid?: boolean | "left" | "right";
   /** 自定义组件映射 */
   customComponents?: Record<string, any>;
-  /** 是否显示搜索按钮(默认：true) */
+  /** 是否显示搜索按钮(默认: true) */
   showSearchButton?: boolean;
-  /** 是否显示重置按钮(默认：true) */
+  /** 是否显示重置按钮(默认: true) */
   showResetButton?: boolean;
   /** 搜索按钮权限 */
   searchButtonPerm?: string | string[];
   /** 重置按钮权限 */
   resetButtonPerm?: string | string[];
-  /** 是否显示搜索区域切换按钮(默认：false) */
+  /** 是否显示搜索区域切换按钮(默认: false) */
   showToggle?: boolean;
   /** 搜索区域切换按钮权限 */
   togglePerm?: string | string[];
@@ -139,11 +139,11 @@ export interface IContentConfig<T = any> {
   permPrefix?: string;
   /** table组件属性 */
   table?: Omit<TableProps<any>, "data">;
-  /** 页面标题与提示（用于卡片头部显示） */
+  /** 页面标题与提示(用于卡片头部显示) */
   title?: string;
   /** 提示信息 */
   tooltip?: string | IObject;
-  /** 分页组件位置(默认：left) */
+  /** 分页组件位置(默认: left) */
   pagePosition?: "left" | "right";
   /** pagination组件属性 */
   pagination?:
@@ -268,19 +268,19 @@ export interface IContentConfig<T = any> {
 export interface IModalConfig<T = any> {
   /** 权限前缀(如sys:user，用于组成权限标识)，不提供则不进行权限校验 */
   permPrefix?: string;
-  /** 标签冒号(默认：false) */
+  /** 标签冒号(默认: false) */
   colon?: boolean;
   /** 主键名(主要用于编辑数据,默认为id) */
   pk?: string;
-  /** 组件类型(默认：dialog) */
+  /** 组件类型(默认: dialog) */
   component?: "dialog" | "drawer";
   /** dialog组件属性 */
   dialog?: Partial<Omit<DialogProps, "modelValue">>;
   /** drawer组件属性 */
   drawer?: Partial<Omit<DrawerProps, "modelValue">>;
-  /** 查看模式渲染方式(默认：form；可选：descriptions) */
+  /** 查看模式渲染方式(默认: form；可选: descriptions) */
   viewMode?: "form" | "descriptions";
-  /** descriptions组件属性（当 viewMode 为 descriptions 时生效） */
+  /** descriptions组件属性(当 viewMode 为 descriptions 时生效) */
   descriptions?: IObject;
   /** form组件属性 */
   form?: IForm;

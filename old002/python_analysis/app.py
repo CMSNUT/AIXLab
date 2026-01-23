@@ -149,7 +149,7 @@ def setup_custom_font():
         import requests
         import tempfile
 
-        # 字体下载URL（开源字体）
+        # 字体下载URL(开源字体)
         font_urls = {
             'SimHei': 'https://github.com/googlefonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf',
             'SourceHanSansSC': 'https://github.com/adobe-fonts/source-han-sans/raw/release/OTF/SimplifiedChinese/SourceHanSansSC-Regular.otf'

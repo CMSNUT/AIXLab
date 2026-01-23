@@ -1,6 +1,6 @@
 // https://cn.vitejs.dev/guide/env-and-mode
 
-// TypeScript 类型提示都为 string： https://github.com/vitejs/vite/issues/6930
+// TypeScript 类型提示都为 string:  https://github.com/vitejs/vite/issues/6930
 interface ImportMetaEnv {
   /** 环境 */
   VITE_APP_ENV: string;

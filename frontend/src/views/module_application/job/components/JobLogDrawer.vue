@@ -128,7 +128,7 @@
         </div>
       </div>
 
-      <!-- 表格区域：任务日志列表 -->
+      <!-- 表格区域: 任务日志列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -381,7 +381,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -496,7 +496,7 @@ const exportColumns = [
   { prop: "create_time", label: "创建时间" },
 ];
 
-// 导出配置（用于导出弹窗）
+// 导出配置(用于导出弹窗)
 const curdContentConfig = {
   permPrefix: "application:job_log",
   cols: exportColumns as any,

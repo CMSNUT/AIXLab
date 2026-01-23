@@ -134,7 +134,7 @@ class ResourceCreateDirSchema(BaseModel):
     @field_validator("parent_path", "dir_name")
     @classmethod
     def validate_inputs(cls, value: str, info):
-        # 对于parent_path允许为空字符串（表示根目录）或 '/'，其他情况必须非空
+        # 对于parent_path允许为空字符串(表示根目录)或 '/'，其他情况必须非空
         if info.field_name == "parent_path":
             # 对于parent_path仍然严格检查路径遍历
             if ".." in value or value.startswith("\\"):

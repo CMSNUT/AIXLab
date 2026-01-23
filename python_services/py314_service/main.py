@@ -13,14 +13,14 @@ import pandas as pd
 
 from fastapi.middleware.cors import CORSMiddleware
 
-# 创建FastAPI实例（注意：不要设置docs_url=None）
+# 创建FastAPI实例(注意: 不要设置docs_url=None)
 app = FastAPI(
     title="AIXLab Python分析服务",
     description="AIXLab Python分析服务API文档",
     version="0.1.0"
 )
 
-# 挂载静态文件目录（用于存放本地Swagger UI资源，若不需要可跳过）
+# 挂载静态文件目录(用于存放本地Swagger UI资源，若不需要可跳过)
 # 如果你不想手动下载资源，方案2更简单
 # app.mount("/static", StaticFiles(directory="static"), name="static")
 

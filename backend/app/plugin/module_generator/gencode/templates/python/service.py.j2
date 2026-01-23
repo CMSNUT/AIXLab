@@ -35,7 +35,7 @@ class {{ class_name }}Service:
 
     @classmethod
     async def page_{{ business_name }}_service(cls, auth: AuthSchema, page_no: int, page_size: int, search: {{ class_name }}QueryParam | None = None, order_by: list[dict] | None = None) -> dict:
-        """分页查询（数据库分页）"""
+        """分页查询(数据库分页)"""
         search_dict = search.__dict__ if search else {}
         order_by_list = order_by or [{'id': 'asc'}]
         offset = (page_no - 1) * page_size
@@ -154,7 +154,7 @@ class {{ class_name }}Service:
                 rows_str = "、".join([str(i+1) for i in missing_rows])
                 errors.append(f"{field_name}不能为空，第{rows_str}行")
             if errors:
-                raise CustomException(msg=f"导入失败，以下行缺少必要字段：\n{'; '.join(errors)}")
+                raise CustomException(msg=f"导入失败，以下行缺少必要字段: \n{'; '.join(errors)}")
             {% endif %}
             {% endfor %}
             

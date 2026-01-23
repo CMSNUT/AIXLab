@@ -32,7 +32,7 @@ async def get_{{ business_name }}_list_controller(
     search: {{ class_name }}QueryParam = Depends(),
     auth: AuthSchema = Depends(AuthPermission(["{{ permission_prefix }}:query"]))
 ) -> JSONResponse:
-    """查询{{ function_name }}列表接口（数据库分页）"""
+    """查询{{ function_name }}列表接口(数据库分页)"""
     result_dict = await {{ class_name }}Service.page_{{ business_name }}_service(
         auth=auth,
         page_no=page.page_no if page.page_no is not None else 1,

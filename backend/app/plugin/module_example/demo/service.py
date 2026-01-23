@@ -258,7 +258,7 @@ class DemoService:
                     rows_str = "、".join([str(i + 1) for i in missing_rows])
                     errors.append(f"{field_name}不能为空，第{rows_str}行")
             if errors:
-                raise CustomException(msg=f"导入失败，以下行缺少必要字段：\n{'; '.join(errors)}")
+                raise CustomException(msg=f"导入失败，以下行缺少必要字段: \n{'; '.join(errors)}")
 
             error_msgs = []
             success_count = 0

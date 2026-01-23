@@ -3,7 +3,7 @@
  *
  * @description
  * 统一管理所有 localStorage/sessionStorage 的键名
- * 命名规则：{APP_PREFIX}:{分类}:{具体名称}
+ * 命名规则: {APP_PREFIX}:{分类}:{具体名称}
  */
 
 // 🔐 用户认证相关

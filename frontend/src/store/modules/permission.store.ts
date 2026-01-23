@@ -160,8 +160,8 @@ const transformRoutes = (routes: RouteVO[], isTopLevel: boolean = true): RouteRe
     //   : modules[`../../views/${normalizedRoute.component}.vue`] ||
     //     modules["../../views/error/404.vue"];
 
-    // 关键优化：
-    // 1. 顶级路由（一级目录）使用Layout组件，确保菜单和navbar能正常显示
+    // 关键优化: 
+    // 1. 顶级路由(一级目录)使用Layout组件，确保菜单和navbar能正常显示
     // 2. 二级及以上的父路由不使用Layout组件，只作为路由容器，避免Layout嵌套
     // 3. 叶子路由使用实际组件
     // 4. 递归处理子路由，实现无限层级菜单
@@ -170,7 +170,7 @@ const transformRoutes = (routes: RouteVO[], isTopLevel: boolean = true): RouteRe
 
       // 非叶子路由
       if (isTopLevel) {
-        // 顶级路由（一级目录），使用Layout组件
+        // 顶级路由(一级目录)，使用Layout组件
         normalizedRoute.component = Layout;
       } else {
         // 二级及以上的父路由，不使用Layout组件，只作为路由容器

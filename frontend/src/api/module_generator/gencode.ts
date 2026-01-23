@@ -188,25 +188,25 @@ export interface GenTableColumnSchema extends BaseType {
   python_type?: string;
   /** PYTHON字段名 */
   python_field?: string;
-  /** 是否主键（1是） */
+  /** 是否主键(1是) */
   is_pk?: boolean;
-  /** 是否自增（1是） */
+  /** 是否自增(1是) */
   is_increment?: boolean;
-  /** 是否必填（1是） */
+  /** 是否必填(1是) */
   is_nullable?: boolean;
-  /** 是否唯一（1是） */
+  /** 是否唯一(1是) */
   is_unique?: boolean;
-  /** 是否为新增字段（1是） */
+  /** 是否为新增字段(1是) */
   is_insert?: boolean;
-  /** 是否编辑字段（1是） */
+  /** 是否编辑字段(1是) */
   is_edit?: boolean;
-  /** 是否列表字段（1是） */
+  /** 是否列表字段(1是) */
   is_list?: boolean;
-  /** 是否查询字段（1是） */
+  /** 是否查询字段(1是) */
   is_query?: boolean;
-  /** 查询方式（等于、不等于、大于、小于、范围） */
+  /** 查询方式(等于、不等于、大于、小于、范围) */
   query_type?: string;
-  /** 显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件） */
+  /** 显示类型(文本框、文本域、下拉框、复选框、单选框、日期控件) */
   html_type?: string;
   /** 字典类型 */
   dict_type?: string;

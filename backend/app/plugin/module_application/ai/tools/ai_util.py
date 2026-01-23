@@ -99,10 +99,10 @@ class AIClient:
             return "请求过于频繁或配额已用尽。请稍后重试或提升账户配额。"
         # 客户端错误
         if status_code == 400:
-            return f"请求参数错误或服务拒绝：{message or '请检查输入内容。'}"
+            return f"请求参数错误或服务拒绝: {message or '请检查输入内容。'}"
         # 服务端错误
         if status_code in {500, 502, 503, 504}:
             return "服务暂时不可用，请稍后重试。"
 
         # 默认兜底
-        return f"处理您的请求时出现错误：{msg}"
+        return f"处理您的请求时出现错误: {msg}"

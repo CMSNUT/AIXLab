@@ -32,7 +32,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
         - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
-        - McpModel | None: MCP服务器模型实例（如果存在）
+        - McpModel | None: MCP服务器模型实例(如果存在)
         """
         return await self.get(id=id, preload=preload)
 
@@ -47,7 +47,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
         - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
-        - Optional[McpModel]: MCP服务器模型实例（如果存在）
+        - Optional[McpModel]: MCP服务器模型实例(如果存在)
         """
         return await self.get(name=name, preload=preload)
 
@@ -82,7 +82,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
         - data (McpCreateSchema): 创建MCP服务器模型
 
         返回:
-        - Optional[McpModel]: 创建的MCP服务器模型实例（如果成功）
+        - Optional[McpModel]: 创建的MCP服务器模型实例(如果成功)
         """
         return await self.create(data=data)
 
@@ -95,7 +95,7 @@ class McpCRUD(CRUDBase[McpModel, McpCreateSchema, McpUpdateSchema]):
         - data (McpUpdateSchema): 更新MCP服务器模型
 
         返回:
-        - McpModel | None: 更新的MCP服务器模型实例（如果成功）
+        - McpModel | None: 更新的MCP服务器模型实例(如果成功)
         """
         return await self.update(id=id, data=data)
 

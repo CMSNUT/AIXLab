@@ -139,7 +139,7 @@ class ResourceService:
         resource_root = cls._get_resource_root()
         try:
             relative_path = os.path.relpath(file_path, resource_root)
-            # 确保路径使用正斜杠（URL格式）
+            # 确保路径使用正斜杠(URL格式)
             url_path = relative_path.replace(os.sep, "/")
         except ValueError:
             # 如果无法计算相对路径，使用文件名
@@ -197,10 +197,10 @@ class ResourceService:
             # 生成HTTP URL路径而不是文件系统路径
             http_url = cls._generate_http_url(safe_path, base_url)
 
-            # 检查是否为隐藏文件（文件名以点开头）
+            # 检查是否为隐藏文件(文件名以点开头)
             is_hidden = path_obj.name.startswith(".")
 
-            # 对于目录，设置is_directory字段（兼容前端）
+            # 对于目录，设置is_directory字段(兼容前端)
             is_directory = os.path.isdir(safe_path)
 
             # 将datetime对象转换为ISO格式的字符串，确保JSON序列化成功
@@ -304,7 +304,7 @@ class ResourceService:
         base_url: str | None = None,
     ) -> list[dict]:
         """
-        搜索资源列表（用于分页和导出）
+        搜索资源列表(用于分页和导出)
 
         参数:
         - search (ResourceSearchQueryParam | None): 查询参数模型。
@@ -480,7 +480,7 @@ class ResourceService:
                         keys.append(value)
                     return keys
 
-                # 确定排序方向（这里只支持单一方向，多个条件时使用第一个条件的方向）
+                # 确定排序方向(这里只支持单一方向，多个条件时使用第一个条件的方向)
                 reverse = False
                 if sort_conditions and isinstance(sort_conditions[0], dict):
                     direction = sort_conditions[0].get("direction", "").lower()
@@ -529,7 +529,7 @@ class ResourceService:
                 cls._get_resource_root() if target_path is None else cls._get_safe_path(target_path)
             )
 
-            # 创建目录（如果不存在）
+            # 创建目录(如果不存在)
             os.makedirs(safe_dir, exist_ok=True)
 
             # 生成文件路径
@@ -547,7 +547,7 @@ class ResourceService:
                     counter += 1
                 filename = os.path.basename(file_path)
 
-            # 保存文件（使用已读取的内容）
+            # 保存文件(使用已读取的内容)
             Path(file_path).write_bytes(content)
 
             # 获取文件信息
@@ -572,11 +572,11 @@ class ResourceService:
     @classmethod
     async def download_file_service(cls, file_path: str, base_url: str | None = None) -> str:
         """
-        下载文件（返回本地文件系统路径）
+        下载文件(返回本地文件系统路径)
 
         参数:
-        - file_path (str): 文件路径（可为相对路径、绝对路径或完整URL）。
-        - base_url (str | None): 基础URL，用于生成完整URL（不再直接返回URL）。
+        - file_path (str): 文件路径(可为相对路径、绝对路径或完整URL)。
+        - base_url (str | None): 基础URL，用于生成完整URL(不再直接返回URL)。
 
         返回:
         - str: 本地文件系统路径。
@@ -812,7 +812,7 @@ class ResourceService:
             # 生成新目录路径
             new_dir_path = os.path.join(parent_path, data.dir_name)
 
-            # 安全检查：确保新目录名称不包含路径遍历字符
+            # 安全检查: 确保新目录名称不包含路径遍历字符
             if ".." in data.dir_name or "/" in data.dir_name or "\\" in data.dir_name:
                 raise CustomException(msg="目录名称包含不安全字符")
 
@@ -835,10 +835,10 @@ class ResourceService:
         格式化文件大小
 
         参数:
-        - size_bytes (int): 文件大小（字节）
+        - size_bytes (int): 文件大小(字节)
 
         返回:
-        - str: 格式化后的文件大小字符串（例如："123.45MB"）
+        - str: 格式化后的文件大小字符串(例如: "123.45MB")
         """
         if size_bytes == 0:
             return "0B"

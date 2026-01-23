@@ -43,7 +43,7 @@ export function useLayout() {
   }
 
   /**
-   * 关闭侧边栏（移动端）
+   * 关闭侧边栏(移动端)
    */
   function closeSidebar() {
     appStore.closeSideBar();

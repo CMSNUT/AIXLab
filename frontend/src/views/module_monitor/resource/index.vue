@@ -46,7 +46,7 @@
             <el-tooltip content="资源文件管理系统: 点击路径可以快速返回上级目录">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
-            文件列表(当前路径)：
+            文件列表(当前路径): 
           </span>
           <!-- 资源路径 -->
           <div class="breadcrumb-container">
@@ -637,7 +637,7 @@ async function handleRefresh() {
   await loadFileList();
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   await loadFileList();

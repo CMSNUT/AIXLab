@@ -39,7 +39,7 @@ class ModelMixin(MappedBase):
 
     基础模型混合类 Mixin: 一种面向对象编程概念, 使结构变得更加清晰
 
-    数据隔离设计原则：
+    数据隔离设计原则: 
     ==================
     数据权限 (created_id/updated_id):
         - 配合角色的data_scope字段实现精细化权限控制
@@ -136,7 +136,7 @@ class UserMixin(MappedBase):
     @declared_attr
     def created_by(self) -> Mapped[Optional["UserModel"]]:
         """
-        创建人关联关系（延迟加载，避免循环依赖）
+        创建人关联关系(延迟加载，避免循环依赖)
         """
         return relationship(
             "UserModel",
@@ -148,7 +148,7 @@ class UserMixin(MappedBase):
     @declared_attr
     def updated_by(self) -> Mapped[Optional["UserModel"]]:
         """
-        更新人关联关系（延迟加载，避免循环依赖）
+        更新人关联关系(延迟加载，避免循环依赖)
         """
         return relationship(
             "UserModel",

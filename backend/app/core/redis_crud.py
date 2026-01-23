@@ -102,7 +102,7 @@ class RedisCURD:
         参数:
         - key (str): 锁键名
         - expire (int): 锁过期时间,单位为秒
-        - value (str, optional): 锁值,默认值为None（自动生成UUID）。
+        - value (str, optional): 锁值,默认值为None(自动生成UUID)。
 
         返回:
         - tuple[bool, str]: (获取锁是否成功, 锁值)
@@ -125,7 +125,7 @@ class RedisCURD:
             return (False, "")
 
     async def unlock(self, key: str, value: str) -> bool:
-        """释放分布式锁（安全版本，验证锁值）
+        """释放分布式锁(安全版本，验证锁值)
 
         参数:
         - key (str): 锁键名
@@ -150,7 +150,7 @@ class RedisCURD:
             return False
 
     async def unlock_simple(self, key: str) -> bool:
-        """释放分布式锁（简单版本，不验证锁值）
+        """释放分布式锁(简单版本，不验证锁值)
 
         参数:
         - key (str): 锁键名

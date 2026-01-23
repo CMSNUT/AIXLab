@@ -1,9 +1,9 @@
 <!--
   TextScroll 组件 - 文本滚动公告
   
-  功能：
+  功能: 
   - 支持水平方向文本滚动
-  - 提供多种预设样式（默认、成功、警告、危险、信息）
+  - 提供多种预设样式(默认、成功、警告、危险、信息)
   - 支持自定义滚动速度和方向
   - 可选的打字机输入效果
   - 鼠标悬停时暂停滚动
@@ -61,11 +61,11 @@ import { useElementHover } from "@vueuse/core";
 const emit = defineEmits(["close"]);
 
 interface Props {
-  /** 滚动文本内容（必填） */
+  /** 滚动文本内容(必填) */
   text: string;
   /** 滚动速度，数值越小滚动越慢 */
   speed?: number;
-  /** 滚动方向：左侧或右侧 */
+  /** 滚动方向: 左侧或右侧 */
   direction?: "left" | "right";
   /** 样式类型 */
   type?: "default" | "success" | "warning" | "danger" | "info";
@@ -93,7 +93,7 @@ const containerRef = ref<HTMLElement | null>(null);
 const isHovered = useElementHover(containerRef);
 // 滚动内容元素引用
 const scrollContent = ref<HTMLElement | null>(null);
-// 动画持续时间（秒）
+// 动画持续时间(秒)
 const animationDuration = ref(0);
 
 /**
@@ -108,7 +108,7 @@ const isTypewriterComplete = ref(false);
 
 /**
  * 计算是否应该滚动
- * 条件：
+ * 条件: 
  * 1. 鼠标未悬停在组件上
  * 2. 如果启用了打字机效果，则需要等待打字效果完成
  */
@@ -123,7 +123,7 @@ const shouldScroll = computed(() => {
  * 计算最终显示的内容
  * 如果启用了打字机效果，则显示当前已打出的文本
  * 否则直接显示完整文本
- * 注意：内容支持 HTML，使用时需注意 XSS 风险
+ * 注意: 内容支持 HTML，使用时需注意 XSS 风险
  */
 const sanitizedContent = computed(() => (props.typewriter ? currentText.value : props.text));
 

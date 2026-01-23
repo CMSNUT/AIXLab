@@ -52,7 +52,7 @@ export const defaultSettings: AppSettings = {
 };
 
 // 主题色预设 - 现代化配色方案
-// 注意：修改默认主题色时，需要同步修改 src/styles/variables.scss 中的 primary.base 值
+// 注意: 修改默认主题色时，需要同步修改 src/styles/variables.scss 中的 primary.base 值
 export const themeColorPresets = [
   // === 精选常用颜色 - 多样化色系 ===
   "#4080FF", // Arco Design 蓝 - 现代感强

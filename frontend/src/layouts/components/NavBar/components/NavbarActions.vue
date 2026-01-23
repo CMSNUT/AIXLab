@@ -188,13 +188,13 @@ function handleTourClick() {
   }
 }
 
-// 引导结束（点击跳过或最后一步完成关闭）后，自动关闭下次登录的自动展示
+// 引导结束(点击跳过或最后一步完成关闭)后，自动关闭下次登录的自动展示
 function handleGuideExit() {
   // 关闭自动展示开关，确保下次登录不再自动开启
   settingStore.updateSetting("showGuide", false);
 }
 
-// 监听引导关闭（从 true -> false），也同步关闭自动展示开关
+// 监听引导关闭(从 true -> false)，也同步关闭自动展示开关
 watch(
   () => guideVisible.value,
   (val, oldVal) => {
@@ -226,7 +226,7 @@ const navbarActionsClass = computed(() => {
 
   // 明亮主题下
   if (theme === ThemeMode.LIGHT) {
-    // 顶部布局和混合布局的顶部区域：
+    // 顶部布局和混合布局的顶部区域: 
     // - 如果侧边栏是经典蓝色，使用白色文字
     // - 如果侧边栏是极简白色，使用深色文字
     if (layout === LayoutMode.TOP || layout === LayoutMode.MIX) {
@@ -364,7 +364,7 @@ function logout() {
   }
 }
 
-// 白色文字样式（用于深色背景：暗黑主题、顶部布局、混合布局）
+// 白色文字样式(用于深色背景: 暗黑主题、顶部布局、混合布局)
 .navbar-actions--white-text {
   .navbar-actions__item {
     :deep([class^="i-svg:"]) {
@@ -385,7 +385,7 @@ function logout() {
   }
 }
 
-// 深色文字样式（用于浅色背景：明亮主题下的左侧布局）
+// 深色文字样式(用于浅色背景: 明亮主题下的左侧布局)
 .navbar-actions--dark-text {
   .navbar-actions__item {
     :deep([class^="i-svg:"]) {

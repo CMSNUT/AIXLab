@@ -302,7 +302,7 @@ class SchedulerUtil:
 
         # 使用类变量中的Redis连接
         if not cls.redis_instance:
-            log.error(f"任务 {job_id} 执行失败：Redis连接未初始化")
+            log.error(f"任务 {job_id} 执行失败: Redis连接未初始化")
             return None
 
         redis_client = RedisCURD(redis=cls.redis_instance)
@@ -323,7 +323,7 @@ class SchedulerUtil:
                     if success:
                         log.info(f"任务 {job_id} 锁续约成功")
                     else:
-                        log.warning(f"任务 {job_id} 锁续约失败：锁可能已被其他实例获取")
+                        log.warning(f"任务 {job_id} 锁续约失败: 锁可能已被其他实例获取")
                         break
             except asyncio.CancelledError:
                 log.info(f"任务 {job_id} 锁续约任务已取消")
@@ -376,7 +376,7 @@ class SchedulerUtil:
         根据任务配置创建并添加调度任务。
 
         参数:
-        - job_info (JobModel): 任务对象信息（包含触发器、函数、参数等）。
+        - job_info (JobModel): 任务对象信息(包含触发器、函数、参数等)。
 
         返回:
         - Job: 新增的任务对象。
@@ -389,7 +389,7 @@ class SchedulerUtil:
             module = importlib.import_module(module_path)
             job_func = getattr(module, func_name)
 
-            # 2. 确定任务存储器：优先使用redis，确保分布式环境中任务同步
+            # 2. 确定任务存储器: 优先使用redis，确保分布式环境中任务同步
             if job_info.jobstore is None:
                 job_info.jobstore = "redis"  # 改为默认使用redis存储
 
@@ -405,7 +405,7 @@ class SchedulerUtil:
             # 4. 创建触发器
             trigger = None
             if job_info.trigger is None or job_info.trigger.lower() == "now":
-                # 立即执行作业：省略trigger或使用'now'时，使用date触发器立即执行
+                # 立即执行作业: 省略trigger或使用'now'时，使用date触发器立即执行
                 trigger = DateTrigger(run_date=datetime.now())
             elif job_info.trigger == "date":
                 if job_info.trigger_args is None:
@@ -421,7 +421,7 @@ class SchedulerUtil:
                 second, minute, hour, day, week = tuple(
                     int(field) if field != "*" else 0 for field in fields
                 )
-                # 秒、分、时、天、周（* * * * 1）
+                # 秒、分、时、天、周(* * * * 1)
                 trigger = IntervalTrigger(
                     weeks=week,
                     days=day,
@@ -464,7 +464,7 @@ class SchedulerUtil:
             else:
                 raise ValueError("无效的 trigger 触发器")
 
-            # 5. 添加任务（使用包装器函数）
+            # 5. 添加任务(使用包装器函数)
             # 处理任务参数，确保空参数时返回空列表
             job_args = []
             if job_info.args:
@@ -487,9 +487,9 @@ class SchedulerUtil:
             log.info(f"任务 {job_info.id} 添加到 {job_info.jobstore} 存储器成功")
             return job
         except ModuleNotFoundError:
-            raise ValueError(f"未找到该模块：{module_path}")
+            raise ValueError(f"未找到该模块: {module_path}")
         except AttributeError:
-            raise ValueError(f"未找到该模块下的方法：{func_name}")
+            raise ValueError(f"未找到该模块下的方法: {func_name}")
         except Exception as e:
             raise CustomException(msg=f"添加任务失败: {e!s}")
 
@@ -521,7 +521,7 @@ class SchedulerUtil:
     @classmethod
     def modify_job(cls, job_id: str | int) -> Job:
         """
-        更新指定任务的配置（运行中的任务下次执行生效）。
+        更新指定任务的配置(运行中的任务下次执行生效)。
 
         参数:
         - job_id (str | int): 任务ID。
@@ -534,13 +534,13 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise CustomException(msg=f"未找到该任务：{job_id}")
+            raise CustomException(msg=f"未找到该任务: {job_id}")
         return scheduler.modify_job(job_id=str(job_id))
 
     @classmethod
     def pause_job(cls, job_id: str | int) -> None:
         """
-        暂停指定任务（仅运行中可暂停，已终止不可）。
+        暂停指定任务(仅运行中可暂停，已终止不可)。
 
         参数:
         - job_id (str | int): 任务ID。
@@ -553,13 +553,13 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise ValueError(f"未找到该任务：{job_id}")
+            raise ValueError(f"未找到该任务: {job_id}")
         scheduler.pause_job(job_id=str(job_id))
 
     @classmethod
     def resume_job(cls, job_id: str | int) -> None:
         """
-        恢复指定任务（仅暂停中可恢复，已终止不可）。
+        恢复指定任务(仅暂停中可恢复，已终止不可)。
 
         参数:
         - job_id (str | int): 任务ID。
@@ -572,7 +572,7 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise ValueError(f"未找到该任务：{job_id}")
+            raise ValueError(f"未找到该任务: {job_id}")
         scheduler.resume_job(job_id=str(job_id))
 
     @classmethod
@@ -584,7 +584,7 @@ class SchedulerUtil:
 
         参数:
         - job_id (str | int): 任务ID。
-        - trigger: 触发器类型（'date', 'interval', 'cron'）
+        - trigger: 触发器类型('date', 'interval', 'cron')
         - **trigger_args: 触发器参数
 
         返回:
@@ -595,7 +595,7 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise CustomException(msg=f"未找到该任务：{job_id}")
+            raise CustomException(msg=f"未找到该任务: {job_id}")
 
         # 如果没有提供新的触发器，则使用现有触发器
         if trigger is None:
@@ -615,7 +615,7 @@ class SchedulerUtil:
         - job_id (str | int): 任务ID
 
         返回:
-        - str: 任务状态（'running' | 'paused' | 'stopped' | 'unknown'）
+        - str: 任务状态('running' | 'paused' | 'stopped' | 'unknown')
         """
         job = cls.get_job(job_id=str(job_id))
         if not job:
@@ -651,7 +651,7 @@ class SchedulerUtil:
         获取调度器当前状态。
 
         返回:
-        - str: 状态字符串（'stopped' | 'running' | 'paused' | 'unknown'）。
+        - str: 状态字符串('stopped' | 'running' | 'paused' | 'unknown')。
         """
         if scheduler.state == 0:
             return "stopped"
@@ -677,7 +677,7 @@ class SchedulerUtil:
         """
         job = cls.get_job(job_id=str(job_id))
         if not job:
-            raise ValueError(f"未找到该任务：{job_id}")
+            raise ValueError(f"未找到该任务: {job_id}")
 
         # 立即执行任务
         scheduler.modify_job(job_id=str(job_id), next_run_time=datetime.now())

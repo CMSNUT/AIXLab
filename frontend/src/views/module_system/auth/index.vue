@@ -15,7 +15,7 @@
     </div>
     <!-- 登录页主体 -->
     <div class="auth-view__wrapper">
-      <!-- 可选：左侧产品介绍区域，如不需要可整段删除，右侧登录表单会自动居中展示 -->
+      <!-- 可选: 左侧产品介绍区域，如不需要可整段删除，右侧登录表单会自动居中展示 -->
       <section class="auth-feature">
         <div class="auth-feature__badge">
           <span class="auth-feature__dot" />
@@ -142,7 +142,7 @@ const formComponents = {
   resetPwd: defineAsyncComponent(() => import("./components/ResetPwd.vue")),
 };
 
-// 预填登录信息（通过具名 v-model 双向绑定传递）
+// 预填登录信息(通过具名 v-model 双向绑定传递)
 const loginPreset = reactive<{ username: string; password: string }>({
   username: "admin",
   password: "123456",
@@ -376,7 +376,7 @@ onBeforeUnmount(() => {
   animation: panelLift 0.7s ease;
 }
 
-/* 应用内暗黑主题（例如 html/body 上挂 .dark 类）下的登录表单样式 */
+/* 应用内暗黑主题(例如 html/body 上挂 .dark 类)下的登录表单样式 */
 .dark .auth-panel {
   background: rgba(26, 32, 48, 0.9);
   border-color: rgba(86, 140, 255, 0.28);

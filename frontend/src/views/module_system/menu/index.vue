@@ -454,7 +454,7 @@
                 <el-tooltip placement="bottom" effect="light">
                   <template #content>
                     定义应用中不同页面对应的 URL 路径，目录需以 /
-                    开头，菜单项不用。例如：系统管理目录 /system，系统管理下的用户管理菜单 user。
+                    开头，菜单项不用。例如: 系统管理目录 /system，系统管理下的用户管理菜单 user。
                   </template>
                   <el-icon class="ml-1 cursor-pointer">
                     <QuestionFilled />
@@ -462,7 +462,7 @@
                 </el-tooltip>
               </div>
             </template>
-            <el-input v-model="formData.route_path" placeholder="请输入路由路径,如：/system" />
+            <el-input v-model="formData.route_path" placeholder="请输入路由路径,如: /system" />
           </el-form-item>
 
           <el-form-item v-if="formData.type == MenuTypeEnum.MENU" prop="component">
@@ -830,7 +830,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   loadingData();
 }

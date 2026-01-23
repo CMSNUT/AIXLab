@@ -165,7 +165,7 @@ const nodes = ref([
   {
     id: "6",
     type: "custom", // 使用自定义类型
-    data: { label: "工位：流程1" },
+    data: { label: "工位: 流程1" },
     position: { x: 200, y: 200 },
     class: "light",
   },
@@ -234,7 +234,7 @@ const onEdgeClick = ({ edge }) => {
 function updateEdge() {
   // 获取当前所有的边
   const allEdges = getEdges.value;
-  // 切换边类型：根据当前类型来切换
+  // 切换边类型: 根据当前类型来切换
   const newType = selectedEdge.value.type === "smoothstep" ? null : "smoothstep";
   // 更新选中边的类型
   setEdges([
@@ -263,7 +263,7 @@ const selectedNode = ref({}); // 存储选中的节点
 const onNodeClick = ({ node }) => {
   selectedNode.value = node; // 更新选中的节点
   updateState.value = "node";
-  console.log("选中的节点：", node);
+  console.log("选中的节点: ", node);
 };
 
 function removeNode() {
@@ -297,7 +297,7 @@ const dragItem = ref(null);
 function onDragStart(event, state) {
   dragItem.value = {
     id: `node-${Date.now()}`, // 动态生成唯一 id
-    data: { label: state === "开始" ? "开始" : state === "结束" ? "结束" : "工位：" + state },
+    data: { label: state === "开始" ? "开始" : state === "结束" ? "结束" : "工位: " + state },
     type: state === "开始" ? "input" : state === "结束" ? "output" : "custom",
     position: { x: event.clientX, y: event.clientY },
     animated: false,

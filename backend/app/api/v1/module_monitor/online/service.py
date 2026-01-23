@@ -18,7 +18,7 @@ class OnlineService:
         cls, redis: Redis, search: OnlineQueryParam | None = None
     ) -> list[dict]:
         """
-        获取在线用户列表信息（支持分页和搜索）
+        获取在线用户列表信息(支持分页和搜索)
 
         参数:
         - redis (Redis): Redis异步客户端实例。

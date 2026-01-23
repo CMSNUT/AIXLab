@@ -161,7 +161,7 @@ class Jinja2TemplateUtil:
 
         # 验证必要的参数
         if not module_name or not business_name:
-            raise ValueError(f"无法为模板 {template} 生成文件名：模块名或业务名未设置")
+            raise ValueError(f"无法为模板 {template} 生成文件名: 模块名或业务名未设置")
 
         # 映射表方式简化
         template_mapping = {
@@ -194,7 +194,7 @@ class Jinja2TemplateUtil:
         返回:
         - str: 包前缀。
         """
-        # 修复：当包名中不存在'.'时，直接返回原包名
+        # 修复: 当包名中不存在'.'时，直接返回原包名
         return package_name[: package_name.rfind(".")] if "." in package_name else package_name
 
     @classmethod
@@ -286,7 +286,7 @@ class Jinja2TemplateUtil:
         - column_type (str): 字段类型字符串。
 
         返回:
-        - str: 数据库类型（去除长度等修饰）。
+        - str: 数据库类型(去除长度等修饰)。
         """
         if "(" in column_type:
             return column_type.split("(")[0]
@@ -405,7 +405,7 @@ class Jinja2TemplateUtil:
             column_type = column.column_type or ""
             column_length = column.column_length or None
 
-        # 首先尝试匹配完整类型（包括括号）
+        # 首先尝试匹配完整类型(包括括号)
         sqlalchemy_type = StringUtil.get_mapping_value_by_key_ignore_case(
             GenConstant.DB_TO_SQLALCHEMY, column_type
         )

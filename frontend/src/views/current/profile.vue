@@ -11,7 +11,7 @@
           </template>
           <div class="user-info-header">
             <div class="avatar-alert mb-10px">
-              <!-- 提示：头像上传成功后请点击“保存更改”按钮才会生效 -->
+              <!-- 提示: 头像上传成功后请点击“保存更改”按钮才会生效 -->
               <el-alert
                 type="info"
                 show-icon

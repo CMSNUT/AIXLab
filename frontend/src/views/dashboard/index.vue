@@ -339,11 +339,11 @@ const welcome = "祝你开心每一天！";
 
 interface VersionItem {
   id: string;
-  title: string; // 版本标题（如：v2.4.0）
+  title: string; // 版本标题(如: v2.4.0)
   date: string; // 发布时间
   content: string; // 版本描述
   link: string; // 详情链接
-  tag?: string; // 版本标签（可选）
+  tag?: string; // 版本标签(可选)
 }
 
 const userStore = useUserStore();
@@ -421,7 +421,7 @@ const transitionTotalPvCount = useTransition(
   }
 );
 
-// 访问趋势日期范围（单位：天）
+// 访问趋势日期范围(单位: 天)
 const visitTrendDateRange = ref(7);
 // 访问趋势图表配置
 const visitTrendChartOptions = ref();

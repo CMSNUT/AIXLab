@@ -477,7 +477,7 @@ class DictDataService:
         if not exist_obj:
             raise CustomException(msg="更新失败，该字典数据不存在")
 
-        # 检查相同字典类型下dict_label是否已存在（排除当前记录）
+        # 检查相同字典类型下dict_label是否已存在(排除当前记录)
         if exist_obj.dict_label != data.dict_label:
             exist_label_obj = await DictDataCRUD(auth).get(
                 dict_type=data.dict_type, dict_label=data.dict_label
@@ -487,7 +487,7 @@ class DictDataService:
                     msg=f'更新失败，该字典类型下的字典标签"{data.dict_label}"已存在'
                 )
 
-        # 检查相同字典类型下dict_value是否已存在（排除当前记录）
+        # 检查相同字典类型下dict_value是否已存在(排除当前记录)
         if exist_obj.dict_value != data.dict_value:
             exist_value_obj = await DictDataCRUD(auth).get(
                 dict_type=data.dict_type, dict_value=data.dict_value

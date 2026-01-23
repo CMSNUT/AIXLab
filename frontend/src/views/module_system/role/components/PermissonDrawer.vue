@@ -233,7 +233,7 @@ const init = async () => {
       await permTreeRef.value.setCheckedKeys(permissionState.value.menu_ids);
     }
 
-    // 修改：增加对 deptTreeRef.value 的存在性判断，并添加日志
+    // 修改: 增加对 deptTreeRef.value 的存在性判断，并添加日志
     if (permissionState.value.data_scope === 5 && deptTreeRef.value) {
       // await 一定不能丢，否则到导致初始化时候deptTreeRef.value 为 undefined
       await deptTreeRef.value.setCheckedKeys(permissionState.value.dept_ids);

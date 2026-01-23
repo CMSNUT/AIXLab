@@ -137,7 +137,7 @@ const router = useRouter();
 // 组件挂载时获取验证码
 onMounted(() => getCaptcha());
 
-// 组件激活时获取验证码（适用于KeepAlive缓存的情况）
+// 组件激活时获取验证码(适用于KeepAlive缓存的情况)
 onActivated(() => {
   getCaptcha();
   // 重置登录表单
@@ -304,7 +304,7 @@ function resolveRedirectTarget(query: LocationQuery): RouteLocationRaw {
       query: resolved.query,
     };
   } catch {
-    // 7. 异常处理：返回安全路径
+    // 7. 异常处理: 返回安全路径
     return { path: defaultPath };
   }
 }

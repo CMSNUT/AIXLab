@@ -70,7 +70,7 @@ export const usePlotStore = defineStore('plot', () => {
       
       plotResult.value = result
       
-      // 添加到历史记录（最多保存10条）
+      // 添加到历史记录(最多保存10条)
       if (result.success) {
         plotHistory.value.unshift({
           id: Date.now(),

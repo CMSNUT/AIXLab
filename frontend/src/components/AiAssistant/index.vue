@@ -15,7 +15,7 @@
       <div class="i-svg:ai ai-icon" />
     </el-button>
 
-    <!-- 收缩态：贴边小标签，避免遮挡表单控件 -->
+    <!-- 收缩态: 贴边小标签，避免遮挡表单控件 -->
     <div
       v-if="!dialogVisible && fabCollapsed"
       class="ai-fab-tab"
@@ -47,7 +47,7 @@
           v-model="command"
           type="textarea"
           :rows="3"
-          placeholder="试试说：打开角色管理页面&#10;或者：跳转到用户管理&#10;按 Ctrl+Enter 快速发送"
+          placeholder="试试说: 打开角色管理页面&#10;或者: 跳转到用户管理&#10;按 Ctrl+Enter 快速发送"
           :disabled="loading"
           @keydown.ctrl.enter="handleExecute"
         />
@@ -55,7 +55,7 @@
 
       <!-- 快捷命令示例 -->
       <div class="quick-commands">
-        <div class="section-title">💡 试试这些命令：</div>
+        <div class="section-title">💡 试试这些命令: </div>
         <el-tag
           v-for="example in examples"
           :key="example"
@@ -72,33 +72,33 @@
 
         <!-- 将要执行的操作 -->
         <div v-if="response.action" class="action-preview">
-          <div class="action-title">🎯 将要执行：</div>
+          <div class="action-title">🎯 将要执行: </div>
           <div class="action-content">
             <div v-if="response.action.type === 'navigate'">
               <el-icon><Position /></el-icon>
-              跳转到：
+              跳转到: 
               <strong>{{ response.action.pageName }}</strong>
               <span v-if="response.action.query" class="query-info">
-                并搜索：
+                并搜索: 
                 <el-tag type="warning" size="small">{{ response.action.query }}</el-tag>
               </span>
             </div>
             <div v-if="response.action.type === 'navigate-and-execute'">
               <el-icon><Position /></el-icon>
-              跳转至：
+              跳转至: 
               <strong>{{ response.action.pageName }}</strong>
               <span v-if="response.action.query" class="query-info">
-                并搜索：
+                并搜索: 
                 <el-tag type="warning" size="small">{{ response.action.query }}</el-tag>
               </span>
               <el-divider direction="vertical" />
               <el-icon><Tools /></el-icon>
-              执行：
+              执行: 
               <strong>{{ response.action.functionCall.name }}</strong>
             </div>
             <div v-if="response.action.type === 'execute'">
               <el-icon><Tools /></el-icon>
-              执行：
+              执行: 
               <strong>{{ response.action.functionName }}</strong>
             </div>
           </div>
@@ -130,7 +130,7 @@ type ToolFunctionCall = {
   arguments: Record<string, any>;
 };
 
-// 统一的动作描述（区分“跳转”、“跳转+执行”、“仅执行”三种场景）
+// 统一的动作描述(区分“跳转”、“跳转+执行”、“仅执行”三种场景)
 type AiAction =
   | {
       type: "navigate";
@@ -372,13 +372,13 @@ const routeConfig = [
   { keywords: ["日志", "log"], path: "/system/log", name: "系统日志" },
 ];
 
-// 根据函数名推断路由（如 getUserInfo -> /system/user）
+// 根据函数名推断路由(如 getUserInfo -> /system/user)
 const normalizeText = (text: string) => text.replace(/\s+/g, " ").trim().toLowerCase();
 
 const inferRouteFromFunction = (functionName: string) => {
   const fnLower = normalizeText(functionName);
   for (const config of routeConfig) {
-    // 检查函数名是否包含关键词（如 getUserInfo 包含 user）
+    // 检查函数名是否包含关键词(如 getUserInfo 包含 user)
     if (config.keywords.some((kw) => fnLower.includes(kw.toLowerCase()))) {
       return { path: config.path, name: config.name };
     }
@@ -491,7 +491,7 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
   if (primaryCall && functionName) {
     const fnNameLower = functionName.toLowerCase();
 
-    // 1) 查询类函数（query/search/list/get）-> 跳转并执行筛选操作
+    // 1) 查询类函数(query/search/list/get)-> 跳转并执行筛选操作
     const isQueryFunction =
       fnNameLower.includes("query") ||
       fnNameLower.includes("search") ||
@@ -499,7 +499,7 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
       fnNameLower.includes("get");
 
     if (isQueryFunction) {
-      // 统一使用 keywords 参数（约定大于配置）
+      // 统一使用 keywords 参数(约定大于配置)
       const args = (primaryCall.arguments || {}) as Record<string, unknown>;
       const keywords =
         typeof args.keywords === "string" && args.keywords.trim().length > 0
@@ -517,7 +517,7 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
       }
     }
 
-    // 2) 其他操作类函数（修改/删除/创建/更新等）-> 跳转并执行
+    // 2) 其他操作类函数(修改/删除/创建/更新等)-> 跳转并执行
     const isModifyFunction =
       fnNameLower.includes("update") ||
       fnNameLower.includes("modify") ||
@@ -567,13 +567,13 @@ const parseAction = (result: any, rawCommand: string): AiAction | null => {
   return null;
 };
 
-// 定时器引用（用于清理）
+// 定时器引用(用于清理)
 let navigationTimer: ReturnType<typeof setTimeout> | null = null;
 let executeTimer: ReturnType<typeof setTimeout> | null = null;
 
 // 执行操作
 const executeAction = async (action: AiAction) => {
-  // 🎯 新增：跳转并执行操作
+  // 🎯 新增: 跳转并执行操作
   if (action.type === "navigate-and-execute") {
     ElMessage.success(`正在跳转到 ${action.pageName} 并执行操作...`);
 
@@ -621,7 +621,7 @@ const executeAction = async (action: AiAction) => {
       // 如果已经在目标页面
       if (action.query) {
         // 有查询关键字，直接在当前页面执行搜索
-        ElMessage.info(`您已在 ${action.pageName} 页面，为您执行搜索：${action.query}`);
+        ElMessage.info(`您已在 ${action.pageName} 页面，为您执行搜索: ${action.query}`);
 
         // 触发路由更新，让页面执行搜索
         router.replace({

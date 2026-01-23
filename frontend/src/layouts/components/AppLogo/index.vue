@@ -55,7 +55,7 @@ defineProps({
   }
 }
 
-// 宽屏时：openSidebar 状态下显示完整Logo+文字
+// 宽屏时: openSidebar 状态下显示完整Logo+文字
 .openSidebar {
   &.layout-top .layout__header-left .logo,
   &.layout-mix .layout__header-logo .logo {
@@ -63,7 +63,7 @@ defineProps({
   }
 }
 
-// 窄屏时：hideSidebar 状态下只显示Logo图标
+// 窄屏时: hideSidebar 状态下只显示Logo图标
 .hideSidebar {
   &.layout-top .layout__header-left .logo,
   &.layout-mix .layout__header-logo .logo {

@@ -365,10 +365,10 @@ const handleWebSocketMessage = (data: any) => {
     lastMessage.content += data.content || data.message || "";
 
     // 保持加载状态，直到收到完整响应
-    // 注意：如果后端会发送特定的结束信号，需要根据实际情况调整
-    // 例如：if (data.finish_reason || data.is_complete) { lastMessage.loading = false; }
+    // 注意: 如果后端会发送特定的结束信号，需要根据实际情况调整
+    // 例如: if (data.finish_reason || data.is_complete) { lastMessage.loading = false; }
   } else {
-    // 添加新的助手消息（仅当没有加载中的助手消息时）
+    // 添加新的助手消息(仅当没有加载中的助手消息时)
     addMessage("assistant", data.content || data.message || "收到回复");
   }
 
@@ -382,7 +382,7 @@ const sendMessage = async () => {
     return;
   }
 
-  // 结束上一条助手消息的加载状态（如果存在）
+  // 结束上一条助手消息的加载状态(如果存在)
   const lastMessage = messages.value[messages.value.length - 1];
   if (lastMessage && lastMessage.type === "assistant" && lastMessage.loading) {
     lastMessage.loading = false;

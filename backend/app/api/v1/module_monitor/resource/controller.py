@@ -45,11 +45,11 @@ async def get_directory_list_controller(
     返回:
     - JSONResponse: 包含目录列表的JSON响应。
     """
-    # 获取资源列表（与案例模块保持一致的分页实现）
+    # 获取资源列表(与案例模块保持一致的分页实现)
     result_dict_list = await ResourceService.get_resources_list_service(
         search=search, base_url=str(request.base_url)
     )
-    # 使用分页服务进行分页处理（与案例模块保持一致）
+    # 使用分页服务进行分页处理(与案例模块保持一致)
     result_dict = await PaginationService.paginate(
         data_list=result_dict_list,
         page_no=page.page_no,

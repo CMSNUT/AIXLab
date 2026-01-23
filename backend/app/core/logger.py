@@ -14,9 +14,9 @@ _logger_handlers = []
 
 class InterceptHandler(logging.Handler):
     """
-    日志拦截处理器：将所有 Python 标准日志重定向到 Loguru
+    日志拦截处理器: 将所有 Python 标准日志重定向到 Loguru
 
-    工作原理：
+    工作原理: 
     1. 继承自 logging.Handler
     2. 重写 emit 方法处理日志记录
     3. 将标准库日志转换为 Loguru 格式
@@ -60,7 +60,7 @@ def setup_logging() -> None:
     """
     配置日志系统
 
-    功能：
+    功能: 
     1. 控制台彩色输出
     2. 文件日志轮转
     3. 错误日志单独存储
@@ -69,10 +69,10 @@ def setup_logging() -> None:
 
     # 添加上下文信息
     _ = logger.configure(extra={"app_name": "AIXLab"})
-    # 步骤1：移除默认处理器
+    # 步骤1: 移除默认处理器
     logger.remove()
 
-    # 步骤2：定义日志格式
+    # 步骤2: 定义日志格式
     log_format = (
         # 时间信息
         "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | "
@@ -84,16 +84,16 @@ def setup_logging() -> None:
         "<level>{message}</level>"
     )
 
-    # 步骤3：配置控制台输出
+    # 步骤3: 配置控制台输出
     handler_id = logger.add(sys.stdout, format=log_format, level=settings.LOGGER_LEVEL)
     _logger_handlers.append(handler_id)
 
-    # 步骤4：创建日志目录
+    # 步骤4: 创建日志目录
     log_dir = LOG_DIR
     # 确保日志目录存在,如果不存在则创建
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    # 步骤5：配置常规日志文件
+    # 步骤5: 配置常规日志文件
     handler_id = logger.add(
         str(log_dir / "info.log"),
         format=log_format,
@@ -105,7 +105,7 @@ def setup_logging() -> None:
     )
     _logger_handlers.append(handler_id)
 
-    # 步骤6：配置错误日志文件
+    # 步骤6: 配置错误日志文件
     handler_id = logger.add(
         str(log_dir / "error.log"),
         format=log_format,
@@ -119,11 +119,11 @@ def setup_logging() -> None:
     )
     _logger_handlers.append(handler_id)
 
-    # 步骤7：配置标准库日志
+    # 步骤7: 配置标准库日志
     logging.basicConfig(handlers=[InterceptHandler()], level=settings.LOGGER_LEVEL, force=True)
     logger_name_list = list(logging.root.manager.loggerDict)
 
-    # 步骤8：配置第三方库日志
+    # 步骤8: 配置第三方库日志
     for logger_name in logger_name_list:
         logger_ = logging.getLogger(logger_name)
         logger_.handlers = [InterceptHandler()]

@@ -194,8 +194,8 @@
           <div class="instructions">
             <h3>快速开始:</h3>
             <ol>
-              <li>选择编程语言（Python或R）</li>
-              <li>选择绘图类型（散点图、折线图等）</li>
+              <li>选择编程语言(Python或R)</li>
+              <li>选择绘图类型(散点图、折线图等)</li>
               <li>点击"生成图表"按钮</li>
               <li>查看右侧生成的图表</li>
             </ol>

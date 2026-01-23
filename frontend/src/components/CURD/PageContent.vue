@@ -722,7 +722,7 @@ function handleImports() {
             worksheet.getRow(1).eachCell((cell) => {
               fields.push(cell.value);
             });
-            // 遍历工作表的每一行（从第二行开始，因为第一行通常是标题行）
+            // 遍历工作表的每一行(从第二行开始，因为第一行通常是标题行)
             for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
               const rowData: IObject = {};
               const row = worksheet.getRow(rowNumber);

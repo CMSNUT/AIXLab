@@ -26,7 +26,7 @@ class InitializeData:
         """
         初始化数据库和基础数据
         """
-        # 按照依赖关系排序：先创建基础表，再创建关联表
+        # 按照依赖关系排序: 先创建基础表，再创建关联表
         self.prepare_init_models = [
             MenuModel,
             ParamsModel,
@@ -41,7 +41,7 @@ class InitializeData:
 
     async def __init_create_table(self) -> None:
         """
-        初始化表结构（第一阶段）
+        初始化表结构(第一阶段)
         """
         try:
             # 使用引擎创建所有表
@@ -72,7 +72,7 @@ class InitializeData:
             existing_count = count_result.scalar()
             if existing_count and existing_count > 0:
                 log.warning(
-                    f"⚠️  跳过 {table_name} 表数据初始化（表已存在 {existing_count} 条记录）"
+                    f"⚠️  跳过 {table_name} 表数据初始化(表已存在 {existing_count} 条记录)"
                 )
                 continue
 
@@ -152,7 +152,7 @@ class InitializeData:
         读取初始化数据文件
 
         参数:
-        - filename (str): 文件名（不包含扩展名）。
+        - filename (str): 文件名(不包含扩展名)。
 
         返回:
         - list[dict]: 解析后的 JSON 数据列表。

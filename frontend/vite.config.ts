@@ -23,7 +23,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const isProduction = mode === "production";
 
   return {
-    base: "/web",
+    base: "/",
     resolve: {
       alias: {
         "@": pathSrc,
@@ -46,7 +46,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       proxy: {
         // 代理 /dev-api 的请求
         [env.VITE_APP_BASE_API]: {
-          target: env.VITE_API_BASE_URL, // 代理目标地址：https://后端地址
+          target: env.VITE_API_BASE_URL, // 代理目标地址: https://后端地址
           secure: false, // 请求是否https
           changeOrigin: true, // 是否跨域
           // rewrite: (path: string) => path.replace(new RegExp("^" + env.VITE_APP_BASE_API), ""),
@@ -58,10 +58,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       UnoCSS(),
       // API 自动导入
       AutoImport({
-        // 导入 Vue 函数，如：ref, reactive, toRef 等
+        // 导入 Vue 函数，如: ref, reactive, toRef 等
         imports: ["vue", "@vueuse/core", "pinia", "vue-router", "vue-i18n"],
         resolvers: [
-          // 导入 Element Plus函数，如：ElMessage, ElMessageBox 等
+          // 导入 Element Plus函数，如: ElMessage, ElMessageBox 等
           ElementPlusResolver({ importStyle: "sass" }),
         ],
         eslintrc: {

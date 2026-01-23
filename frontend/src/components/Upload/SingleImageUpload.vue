@@ -69,7 +69,7 @@ const props = defineProps({
     default: "file",
   },
   /**
-   * 最大文件大小（单位：M）
+   * 最大文件大小(单位: M)
    */
   maxFileSize: {
     type: Number,
@@ -77,7 +77,7 @@ const props = defineProps({
   },
 
   /**
-   * 上传图片格式，默认支持所有图片(image/*)，指定格式示例：'.png,.jpg,.jpeg,.gif,.bmp'
+   * 上传图片格式，默认支持所有图片(image/*)，指定格式示例: '.png,.jpg,.jpeg,.gif,.bmp'
    */
   accept: {
     type: String,
@@ -183,7 +183,7 @@ const emit = defineEmits<{
  * 限制用户上传文件的格式和大小
  */
 function handleBeforeUpload(file: UploadRawFile) {
-  // 校验文件类型：虽然 accept 属性限制了用户在文件选择器中可选的文件类型，但仍需在上传时再次校验文件实际类型，确保符合 accept 的规则
+  // 校验文件类型: 虽然 accept 属性限制了用户在文件选择器中可选的文件类型，但仍需在上传时再次校验文件实际类型，确保符合 accept 的规则
   const acceptTypes = props.accept.split(",").map((type) => type.trim());
 
   // 检查文件格式是否符合 accept
@@ -201,7 +201,7 @@ function handleBeforeUpload(file: UploadRawFile) {
   });
 
   if (!isValidType) {
-    ElMessage.warning(`上传文件的格式不正确，仅支持：${props.accept}`);
+    ElMessage.warning(`上传文件的格式不正确，仅支持: ${props.accept}`);
     return false;
   }
 

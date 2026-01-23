@@ -1,11 +1,11 @@
 # 项目规划
 - 前后端分离
-- 前端：vue3 + vite + element-plus + pinia + router
+- 前端: vue3 + vite + element-plus + pinia + router
 - 后端: FastAPI + plumber + MySQL
 
 ## 项目需求
 - 后端数据管理的前端界面
-- 后端分为：主服务 fastapi + 子服务 fastapi + plumber
+- 后端分为: 主服务 fastapi + 子服务 fastapi + plumber
 
 ## 项目结构
 ```text
@@ -13,7 +13,7 @@ AIXLAB\
 |
 ```
 
-# 主后端（FastAPI主后端）依赖
+# 主后端(FastAPI主后端)依赖
 
 ## Web框架和服务器
 - fastapi[all]
@@ -22,21 +22,21 @@ AIXLAB\
 ## 数据库连接和ORM
 - sqlalchemy
 - aiomysql 用于异步MySQL
-- databases（SQLAlchemy的异步支持）
+- databases(SQLAlchemy的异步支持)
 
 ## 认证和安全性
 - passlib[bcrypt]
-- python-jose[cryptography]（用于JWT令牌）
-- python-multipart （用于表单数据，包括文件上传）
-- email-validator（用于验证邮箱格式）
+- python-jose[cryptography](用于JWT令牌)
+- python-multipart (用于表单数据，包括文件上传)
+- email-validator(用于验证邮箱格式)
 
 ## 配置和环境变量
-- pydantic（FastAPI已经依赖）
+- pydantic(FastAPI已经依赖)
 - python-dotenv
 
 ## 异步任务和消息队列
-- celery（如果需要分布式任务队列）
-- redis（作为celery的broker）
+- celery(如果需要分布式任务队列)
+- redis(作为celery的broker)
 
 ## 安装
 ```bash
@@ -48,7 +48,7 @@ pip freeze > G:\\AIXLAB\\backend\\main_backend\\requirements.txt
 conda deactivate
 ```
 
-# 子服务端：py314_service
+# 子服务端: py314_service
 ## 功能包
 # Python科学计算相关功能包分类汇总
 
@@ -71,7 +71,7 @@ conda deactivate
 | [Bokeh](https://bokeh.org/) | 交互式可视化库，适合Web应用 |
 | [Altair](https://altair-viz.github.io/) | 声明式统计可视化库，基于Vega-Lite |
 
-## 🤖 机器学习（传统+通用深度学习）
+## 🤖 机器学习(传统+通用深度学习)
 ### 模型构建
 | 包的名称及官方/核心链接 | 功能简介 |
 |---|---|
@@ -124,22 +124,22 @@ conda deactivate
 | [Captum](https://captum.ai/) | PyTorch模型解释库 |
 
 ## 🧪 化学计量学
-### 基础化学计量学包（已列出）
+### 基础化学计量学包(已列出)
 | 包的名称及官方/核心链接 | 功能简介 |
 |---|---|
 | [chemometrics](https://pypi.org/project/chemometrics/) | 化学计量学专用包，封装PCA、PLS等多元统计方法，适配化学数据。 |
 | [PyChem](http://pychem.sourceforge.net/) | 多元分析化学计量学工具 |
 | [mdatools](https://mdatools.readthedocs.io/) | 多元数据分析工具包 |
 
-### 🔬 MCR-ALS（多元曲线分辨-交替最小二乘）
+### 🔬 MCR-ALS(多元曲线分辨-交替最小二乘)
 | 包的名称及官方/核心链接 | 功能简介 |
 |---|---|
-| [pyMCR](https://github.com/CCampJr/PyMCR) | 多元曲线分辨率（MCR）Python实现，支持ALS、NMF等多种算法 |
+| [pyMCR](https://github.com/CCampJr/PyMCR) | 多元曲线分辨率(MCR)Python实现，支持ALS、NMF等多种算法 |
 | [MCRpy](https://github.com/NEFM-TUDresden/MCRpy) | MCR-ALS算法的另一种实现，专注于光谱数据解析 |
 | [hyperspy](https://hyperspy.org/) | 电子显微镜数据分析库，包含MCR-ALS等多元分析功能 |
 | [Spectra](https://spectra.readthedocs.io/) | 光谱处理库，支持MCR等化学计量学方法 |
 
-### 📊 2DCOS（二维相关光谱）
+### 📊 2DCOS(二维相关光谱)
 | 包的名称及官方/核心链接 | 功能简介 |
 |---|---|
 | [py2Dcos](https://github.com/jianboq/py2Dcos) | 二维相关光谱分析的Python实现 |
@@ -152,7 +152,7 @@ conda deactivate
 | [scikit-chem](https://github.com/lewisacidic/scikit-chem) | 化学信息学和化学计量学库，扩展scikit-learn |
 | [ChemometricsTools](https://github.com/HegemanLab/ChemometricsTools) | 化学计量学工具集，包含PLS-DA、OPLS等 |
 | [PyPLS](https://pypi.org/project/PyPLS/) | 偏最小二乘回归的Python实现 |
-| [orthogonal-PLS](https://github.com/CEA-CESTA/orthogonal-PLS) | 正交偏最小二乘（OPLS）算法实现 |
+| [orthogonal-PLS](https://github.com/CEA-CESTA/orthogonal-PLS) | 正交偏最小二乘(OPLS)算法实现 |
 
 ### 📊 谱图处理
 | 包的名称及官方/核心链接 | 功能简介 |
@@ -187,8 +187,8 @@ conda deactivate
 | [MoleculeNet](https://moleculenet.org/) | 分子机器学习基准数据集 |
 | [TorchDrug](https://torchdrug.ai/) | 基于PyTorch的药物发现深度学习库，封装分子生成、对接、性质预测等专用模型。 |
 | [ChemBERTa](https://huggingface.co/seyonec/ChemBERTa-zinc-base-v1) | 基于BERT的分子SMILES序列预训练模型，适配分子性质预测、生成任务。 |
-| [DGL-LifeSci](https://lifesci.dgl.ai/) | 深度图库（DGL）的生命科学分支，专注分子图神经网络（GNN），支持分子图建模。 |
-| [Chemprop](https://github.com/chemprop/chemprop) | 基于PyTorch的分子性质预测库，专为小分子性质（活性、溶解度）预测优化。 |
+| [DGL-LifeSci](https://lifesci.dgl.ai/) | 深度图库(DGL)的生命科学分支，专注分子图神经网络(GNN)，支持分子图建模。 |
+| [Chemprop](https://github.com/chemprop/chemprop) | 基于PyTorch的分子性质预测库，专为小分子性质(活性、溶解度)预测优化。 |
 | [Equiformer](https://github.com/atomicarchitects/equiformer-pytorch) | 3D分子结构的等变Transformer模型，精准建模分子空间结构与性质的关系。 |
 | [GeoMol](https://github.com/jensengroup/geomol) | 3D分子生成模型，支持从2D SMILES生成合理的3D分子构象，适配药物分子设计。 |
 | [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/) | 图神经网络库，用于分子表示 |
@@ -201,7 +201,7 @@ conda deactivate
 | [ASE](https://wiki.fysik.dtu.dk/ase/) | 原子模拟环境，支持分子动力学、量子化学计算、晶体结构优化。 |
 | [FireWorks](https://materialsproject.github.io/fireworks/) | 高通量计算工作流管理 |
 | [Matminer](https://hackingmaterials.lbl.gov/matminer/) | 材料信息学数据挖掘工具 |
-| [SchNetPack](https://schnetpack.readthedocs.io/) | 基于PyTorch的深度学习包，专注材料分子性质预测（能量、弹性模量等）。 |
+| [SchNetPack](https://schnetpack.readthedocs.io/) | 基于PyTorch的深度学习包，专注材料分子性质预测(能量、弹性模量等)。 |
 | [AtomicSimulator](https://github.com/AtomicSimulator/AtomicSimulator) | 轻量级原子模拟包，支持材料分子结构优化、分子动力学模拟，适配小分子材料设计。 |
 | [PyXAID](https://github.com/CMS-KULeuven/PyXAID) | 材料分子激发态计算工具，支持光化学/光物理性质模拟，适配光电材料分子设计。 |
 | [MatDeepLearn](https://github.com/ulissigroup/matdeeplearn) | 材料深度学习工具 |
@@ -212,14 +212,14 @@ conda deactivate
 | 包的名称及官方/核心链接 | 功能简介 |
 |---|---|
 | [papermill](https://papermill.readthedocs.io/) | 批量执行Jupyter Notebook，整合代码/结果到论文草稿，实现可复现的论文写作。 |
-| [pylatex](https://jelmerro.github.io/PyLaTeX/) | Python生成LaTeX代码，自动化构建论文结构（摘要/图表/参考文献），适配LaTeX撰写。 |
-| [pandoc](https://pandoc.org/) | 格式转换工具（Python可调用），支持Markdown/LaTeX/Word/PDF互转，适配论文多格式输出。 |
+| [pylatex](https://jelmerro.github.io/PyLaTeX/) | Python生成LaTeX代码，自动化构建论文结构(摘要/图表/参考文献)，适配LaTeX撰写。 |
+| [pandoc](https://pandoc.org/) | 格式转换工具(Python可调用)，支持Markdown/LaTeX/Word/PDF互转，适配论文多格式输出。 |
 | [Jupyter](https://jupyter.org/) | 交互式笔记本，支持代码、文本和可视化 |
 | [Manim](https://www.manim.community/) | 数学动画引擎，创建解释性视频 |
-| [Graphviz](https://graphviz.org/) | 流程图核心工具，Python接口（pydot/graphviz）支持绘制结构化流程图、算法框图，符合学术规范。 |
-| [Mermaid](https://mermaid.js.org/) | 文本式绘图工具（Python可调用），用简单语法绘制流程图/时序图，可嵌入Jupyter/LaTeX，轻量化易维护。 |
-| [drawSvg](https://drawsvg.readthedocs.io/) | 纯Python绘制SVG矢量图，精准控制图形元素，适合绘制自定义科学示意图（分子结构/实验装置）。 |
-| [Inkscape](https://inkscape.org/)（Python接口：inkex） | 矢量图编辑工具，Python接口支持高精度科学示意图绘制，导出高分辨率PDF适配论文。 |
+| [Graphviz](https://graphviz.org/) | 流程图核心工具，Python接口(pydot/graphviz)支持绘制结构化流程图、算法框图，符合学术规范。 |
+| [Mermaid](https://mermaid.js.org/) | 文本式绘图工具(Python可调用)，用简单语法绘制流程图/时序图，可嵌入Jupyter/LaTeX，轻量化易维护。 |
+| [drawSvg](https://drawsvg.readthedocs.io/) | 纯Python绘制SVG矢量图，精准控制图形元素，适合绘制自定义科学示意图(分子结构/实验装置)。 |
+| [Inkscape](https://inkscape.org/)(Python接口: inkex) | 矢量图编辑工具，Python接口支持高精度科学示意图绘制，导出高分辨率PDF适配论文。 |
 | [Diagrams](https://diagrams.mingrammer.com/) | 用Python代码绘制云系统架构图 |
 | [NetworkX](https://networkx.org/) | 复杂网络分析、设计和可视化 |
 

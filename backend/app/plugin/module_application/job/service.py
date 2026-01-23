@@ -161,7 +161,7 @@ class JobService:
             SchedulerUtil().resume_job(job_id=id)
             await JobCRUD(auth).set_obj_field_crud(ids=[id], status="0")  # 更新为运行状态(0)
         elif option == 3:
-            # 重启任务：先移除再添加，确保使用最新的任务配置
+            # 重启任务: 先移除再添加，确保使用最新的任务配置
             SchedulerUtil().remove_job(job_id=id)
             # 获取最新的任务配置
             updated_job = await JobCRUD(auth).get_obj_by_id_crud(id=id)

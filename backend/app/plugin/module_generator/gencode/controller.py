@@ -217,7 +217,7 @@ async def batch_gen_code_controller(
     - StreamResponse: 包含批量生成代码的ZIP文件流响应
     """
     batch_gen_code_result = await GenTableService.batch_gen_code_service(auth, table_names)
-    log.info(f"批量生成代码成功,表名列表：{table_names}")
+    log.info(f"批量生成代码成功,表名列表: {table_names}")
     return StreamResponse(
         data=bytes2file_response(batch_gen_code_result),
         media_type="application/zip",
@@ -245,7 +245,7 @@ async def gen_code_local_controller(
     - JSONResponse: 包含生成结果的JSON响应
     """
     result = await GenTableService.generate_code_service(auth, table_name)
-    log.info(f"生成代码,表名：{table_name},到指定路径成功")
+    log.info(f"生成代码,表名: {table_name},到指定路径成功")
     return SuccessResponse(msg="生成代码到指定路径成功", data=result)
 
 
@@ -265,7 +265,7 @@ async def preview_code_controller(
     - JSONResponse: 包含预览代码的JSON响应
     """
     preview_code_result = await GenTableService.preview_code_service(auth, table_id)
-    log.info(f"预览代码,表id：{table_id},成功")
+    log.info(f"预览代码,表id: {table_id},成功")
     return SuccessResponse(data=preview_code_result, msg="预览代码成功")
 
 
@@ -285,5 +285,5 @@ async def sync_db_controller(
     - JSONResponse: 包含同步数据库结果的JSON响应
     """
     result = await GenTableService.sync_db_service(auth, table_name)
-    log.info(f"同步数据库,表名：{table_name},成功")
+    log.info(f"同步数据库,表名: {table_name},成功")
     return SuccessResponse(msg="同步数据库成功", data=result)

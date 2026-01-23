@@ -4,7 +4,7 @@ from app.core.logger import log
 
 def worship(env: str) -> None:
     """
-    获取项目启动Banner（优先读取 banner.txt）
+    获取项目启动Banner(优先读取 banner.txt)
     """
     if BANNER_FILE.exists():
         banner = BANNER_FILE.read_text(encoding="utf-8")

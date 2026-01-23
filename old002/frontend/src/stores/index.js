@@ -9,7 +9,7 @@ import { createPinia } from 'pinia'
 // 创建 Pinia 实例
 const pinia = createPinia()
 
-// Pinia 插件示例（如果需要）
+// Pinia 插件示例(如果需要)
 pinia.use(({ store }) => {
   // 添加自定义方法到所有 store
   store.$reset = () => {
@@ -103,7 +103,7 @@ export const createStoreHelpers = () => {
   }
 }
 
-// 状态存储类型定义（用于 TypeScript 或文档）
+// 状态存储类型定义(用于 TypeScript 或文档)
 export const StoreTypes = {
   PLOT: 'plot',
   HEALTH: 'health'

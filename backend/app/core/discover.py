@@ -1,7 +1,7 @@
 """
 简化的动态路由发现与注册
 
-约定：
+约定: 
 - 扫描 `app.plugin` 下所有以 `module_` 开头的顶级目录
 - 在各模块任意子目录下的 `controller.py` 中定义的 `APIRouter` 实例会自动被注册
 - 顶级目录 `module_xxx` 会映射为容器路由前缀 `/<xxx>`

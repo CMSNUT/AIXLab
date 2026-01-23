@@ -66,7 +66,7 @@ const JobAPI = {
     });
   },
 
-  // 获取定时任务运行日志（实时状态）
+  // 获取定时任务运行日志(实时状态)
   getJobRunLog() {
     return request<ApiResponse<JobRunLog[]>>({
       url: `${API_PATH}/log`,
@@ -183,7 +183,7 @@ export interface JobForm extends BaseFormType {
   end_date?: string;
 }
 
-// 定时任务运行日志接口（对应Scheduler实时状态）
+// 定时任务运行日志接口(对应Scheduler实时状态)
 export interface JobRunLog extends BaseType {
   name: string;
   trigger: string;
@@ -198,7 +198,7 @@ export interface JobRunLog extends BaseType {
   next_run_time: string;
 }
 
-// 定时任务日志详情接口（对应数据库日志表）
+// 定时任务日志详情接口(对应数据库日志表)
 export interface JobLogDetail extends BaseType {
   job_name: string;
   job_group: string;
@@ -211,7 +211,7 @@ export interface JobLogDetail extends BaseType {
   exception_info?: string;
 }
 
-// 定时任务日志列表接口（对应数据库日志表）
+// 定时任务日志列表接口(对应数据库日志表)
 export interface JobLogTable extends BaseType {
   job_name: string;
   job_group: string;

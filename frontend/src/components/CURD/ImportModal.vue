@@ -172,13 +172,13 @@ const props = withDefaults(defineProps<ImportModalProps>(), {
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel",
   limit: 1,
   showTemplateDownload: true,
-  note: "注意事项：",
+  note: "注意事项: ",
   fileTypeWarning: "格式为*.xlsx / *.xls，文件不超过 5MB",
   uploadFileName: "file",
   uploadData: () => ({}),
 });
 
-// 定义模型值（控制弹窗显示/隐藏）
+// 定义模型值(控制弹窗显示/隐藏)
 const importModalVisible = defineModel<boolean>("modelValue", {
   required: true,
   default: false,
@@ -284,7 +284,7 @@ const handleUpload = async () => {
     emit("upload", formData, file);
   } catch (error: any) {
     console.error("上传失败:", error);
-    ElMessage.error("上传失败：" + error.message || error);
+    ElMessage.error("上传失败: " + error.message || error);
     emit("import-fail", error);
   } finally {
     loading.value = false;

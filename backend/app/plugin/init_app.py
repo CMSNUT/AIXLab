@@ -180,7 +180,7 @@ def register_files(app: FastAPI) -> None:
 
 def reset_api_docs(app: FastAPI) -> None:
     """
-    使用本地静态资源自定义 API 文档页面（Swagger UI 与 ReDoc）。
+    使用本地静态资源自定义 API 文档页面(Swagger UI 与 ReDoc)。
 
     参数:
     - app (FastAPI): FastAPI 应用实例。

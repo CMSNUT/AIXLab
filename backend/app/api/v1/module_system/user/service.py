@@ -160,12 +160,12 @@ class UserService:
         exist_user = await UserCRUD(auth).get_by_username_crud(username=data.username)
         if exist_user and exist_user.id != id:
             raise CustomException(msg="已存在相同的账号")
-        # 新增：检查手机号是否重复
+        # 新增: 检查手机号是否重复
         if data.mobile:
             exist_mobile_user = await UserCRUD(auth).get_by_mobile_crud(mobile=data.mobile)
             if exist_mobile_user and exist_mobile_user.id != id:
                 raise CustomException(msg="更新失败，手机号已存在")
-        # 新增：检查邮箱是否重复
+        # 新增: 检查邮箱是否重复
         if data.email:
             exist_email_user = await UserCRUD(auth).get(email=data.email)
             if exist_email_user and exist_email_user.id != id:
@@ -318,12 +318,12 @@ class UserService:
             raise CustomException(msg="用户不存在")
         if user.is_superuser:
             raise CustomException(msg="超级管理员不能修改个人信息")
-        # 新增：检查手机号是否重复
+        # 新增: 检查手机号是否重复
         if data.mobile:
             exist_mobile_user = await UserCRUD(auth).get_by_mobile_crud(mobile=data.mobile)
             if exist_mobile_user and exist_mobile_user.id != auth.user.id:
                 raise CustomException(msg="更新失败，手机号已存在")
-        # 新增：检查邮箱是否重复
+        # 新增: 检查邮箱是否重复
         if data.email:
             exist_email_user = await UserCRUD(auth).get(email=data.email)
             if exist_email_user and exist_email_user.id != auth.user.id:

@@ -1,17 +1,17 @@
 import { ThemeMode } from "@/enums";
 
-// 辅助函数：将十六进制颜色转换为 RGB
+// 辅助函数: 将十六进制颜色转换为 RGB
 function hexToRgb(hex: string): [number, number, number] {
   const bigint = parseInt(hex.slice(1), 16);
   return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
 }
 
-// 辅助函数：将 RGB 转换为十六进制颜色
+// 辅助函数: 将 RGB 转换为十六进制颜色
 function rgbToHex(r: number, g: number, b: number): string {
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 
-// 辅助函数：调整颜色亮度
+// 辅助函数: 调整颜色亮度
 /** function adjustBrightness(hex: string, factor: number, theme: string): string {
   const rgb = hexToRgb(hex);
   // 是否是暗黑模式

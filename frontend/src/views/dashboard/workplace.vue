@@ -26,7 +26,7 @@
 
     <div class="mt-4">
       <ElRow :gutter="16" justify="space-between">
-        <!-- 左侧：进行中的项目 + 动态 -->
+        <!-- 左侧: 进行中的项目 + 动态 -->
         <ElCol :xl="16" :lg="16" :md="24" :sm="24" :xs="24">
           <!-- 进行中的项目 -->
           <ElCard shadow="hover" title="进行中的项目">
@@ -154,7 +154,7 @@
           </ElCard>
         </ElCol>
 
-        <!-- 右侧：快速开始 / 便捷导航 + XX 指数 -->
+        <!-- 右侧: 快速开始 / 便捷导航 + XX 指数 -->
         <ElCol :xl="8" :lg="8" :md="12" :sm="12" :xs="24">
           <!-- 快速开始 / 便捷导航 -->
           <ElCard shadow="hover" class="mb-4">
@@ -331,7 +331,7 @@ const handleQuickLinkClick = (item: QuickLink) => {
     router.push(item.href).catch(() => {
       ElMessage.warning(`路由 ${item.href} 不存在，请检查配置`);
     });
-    ElMessage.success(`进入：${item.title}`);
+    ElMessage.success(`进入: ${item.title}`);
   } else {
     ElMessage.info(`${item.title} 功能待开发`);
   }
@@ -365,7 +365,7 @@ const handleDeleteLink = (item: QuickLink) => {
     .then(() => {
       if (item.id) {
         quickStartManager.removeQuickLink(item.id);
-        ElMessage.success(`已取消收藏：${item.title}`);
+        ElMessage.success(`已取消收藏: ${item.title}`);
       }
     })
     .catch(() => {

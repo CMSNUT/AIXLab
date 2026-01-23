@@ -224,7 +224,7 @@ const isFirstView = (tag?: TagView) => {
     // 传入特定标签时使用传入的标签
     return tag.path === "/" || tag.fullPath === visitedViews.value[1]?.fullPath;
   } else {
-    // 未传入标签时使用当前激活标签（向后兼容）
+    // 未传入标签时使用当前激活标签(向后兼容)
     const currentTag = routePathMap.get(route.path);
     if (!currentTag) return false;
     return currentTag.path === "/" || currentTag.fullPath === visitedViews.value[1]?.fullPath;
@@ -237,7 +237,7 @@ const isLastView = (tag?: TagView) => {
     // 传入特定标签时使用传入的标签
     return tag.fullPath === visitedViews.value[visitedViews.value.length - 1]?.fullPath;
   } else {
-    // 未传入标签时使用当前激活标签（向后兼容）
+    // 未传入标签时使用当前激活标签(向后兼容)
     const currentTag = routePathMap.get(route.path);
     if (!currentTag) return false;
     return currentTag.fullPath === visitedViews.value[visitedViews.value.length - 1]?.fullPath;
@@ -303,14 +303,14 @@ const addCurrentTag = () => {
     // 如果标签已存在，根据来源决定是否移动位置
     if (!existingTag.affix) {
       if (tagSwitchSource.value === "menu") {
-        // 通过菜单点击：移动到最新位置
+        // 通过菜单点击: 移动到最新位置
         const index = visitedViews.value.findIndex((tag) => tag.path === route.path);
         if (index !== -1) {
           const tag = visitedViews.value.splice(index, 1)[0];
           visitedViews.value.push(tag);
         }
       }
-      // 通过标签容器点击：不移动位置，只激活
+      // 通过标签容器点击: 不移动位置，只激活
     }
   } else {
     // 添加新标签
@@ -328,12 +328,12 @@ const addCurrentTag = () => {
 
   // 根据来源决定是否滚动
   if (tagSwitchSource.value === "menu") {
-    // 通过菜单点击：滚动到最新标签
+    // 通过菜单点击: 滚动到最新标签
     nextTick(() => {
       autoScrollToLatestTag();
     });
   }
-  // 通过标签容器点击：不滚动，保持当前位置
+  // 通过标签容器点击: 不滚动，保持当前位置
 
   // 重置来源状态
   tagSwitchSource.value = null;
@@ -371,7 +371,7 @@ const handleMiddleClick = (tag: TagView) => {
 };
 
 /**
- * 处理滚轮事件（优化后）
+ * 处理滚轮事件(优化后)
  */
 const handleScroll = (event: WheelEvent) => {
   const scrollWrapper = scrollbarRef.value?.wrapRef;
@@ -539,7 +539,7 @@ const handleAction = async (action: string) => {
       break;
     case "refreshCache":
       try {
-        // 1) 刷新服务端缓存（用户/权限/配置/公告/按需字典）并重建路由
+        // 1) 刷新服务端缓存(用户/权限/配置/公告/按需字典)并重建路由
         await refreshAppCaches();
         // 2) 软刷新当前页面，重新加载组件
         refreshSelectedTag(currentTag);
@@ -577,18 +577,18 @@ const toggleQuickStart = (tag: TagView) => {
     const isExists = quickStartManager.isLinkExists(href);
 
     if (isExists) {
-      // 取消收藏：找到对应的链接并删除
+      // 取消收藏: 找到对应的链接并删除
       const links = quickStartManager.getQuickLinks();
       const targetLink = links.find((link) => link.href === href);
       if (targetLink?.id) {
         quickStartManager.removeQuickLink(targetLink.id);
-        ElMessage.success(`已取消收藏：${tag.title}`);
+        ElMessage.success(`已取消收藏: ${tag.title}`);
       }
     } else {
       // 添加收藏
       const quickLink = quickStartManager.createQuickLinkFromRoute(tag);
       quickStartManager.addQuickLink(quickLink);
-      ElMessage.success(`已收藏：${tag.title}`);
+      ElMessage.success(`已收藏: ${tag.title}`);
     }
   } catch (error) {
     console.error("Failed to toggle quick start:", error);
@@ -656,7 +656,7 @@ const autoScrollToLatestTag = () => {
   const containerWidth = scrollWrapper.clientWidth;
   const contentWidth = scrollWrapper.scrollWidth;
 
-  // 判断容器是否已满（内容宽度是否超过容器宽度）
+  // 判断容器是否已满(内容宽度是否超过容器宽度)
   const isContainerFull = contentWidth > containerWidth;
 
   // 查找当前激活的标签元素
@@ -725,7 +725,7 @@ watch(
 // 监听容器大小变化
 let resizeObserver: ResizeObserver | null = null;
 
-// 监听标签数量变化，自动滚动到最新标签（新标签添加时）
+// 监听标签数量变化，自动滚动到最新标签(新标签添加时)
 watch(
   () => visitedViews.value.length,
   () => {

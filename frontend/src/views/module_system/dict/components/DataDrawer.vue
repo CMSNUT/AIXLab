@@ -133,7 +133,7 @@
         </div>
       </div>
 
-      <!-- 表格区域：系统配置列表 -->
+      <!-- 表格区域: 系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -311,7 +311,7 @@
               allow-create
               default-first-option
             >
-              <!-- Element Plus 常用主题色（十六进制） -->
+              <!-- Element Plus 常用主题色(十六进制) -->
               <el-option value="#409EFF" label="蓝色-Primary (#409EFF)" />
               <el-option value="#67C23A" label="绿色-Success (#67C23A)" />
               <el-option value="#E6A23C" label="橙色-Warning (#E6A23C)" />
@@ -513,7 +513,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -692,7 +692,7 @@ const exportColumns = [
   { prop: "updated_time", label: "更新时间" },
 ];
 
-// 导出配置（用于导出弹窗）
+// 导出配置(用于导出弹窗)
 const curdContentConfig = {
   permPrefix: "module_system:dict_data",
   cols: exportColumns as any,

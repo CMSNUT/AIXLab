@@ -205,7 +205,7 @@
         </div>
       </div>
 
-      <!-- 表格区域：系统配置列表 -->
+      <!-- 表格区域: 系统配置列表 -->
       <el-table
         ref="tableRef"
         v-loading="loading"
@@ -654,7 +654,7 @@ const tableColumns = ref([
   { prop: "operation", label: "操作", show: true },
 ]);
 
-// 仅用于导出字段的列（排除非数据列及嵌套对象列）
+// 仅用于导出字段的列(排除非数据列及嵌套对象列)
 const exportColumns = [
   { prop: "name", label: "名称" },
   { prop: "uuid", label: "UUID" },
@@ -801,7 +801,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -884,7 +884,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
   dialogVisible.visible = true;
 }
 
-// 提交表单（防抖）
+// 提交表单(防抖)
 async function handleSubmit() {
   // 表单校验
   dataFormRef.value.validate(async (valid: any) => {

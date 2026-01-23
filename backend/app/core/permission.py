@@ -52,16 +52,16 @@ class Permission:
         """
         应用数据范围权限隔离
         基于角色的五种数据权限范围过滤
-        支持五种权限类型：
+        支持五种权限类型: 
         1. 仅本人数据权限 - 只能查看自己创建的数据
         2. 本部门数据权限 - 只能查看同部门的数据
         3. 本部门及以下数据权限 - 可以查看本部门及所有子部门的数据
         4. 全部数据权限 - 可以查看所有数据
         5. 自定义数据权限 - 通过role_dept_relation表定义可访问的部门列表
 
-        权限处理原则：
-        - 多个角色的权限取并集（最宽松原则）
-        - 优先级：全部数据 > 部门权限（2、3、5的并集）> 仅本人
+        权限处理原则: 
+        - 多个角色的权限取并集(最宽松原则)
+        - 优先级: 全部数据 > 部门权限(2、3、5的并集)> 仅本人
         - 构造权限过滤表达式，返回None表示不限制
         """
         # 如果不需要检查数据权限,则不限制
@@ -90,31 +90,31 @@ class Permission:
 
         # 获取用户所有角色的权限范围
         data_scopes = set()
-        custom_dept_ids = set()  # 自定义权限（data_scope=5）关联的部门ID集合
+        custom_dept_ids = set()  # 自定义权限(data_scope=5)关联的部门ID集合
 
         for role in roles:
             data_scopes.add(role.data_scope)
-            # 收集自定义权限（data_scope=5）关联的部门ID
+            # 收集自定义权限(data_scope=5)关联的部门ID
             if role.data_scope == self.DATA_SCOPE_CUSTOM and hasattr(role, "depts") and role.depts:
                 custom_dept_ids.update(dept.id for dept in role.depts)
 
-        # 权限优先级处理：全部数据权限最高优先级
+        # 权限优先级处理: 全部数据权限最高优先级
         if self.DATA_SCOPE_ALL in data_scopes:
             return None
 
-        # 收集所有可访问的部门ID（2、3、5权限的并集）
+        # 收集所有可访问的部门ID(2、3、5权限的并集)
         accessible_dept_ids = set()
         user_dept_id = getattr(self.auth.user, "dept_id", None)
 
-        # 处理自定义数据权限（5）
+        # 处理自定义数据权限(5)
         if self.DATA_SCOPE_CUSTOM in data_scopes:
             accessible_dept_ids.update(custom_dept_ids)
 
-        # 处理本部门数据权限（2）
+        # 处理本部门数据权限(2)
         if self.DATA_SCOPE_DEPT in data_scopes and user_dept_id is not None:
             accessible_dept_ids.add(user_dept_id)
 
-        # 处理本部门及以下数据权限（3）
+        # 处理本部门及以下数据权限(3)
         if self.DATA_SCOPE_DEPT_AND_CHILD in data_scopes and user_dept_id is not None:
             try:
                 # 查询所有部门并递归获取子部门
@@ -129,26 +129,26 @@ class Permission:
                 # 查询失败时降级到本部门
                 accessible_dept_ids.add(user_dept_id)
 
-        # 如果有部门权限（2、3、5任一），使用部门过滤
+        # 如果有部门权限(2、3、5任一)，使用部门过滤
         if accessible_dept_ids:
             creator_rel = getattr(self.model, "created_by", None)
-            # 优先使用关系过滤（性能更好）
+            # 优先使用关系过滤(性能更好)
             if creator_rel is not None and hasattr(UserModel, "dept_id"):
                 return creator_rel.has(UserModel.dept_id.in_(list(accessible_dept_ids)))
-            # 降级方案：如果模型没有created_by关系但有created_id，则只能查看自己的数据
+            # 降级方案: 如果模型没有created_by关系但有created_id，则只能查看自己的数据
             created_id_attr = getattr(self.model, "created_id", None)
             if created_id_attr is not None:
                 return created_id_attr == self.auth.user.id
             return None
 
-        # 处理仅本人数据权限（1）
+        # 处理仅本人数据权限(1)
         if self.DATA_SCOPE_SELF in data_scopes:
             created_id_attr = getattr(self.model, "created_id", None)
             if created_id_attr is not None:
                 return created_id_attr == self.auth.user.id
             return None
 
-        # 默认情况：如果用户有角色但没有任何有效权限范围，只能查看自己的数据
+        # 默认情况: 如果用户有角色但没有任何有效权限范围，只能查看自己的数据
         created_id_attr = getattr(self.model, "created_id", None)
         if created_id_attr is not None:
             return created_id_attr == self.auth.user.id

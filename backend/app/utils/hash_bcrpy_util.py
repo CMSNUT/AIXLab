@@ -95,7 +95,7 @@ class AESCipher:
         - plaintext (bytes | str): 加密前的明文。
 
         返回:
-        - bytes: 加密后的密文（前16字节为随机IV）。
+        - bytes: 加密后的密文(前16字节为随机IV)。
         """
         if not isinstance(plaintext, bytes):
             plaintext = str(plaintext).encode("utf-8")
@@ -172,7 +172,7 @@ class ItsDCipher:
         - plaintext (Any): 加密前的明文。
 
         返回:
-        - str: 加密后的密文（URL安全）。
+        - str: 加密后的密文(URL安全)。
 
         异常:
         - Exception: 加密失败时使用 MD5 作为降级，错误已记录。

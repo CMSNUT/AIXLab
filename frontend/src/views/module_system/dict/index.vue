@@ -163,7 +163,7 @@
         </div>
       </div>
 
-      <!-- 表格区域：系统配置列表 -->
+      <!-- 表格区域: 系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -531,7 +531,7 @@ async function loadingData() {
   }
 }
 
-// 查询（重置页码后获取数据）
+// 查询(重置页码后获取数据)
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -702,7 +702,7 @@ const exportColumns = [
   { prop: "updated_time", label: "更新时间" },
 ];
 
-// 导出配置（用于导出弹窗）
+// 导出配置(用于导出弹窗)
 const curdContentConfig = {
   permPrefix: "module_system:dict_type",
   cols: exportColumns as any,

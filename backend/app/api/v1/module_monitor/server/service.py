@@ -133,7 +133,7 @@ class ServerService:
                     DiskInfoSchema(
                         dir_name=mount_point,  # 使用mountpoint替代device
                         sys_type_name=partition.fstype,
-                        type_name=f"本地固定磁盘（{mount_point}）",
+                        type_name=f"本地固定磁盘({mount_point})",
                         total=bytes2human(usage.total),
                         used=bytes2human(usage.used),
                         free=bytes2human(usage.free),
@@ -151,10 +151,10 @@ class ServerService:
         计算运行时间
 
         参数:
-        - start_time (float): 进程启动时间（时间戳）
+        - start_time (float): 进程启动时间(时间戳)
 
         返回:
-        - str: 格式化后的运行时间字符串（例如："1天2小时3分钟"）
+        - str: 格式化后的运行时间字符串(例如: "1天2小时3分钟")
         """
         difference = time.time() - start_time
         days = int(difference // (24 * 60 * 60))

@@ -82,7 +82,7 @@ const menuThemeProps = computed(() => {
 const activeMenuPath = computed((): string => {
   const { meta, path } = currentRoute;
 
-  // 如果路由meta中设置了activeMenu，则使用它（用于处理一些特殊情况，如详情页）
+  // 如果路由meta中设置了activeMenu，则使用它(用于处理一些特殊情况，如详情页)
   if (meta?.activeMenu && typeof meta.activeMenu === "string") {
     return meta.activeMenu;
   }
@@ -105,7 +105,7 @@ function resolveFullPath(routePath: string) {
     return props.basePath;
   }
 
-  // 如果 basePath 为空（顶部布局），直接返回 routePath
+  // 如果 basePath 为空(顶部布局)，直接返回 routePath
   if (!props.basePath || props.basePath === "") {
     return routePath;
   }
@@ -143,7 +143,7 @@ watch(
 );
 
 /**
- * 监听菜单模式变化：当菜单模式切换为水平模式时，关闭所有展开的菜单项，
+ * 监听菜单模式变化: 当菜单模式切换为水平模式时，关闭所有展开的菜单项，
  * 避免在水平模式下菜单项显示错位。
  */
 watch(
