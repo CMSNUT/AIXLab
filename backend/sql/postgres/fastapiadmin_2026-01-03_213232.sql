@@ -3375,8 +3375,8 @@ COPY public.sys_notice (notice_title, notice_type, notice_content, id, uuid, sta
 --
 
 COPY public.sys_param (config_name, config_key, config_value, config_type, id, uuid, status, description, created_time, updated_time) FROM stdin;
-网站名称	sys_web_title	FastApiAdmin	t	1	c27c73a7-59b3-4942-a6a5-c1014a48ba31	0	初始化数据	2026-01-03 21:32:18.923106	2026-01-03 21:32:18.923107
-网站描述	sys_web_description	FastApiAdmin 是完全开源的权限管理系统	t	2	83e5866f-6926-4b27-a323-c8b5457535e6	0	初始化数据	2026-01-03 21:32:18.923111	2026-01-03 21:32:18.923112
+网站名称	sys_web_title	AIXLab	t	1	c27c73a7-59b3-4942-a6a5-c1014a48ba31	0	初始化数据	2026-01-03 21:32:18.923106	2026-01-03 21:32:18.923107
+网站描述	sys_web_description	AIXLab 是完全开源的权限管理系统	t	2	83e5866f-6926-4b27-a323-c8b5457535e6	0	初始化数据	2026-01-03 21:32:18.923111	2026-01-03 21:32:18.923112
 网页图标	sys_web_favicon	https://service.aixlab.com/api/v1/static/image/favicon.png	t	3	32ce1f34-f4c2-4b41-9845-f937cc385017	0	初始化数据	2026-01-03 21:32:18.923115	2026-01-03 21:32:18.923115
 网站Logo	sys_web_logo	https://service.aixlab.com/api/v1/static/image/logo.png	t	4	d8b9b7e3-c501-4f3c-a71b-94e44d319069	0	初始化数据	2026-01-03 21:32:18.923118	2026-01-03 21:32:18.923118
 登录背景	sys_login_background	https://service.aixlab.com/api/v1/static/image/background.svg	t	5	92713ea5-6fa8-4adc-ac7b-5e2a6ab80704	0	初始化数据	2026-01-03 21:32:18.923121	2026-01-03 21:32:18.923122

@@ -18,7 +18,7 @@ async def health_check() -> JSONResponse:
     services_status = {
         "main_service": "healthy",
         "py314_service": "unknown",
-        "r_service": "unknown"
+        "r452_service": "unknown"
     }
 
     # 检查Python分析服务
