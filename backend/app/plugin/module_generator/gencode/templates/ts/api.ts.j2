@@ -29,7 +29,7 @@ const {{ class_name }}API = {
     });
   },
 
-  // 修改(带主键)
+  // 修改（带主键）
   update{{ class_name }}(id: number, body: {{ class_name }}Form) {
     return request<ApiResponse>({
       url: `${API_PATH}/update/${id}`,
@@ -38,7 +38,7 @@ const {{ class_name }}API = {
     });
   },
 
-  // 删除(支持批量)
+  // 删除（支持批量）
   delete{{ class_name }}(ids: number[]) {
     return request<ApiResponse>({
       url: `${API_PATH}/delete`,

@@ -89,7 +89,7 @@ class GenUtils:
             else:
                 column.html_type = GenConstant.HTML_INPUT
 
-        # 只有当is_insert为None时才设置插入字段(默认所有字段都需要插入)
+        # 只有当is_insert为None时才设置插入字段（默认所有字段都需要插入）
         if column.is_insert:
             column.is_insert = GenConstant.REQUIRE
         else:
@@ -119,7 +119,7 @@ class GenUtils:
             and not column.is_pk
         ):
             column.is_query = GenConstant.REQUIRE
-            # 直接设置查询类型, 因为我们已经确定这是一个查询字段
+            # 直接设置查询类型，因为我们已经确定这是一个查询字段
             if column_name.lower().endswith("name") or data_type in [
                 "varchar",
                 "char",
@@ -137,8 +137,8 @@ class GenUtils:
         """
         检查目标值是否在数组中
 
-        注意: 从根本上解决问题, 现在确保传入的参数都是正确的类型: 
-        - arr 是列表类型, 且在GenConstant中定义
+        注意：从根本上解决问题，现在确保传入的参数都是正确的类型：
+        - arr 是列表类型，且在GenConstant中定义
         - target_value 不会是None
 
         参数:
@@ -146,14 +146,14 @@ class GenUtils:
         - target_value: 目标值
 
         返回:
-        - bool: 如果目标值在数组中, 返回True；否则返回False
+        - bool: 如果目标值在数组中，返回True；否则返回False
         """
-        # 从根本上解决问题, 不再需要复杂的防御性检查
+        # 从根本上解决问题，不再需要复杂的防御性检查
         # 因为现在我们确保传入的arr是GenConstant中定义的列表常量
         # 并且target_value在调用前已经被处理过不会是None
 
-        # 对于包含括号的类型(如TINYINT(1)), 需要特殊处理
-        # 先获取基本类型名称(不含括号)用于比较
+        # 对于包含括号的类型（如TINYINT(1)），需要特殊处理
+        # 先获取基本类型名称（不含括号）用于比较
         target_str = str(target_value).lower()
         target_base_type = target_str.split("(")[0] if "(" in target_str else target_str
 
@@ -205,7 +205,7 @@ class GenUtils:
         返回:
         - str: 数据库类型。
         """
-        # 特殊处理tinyint(1), 保留括号和长度信息以便识别为布尔类型
+        # 特殊处理tinyint(1)，保留括号和长度信息以便识别为布尔类型
         if column_type.lower().startswith("tinyint(1)"):
             return column_type
         if "(" in column_type:
@@ -218,10 +218,10 @@ class GenUtils:
         获取字段长度
 
         参数:
-        - column_type (str): 字段类型, 例如 'varchar(255)' 或 'decimal(10,2)'
+        - column_type (str): 字段类型，例如 'varchar(255)' 或 'decimal(10,2)'
 
         返回:
-        - int: 字段长度(优先取第一个长度值, 无法解析时返回0)。
+        - int: 字段长度（优先取第一个长度值，无法解析时返回0）。
         """
         if "(" in column_type:
             length = len(column_type.split("(")[1].split(")")[0])

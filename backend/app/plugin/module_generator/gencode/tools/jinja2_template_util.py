@@ -161,7 +161,7 @@ class Jinja2TemplateUtil:
 
         # 验证必要的参数
         if not module_name or not business_name:
-            raise ValueError(f"无法为模板 {template} 生成文件名: 模块名或业务名未设置")
+            raise ValueError(f"无法为模板 {template} 生成文件名：模块名或业务名未设置")
 
         # 映射表方式简化
         template_mapping = {
@@ -180,7 +180,7 @@ class Jinja2TemplateUtil:
             if key in template:
                 return path
 
-        # 遍历完所有映射都没找到匹配项, 才抛出异常
+        # 遍历完所有映射都没找到匹配项，才抛出异常
         raise ValueError(f"未找到模板 '{template}' 的路径映射")
 
     @classmethod
@@ -194,7 +194,7 @@ class Jinja2TemplateUtil:
         返回:
         - str: 包前缀。
         """
-        # 修复: 当包名中不存在'.'时, 直接返回原包名
+        # 修复：当包名中不存在'.'时，直接返回原包名
         return package_name[: package_name.rfind(".")] if "." in package_name else package_name
 
     @classmethod
@@ -210,7 +210,7 @@ class Jinja2TemplateUtil:
         has_datetime_type = False
 
         for column in columns:
-            # 处理嵌套的datetime类型, 如datetime.date、datetime.time、datetime.datetime
+            # 处理嵌套的datetime类型，如datetime.date、datetime.time、datetime.datetime
             if (
                 column.python_type.startswith("datetime.")
                 or column.python_type in GenConstant.TYPE_DATE
@@ -222,7 +222,7 @@ class Jinja2TemplateUtil:
         if gen_table.sub and gen_table.sub_table and gen_table.sub_table.columns:
             sub_columns = gen_table.sub_table.columns or []
             for sub_column in sub_columns:
-                # 处理嵌套的datetime类型, 如datetime.date、datetime.time、datetime.datetime
+                # 处理嵌套的datetime类型，如datetime.date、datetime.time、datetime.datetime
                 if (
                     sub_column.python_type.startswith("datetime.")
                     or sub_column.python_type in GenConstant.TYPE_DATE
@@ -286,7 +286,7 @@ class Jinja2TemplateUtil:
         - column_type (str): 字段类型字符串。
 
         返回:
-        - str: 数据库类型(去除长度等修饰)。
+        - str: 数据库类型（去除长度等修饰）。
         """
         if "(" in column_type:
             return column_type.split("(")[0]
@@ -405,13 +405,13 @@ class Jinja2TemplateUtil:
             column_type = column.column_type or ""
             column_length = column.column_length or None
 
-        # 首先尝试匹配完整类型(包括括号)
+        # 首先尝试匹配完整类型（包括括号）
         sqlalchemy_type = StringUtil.get_mapping_value_by_key_ignore_case(
             GenConstant.DB_TO_SQLALCHEMY, column_type
         )
 
         if sqlalchemy_type is None and "(" in column_type:
-            # 如果没有匹配到, 再尝试剥离括号
+            # 如果没有匹配到，再尝试剥离括号
             column_type_list = column_type.split("(")
             col_type = column_type_list[0]
             # 将 'character' 映射为 'char' 以匹配常量定义
@@ -420,7 +420,7 @@ class Jinja2TemplateUtil:
             sqlalchemy_type = StringUtil.get_mapping_value_by_key_ignore_case(
                 GenConstant.DB_TO_SQLALCHEMY, col_type
             )
-            # 如果是字符串类型且包含括号参数, 保持原参数
+            # 如果是字符串类型且包含括号参数，保持原参数
             if sqlalchemy_type in ["String", "CHAR"]:
                 sqlalchemy_type += "(" + column_type_list[1]
         elif sqlalchemy_type is None:
@@ -432,18 +432,18 @@ class Jinja2TemplateUtil:
             sqlalchemy_type = StringUtil.get_mapping_value_by_key_ignore_case(
                 GenConstant.DB_TO_SQLALCHEMY, col_type
             )
-            # 如果是字符串类型且没有指定长度, 使用column_length或默认255
+            # 如果是字符串类型且没有指定长度，使用column_length或默认255
             if sqlalchemy_type in ["String", "CHAR"]:
                 length = column_length if column_length and column_length.isdigit() else "255"
                 sqlalchemy_type += f"({length})"
         else:
-            # 对于已经匹配到的类型, 如果是字符串类型且column有长度信息, 添加长度
+            # 对于已经匹配到的类型，如果是字符串类型且column有长度信息，添加长度
             if sqlalchemy_type in ["String", "CHAR"] and "(" not in sqlalchemy_type:
                 # 检查column_length是否有效
                 length = column_length if column_length and column_length.isdigit() else "255"
                 sqlalchemy_type += f"({length})"
 
-        # 如果没有找到匹配的类型, 使用String(column_length)或String(255)作为默认类型
+        # 如果没有找到匹配的类型，使用String(column_length)或String(255)作为默认类型
         if not sqlalchemy_type:
             length = column_length if column_length and column_length.isdigit() else "255"
             sqlalchemy_type = f"String({length})"
