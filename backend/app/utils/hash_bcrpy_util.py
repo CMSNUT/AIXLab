@@ -80,7 +80,7 @@ class AESCipher:
         初始化 AES 加密器。
 
         参数:
-        - key (bytes | str): 密钥, 16/24/32 bytes 或 16 进制字符串。
+        - key (bytes | str): 密钥，16/24/32 bytes 或 16 进制字符串。
 
         返回:
         - None
@@ -95,7 +95,7 @@ class AESCipher:
         - plaintext (bytes | str): 加密前的明文。
 
         返回:
-        - bytes: 加密后的密文(前16字节为随机IV)。
+        - bytes: 加密后的密文（前16字节为随机IV）。
         """
         if not isinstance(plaintext, bytes):
             plaintext = str(plaintext).encode("utf-8")
@@ -112,7 +112,7 @@ class AESCipher:
         AES 解密。
 
         参数:
-        - ciphertext (bytes | str): 解密前的密文, bytes 或 16 进制字符串。
+        - ciphertext (bytes | str): 解密前的密文，bytes 或 16 进制字符串。
 
         返回:
         - str: 解密后的明文。
@@ -157,7 +157,7 @@ class ItsDCipher:
         初始化 ItsDangerous 加密器。
 
         参数:
-        - key (bytes | str): 密钥, 16/24/32 bytes 或 16 进制字符串。
+        - key (bytes | str): 密钥，16/24/32 bytes 或 16 进制字符串。
 
         返回:
         - None
@@ -172,10 +172,10 @@ class ItsDCipher:
         - plaintext (Any): 加密前的明文。
 
         返回:
-        - str: 加密后的密文(URL安全)。
+        - str: 加密后的密文（URL安全）。
 
         异常:
-        - Exception: 加密失败时使用 MD5 作为降级, 错误已记录。
+        - Exception: 加密失败时使用 MD5 作为降级，错误已记录。
         """
         serializer = URLSafeSerializer(self.key)
         try:

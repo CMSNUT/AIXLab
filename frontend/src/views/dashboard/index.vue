@@ -13,9 +13,9 @@
           />
           <div class="ml-5">
             <div class="text-20px font-bold mb-5px">
-              {{ timefix }}{{ userStore.basicInfo.name }}, {{ welcome }}
+              {{ timefix }}{{ userStore.basicInfo.name }}，{{ welcome }}
             </div>
-            <p class="text-sm text-gray">今日天气晴朗, 气温在15℃至25℃之间, 东南风。</p>
+            <p class="text-sm text-gray">今日天气晴朗，气温在15℃至25℃之间，东南风。</p>
           </div>
         </div>
 
@@ -46,11 +46,11 @@
                 仓库
               </div>
               <div class="mt-3 whitespace-nowrap">
-                <el-link href="https://gitee.com/aixlab/AIXLab" target="_blank">
+                <el-link href="https://gitee.com/CMSNUT/AIXLab" target="_blank">
                   <div class="i-svg:gitee text-lg color-#F76560" />
                 </el-link>
                 <el-divider direction="vertical" />
-                <el-link href="https://github.com/aixlab/AIXLab" target="_blank">
+                <el-link href="https://github.com/CMSNUT/AIXLab" target="_blank">
                   <div class="i-svg:github text-lg color-#4080FF" />
                 </el-link>
                 <el-divider direction="vertical" />
@@ -66,11 +66,11 @@
         <div class="w-full sm:hidden mt-3">
           <div class="flex justify-end space-x-4 overflow-x-auto">
             <!-- 仓库图标 -->
-            <el-link href="https://gitee.com/aixlab/AIXLab" target="_blank">
+            <el-link href="https://gitee.com/CMSNUT/AIXLab" target="_blank">
               <div class="i-svg:gitee text-lg color-#F76560" />
             </el-link>
             <el-divider direction="vertical" />
-            <el-link href="https://github.com/aixlab/AIXLab" target="_blank">
+            <el-link href="https://github.com/CMSNUT/AIXLab" target="_blank">
               <div class="i-svg:github text-lg color-#4080FF" />
             </el-link>
             <el-divider direction="vertical" />
@@ -266,7 +266,7 @@
               <el-link
                 type="primary"
                 underline="never"
-                href="https://gitee.com/aixlab/AIXLab/releases"
+                href="https://gitee.com/CMSNUT/AIXLab/releases"
                 target="_blank"
               >
                 完整记录
@@ -339,11 +339,11 @@ const welcome = "祝你开心每一天！";
 
 interface VersionItem {
   id: string;
-  title: string; // 版本标题(如: v2.4.0)
+  title: string; // 版本标题（如：v2.4.0）
   date: string; // 发布时间
   content: string; // 版本描述
   link: string; // 详情链接
-  tag?: string; // 版本标签(可选)
+  tag?: string; // 版本标签（可选）
 }
 
 const userStore = useUserStore();
@@ -354,8 +354,8 @@ const vesionList = ref<VersionItem[]>([
     id: "1",
     title: "v3.2.1",
     date: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-    content: "优化性能, 修复若干小bug。",
-    link: "https://gitee.com/aixlab/AIXLab/releases",
+    content: "优化性能，修复若干小bug。",
+    link: "https://gitee.com/CMSNUT/AIXLab/releases",
     tag: "更新",
   },
   {
@@ -363,7 +363,7 @@ const vesionList = ref<VersionItem[]>([
     title: "v3.2.0",
     date: dayjs().subtract(1, "day").format("YYYY-MM-DD HH:mm:ss"),
     content: "新增用户行为分析功能。",
-    link: "https://gitee.com/aixlab/AIXLab/releases",
+    link: "https://gitee.com/CMSNUT/AIXLab/releases",
     tag: "新功能",
   },
   {
@@ -371,7 +371,7 @@ const vesionList = ref<VersionItem[]>([
     title: "v3.1.0",
     date: dayjs().subtract(3, "day").format("YYYY-MM-DD HH:mm:ss"),
     content: "优化权限管理系统。",
-    link: "https://gitee.com/aixlab/AIXLab/releases",
+    link: "https://gitee.com/CMSNUT/AIXLab/releases",
     tag: "优化",
   },
 ]);
@@ -421,7 +421,7 @@ const transitionTotalPvCount = useTransition(
   }
 );
 
-// 访问趋势日期范围(单位: 天)
+// 访问趋势日期范围（单位：天）
 const visitTrendDateRange = ref(7);
 // 访问趋势图表配置
 const visitTrendChartOptions = ref();
@@ -522,7 +522,7 @@ const computeGrowthRateClass = (growthRate?: number): string => {
   }
 };
 
-// 监听访问趋势日期范围的变化, 重新获取趋势数据
+// 监听访问趋势日期范围的变化，重新获取趋势数据
 watch(
   () => visitTrendDateRange.value,
   () => {

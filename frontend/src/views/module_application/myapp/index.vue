@@ -77,7 +77,7 @@
       <template #header>
         <div class="card-header">
           <span>
-            <el-tooltip content="点击卡片, 打开应用">
+            <el-tooltip content="点击卡片，打开应用">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
             应用市场
@@ -175,7 +175,7 @@
 
       <!-- 分页区域 -->
       <template #footer>
-        <!-- 使用卡片 footer 样式右对齐, 无需额外容器 -->
+        <!-- 使用卡片 footer 样式右对齐，无需额外容器 -->
         <pagination
           v-model:total="total"
           v-model:page="queryFormData.page_no"
@@ -406,9 +406,9 @@ async function handleAppAction(command: string, app: ApplicationInfo) {
 function openAppInternal(app: ApplicationInfo) {
   if (!app.status || !app.id) {
     if (!app.status) {
-      ElMessage.warning("应用已停用, 无法打开");
+      ElMessage.warning("应用已停用，无法打开");
     } else {
-      ElMessage.warning("应用ID不存在, 无法打开");
+      ElMessage.warning("应用ID不存在，无法打开");
     }
     return;
   }
@@ -423,26 +423,26 @@ function openAppInternal(app: ApplicationInfo) {
   const appName = `InternalApp${app.id}`;
   const appTitle = app.name || "未命名应用";
 
-  // 先导航到路由, 这样可以动态设置路由的meta信息
+  // 先导航到路由，这样可以动态设置路由的meta信息
   router
     .push({
       path: appPath,
       query: { url: app.access_url, appId: app.id.toString(), appName: appTitle },
     })
     .then(() => {
-      // 导航完成后, 手动添加或更新标签视图
+      // 导航完成后，手动添加或更新标签视图
       nextTick(() => {
         // 查找是否已存在该标签
         const existingTag = tagsViewStore.visitedViews.find((tag) => tag.path === appPath);
 
         if (existingTag) {
-          // 如果存在, 更新标题
+          // 如果存在，更新标题
           tagsViewStore.updateVisitedView({
             ...existingTag,
             title: appTitle,
           });
         } else {
-          // 如果不存在, 添加新标签
+          // 如果不存在，添加新标签
           tagsViewStore.addView({
             name: appName,
             title: appTitle,

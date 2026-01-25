@@ -148,7 +148,7 @@ def code_validator(value: str | None) -> str | None:
     if not re.match(r"^[A-Za-z][A-Za-z0-9_]{1,15}$", v):
         raise CustomException(
             code=RET.ERROR.code,
-            msg="编码需字母开头, 允许字母/数字/下划线, 长度2-16",
+            msg="编码需字母开头，允许字母/数字/下划线，长度2-16",
         )
     return v
 

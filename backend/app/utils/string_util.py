@@ -80,7 +80,7 @@ class StringUtil:
     @classmethod
     def contains_any_ignore_case(cls, search_str: str, compare_str_list: list[str]):
         """
-        查找指定字符串是否包含列表中的任意一个字符串(忽略大小写)
+        查找指定字符串是否包含列表中的任意一个字符串（忽略大小写）
 
         参数:
         - search_str (str): 查找的字符串。
@@ -99,7 +99,7 @@ class StringUtil:
     @classmethod
     def equals_ignore_case(cls, search_str: str, compare_str: str):
         """
-        比较两个字符串是否相等(忽略大小写)
+        比较两个字符串是否相等（忽略大小写）
 
         参数:
         - search_str (str): 查找的字符串。
@@ -115,7 +115,7 @@ class StringUtil:
     @classmethod
     def equals_any_ignore_case(cls, search_str: str, compare_str_list: list[str]):
         """
-        判断指定字符串是否与列表中任意一个字符串相等(忽略大小写)
+        判断指定字符串是否与列表中任意一个字符串相等（忽略大小写）
 
         参数:
         - search_str (str): 查找的字符串。
@@ -197,7 +197,7 @@ class StringUtil:
         - key (str): 字典的键。
 
         返回:
-        - str: 字典键对应的值, 未匹配则返回空字符串。
+        - str: 字典键对应的值，未匹配则返回空字符串。
         """
         for k, v in mapping.items():
             if key.lower() == k.lower():

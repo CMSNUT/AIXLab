@@ -1,7 +1,7 @@
 <!-- github 角标 -->
 <template>
   <a
-    href="https://github.com/aixlab/AIXLab"
+    href="https://github.com/CMSNUT/AIXLab"
     target="_blank"
     class="github-corner"
     aria-label="View source on Github"

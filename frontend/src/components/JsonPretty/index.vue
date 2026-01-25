@@ -28,7 +28,7 @@ const parsed = computed(() => {
     try {
       return JSON.parse(v);
     } catch {
-      return v; // 非 JSON 字符串, 原样展示
+      return v; // 非 JSON 字符串，原样展示
     }
   }
   return v;

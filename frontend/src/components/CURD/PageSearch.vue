@@ -176,7 +176,7 @@ const componentMap = new Map<ISearchComponent, any>([
   ["slider", markRaw(ElSlider)], // @ts-ignore
 ]);
 
-// 自定义组件映射(从searchConfig中获取)
+// 自定义组件映射（从searchConfig中获取）
 const getCustomComponent = (componentName: string) => {
   return props.searchConfig?.customComponents?.[componentName] || null;
 };
@@ -193,15 +193,15 @@ const formItems = reactive(props.searchConfig?.formItems ?? []);
 const isExpandable = ref(props.searchConfig?.isExpandable ?? true);
 // 是否已展开
 const isExpand = ref(false);
-// 表单项展示数量, 若可展开, 超出展示数量的表单项隐藏
+// 表单项展示数量，若可展开，超出展示数量的表单项隐藏
 const showNumber = computed(() =>
   isExpandable.value ? (props.searchConfig?.showNumber ?? 3) : formItems.length
 );
-// 卡片组件自定义属性(阴影、自定义边距样式等)
+// 卡片组件自定义属性（阴影、自定义边距样式等）
 const cardAttrs = computed<IObject>(() => {
   return { shadow: "never", style: { "margin-bottom": "12px" }, ...props.searchConfig?.cardAttrs };
 });
-// 表单组件自定义属性(label位置、宽度、对齐方式等)
+// 表单组件自定义属性（label位置、宽度、对齐方式等）
 const formAttrs = computed<IForm>(() => {
   return { inline: true, ...props.searchConfig?.form };
 });
@@ -245,7 +245,7 @@ const handleDateRangeChange = (
 
 // 处理自定义按钮点击
 const handleCustomButtonClick = (button: any) => {
-  // 如果配置了自定义处理器, 优先使用
+  // 如果配置了自定义处理器，优先使用
   if (button.handler && typeof button.handler === "function") {
     button.handler(queryParams, getCurrentInstance());
   }
@@ -257,7 +257,7 @@ const handleCustomButtonClick = (button: any) => {
 const hasPermission = (perm: string | string[]): boolean => {
   if (!perm || !props.searchConfig?.permPrefix) return true;
   // 这里应该根据实际的权限系统来实现
-  // 暂时返回 true, 实际项目中需要对接权限系统
+  // 暂时返回 true，实际项目中需要对接权限系统
   return true;
 };
 

@@ -174,7 +174,7 @@ def traversal_to_tree(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
     node_dict = {node["id"]: node for node in nodes}
 
     for node in nodes:
-        # 确保每个节点都有children字段, 即使没有子节点也设置为null
+        # 确保每个节点都有children字段，即使没有子节点也设置为null
         if "children" not in node:
             node["children"] = None
 
@@ -204,7 +204,7 @@ def recursive_to_tree(
     nodes: list[dict[str, Any]], *, parent_id: int | None = None
 ) -> list[dict[str, Any]]:
     """
-    通过递归算法构造树形结构(性能影响较大)
+    通过递归算法构造树形结构（性能影响较大）
 
     参数:
     - nodes (list[dict[str, Any]]): 树节点列表。
@@ -236,10 +236,10 @@ def bytes2human(n: int, format_str: str = "%(value).1f%(symbol)s") -> str:
 
     参数:
     - n (int): 字节数。
-    - format_str (str): 格式化字符串, 默认 '%(value).1f%(symbol)s'。
+    - format_str (str): 格式化字符串，默认 '%(value).1f%(symbol)s'。
 
     返回:
-    - str: 可读的字节字符串, 如 '1.5MB'。
+    - str: 可读的字节字符串，如 '1.5MB'。
     """
     symbols = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
     prefix = {s: 1 << (i + 1) * 10 for i, s in enumerate(symbols[1:])}
@@ -257,7 +257,7 @@ def bytes2file_response(bytes_info: bytes) -> Generator[bytes, Any, None]:
 
 def get_filepath_from_url(url: str) -> Path:
     """
-    工具方法: 根据请求参数获取文件路径
+    工具方法：根据请求参数获取文件路径
 
     参数:
     - url (str): 请求参数中的 url 参数。
@@ -289,7 +289,7 @@ class SqlalchemyUtil:
         将sqlalchemy模型对象转换为字典
 
         :param obj: sqlalchemy模型对象或普通字典
-        :param transform_case: 转换得到的结果形式, 可选的有'no_case'(不转换)、'snake_to_camel'(下划线转小驼峰)、'camel_to_snake'(小驼峰转下划线), 默认为'no_case'
+        :param transform_case: 转换得到的结果形式，可选的有'no_case'(不转换)、'snake_to_camel'(下划线转小驼峰)、'camel_to_snake'(小驼峰转下划线)，默认为'no_case'
         :return: 字典结果
         """
         if isinstance(obj, DeclarativeBase):
@@ -317,7 +317,7 @@ class SqlalchemyUtil:
         将sqlalchemy查询结果序列化
 
         :param result: sqlalchemy查询结果
-        :param transform_case: 'no_case'(不转换)、'snake_to_camel'(下划线转小驼峰)、'camel_to_snake'(小驼峰转下划线), 默认为'no_case'
+        :param transform_case: 'no_case'(不转换)、'snake_to_camel'(下划线转小驼峰)、'camel_to_snake'(小驼峰转下划线)，默认为'no_case'
         :return: 序列化结果
         """
         if isinstance(result, (DeclarativeBase, dict)):
@@ -368,9 +368,9 @@ class CamelCaseUtil:
         """
         # 分割字符串
         words = snake_str.split("_")
-        # 小驼峰命名, 第一个词首字母小写, 其余词首字母大写
+        # 小驼峰命名，第一个词首字母小写，其余词首字母大写
         # return words[0] + ''.join(word.capitalize() for word in words[1:])
-        # 大驼峰命名, 所有词首字母大写
+        # 大驼峰命名，所有词首字母大写
         return "".join(word.capitalize() for word in words)
 
     @classmethod
@@ -397,7 +397,7 @@ class SnakeCaseUtil:
         :param camel_str: 小驼峰形式字符串
         :return: 下划线形式字符串
         """
-        # 在大写字母前添加一个下划线, 然后将整个字符串转为小写
+        # 在大写字母前添加一个下划线，然后将整个字符串转为小写
         words = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", camel_str)
         return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", words).lower()
 

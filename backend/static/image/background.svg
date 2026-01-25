@@ -52,12 +52,12 @@
   <rect width="100%" height="100%" fill="url(#glowSecondary)" />
   <rect width="100%" height="100%" fill="url(#meshLight)" />
   
-  <!-- 柔和块面光影, 替代明显线条 -->
+  <!-- 柔和块面光影，替代明显线条 -->
   <g opacity="0.45">
     <rect x="-40" y="520" width="520" height="220" rx="180" fill="rgba(255,255,255,0.25)" />
     <rect x="760" y="90" width="520" height="210" rx="180" fill="rgba(255,255,255,0.22)" />
     <rect x="420" y="620" width="560" height="190" rx="180" fill="rgba(255,255,255,0.18)" />
   </g>
 
-  <!-- 去掉点状噪声, 仅保留大区域柔光 -->
+  <!-- 去掉点状噪声，仅保留大区域柔光 -->
 </svg>

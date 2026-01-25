@@ -24,7 +24,7 @@
             <el-option value="false" label="停用" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围, 收起状态下隐藏 -->
+        <!-- 时间范围，收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -284,7 +284,7 @@
               :disabled="scope.row.id === 1"
               @click="
                 scope.row.id === 1
-                  ? ElMessage.warning('系统默认角色, 不可操作')
+                  ? ElMessage.warning('系统默认角色，不可操作')
                   : handleOpenAssignPermDialog(scope.row.id, scope.row.name)
               "
             >
@@ -309,7 +309,7 @@
               :disabled="scope.row.id === 1"
               @click="
                 scope.row.id === 1
-                  ? ElMessage.warning('系统默认角色, 不可操作')
+                  ? ElMessage.warning('系统默认角色，不可操作')
                   : handleOpenDialog('update', scope.row.id)
               "
             >
@@ -324,7 +324,7 @@
               :disabled="scope.row.id === 1"
               @click="
                 scope.row.id === 1
-                  ? ElMessage.warning('系统默认角色, 不可操作')
+                  ? ElMessage.warning('系统默认角色，不可操作')
                   : handleDelete([scope.row.id])
               "
             >
@@ -563,7 +563,7 @@ async function handleRefresh() {
   await loadingData();
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -660,7 +660,7 @@ async function handleSubmit() {
         dialogVisible.visible = false;
         resetForm();
         handleResetQuery();
-        // 更新全局用户状态, 刷新权限信息
+        // 更新全局用户状态，刷新权限信息
         const userStore = useUserStore();
         await userStore.getUserInfo();
       } catch (error: any) {

@@ -86,13 +86,13 @@ const { sideMenuRoutes, activeTopMenuPath } = useLayoutMenu();
 // 响应式窗口尺寸
 const { width } = useWindowSize();
 
-// 只有在小屏设备(移动设备)时才折叠Logo(只显示图标, 隐藏文字)
+// 只有在小屏设备（移动设备）时才折叠Logo（只显示图标，隐藏文字）
 const isLogoCollapsed = computed(() => width.value < 768);
 
 // 当前激活的菜单
 const activeLeftMenuPath = computed(() => {
   const { meta, path } = route;
-  // 如果设置了activeMenu, 则使用
+  // 如果设置了activeMenu，则使用
   if (meta?.activeMenu && typeof meta.activeMenu === "string") {
     return meta.activeMenu;
   }
@@ -100,7 +100,7 @@ const activeLeftMenuPath = computed(() => {
 });
 
 /**
- * 解析路径 - 混合模式下, 左侧菜单是从顶级菜单下的子菜单开始的
+ * 解析路径 - 混合模式下，左侧菜单是从顶级菜单下的子菜单开始的
  * 所以需要拼接顶级菜单路径
  */
 function resolvePath(routePath: string) {

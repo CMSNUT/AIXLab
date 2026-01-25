@@ -48,7 +48,7 @@ class QuickStartManager {
     if (existingIndex !== -1) {
       // 更新现有链接
       links[existingIndex] = { ...links[existingIndex], ...link };
-      ElMessage.success(`已更新快速链接: ${link.title}`);
+      ElMessage.success(`已更新快速链接：${link.title}`);
     } else {
       // 添加新链接
       links.push(link);

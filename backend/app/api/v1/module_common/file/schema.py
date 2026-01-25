@@ -51,7 +51,7 @@ class ImportModel(BaseModel):
 
     @model_validator(mode="after")
     def _validate(self):
-        # excel_column 不重复(忽略 None)
+        # excel_column 不重复（忽略 None）
         if self.filed_info:
             seen = set()
             for f in self.filed_info:

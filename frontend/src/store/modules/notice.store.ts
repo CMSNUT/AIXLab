@@ -6,7 +6,7 @@ export const useNoticeStore = defineStore("notice", {
     noticeList: [] as NoticeTable[],
     total: 0,
     isNoticeLoaded: false,
-    // 已读通知ID集合(前端持久化, 避免刷新后重复展示)
+    // 已读通知ID集合（前端持久化，避免刷新后重复展示）
     readIds: [] as number[],
   }),
   actions: {

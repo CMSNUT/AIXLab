@@ -18,10 +18,10 @@
 import type { ISelectConfig } from "@/components/TableSelect/index.vue";
 import UserAPI from "@/api/module_system/user";
 
-// 父组件双向绑定的值(选中用户ID)
+// 父组件双向绑定的值（选中用户ID）
 const props = defineProps<{ modelValue?: number }>();
 
-// 事件向上派发, 支持父组件监听和 v-model(仅回传选中用户ID)
+// 事件向上派发，支持父组件监听和 v-model（仅回传选中用户ID）
 const emit = defineEmits<{
   confirmClick: [data: IUser[]];
   "update:modelValue": [val: number | undefined];
@@ -32,7 +32,7 @@ const selectConfig: ISelectConfig = {
   width: "167.5px", // 与搜索表单其他输入宽度一致
   placeholder: "请选择用户",
   popover: {
-    width: 720, // 弹出层宽度, 提升可用性(约 720px)
+    width: 720, // 弹出层宽度，提升可用性（约 720px）
   },
   formItems: [
     {
@@ -56,7 +56,7 @@ const selectConfig: ISelectConfig = {
   indexAction(params) {
     // 映射查询参数到后端接口
     const query: any = { ...params };
-    // 清理空字符串/空值, 避免后端 422
+    // 清理空字符串/空值，避免后端 422
     Object.keys(query).forEach((k) => {
       const v = query[k];
       if (v === "" || v === null || v === undefined) {
@@ -116,7 +116,7 @@ function handleClearSelection() {
   emit("update:modelValue", undefined);
 }
 
-// 当父组件重置 v-model(modelValue)为 undefined 时, 清空本地显示
+// 当父组件重置 v-model（modelValue）为 undefined 时，清空本地显示
 watch(
   () => props.modelValue,
   (val) => {

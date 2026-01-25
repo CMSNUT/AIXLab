@@ -193,7 +193,7 @@ export interface ResourceItem {
   is_file?: boolean;
   /** 是否为目录 */
   is_dir?: boolean;
-  /** 文件大小(字节) */
+  /** 文件大小（字节） */
   size?: number | null;
   /** 创建时间 */
   created_time: string;

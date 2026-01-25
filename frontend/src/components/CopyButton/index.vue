@@ -39,7 +39,7 @@ function handleClipboard() {
         console.log("[CopyButton] Copy failed", error);
       });
   } else {
-    // 兼容性处理(useClipboard 有兼容性问题)
+    // 兼容性处理（useClipboard 有兼容性问题）
     const input = document.createElement("input");
     input.style.position = "absolute";
     input.style.left = "-9999px";

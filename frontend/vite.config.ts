@@ -41,12 +41,11 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     server: {
       host: true,
       port: Number(env.VITE_APP_PORT),
-      // open: true,
       open: false,
       proxy: {
         // 代理 /dev-api 的请求
         [env.VITE_APP_BASE_API]: {
-          target: env.VITE_API_BASE_URL, // 代理目标地址: https://后端地址
+          target: env.VITE_API_BASE_URL, // 代理目标地址：https://后端地址
           secure: false, // 请求是否https
           changeOrigin: true, // 是否跨域
           // rewrite: (path: string) => path.replace(new RegExp("^" + env.VITE_APP_BASE_API), ""),
@@ -58,10 +57,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       UnoCSS(),
       // API 自动导入
       AutoImport({
-        // 导入 Vue 函数, 如: ref, reactive, toRef 等
+        // 导入 Vue 函数，如：ref, reactive, toRef 等
         imports: ["vue", "@vueuse/core", "pinia", "vue-router", "vue-i18n"],
         resolvers: [
-          // 导入 Element Plus函数, 如: ElMessage, ElMessageBox 等
+          // 导入 Element Plus函数，如：ElMessage, ElMessageBox 等
           ElementPlusResolver({ importStyle: "sass" }),
         ],
         eslintrc: {
@@ -204,7 +203,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       terserOptions: isProduction
         ? {
             compress: {
-              keep_infinity: true, // 防止 Infinity 被压缩成 1/0, 这可能会导致 Chrome 上的性能问题
+              keep_infinity: true, // 防止 Infinity 被压缩成 1/0，这可能会导致 Chrome 上的性能问题
               drop_console: true, // 生产环境去除 console.log, console.warn, console.error 等
               drop_debugger: true, // 生产环境去除 debugger
               pure_funcs: ["console.log", "console.info"], // 移除指定的函数调用
@@ -248,7 +247,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           entryFileNames: "js/[name].[hash].js",
           // 用于命名代码拆分时创建的共享块的输出命名
           chunkFileNames: "js/[name].[hash].js",
-          // 用于输出静态资源的命名, [ext]表示文件扩展名
+          // 用于输出静态资源的命名，[ext]表示文件扩展名
           assetFileNames: (assetInfo: any) => {
             const info = assetInfo.name.split(".");
             let extType = info[info.length - 1];

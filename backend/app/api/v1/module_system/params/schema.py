@@ -22,7 +22,7 @@ class ParamsCreateSchema(BaseModel):
         import re
 
         if not re.match(r"^[a-z][a-z0-9_.-]*$", v):
-            raise ValueError("参数键名必须以小写字母开头, 仅包含小写字母/数字/_.-")
+            raise ValueError("参数键名必须以小写字母开头，仅包含小写字母/数字/_.-")
         return v
 
 

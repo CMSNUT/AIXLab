@@ -67,7 +67,7 @@ class UploadUtil:
         校验文件时间戳是否合法。
 
         参数:
-        - filename (str): 文件名(包含时间戳片段)。
+        - filename (str): 文件名（包含时间戳片段）。
 
         返回:
         - bool: 时间戳是否合法。
@@ -106,7 +106,7 @@ class UploadUtil:
         - filename (str): 文件名。
 
         返回:
-        - bool: 随机码是否合法(000–999)。
+        - bool: 随机码是否合法（000–999）。
         """
         try:
             code = filename.rsplit(".", 1)[0][-3:]
@@ -123,7 +123,7 @@ class UploadUtil:
         - file (UploadFile): 上传的文件对象。
 
         返回:
-        - bool: 文件大小是否合法(未提供 size 返回 False)。
+        - bool: 文件大小是否合法（未提供 size 返回 False）。
         """
         if file.size:
             return file.size <= settings.MAX_FILE_SIZE
@@ -135,10 +135,10 @@ class UploadUtil:
         生成文件名称。
 
         参数:
-        - filename (str): 原始文件名(包含拓展名)。
+        - filename (str): 原始文件名（包含拓展名）。
 
         返回:
-        - str: 生成的文件名(包含时间戳、机器码、随机码)。
+        - str: 生成的文件名（包含时间戳、机器码、随机码）。
         """
         name, ext = filename.rsplit(".", 1)
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -151,7 +151,7 @@ class UploadUtil:
 
         参数:
         - filepath (Path): 文件路径。
-        - chunk_size (int): 分块大小, 默认 8192 字节。
+        - chunk_size (int): 分块大小，默认 8192 字节。
 
         返回:
         - Iterator[bytes]: 文件二进制数据分块迭代器。
@@ -241,7 +241,7 @@ class UploadUtil:
     @classmethod
     async def download_file(cls, file_path: str) -> str:
         """
-        下载文件, 生成新的文件名。
+        下载文件，生成新的文件名。
 
         参数:
         - file_path (str): 文件路径。

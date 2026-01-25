@@ -22,4 +22,3 @@ CREATE TABLE `resource_subject` (
     
     FULLTEXT INDEX `ft_resource_subject_name_desc` (`name`, `description`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='学科分类表';
-

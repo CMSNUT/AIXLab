@@ -24,7 +24,7 @@ try {
 
 // Element Plus组件
 const elementPlusComponents = {
-  // Element Plus 组件添加为全局变量, 避免 no-undef 报错
+  // Element Plus 组件添加为全局变量，避免 no-undef 报错
   ElInput: "readonly",
   ElSelect: "readonly",
   ElSwitch: "readonly",
@@ -89,7 +89,7 @@ export default [
         ...globals.es2022, // ES2022 全局对象
         ...autoImportGlobals, // 自动导入的 API 函数
         ...elementPlusComponents, // Element Plus 组件
-        // 全局类型定义, 解决 TypeScript 中定义但 ESLint 不识别的问题
+        // 全局类型定义，解决 TypeScript 中定义但 ESLint 不识别的问题
         PageQuery: "readonly",
         PageResult: "readonly",
         OptionType: "readonly",
@@ -191,7 +191,7 @@ export default [
     },
     rules: {
       // TypeScript 规则
-      "@typescript-eslint/no-explicit-any": "off", // 允许使用any类型, 方便开发
+      "@typescript-eslint/no-explicit-any": "off", // 允许使用any类型，方便开发
       "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/ban-ts-comment": "off",
@@ -222,7 +222,7 @@ export default [
     },
   },
 
-  // Prettier 集成(必须放在最后)
+  // Prettier 集成（必须放在最后）
   {
     plugins: {
       prettier: prettierPlugin, // 将 Prettier 的输出作为 ESLint 的问题来报告

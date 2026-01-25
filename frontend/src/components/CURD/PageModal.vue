@@ -172,7 +172,7 @@ const childrenMap = new Map<IComponentType, any>([
   ["checkbox", markRaw(ElCheckbox)],
 ]);
 
-const pk = props.modalConfig.pk ?? "id"; // 主键名, 用于表单数据处理
+const pk = props.modalConfig.pk ?? "id"; // 主键名，用于表单数据处理
 const modalVisible = ref(false); // 弹窗显示状态
 const formRef = ref<FormInstance>(); // 表单实例
 const formItems = reactive(props.modalConfig.formItems ?? []); // 表单配置项

@@ -49,7 +49,7 @@ class IpLocalUtil:
         - ip (str): IP地址。
 
         返回:
-        - str | None: IP归属地信息, 失败时返回"未知"或None。
+        - str | None: IP归属地信息，失败时返回"未知"或None。
         """
         # 校验IP格式
         if not cls.is_valid_ip(ip):
@@ -85,14 +85,14 @@ class IpLocalUtil:
     @classmethod
     async def _make_api_request(cls, client: httpx.AsyncClient, url: str):
         """
-        单独的 API 请求方法, 包含重试机制。
+        单独的 API 请求方法，包含重试机制。
 
         参数:
         - client (AsyncClient): httpx 异步客户端。
         - url (str): 请求 URL。
 
         返回:
-        - Response | None: 响应对象, 失败时返回None。
+        - Response | None: 响应对象，失败时返回None。
         """
         max_retries = 3
         for attempt in range(max_retries):

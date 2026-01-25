@@ -24,14 +24,14 @@
             <el-option value="1" label="暂停" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围, 收起状态下隐藏 -->
+        <!-- 时间范围，收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
           <DatePicker
             v-model="createdDateRange"
             @update:model-value="handleCreatedDateRangeChange"
           />
         </el-form-item>
-        <!-- 更新时间范围, 收起状态下隐藏 -->
+        <!-- 更新时间范围，收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
           <DatePicker
             v-model="updatedDateRange"
@@ -160,7 +160,7 @@
         </div>
       </div>
 
-      <!-- 表格区域: 系统配置列表 -->
+      <!-- 表格区域：系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -767,7 +767,7 @@ async function loadingData() {
   }
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -850,7 +850,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
   dialogVisible.visible = true;
 }
 
-// 提交表单(防抖)
+// 提交表单（防抖）
 async function handleSubmit() {
   // 表单校验
   dataFormRef.value.validate(async (valid: any) => {
@@ -950,7 +950,7 @@ const handleClear = () => {
     });
 };
 
-// 操作按钮:操作类型 1: 暂停 2: 恢复 3: 重启(暂时移除重启)
+// 操作按钮:操作类型 1: 暂停 2: 恢复 3: 重启（暂时移除重启）
 const handleOption = (id: number, option: number) => {
   JobAPI.OptionJob({ id, option }).then(() => {
     loadingData();
@@ -987,7 +987,7 @@ const exportColumns = [
   { prop: "updated_time", label: "更新时间" },
 ];
 
-// 导出配置(用于导出弹窗)
+// 导出配置（用于导出弹窗）
 const curdContentConfig = {
   permPrefix: "module_application:job",
   cols: exportColumns as any,

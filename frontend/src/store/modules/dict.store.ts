@@ -11,7 +11,7 @@ export const useDictStore = defineStore("dict", {
       return this.dictData;
     },
 
-    // 获取指定类型的字典数据, 确保返回数组
+    // 获取指定类型的字典数据，确保返回数组
     getDictArray() {
       return (type: string): Array<{ dict_value: string; dict_label: string }> => {
         return (this.dictData[type] || [])

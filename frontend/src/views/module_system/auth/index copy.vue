@@ -95,7 +95,7 @@ const formComponents = {
   resetPwd: defineAsyncComponent(() => import("./components/ResetPwd.vue")),
 };
 
-// 预填登录信息(通过具名 v-model 双向绑定传递)
+// 预填登录信息（通过具名 v-model 双向绑定传递）
 const loginPreset = reactive<{ username: string; password: string }>({
   username: "admin",
   password: "123456",

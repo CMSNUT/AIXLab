@@ -14,7 +14,7 @@ class ExcelUtil:
     @classmethod
     def __mapping_list(cls, list_data: list[dict[str, Any]], mapping_dict: dict) -> list:
         """
-        工具方法: 将列表数据中的字段名映射为对应的中文字段名。
+        工具方法：将列表数据中的字段名映射为对应的中文字段名。
 
         参数:
         - list_data (list[dict[str, Any]]): 数据列表。

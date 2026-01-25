@@ -38,18 +38,18 @@ async def get_directory_list_controller(
     获取目录列表
 
     参数:
-    - request (Request): FastAPI请求对象, 用于获取基础URL。
+    - request (Request): FastAPI请求对象，用于获取基础URL。
     - page (PaginationQueryParam): 分页查询参数模型。
     - search (ResourceSearchQueryParam): 资源查询参数模型。
 
     返回:
     - JSONResponse: 包含目录列表的JSON响应。
     """
-    # 获取资源列表(与案例模块保持一致的分页实现)
+    # 获取资源列表（与案例模块保持一致的分页实现）
     result_dict_list = await ResourceService.get_resources_list_service(
         search=search, base_url=str(request.base_url)
     )
-    # 使用分页服务进行分页处理(与案例模块保持一致)
+    # 使用分页服务进行分页处理（与案例模块保持一致）
     result_dict = await PaginationService.paginate(
         data_list=result_dict_list,
         page_no=page.page_no,
@@ -76,8 +76,8 @@ async def upload_file_controller(
 
     参数:
     - file (UploadFile): 要上传的文件对象。
-    - request (Request): FastAPI请求对象, 用于获取基础URL。
-    - target_path (str | None): 目标目录路径, 默认为None。
+    - request (Request): FastAPI请求对象，用于获取基础URL。
+    - target_path (str | None): 目标目录路径，默认为None。
 
     返回:
     - JSONResponse: 包含上传文件信息的JSON响应。
@@ -102,7 +102,7 @@ async def download_file_controller(
     下载文件
 
     参数:
-    - request (Request): FastAPI请求对象, 用于获取基础URL。
+    - request (Request): FastAPI请求对象，用于获取基础URL。
     - path (str): 文件路径。
 
     返回:
@@ -247,7 +247,7 @@ async def export_resource_list_controller(
     导出资源列表
 
     参数:
-    - request (Request): FastAPI请求对象, 用于获取基础URL。
+    - request (Request): FastAPI请求对象，用于获取基础URL。
     - search (ResourceSearchQueryParam): 资源查询参数模型。
 
     返回:

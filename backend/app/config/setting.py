@@ -29,16 +29,16 @@ class Settings(BaseSettings):
     # ******************* 服务器配置 ****************** #
     # ================================================= #
     SERVER_HOST: str = "127.0.0.1"  # 允许访问的IP地址
-    SERVER_PORT: int = 8001  # 服务端口
+    SERVER_PORT: int = 8000  # 服务端口
 
     # ================================================= #
     # ******************* API文档配置 ****************** #
     # ================================================= #
     DEBUG: bool = True  # 调试模式
-    TITLE: str = "🎉 巴莱侠 AIXLab API 🎉 "  # 文档标题
+    TITLE: str = "🎉 AIXLab 🎉 "  # 文档标题
     VERSION: str = "0.1.0"  # 版本号
     DESCRIPTION: str = (
-        "该项目是一个基于python的web服务框架, 基于fastapi和sqlalchemy实现。"  # 文档描述
+        "该项目是一个基于python的web服务框架，基于fastapi和sqlalchemy实现。"  # 文档描述
     )
     SUMMARY: str = "接口汇总"  # 文档概述
     DOCS_URL: str = "/docs"  # Swagger UI路径
@@ -65,8 +65,8 @@ class Settings(BaseSettings):
     # ================================================= #
     SECRET_KEY: str = "vgb0tnl9d58+6n-6h-ea&u^1#s0ccp!794=krylxcjq75vzps$"  # JWT密钥
     ALGORITHM: str = "HS256"  # JWT算法
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 300  # access_token过期时间(秒)30 分钟
-    REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 300  # refresh_token过期时间(秒)30 分钟
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 30  # access_token过期时间(秒)30 分钟
+    REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 30  # refresh_token过期时间(秒)30 分钟
     TOKEN_TYPE: str = "bearer"  # token类型
     TOKEN_REQUEST_PATH_EXCLUDE: list[str] = ["api/v1/auth/login"]  # JWT / RBAC 路由白名单
 
@@ -79,7 +79,7 @@ class Settings(BaseSettings):
     POOL_SIZE: int = 10  # 连接池大小
     MAX_OVERFLOW: int = 20  # 最大溢出连接数
     POOL_TIMEOUT: int = 30  # 连接超时时间(秒)
-    POOL_RECYCLE: int = 18000000  # 连接回收时间(秒)
+    POOL_RECYCLE: int = 1800  # 连接回收时间(秒)
     POOL_USE_LIFO: bool = True  # 是否使用LIFO连接池
     POOL_PRE_PING: bool = True  # 是否开启连接预检
     FUTURE: bool = True  # 是否使用SQLAlchemy 2.0特性
@@ -155,24 +155,19 @@ class Settings(BaseSettings):
         ".ico",
         ".svg",
         ".bmp",
-        ".eps",
         ".tiff",
         ".webp",
-        ".csv",
+        ".eps",
+        ".csv"
         ".xls",
         ".xlsx",
-        ".doc",
-        ".docx",
         ".txt",
         ".md",
-        ".pdf",
-        ".mp4",
-        ".webm",
-        ".flv",
-        ".m3u8",
-        ".ts",
-        ".rar",
+        "pdf",
+        ".doc",
+        ".docx",
         ".zip",
+        ".rar",
         ".7z"
     ]
     MAX_FILE_SIZE: int = 200 * 1024 * 1024  # 最大文件大小(200MB)

@@ -22,14 +22,14 @@
 .layout-mix .layout__sidebar--left .el-menu {
   .el-menu-item {
     &:hover {
-      // 极简白主题: 使用浅灰色背景
+      // 极简白主题：使用浅灰色背景
       background-color: var(--el-fill-color-light) !important;
     }
   }
 
   .el-sub-menu__title {
     &:hover {
-      // 极简白主题: 使用浅灰色背景
+      // 极简白主题：使用浅灰色背景
       background-color: var(--el-fill-color-light) !important;
     }
   }
@@ -40,20 +40,20 @@ html.dark .layout-mix .layout__sidebar--left .el-menu,
 html.sidebar-color-blue .layout-mix .layout__sidebar--left .el-menu {
   .el-menu-item {
     &:hover {
-      // 深色背景: 使用CSS变量
+      // 深色背景：使用CSS变量
       background-color: var(--menu-hover) !important;
     }
   }
 
   .el-sub-menu__title {
     &:hover {
-      // 深色背景: 使用CSS变量
+      // 深色背景：使用CSS变量
       background-color: var(--menu-hover) !important;
     }
   }
 }
 
-// 窄屏时隐藏菜单文字, 只显示图标
+// 窄屏时隐藏菜单文字，只显示图标
 .hideSidebar {
   // Top布局和Mix布局的水平菜单
   &.layout-top .layout__header .el-menu--horizontal,

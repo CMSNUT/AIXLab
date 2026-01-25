@@ -35,7 +35,7 @@
                 <el-option value="1" label="停用" />
               </el-select>
             </el-form-item>
-            <!-- 时间范围, 收起状态下隐藏 -->
+            <!-- 时间范围，收起状态下隐藏 -->
             <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
               <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
             </el-form-item>
@@ -668,7 +668,7 @@ const rules = reactive({
 // 日期范围临时变量
 const dateRange = ref<[Date, Date] | []>([]);
 
-// 仅用于导出字段的列(排除非数据列及嵌套对象列)
+// 仅用于导出字段的列（排除非数据列及嵌套对象列）
 const exportColumns = [
   { prop: "username", label: "账号" },
   { prop: "name", label: "名称" },
@@ -741,7 +741,7 @@ async function loadingData() {
   }
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -751,7 +751,7 @@ async function handleQuery() {
 async function handleResetQuery() {
   // 重置表单字段
   queryFormRef.value.resetFields();
-  // 额外清空不在 model 内的扩展查询项(如日期范围)
+  // 额外清空不在 model 内的扩展查询项（如日期范围）
   dateRange.value = [];
   queryFormData.created_time = undefined;
   // 清空部门并重置页码
@@ -807,7 +807,7 @@ function hancleResetPassword(row: UserInfo) {
   }).then(
     async ({ value }) => {
       if (!value || value.length < 6) {
-        ElMessage.warning("密码至少需要6位字符, 请重新输入");
+        ElMessage.warning("密码至少需要6位字符，请重新输入");
         return false;
       }
       await UserAPI.resetUserPassword({ id: row.id!, password: value });
@@ -877,7 +877,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
     .filter((opt) => !opt.disabled);
 }
 
-// 提交表单(防抖)
+// 提交表单（防抖）
 async function handleSubmit() {
   // 表单校验
   dataFormRef.value.validate(async (valid: any) => {
@@ -894,7 +894,7 @@ async function handleSubmit() {
         dialogVisible.visible = false;
         resetForm();
         handleResetQuery();
-        // 如果当前编辑的是登录用户, 更新全局用户状态
+        // 如果当前编辑的是登录用户，更新全局用户状态
         const userStore = useUserStore();
         if (id === userStore.basicInfo.id) {
           await userStore.getUserInfo();
@@ -975,14 +975,14 @@ const handleUpload = async (formData: FormData) => {
   try {
     const response = await UserAPI.importUser(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
-      ElMessage.success(`${response.data.msg}, ${response.data.data}`);
+      ElMessage.success(`${response.data.msg}，${response.data.data}`);
       importDialogVisible.value = false;
       await handleQuery();
       emit("import-success");
     }
   } catch (error: any) {
     console.error(error);
-    ElMessage.error("上传失败: " + error);
+    ElMessage.error("上传失败：" + error);
   }
 };
 

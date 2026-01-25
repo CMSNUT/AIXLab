@@ -63,7 +63,7 @@ class SchedulerUtil:
     定时任务相关方法
     """
 
-    # 类变量, 存储应用的Redis连接
+    # 类变量，存储应用的Redis连接
     redis_instance = None
 
     @classmethod
@@ -78,7 +78,7 @@ class SchedulerUtil:
         - None
         """
         try:
-            # 只处理任务执行相关事件, 不处理任务添加、删除等事件
+            # 只处理任务执行相关事件，不处理任务添加、删除等事件
             if not isinstance(event, JobExecutionEvent):
                 return
 
@@ -157,7 +157,7 @@ class SchedulerUtil:
                             job_message += f", 错误={exception_info[:500]}..."
                     except Exception as e:
                         job_message = (
-                            f"任务 {job_id} 执行事件, 状态={'成功' if status == '0' else '失败'}"
+                            f"任务 {job_id} 执行事件，状态={'成功' if status == '0' else '失败'}"
                         )
                         log.error(f"构建任务 {job_id} 消息失败: {e!s}")
 
@@ -230,7 +230,7 @@ class SchedulerUtil:
                 # 使用Redis锁确保只有一个实例执行任务初始化
                 redis_client = RedisCURD(redis)
                 lock_key = f"{RedisInitKeyConfig.APSCHEDULER_LOCK_KEY.key}:job"
-                # 尝试获取锁, 过期时间10秒
+                # 尝试获取锁，过期时间10秒
                 lock_acquired, lock_value = await redis_client.lock(lock_key, 10)
                 if lock_acquired:
                     try:
@@ -243,7 +243,7 @@ class SchedulerUtil:
                             cls.add_job(item)
                             # 根据数据库中保存的状态来设置任务状态
                             if item.status == "1":
-                                # 如果任务状态为暂停, 则立即暂停刚添加的任务
+                                # 如果任务状态为暂停，则立即暂停刚添加的任务
                                 cls.pause_job(job_id=item.id)
                     finally:
                         # 释放锁
@@ -281,7 +281,7 @@ class SchedulerUtil:
         - job_id (str | int): 任务ID。
 
         返回:
-        - Job | None: 任务对象, 未找到则为 None。
+        - Job | None: 任务对象，未找到则为 None。
         """
         return scheduler.get_job(job_id=str(job_id))
 
@@ -297,12 +297,12 @@ class SchedulerUtil:
 
     @classmethod
     async def _task_wrapper(cls, func: Callable, job_id: str | int, *args, **kwargs):
-        """任务执行包装器, 添加分布式锁防止并发执行"""
+        """任务执行包装器，添加分布式锁防止并发执行"""
         import asyncio
 
         # 使用类变量中的Redis连接
         if not cls.redis_instance:
-            log.error(f"任务 {job_id} 执行失败: Redis连接未初始化")
+            log.error(f"任务 {job_id} 执行失败：Redis连接未初始化")
             return None
 
         redis_client = RedisCURD(redis=cls.redis_instance)
@@ -318,12 +318,12 @@ class SchedulerUtil:
                 while True:
                     # 等待锁过期时间的2/3后进行续约
                     await asyncio.sleep(20)  # 30秒的2/3
-                    # 使用redis_client.renew_lock续约锁, 验证锁持有者
+                    # 使用redis_client.renew_lock续约锁，验证锁持有者
                     success = await redis_client.renew_lock(lock_key, 30, lock_value)
                     if success:
                         log.info(f"任务 {job_id} 锁续约成功")
                     else:
-                        log.warning(f"任务 {job_id} 锁续约失败: 锁可能已被其他实例获取")
+                        log.warning(f"任务 {job_id} 锁续约失败：锁可能已被其他实例获取")
                         break
             except asyncio.CancelledError:
                 log.info(f"任务 {job_id} 锁续约任务已取消")
@@ -331,7 +331,7 @@ class SchedulerUtil:
                 log.error(f"任务 {job_id} 锁续约失败: {e!s}")
 
         try:
-            # 获取分布式锁, 使用原子性的lock方法
+            # 获取分布式锁，使用原子性的lock方法
             lock_acquired, lock_value = await redis_client.lock(lock_key, 30)
             if lock_acquired:
                 log.info(f"任务 {job_id} 获取执行锁成功")
@@ -341,20 +341,20 @@ class SchedulerUtil:
                 # 执行任务
                 if iscoroutinefunction(func):
                     return await func(*args, **kwargs)
-                # 对于同步函数, 使用线程池执行
+                # 对于同步函数，使用线程池执行
                 log.info(f"任务 {job_id} 开始执行同步函数: {func.__name__}, 参数: {args}-{kwargs}")
                 try:
                     loop = asyncio.get_running_loop()
-                    # 使用lambda包装函数调用, 以支持关键字参数
+                    # 使用lambda包装函数调用，以支持关键字参数
                     result = await loop.run_in_executor(None, lambda: func(*args, **kwargs))
-                    log.info(f"任务 {job_id} 同步函数执行完成, 结果: {result}")
+                    log.info(f"任务 {job_id} 同步函数执行完成，结果: {result}")
                     return result
                 except Exception as e:
                     log.error(f"任务 {job_id} 同步函数执行失败: {e!s}")
                     raise
             else:
-                # 获取锁失败, 记录日志
-                log.info(f"任务 {job_id} 获取执行锁失败, 跳过本次执行")
+                # 获取锁失败，记录日志
+                log.info(f"任务 {job_id} 获取执行锁失败，跳过本次执行")
                 return None
         finally:
             # 取消锁续约任务
@@ -376,7 +376,7 @@ class SchedulerUtil:
         根据任务配置创建并添加调度任务。
 
         参数:
-        - job_info (JobModel): 任务对象信息(包含触发器、函数、参数等)。
+        - job_info (JobModel): 任务对象信息（包含触发器、函数、参数等）。
 
         返回:
         - Job: 新增的任务对象。
@@ -389,7 +389,7 @@ class SchedulerUtil:
             module = importlib.import_module(module_path)
             job_func = getattr(module, func_name)
 
-            # 2. 确定任务存储器: 优先使用redis, 确保分布式环境中任务同步
+            # 2. 确定任务存储器：优先使用redis，确保分布式环境中任务同步
             if job_info.jobstore is None:
                 job_info.jobstore = "redis"  # 改为默认使用redis存储
 
@@ -405,7 +405,7 @@ class SchedulerUtil:
             # 4. 创建触发器
             trigger = None
             if job_info.trigger is None or job_info.trigger.lower() == "now":
-                # 立即执行作业: 省略trigger或使用'now'时, 使用date触发器立即执行
+                # 立即执行作业：省略trigger或使用'now'时，使用date触发器立即执行
                 trigger = DateTrigger(run_date=datetime.now())
             elif job_info.trigger == "date":
                 if job_info.trigger_args is None:
@@ -421,7 +421,7 @@ class SchedulerUtil:
                 second, minute, hour, day, week = tuple(
                     int(field) if field != "*" else 0 for field in fields
                 )
-                # 秒、分、时、天、周(* * * * 1)
+                # 秒、分、时、天、周（* * * * 1）
                 trigger = IntervalTrigger(
                     weeks=week,
                     days=day,
@@ -446,7 +446,7 @@ class SchedulerUtil:
                 # 将Cron表达式中的"?"替换为"*"以兼容APScheduler
                 parsed_fields = [field if field != "?" else "*" for field in fields]
                 if len(fields) == 6:
-                    parsed_fields.append("*")  # 如果没有年份字段, 添加None
+                    parsed_fields.append("*")  # 如果没有年份字段，添加None
 
                 second, minute, hour, day, month, day_of_week, year = tuple(parsed_fields)
                 trigger = CronTrigger(
@@ -464,8 +464,8 @@ class SchedulerUtil:
             else:
                 raise ValueError("无效的 trigger 触发器")
 
-            # 5. 添加任务(使用包装器函数)
-            # 处理任务参数, 确保空参数时返回空列表
+            # 5. 添加任务（使用包装器函数）
+            # 处理任务参数，确保空参数时返回空列表
             job_args = []
             if job_info.args:
                 args_str = str(job_info.args).strip()
@@ -487,9 +487,9 @@ class SchedulerUtil:
             log.info(f"任务 {job_info.id} 添加到 {job_info.jobstore} 存储器成功")
             return job
         except ModuleNotFoundError:
-            raise ValueError(f"未找到该模块: {module_path}")
+            raise ValueError(f"未找到该模块：{module_path}")
         except AttributeError:
-            raise ValueError(f"未找到该模块下的方法: {func_name}")
+            raise ValueError(f"未找到该模块下的方法：{func_name}")
         except Exception as e:
             raise CustomException(msg=f"添加任务失败: {e!s}")
 
@@ -521,7 +521,7 @@ class SchedulerUtil:
     @classmethod
     def modify_job(cls, job_id: str | int) -> Job:
         """
-        更新指定任务的配置(运行中的任务下次执行生效)。
+        更新指定任务的配置（运行中的任务下次执行生效）。
 
         参数:
         - job_id (str | int): 任务ID。
@@ -534,13 +534,13 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise CustomException(msg=f"未找到该任务: {job_id}")
+            raise CustomException(msg=f"未找到该任务：{job_id}")
         return scheduler.modify_job(job_id=str(job_id))
 
     @classmethod
     def pause_job(cls, job_id: str | int) -> None:
         """
-        暂停指定任务(仅运行中可暂停, 已终止不可)。
+        暂停指定任务（仅运行中可暂停，已终止不可）。
 
         参数:
         - job_id (str | int): 任务ID。
@@ -553,13 +553,13 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise ValueError(f"未找到该任务: {job_id}")
+            raise ValueError(f"未找到该任务：{job_id}")
         scheduler.pause_job(job_id=str(job_id))
 
     @classmethod
     def resume_job(cls, job_id: str | int) -> None:
         """
-        恢复指定任务(仅暂停中可恢复, 已终止不可)。
+        恢复指定任务（仅暂停中可恢复，已终止不可）。
 
         参数:
         - job_id (str | int): 任务ID。
@@ -572,7 +572,7 @@ class SchedulerUtil:
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise ValueError(f"未找到该任务: {job_id}")
+            raise ValueError(f"未找到该任务：{job_id}")
         scheduler.resume_job(job_id=str(job_id))
 
     @classmethod
@@ -584,24 +584,24 @@ class SchedulerUtil:
 
         参数:
         - job_id (str | int): 任务ID。
-        - trigger: 触发器类型('date', 'interval', 'cron')
+        - trigger: 触发器类型（'date', 'interval', 'cron'）
         - **trigger_args: 触发器参数
 
         返回:
-        - Job | None: 更新后的任务对象, 未找到任务时返回 None。
+        - Job | None: 更新后的任务对象，未找到任务时返回 None。
 
         异常:
         - CustomException: 当任务不存在时抛出。
         """
         query_job = cls.get_job(job_id=str(job_id))
         if not query_job:
-            raise CustomException(msg=f"未找到该任务: {job_id}")
+            raise CustomException(msg=f"未找到该任务：{job_id}")
 
-        # 如果没有提供新的触发器, 则使用现有触发器
+        # 如果没有提供新的触发器，则使用现有触发器
         if trigger is None:
             # 获取当前任务的触发器配置
             current_trigger = query_job.trigger
-            # 重新调度任务, 使用当前的触发器
+            # 重新调度任务，使用当前的触发器
             return scheduler.reschedule_job(job_id=str(job_id), trigger=current_trigger)
         # 使用新提供的触发器
         return scheduler.reschedule_job(job_id=str(job_id), trigger=trigger, **trigger_args)
@@ -615,7 +615,7 @@ class SchedulerUtil:
         - job_id (str | int): 任务ID
 
         返回:
-        - str: 任务状态('running' | 'paused' | 'stopped' | 'unknown')
+        - str: 任务状态（'running' | 'paused' | 'stopped' | 'unknown'）
         """
         job = cls.get_job(job_id=str(job_id))
         if not job:
@@ -651,7 +651,7 @@ class SchedulerUtil:
         获取调度器当前状态。
 
         返回:
-        - str: 状态字符串('stopped' | 'running' | 'paused' | 'unknown')。
+        - str: 状态字符串（'stopped' | 'running' | 'paused' | 'unknown'）。
         """
         if scheduler.state == 0:
             return "stopped"
@@ -677,7 +677,7 @@ class SchedulerUtil:
         """
         job = cls.get_job(job_id=str(job_id))
         if not job:
-            raise ValueError(f"未找到该任务: {job_id}")
+            raise ValueError(f"未找到该任务：{job_id}")
 
         # 立即执行任务
         scheduler.modify_job(job_id=str(job_id), next_run_time=datetime.now())

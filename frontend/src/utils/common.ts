@@ -1,10 +1,10 @@
-// 问候语: 根据当前小时返回不同问候语
+// 问候语：根据当前小时返回不同问候语
 export function greetings() {
-  // 当前时间(用于计算问候语)
+  // 当前时间（用于计算问候语）
   const currentDate = new Date();
   const hours = currentDate.getHours();
   if (hours >= 6 && hours < 8) {
-    return "晨起披衣出草堂, 轩窗已自喜微凉🌅！";
+    return "晨起披衣出草堂，轩窗已自喜微凉🌅！";
   } else if (hours >= 8 && hours < 12) {
     return `上午好！`;
   } else if (hours >= 12 && hours < 14) {
@@ -14,7 +14,7 @@ export function greetings() {
   } else if (hours >= 18 && hours < 24) {
     return `晚上好！`;
   } else {
-    return "偷偷向银河要了一把碎星, 只等你闭上眼睛撒入你的梦中, 晚安🌛！";
+    return "偷偷向银河要了一把碎星，只等你闭上眼睛撒入你的梦中，晚安🌛！";
   }
 }
 
@@ -35,7 +35,7 @@ export function getRangeDate(startDate: string | number | Date, endDate: string 
   if (startDateInfo.year === endDateInfo.year) {
     //同年
     if (startDateInfo.month !== endDateInfo.month) {
-      //同年, 不同月份
+      //同年，不同月份
       //获取开始时间所在月的月底日期
       const startMax = new Date(startDateInfo.year, startDateInfo.month, 0).getDate();
       const endNum = startMax - startDateInfo.day + endDateInfo.day;
@@ -90,7 +90,7 @@ export function getRangeDate(startDate: string | number | Date, endDate: string 
 
 export function listToTree(list: any[]) {
   const map: { [key: string | number]: any } = {};
-  // 创建映射表, 保留每个节点的 parent_id 等原始字段
+  // 创建映射表，保留每个节点的 parent_id 等原始字段
   list.forEach((item) => {
     map[item.id] = { ...item };
   });

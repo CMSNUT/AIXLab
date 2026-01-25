@@ -44,7 +44,7 @@ function handleIframeLoad() {
   loading.value = false;
 }
 
-// 监听路由变化, 更新iframe
+// 监听路由变化，更新iframe
 watch(
   () => route.query.url,
   (newUrl) => {
@@ -73,7 +73,7 @@ onMounted(() => {
   }
 });
 
-// 监听应用名称变化, 更新标签标题
+// 监听应用名称变化，更新标签标题
 watch(
   () => appName.value,
   (newAppName) => {

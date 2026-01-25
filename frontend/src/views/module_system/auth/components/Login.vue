@@ -137,14 +137,14 @@ const router = useRouter();
 // 组件挂载时获取验证码
 onMounted(() => getCaptcha());
 
-// 组件激活时获取验证码(适用于KeepAlive缓存的情况)
+// 组件激活时获取验证码（适用于KeepAlive缓存的情况）
 onActivated(() => {
   getCaptcha();
   // 重置登录表单
   loginForm.captcha = "";
 });
 
-// 监听路由变化, 确保每次进入登录页面都有最新验证码
+// 监听路由变化，确保每次进入登录页面都有最新验证码
 watch(
   () => route.fullPath,
   () => {
@@ -167,7 +167,7 @@ const loginForm = reactive<LoginFormData>({
   login_type: "PC端",
 });
 
-// 监听父组件传入的预填信息, 立即填充到登录表单
+// 监听父组件传入的预填信息，立即填充到登录表单
 watch(
   () => [props.presetUsername, props.presetPassword],
   ([presetUsername, presetPassword]) => {
@@ -234,10 +234,10 @@ async function getCaptcha() {
     captchaState.img_base = response.data.data.img_base;
     captchaState.enable = response.data.data.enable;
   } catch (error: any) {
-    // 验证码获取失败时, 默认关闭验证码功能
+    // 验证码获取失败时，默认关闭验证码功能
     console.error("获取验证码失败:", error);
     captchaState.enable = false;
-    // 清空验证码相关字段, 避免影响登录
+    // 清空验证码相关字段，避免影响登录
     loginForm.captcha = "";
     loginForm.captcha_key = "";
   } finally {
@@ -259,16 +259,16 @@ async function handleLoginSubmit() {
     // 2. 执行登录
     await userStore.login(loginForm);
 
-    // 4. 登录成功, 让路由守卫处理跳转逻辑
-    // 解析目标地址, 但不直接跳转
+    // 4. 登录成功，让路由守卫处理跳转逻辑
+    // 解析目标地址，但不直接跳转
     const redirect = resolveRedirectTarget(route.query);
 
-    // 通过替换当前路由触发路由守卫, 让守卫处理后续的路由生成和跳转
+    // 通过替换当前路由触发路由守卫，让守卫处理后续的路由生成和跳转
     await router.replace(redirect);
 
-    // 5. 记住我功能已实现, 根据用户选择决定token的存储方式:
-    // - 选中"记住我": token存储在localStorage中, 浏览器关闭后仍然有效
-    // - 未选中"记住我": token存储在sessionStorage中, 浏览器关闭后失效
+    // 5. 记住我功能已实现，根据用户选择决定token的存储方式:
+    // - 选中"记住我": token存储在localStorage中，浏览器关闭后仍然有效
+    // - 未选中"记住我": token存储在sessionStorage中，浏览器关闭后失效
 
     // 登录成功后自动开启项目引导
     if (settingsStore.showGuide) {
@@ -304,7 +304,7 @@ function resolveRedirectTarget(query: LocationQuery): RouteLocationRaw {
       query: resolved.query,
     };
   } catch {
-    // 7. 异常处理: 返回安全路径
+    // 7. 异常处理：返回安全路径
     return { path: defaultPath };
   }
 }

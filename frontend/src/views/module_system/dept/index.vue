@@ -24,7 +24,7 @@
             <el-option value="1" label="停用" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围, 收起状态下隐藏 -->
+        <!-- 时间范围，收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -143,7 +143,7 @@
         </div>
       </div>
 
-      <!-- 表格区域: 系统配置列表 -->
+      <!-- 表格区域：系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -493,7 +493,7 @@ async function loadingData() {
   }
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   loadingData();
 }
@@ -603,7 +603,7 @@ async function handleSubmit() {
         dialogVisible.visible = false;
         resetForm();
         handleResetQuery();
-        // 更新全局用户状态, 刷新部门信息
+        // 更新全局用户状态，刷新部门信息
         const userStore = useUserStore();
         await userStore.getUserInfo();
       } catch (error: any) {

@@ -20,7 +20,7 @@ class FileService:
         参数:
         - base_url (str): 基础访问 URL。
         - file (UploadFile): 上传文件对象。
-        - upload_type (str): 上传类型, 'local' 或 'oss', 默认 'local'。
+        - upload_type (str): 上传类型，'local' 或 'oss'，默认 'local'。
 
         返回:
         - Dict: 上传响应字典。

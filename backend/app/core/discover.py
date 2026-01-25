@@ -1,7 +1,7 @@
 """
 简化的动态路由发现与注册
 
-约定: 
+约定：
 - 扫描 `app.plugin` 下所有以 `module_` 开头的顶级目录
 - 在各模块任意子目录下的 `controller.py` 中定义的 `APIRouter` 实例会自动被注册
 - 顶级目录 `module_xxx` 会映射为容器路由前缀 `/<xxx>`
@@ -20,7 +20,7 @@ from app.core.logger import log
 
 def get_dynamic_router() -> APIRouter:
     """
-    执行动态路由发现与注册, 返回包含所有动态路由的根路由实例
+    执行动态路由发现与注册，返回包含所有动态路由的根路由实例
 
     返回:
     - APIRouter: 包含所有动态路由的根路由实例
@@ -30,7 +30,7 @@ def get_dynamic_router() -> APIRouter:
     # 创建根路由实例
     root_router = APIRouter()
 
-    # 已注册的路由ID集合, 用于避免重复注册
+    # 已注册的路由ID集合，用于避免重复注册
     seen_router_ids: set[int] = set()
 
     try:
@@ -42,7 +42,7 @@ def get_dynamic_router() -> APIRouter:
         # 只扫描module_*目录下的文件
         controller_files = list(base_dir.glob("module_*/**/controller.py"))
 
-        # 按路径排序, 确保注册顺序一致
+        # 按路径排序，确保注册顺序一致
         controller_files.sort()
 
         # 容器路由映射 {prefix: container_router}
@@ -75,7 +75,7 @@ def get_dynamic_router() -> APIRouter:
                 for attr_name in dir(module):
                     attr_value = getattr(module, attr_name, None)
 
-                    # 只注册APIRouter实例, 且避免重复注册
+                    # 只注册APIRouter实例，且避免重复注册
                     if isinstance(attr_value, APIRouter):
                         router_id = id(attr_value)
                         if router_id not in seen_router_ids:
@@ -96,7 +96,7 @@ def get_dynamic_router() -> APIRouter:
 
     except Exception as e:
         log.error(f"❌️ 动态路由发现失败: {e!s}")
-        # 如果失败, 返回一个空的路由实例
+        # 如果失败，返回一个空的路由实例
         return root_router
 
 

@@ -212,12 +212,12 @@ class CommonConstant:
     LOOKUP_RMI: RMI远程方法调用
     LOOKUP_LDAP: LDAP远程方法调用
     LOOKUP_LDAPS: LDAPS远程方法调用
-    YES: 是否为系统默认(是)
-    NO: 是否为系统默认(否)
+    YES: 是否为系统默认（是）
+    NO: 是否为系统默认（否）
     DEPT_NORMAL: 部门正常状态
     DEPT_DISABLE: 部门停用状态
-    UNIQUE: 校验是否唯一的返回标识(是)
-    NOT_UNIQUE: 校验是否唯一的返回标识(否)
+    UNIQUE: 校验是否唯一的返回标识（是）
+    NOT_UNIQUE: 校验是否唯一的返回标识（否）
     """
 
     # 域名相关
@@ -303,11 +303,11 @@ class MenuConstant:
     """
     菜单常量
 
-    TYPE_DIR: 菜单类型(目录)
-    TYPE_MENU: 菜单类型(菜单)
-    TYPE_BUTTON: 菜单类型(按钮)
-    YES_FRAME: 是否菜单外链(是)
-    NO_FRAME: 是否菜单外链(否)
+    TYPE_DIR: 菜单类型（目录）
+    TYPE_MENU: 菜单类型（菜单）
+    TYPE_BUTTON: 菜单类型（按钮）
+    YES_FRAME: 是否菜单外链（是）
+    NO_FRAME: 是否菜单外链（否）
     LAYOUT: Layout组件标识
     PARENT_VIEW: ParentView组件标识
     INNER_LINK: InnerLink组件标识
@@ -601,7 +601,7 @@ class GenConstant:
             "SET": "String",
             # JSON 类型
             "JSON": "JSON",
-            # 空间数据类型(需要扩展支持, 如 GeoAlchemy2)
+            # 空间数据类型（需要扩展支持，如 GeoAlchemy2）
             "GEOMETRY": "Geometry",  # 需要安装 geoalchemy2
             "POINT": "Geometry",
             "LINESTRING": "Geometry",
@@ -677,7 +677,7 @@ class GenConstant:
         }
         if settings.DATABASE_TYPE == "postgres"
         else {
-            # 布尔类型(特殊处理tinyint(1))
+            # 布尔类型（特殊处理tinyint(1)）
             "TINYINT": "bool",
             # 数值类型
             "SMALLINT": "int",
@@ -699,7 +699,7 @@ class GenConstant:
             "TINYINT UNSIGNED": "int",  # 无符号小整数类型
             # 布尔类型
             "BOOLEAN": "bool",
-            "BOOL": "bool",  # 布尔类型, 通常与 BOOLEAN 相同
+            "BOOL": "bool",  # 布尔类型，通常与 BOOLEAN 相同
             # UUID
             "UUID": "str",  # UUID 一般作为字符串
             # 字符串类型
@@ -720,8 +720,8 @@ class GenConstant:
             "SET": "list",
             # JSON 类型
             "JSON": "dict",
-            # 空间数据类型(通常需要特殊处理)
-            "GEOMETRY": "bytes",  # 空间数据类型, 通常存储为字节流
+            # 空间数据类型（通常需要特殊处理）
+            "GEOMETRY": "bytes",  # 空间数据类型，通常存储为字节流
             "POINT": "bytes",  # 点数据类型
             "LINESTRING": "bytes",  # 线数据类型
             "POLYGON": "bytes",  # 多边形数据类型

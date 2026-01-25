@@ -85,7 +85,7 @@ class OperationLogService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         await OperationLogCRUD(auth).delete(ids=ids)
 
     @classmethod

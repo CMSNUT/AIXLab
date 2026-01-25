@@ -15,7 +15,7 @@
     </div>
     <!-- 登录页主体 -->
     <div class="auth-view__wrapper">
-      <!-- 可选: 左侧产品介绍区域, 如不需要可整段删除, 右侧登录表单会自动居中展示 -->
+      <!-- 可选：左侧产品介绍区域，如不需要可整段删除，右侧登录表单会自动居中展示 -->
       <section class="auth-feature">
         <div class="auth-feature__badge">
           <span class="auth-feature__dot" />
@@ -23,7 +23,7 @@
         </div>
         <h1 class="auth-feature__title">企业级管理系统</h1>
         <p class="auth-feature__subtitle">
-          提供安全、高效、可扩展的管理解决方案, 助力企业数字化转型与业务增长。
+          提供安全、高效、可扩展的管理解决方案，助力企业数字化转型与业务增长。
         </p>
         <ul class="auth-feature__highlights">
           <li>
@@ -142,7 +142,7 @@ const formComponents = {
   resetPwd: defineAsyncComponent(() => import("./components/ResetPwd.vue")),
 };
 
-// 预填登录信息(通过具名 v-model 双向绑定传递)
+// 预填登录信息（通过具名 v-model 双向绑定传递）
 const loginPreset = reactive<{ username: string; password: string }>({
   username: "admin",
   password: "123456",
@@ -153,9 +153,9 @@ let notificationInstance: ReturnType<typeof ElNotification> | null = null;
 const showVoteNotification = () => {
   notificationInstance = ElNotification({
     title: "⭐ AIXLab 完全开源 · 期待您的 Star 支持 🙏",
-    message: `项目持续迭代中, 若对您有所帮助, 欢迎点亮 Star 支持！
-    <br/><a href="https://github.com/aixlab/AIXLab" target="_blank" style="color: var(--el-color-primary); text-decoration: none; font-weight: 500;">Github仓库 →</a>
-    <br/><a href="https://gitee.com/aixlab/AIXLab" target="_blank" style="color: var(--el-color-warning); text-decoration: none; font-weight: 500;">Gitee仓库 →</a>`,
+    message: `项目持续迭代中，若对您有所帮助，欢迎点亮 Star 支持！
+    <br/><a href="https://github.com/CMSNUT/AIXLab" target="_blank" style="color: var(--el-color-primary); text-decoration: none; font-weight: 500;">Github仓库 →</a>
+    <br/><a href="https://gitee.com/CMSNUT/AIXLab" target="_blank" style="color: var(--el-color-warning); text-decoration: none; font-weight: 500;">Gitee仓库 →</a>`,
     type: "success",
     position: "bottom-left",
     duration: 0,
@@ -163,7 +163,7 @@ const showVoteNotification = () => {
   });
 };
 
-// 组件初始化时就加载配置, 而不是在onMounted中
+// 组件初始化时就加载配置，而不是在onMounted中
 configStore.getConfig();
 
 onMounted(() => {
@@ -376,7 +376,7 @@ onBeforeUnmount(() => {
   animation: panelLift 0.7s ease;
 }
 
-/* 应用内暗黑主题(例如 html/body 上挂 .dark 类)下的登录表单样式 */
+/* 应用内暗黑主题（例如 html/body 上挂 .dark 类）下的登录表单样式 */
 .dark .auth-panel {
   background: rgba(26, 32, 48, 0.9);
   border-color: rgba(86, 140, 255, 0.28);

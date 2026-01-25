@@ -57,7 +57,7 @@ const download: DownloadUtil = {
   zip(url: string, name: string): void {
     const fullUrl = baseURL + url;
     downloadLoadingInstance = ElLoading.service({
-      text: "正在下载数据, 请稍候",
+      text: "正在下载数据，请稍候",
       background: "rgba(0, 0, 0, 0.7)",
     });
     axios({
@@ -78,7 +78,7 @@ const download: DownloadUtil = {
       })
       .catch((r: any) => {
         console.error(r);
-        ElMessage.error("下载文件出现错误, 请联系管理员！");
+        ElMessage.error("下载文件出现错误，请联系管理员！");
         downloadLoadingInstance.close();
       });
   },

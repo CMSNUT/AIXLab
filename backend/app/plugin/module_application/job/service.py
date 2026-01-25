@@ -70,11 +70,11 @@ class JobService:
         """
         exist_obj = await JobCRUD(auth).get(name=data.name)
         if exist_obj:
-            raise CustomException(msg="创建失败, 该定时任务已存在")
+            raise CustomException(msg="创建失败，该定时任务已存在")
 
         obj = await JobCRUD(auth).create_obj_crud(data=data)
         if not obj:
-            raise CustomException(msg="创建失败, 该数据定时任务不存在")
+            raise CustomException(msg="创建失败，该数据定时任务不存在")
         SchedulerUtil().add_job(job_info=obj)
         return JobOutSchema.model_validate(obj).model_dump()
 
@@ -93,7 +93,7 @@ class JobService:
         """
         exist_obj = await JobCRUD(auth).get_obj_by_id_crud(id=id)
         if not exist_obj:
-            raise CustomException(msg="更新失败, 该定时任务不存在")
+            raise CustomException(msg="更新失败，该定时任务不存在")
         if (
             data.trigger == "cron"
             and data.trigger_args
@@ -102,7 +102,7 @@ class JobService:
             raise CustomException(msg=f"新增定时任务{data.name}失败, Cron表达式不正确")
         obj = await JobCRUD(auth).update_obj_crud(id=id, data=data)
         if not obj:
-            raise CustomException(msg="更新失败, 该数据定时任务不存在")
+            raise CustomException(msg="更新失败，该数据定时任务不存在")
         SchedulerUtil().modify_job(job_id=obj.id)
         return JobOutSchema.model_validate(obj).model_dump()
 
@@ -116,14 +116,14 @@ class JobService:
         - ids (list[int]): 定时任务ID列表
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         for id in ids:
             exist_obj = await JobCRUD(auth).get_obj_by_id_crud(id=id)
             if not exist_obj:
-                raise CustomException(msg="删除失败, 该数据定时任务不存在")
+                raise CustomException(msg="删除失败，该数据定时任务不存在")
             obj = await JobLogCRUD(auth).get(job_id=id)
             if obj:
-                raise CustomException(msg=f"删除失败, 该定时任务存 {exist_obj.name} 在日志记录")
+                raise CustomException(msg=f"删除失败，该定时任务存 {exist_obj.name} 在日志记录")
 
             SchedulerUtil().remove_job(job_id=id)
         await JobCRUD(auth).delete_obj_crud(ids=ids)
@@ -153,7 +153,7 @@ class JobService:
         # 1: 暂停 2: 恢复 3: 重启
         obj = await JobCRUD(auth).get_obj_by_id_crud(id=id)
         if not obj:
-            raise CustomException(msg="操作失败, 该数据定时任务不存在")
+            raise CustomException(msg="操作失败，该数据定时任务不存在")
         if option == 1:
             SchedulerUtil().pause_job(job_id=id)
             await JobCRUD(auth).set_obj_field_crud(ids=[id], status="1")  # 更新为暂停状态(1)
@@ -161,7 +161,7 @@ class JobService:
             SchedulerUtil().resume_job(job_id=id)
             await JobCRUD(auth).set_obj_field_crud(ids=[id], status="0")  # 更新为运行状态(0)
         elif option == 3:
-            # 重启任务: 先移除再添加, 确保使用最新的任务配置
+            # 重启任务：先移除再添加，确保使用最新的任务配置
             SchedulerUtil().remove_job(job_id=id)
             # 获取最新的任务配置
             updated_job = await JobCRUD(auth).get_obj_by_id_crud(id=id)
@@ -270,11 +270,11 @@ class JobLogService:
         - ids (list[int]): 定时任务日志ID列表
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         for id in ids:
             exist_obj = await JobLogCRUD(auth).get_obj_log_by_id_crud(id=id)
             if not exist_obj:
-                raise CustomException(msg=f"删除失败, 该定时任务日志ID为{id}的记录不存在")
+                raise CustomException(msg=f"删除失败，该定时任务日志ID为{id}的记录不存在")
         await JobLogCRUD(auth).delete_obj_log_crud(ids=ids)
 
     @classmethod

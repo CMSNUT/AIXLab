@@ -150,5 +150,5 @@ class CacheService:
 
         return True
 
-        # 避免清除所有的缓存, 而采用上面的方式, 只清除本系统内指定的所有缓存
+        # 避免清除所有的缓存，而采用上面的方式，只清除本系统内指定的所有缓存
         # return await RedisCURD(redis).clear()

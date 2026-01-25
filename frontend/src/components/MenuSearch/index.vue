@@ -301,7 +301,7 @@ function loadRoutes(routes: RouteRecordRaw[], parentPath = "") {
 
     // 处理有子路由的情况
     if (route.children) {
-      // 如果父路由本身有title, 也添加到menuItems中
+      // 如果父路由本身有title，也添加到menuItems中
       if (route.meta?.title) {
         const title = route.meta.title === "dashboard" ? "首页" : route.meta.title;
         menuItems.value.push({

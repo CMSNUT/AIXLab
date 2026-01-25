@@ -84,7 +84,7 @@ class DictTypeService:
         """
         exist_obj = await DictTypeCRUD(auth).get(dict_name=data.dict_name)
         if exist_obj:
-            raise CustomException(msg="创建失败, 该数据字典类型已存在")
+            raise CustomException(msg="创建失败，该数据字典类型已存在")
         obj = await DictTypeCRUD(auth).create_obj_crud(data=data)
 
         new_obj_dict = DictTypeOutSchema.model_validate(obj).model_dump()
@@ -125,12 +125,12 @@ class DictTypeService:
         """
         exist_obj = await DictTypeCRUD(auth).get_obj_by_id_crud(id=id)
         if not exist_obj:
-            raise CustomException(msg="更新失败, 该数据字典类型不存在")
+            raise CustomException(msg="更新失败，该数据字典类型不存在")
         if exist_obj.dict_name != data.dict_name:
-            raise CustomException(msg="更新失败, 数据字典类型名称不可以修改")
+            raise CustomException(msg="更新失败，数据字典类型名称不可以修改")
 
         dict_data_list = []
-        # 如果字典类型修改或状态变更, 则修改对应字典数据的类型和状态, 并更新Redis缓存
+        # 如果字典类型修改或状态变更，则修改对应字典数据的类型和状态，并更新Redis缓存
         if exist_obj.dict_type != data.dict_type or exist_obj.status != data.status:
             # 检查字典数据类型是否被修改
             exist_obj_type_list = await DictDataCRUD(auth).list(
@@ -160,7 +160,7 @@ class DictTypeService:
 
         redis_key = f"{RedisInitKeyConfig.SYSTEM_DICT.key}:{data.dict_type}"
         try:
-            # 获取当前字典类型的所有字典数据, 确保包含最新状态
+            # 获取当前字典类型的所有字典数据，确保包含最新状态
             dict_data_list = await DictDataCRUD(auth).get_obj_list_crud(
                 search={"dict_type": data.dict_type}
             )
@@ -194,16 +194,16 @@ class DictTypeService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         for id in ids:
             exist_obj = await DictTypeCRUD(auth).get_obj_by_id_crud(id=id)
             if not exist_obj:
-                raise CustomException(msg="删除失败, 该数据字典类型不存在")
+                raise CustomException(msg="删除失败，该数据字典类型不存在")
             # 检查是否有字典数据
             exist_obj_type_list = await DictDataCRUD(auth).list(search={"dict_type": id})
             if len(exist_obj_type_list) > 0:
-                # 如果有字典数据, 不能删除
-                raise CustomException(msg="删除失败, 该数据字典类型下存在字典数据")
+                # 如果有字典数据，不能删除
+                raise CustomException(msg="删除失败，该数据字典类型下存在字典数据")
             # 删除Redis缓存
             redis_key = f"{RedisInitKeyConfig.SYSTEM_DICT.key}:{exist_obj.dict_type}"
             try:
@@ -322,7 +322,7 @@ class DictDataService:
         try:
             async with async_db_session() as session:
                 async with session.begin():
-                    # 在初始化过程中, 不需要检查数据权限
+                    # 在初始化过程中，不需要检查数据权限
                     auth = AuthSchema(db=session, check_data_scope=False)
                     obj_list = await DictTypeCRUD(auth).get_obj_list_crud()
                     if not obj_list:
@@ -352,7 +352,7 @@ class DictDataService:
 
         except Exception as e:
             log.error(f"字典初始化过程发生错误: {e}")
-            # 只在严重错误时抛出异常, 允许单个字典加载失败
+            # 只在严重错误时抛出异常，允许单个字典加载失败
             raise CustomException(msg=f"字典数据初始化失败: {e!s}")
 
     @classmethod
@@ -377,7 +377,7 @@ class DictDataService:
                     try:
                         return json.loads(obj_list_dict)
                     except json.JSONDecodeError:
-                        log.warning(f"字典数据反序列化失败, 尝试重新初始化缓存: {dict_type}")
+                        log.warning(f"字典数据反序列化失败，尝试重新初始化缓存: {dict_type}")
                 elif isinstance(obj_list_dict, list):
                     return obj_list_dict
 
@@ -420,14 +420,14 @@ class DictDataService:
             dict_type=data.dict_type, dict_label=data.dict_label
         )
         if exist_label_obj:
-            raise CustomException(msg=f'创建失败, 该字典类型下的字典标签"{data.dict_label}"已存在')
+            raise CustomException(msg=f'创建失败，该字典类型下的字典标签"{data.dict_label}"已存在')
 
         # 检查相同字典类型下dict_value是否已存在
         exist_value_obj = await DictDataCRUD(auth).get(
             dict_type=data.dict_type, dict_value=data.dict_value
         )
         if exist_value_obj:
-            raise CustomException(msg=f'创建失败, 该字典类型下的字典键值"{data.dict_value}"已存在')
+            raise CustomException(msg=f'创建失败，该字典类型下的字典键值"{data.dict_value}"已存在')
 
         obj = await DictDataCRUD(auth).create_obj_crud(data=data)
 
@@ -475,29 +475,29 @@ class DictDataService:
         """
         exist_obj = await DictDataCRUD(auth).get_obj_by_id_crud(id=id)
         if not exist_obj:
-            raise CustomException(msg="更新失败, 该字典数据不存在")
+            raise CustomException(msg="更新失败，该字典数据不存在")
 
-        # 检查相同字典类型下dict_label是否已存在(排除当前记录)
+        # 检查相同字典类型下dict_label是否已存在（排除当前记录）
         if exist_obj.dict_label != data.dict_label:
             exist_label_obj = await DictDataCRUD(auth).get(
                 dict_type=data.dict_type, dict_label=data.dict_label
             )
             if exist_label_obj:
                 raise CustomException(
-                    msg=f'更新失败, 该字典类型下的字典标签"{data.dict_label}"已存在'
+                    msg=f'更新失败，该字典类型下的字典标签"{data.dict_label}"已存在'
                 )
 
-        # 检查相同字典类型下dict_value是否已存在(排除当前记录)
+        # 检查相同字典类型下dict_value是否已存在（排除当前记录）
         if exist_obj.dict_value != data.dict_value:
             exist_value_obj = await DictDataCRUD(auth).get(
                 dict_type=data.dict_type, dict_value=data.dict_value
             )
             if exist_value_obj:
                 raise CustomException(
-                    msg=f'更新失败, 该字典类型下的字典键值"{data.dict_value}"已存在'
+                    msg=f'更新失败，该字典类型下的字典键值"{data.dict_value}"已存在'
                 )
 
-        # 如果字典类型变更, 仅刷新旧类型缓存, 不联动字典类型状态
+        # 如果字典类型变更，仅刷新旧类型缓存，不联动字典类型状态
         if exist_obj.dict_type != data.dict_type:
             dict_type = await DictTypeCRUD(auth).get(dict_type=exist_obj.dict_type)
             if dict_type:
@@ -557,16 +557,16 @@ class DictDataService:
         """
         try:
             if len(ids) < 1:
-                raise CustomException(msg="删除失败, 删除对象不能为空")
+                raise CustomException(msg="删除失败，删除对象不能为空")
 
             # 首先检查是否包含系统默认数据
             for id in ids:
                 exist_obj = await DictDataCRUD(auth).get_obj_by_id_crud(id=id)
                 if not exist_obj:
-                    raise CustomException(msg=f"{id} 删除失败, 该字典数据不存在")
+                    raise CustomException(msg=f"{id} 删除失败，该字典数据不存在")
                 # 系统默认字典数据不允许删除
                 if exist_obj.is_default:
-                    raise CustomException(msg=f"删除失败, ID为{id}的系统默认字典数据不允许删除")
+                    raise CustomException(msg=f"删除失败，ID为{id}的系统默认字典数据不允许删除")
 
             # 获取所有需要清除的缓存键
             dict_types_to_clear = set()
@@ -588,7 +588,7 @@ class DictDataService:
                     log.warning(f"清除字典缓存失败: {e}")
                     # 缓存清除失败不影响删除操作
 
-            log.info(f"删除字典数据成功, ID列表: {ids}")
+            log.info(f"删除字典数据成功，ID列表: {ids}")
 
         except CustomException:
             raise

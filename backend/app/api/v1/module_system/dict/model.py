@@ -39,7 +39,7 @@ class DictDataModel(ModelMixin):
     dict_label: Mapped[str] = mapped_column(String(255), nullable=False, comment="字典标签")
     dict_value: Mapped[str] = mapped_column(String(255), nullable=False, comment="字典键值")
     css_class: Mapped[str | None] = mapped_column(
-        String(255), nullable=True, comment="样式属性(其他样式扩展)"
+        String(255), nullable=True, comment="样式属性（其他样式扩展）"
     )
     list_class: Mapped[str | None] = mapped_column(
         String(255), nullable=True, comment="表格回显样式"
@@ -48,11 +48,11 @@ class DictDataModel(ModelMixin):
         Boolean,
         nullable=False,
         default=False,
-        comment="是否默认(True是 False否)",
+        comment="是否默认（True是 False否）",
     )
     dict_type: Mapped[str] = mapped_column(String(255), nullable=False, comment="字典类型")
 
-    # 添加外键关系, 同时保留dict_type字段用于业务查询
+    # 添加外键关系，同时保留dict_type字段用于业务查询
     dict_type_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("sys_dict_type.id", ondelete="CASCADE"),

@@ -46,7 +46,7 @@
             <el-tooltip content="资源文件管理系统: 点击路径可以快速返回上级目录">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
-            文件列表(当前路径): 
+            文件列表(当前路径)：
           </span>
           <!-- 资源路径 -->
           <div class="breadcrumb-container">
@@ -282,12 +282,12 @@
       >
         <el-icon class="el-icon--upload"><UploadFilled /></el-icon>
         <div class="el-upload__text">
-          将文件拖到此处, 或
+          将文件拖到此处，或
           <em>点击上传</em>
         </div>
         <template #tip>
           <div class="el-upload__tip" style="color: red">
-            不支持多文件上传, 单个文件不超过100MB, 多文件上传, 取最后一个文件上传
+            不支持多文件上传，单个文件不超过100MB，多文件上传，取最后一个文件上传
           </div>
         </template>
       </el-upload>
@@ -432,9 +432,9 @@ const currentQuery = computed(() => {
     page_size: pagination.page_size,
   };
 
-  // 如果当前路径不是根路径, 则添加路径参数
+  // 如果当前路径不是根路径，则添加路径参数
   if (currentPath.value && currentPath.value !== "/") {
-    // 对于文件夹导航, 直接传递文件夹名称
+    // 对于文件夹导航，直接传递文件夹名称
     query.path = currentPath.value;
   }
 
@@ -487,13 +487,13 @@ function handleBreadcrumbClick(item: any) {
 
 // 更新面包屑路径
 function updateBreadcrumb() {
-  // 对于根路径, 直接显示根目录
+  // 对于根路径，直接显示根目录
   if (currentPath.value === "/") {
     breadcrumbList.value = [{ name: "资源根目录", path: "/" }];
     return;
   }
 
-  // 对于嵌套路径, 需要分解并构建面包屑
+  // 对于嵌套路径，需要分解并构建面包屑
   const parts = currentPath.value.split("/").filter((part) => part !== "");
 
   breadcrumbList.value = [
@@ -508,8 +508,8 @@ function updateBreadcrumb() {
 // 文件名点击处理
 function handleFileNameClick(row: ResourceItem) {
   if (row.is_dir) {
-    // 如果当前在根路径, 则直接使用文件夹名称
-    // 如果当前已在某个文件夹中, 则拼接路径
+    // 如果当前在根路径，则直接使用文件夹名称
+    // 如果当前已在某个文件夹中，则拼接路径
     if (currentPath.value === "/") {
       currentPath.value = row.name;
     } else {
@@ -518,7 +518,7 @@ function handleFileNameClick(row: ResourceItem) {
     updateBreadcrumb();
     loadFileList();
   } else {
-    // 文件预览, 使用后端返回的完整URL
+    // 文件预览，使用后端返回的完整URL
     handleFilePreview(row);
   }
 }
@@ -526,8 +526,8 @@ function handleFileNameClick(row: ResourceItem) {
 // 网格视图项目点击处理
 function handleItemClick(item: ResourceItem) {
   if (item.is_dir) {
-    // 如果当前在根路径, 则直接使用文件夹名称
-    // 如果当前已在某个文件夹中, 则拼接路径
+    // 如果当前在根路径，则直接使用文件夹名称
+    // 如果当前已在某个文件夹中，则拼接路径
     if (currentPath.value === "/") {
       currentPath.value = item.name;
     } else {
@@ -536,7 +536,7 @@ function handleItemClick(item: ResourceItem) {
     updateBreadcrumb();
     loadFileList();
   } else {
-    // 文件预览, 使用后端返回的完整URL
+    // 文件预览，使用后端返回的完整URL
     handleFilePreview(item);
   }
 }
@@ -546,7 +546,7 @@ function handleFilePreview(file: ResourceItem) {
   // 直接使用file_url字段进行预览
   let previewUrl = file.file_url;
 
-  // 如果是相对路径, 构建完整URL
+  // 如果是相对路径，构建完整URL
   if (previewUrl && !previewUrl.startsWith("http")) {
     previewUrl = `${window.location.origin}${previewUrl}`;
   }
@@ -585,7 +585,7 @@ async function handleUploadConfirm() {
       formData.append("file", file.raw);
     });
 
-    // 在根目录时传递空字符串作为target_path, 与后端relative_path格式保持一致
+    // 在根目录时传递空字符串作为target_path，与后端relative_path格式保持一致
     const targetPath = currentPath.value === "/" ? "" : currentPath.value;
     formData.append("target_path", targetPath);
 
@@ -619,7 +619,7 @@ async function handleCreateDirConfirm() {
   }
 
   try {
-    // 在根目录时传递空字符串作为parent_path, 与后端relative_path格式保持一致
+    // 在根目录时传递空字符串作为parent_path，与后端relative_path格式保持一致
     const parentPath = currentPath.value === "/" ? "" : currentPath.value;
     await ResourceAPI.createDirectory({
       parent_path: parentPath,
@@ -637,7 +637,7 @@ async function handleRefresh() {
   await loadFileList();
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   queryFormData.page_no = 1;
   await loadFileList();

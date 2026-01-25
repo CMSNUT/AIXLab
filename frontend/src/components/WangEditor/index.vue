@@ -27,7 +27,7 @@ import { IToolbarConfig, IEditorConfig } from "@wangeditor-next/editor";
 // 上传图片回调函数类型
 type InsertFnType = (_url: string, _alt: string, _href: string) => void;
 
-// 模拟文件上传API, 根据实际项目进行调整
+// 模拟文件上传API，根据实际项目进行调整
 interface UploadResult {
   url: string;
   name: string;
@@ -68,7 +68,7 @@ const modelValue = defineModel("modelValue", {
   required: false,
 });
 
-// 编辑器实例, 必须用 shallowRef, 重要！
+// 编辑器实例，必须用 shallowRef，重要！
 const editorRef = shallowRef();
 
 // 工具栏配置
@@ -93,7 +93,7 @@ const editorConfig = ref<Partial<IEditorConfig>>({
   },
 });
 
-// 记录 editor 实例, 重要！
+// 记录 editor 实例，重要！
 const handleCreated = (editor: any) => {
   editorRef.value = editor;
 };
@@ -107,7 +107,7 @@ const handleChange = (editor: any) => {
   }
 };
 
-// 组件销毁时, 也及时销毁编辑器, 重要！
+// 组件销毁时，也及时销毁编辑器，重要！
 onBeforeUnmount(() => {
   const editor = editorRef.value;
   if (editor == null) return;

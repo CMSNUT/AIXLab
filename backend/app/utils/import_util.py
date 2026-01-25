@@ -34,7 +34,7 @@ class ImportUtil:
         if not (inspect.isclass(obj) and issubclass(obj, base_class) and obj is not base_class):
             return False
 
-        # 必须有表名定义(排除抽象基类)
+        # 必须有表名定义（排除抽象基类）
         if not hasattr(obj, "__tablename__") or obj.__tablename__ is None:
             return False
 
@@ -48,15 +48,15 @@ class ImportUtil:
     @lru_cache(maxsize=256)
     def find_models(cls, base_class: type) -> list[Any]:
         """
-        查找并过滤有效的模型类, 避免重复和无效定义
+        查找并过滤有效的模型类，避免重复和无效定义
 
-        :param base_class: SQLAlchemy的Base类, 用于验证模型类
+        :param base_class: SQLAlchemy的Base类，用于验证模型类
         :return: 有效模型类列表
         """
         models = []
         # 按类对象去重
         seen_models = set()
-        # 按表名去重(防止同表名冲突)
+        # 按表名去重（防止同表名冲突）
         seen_tables = set()
         # 记录已经处理过的model.py文件路径
         processed_model_files = set()
@@ -99,7 +99,7 @@ class ImportUtil:
                     relative_path = file_path.relative_to(project_root)
                     model_files.append((file_path, relative_path))
 
-        # 按模块路径排序, 确保先导入基础模块
+        # 按模块路径排序，确保先导入基础模块
         model_files.sort(key=lambda x: str(x[1]))
 
         for file_path, relative_path in model_files:
@@ -109,7 +109,7 @@ class ImportUtil:
 
             processed_model_files.add(str(file_path))
 
-            # 构建模块名(将路径分隔符转换为点)
+            # 构建模块名（将路径分隔符转换为点）
             module_parts = (*relative_path.parts[:-1], relative_path.stem)
             module_name = ".".join(module_parts)
 
@@ -142,7 +142,7 @@ class ImportUtil:
             except Exception as e:
                 raise CustomException(f"❌️ 处理模块 {module_name} 时出错: {e}")
 
-        # 查找apscheduler_jobs表的模型(如果存在)
+        # 查找apscheduler_jobs表的模型（如果存在）
         cls._find_apscheduler_model(base_class, models, seen_models, seen_tables)
 
         return models

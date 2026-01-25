@@ -72,7 +72,7 @@ class McpService:
         """
         obj = await McpCRUD(auth).get_by_name_crud(name=data.name)
         if obj:
-            raise CustomException(msg="创建失败, MCP 服务器已存在")
+            raise CustomException(msg="创建失败，MCP 服务器已存在")
         obj = await McpCRUD(auth).create_crud(data=data)
         return McpOutSchema.model_validate(obj).model_dump()
 
@@ -93,10 +93,10 @@ class McpService:
         """
         obj = await McpCRUD(auth).get_by_id_crud(id=id)
         if not obj:
-            raise CustomException(msg="更新失败, 该数据不存在")
+            raise CustomException(msg="更新失败，该数据不存在")
         exist_obj = await McpCRUD(auth).get_by_name_crud(name=data.name)
         if exist_obj and exist_obj.id != id:
-            raise CustomException(msg="更新失败, MCP 服务器名称重复")
+            raise CustomException(msg="更新失败，MCP 服务器名称重复")
         obj = await McpCRUD(auth).update_crud(id=id, data=data)
         return McpOutSchema.model_validate(obj).model_dump()
 
@@ -113,11 +113,11 @@ class McpService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         for id in ids:
             obj = await McpCRUD(auth).get_by_id_crud(id=id)
             if not obj:
-                raise CustomException(msg="删除失败, 该数据不存在")
+                raise CustomException(msg="删除失败，该数据不存在")
         await McpCRUD(auth).delete_crud(ids=ids)
 
     @classmethod
@@ -138,7 +138,7 @@ class McpService:
             async for response in mcp_client.process(query.message):
                 yield response
         except Exception as e:
-            log.debug(f"关闭AIClient时发生异常(预期行为, 服务可能正在关闭): {e}")
+            log.debug(f"关闭AIClient时发生异常(预期行为，服务可能正在关闭): {e}")
             raise CustomException(
-                msg=f"关闭AIClient时发生异常(预期行为, 服务可能正在关闭), 异常信息: {e}"
+                msg=f"关闭AIClient时发生异常(预期行为，服务可能正在关闭), 异常信息: {e}"
             )

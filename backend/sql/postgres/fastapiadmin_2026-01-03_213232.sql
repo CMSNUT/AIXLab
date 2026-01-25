@@ -1522,7 +1522,7 @@ COMMENT ON COLUMN public.sys_dict_data.dict_value IS '字典键值';
 -- Name: COLUMN sys_dict_data.css_class; Type: COMMENT; Schema: public; Owner: tao
 --
 
-COMMENT ON COLUMN public.sys_dict_data.css_class IS '样式属性(其他样式扩展)';
+COMMENT ON COLUMN public.sys_dict_data.css_class IS '样式属性（其他样式扩展）';
 
 
 --
@@ -1536,7 +1536,7 @@ COMMENT ON COLUMN public.sys_dict_data.list_class IS '表格回显样式';
 -- Name: COLUMN sys_dict_data.is_default; Type: COMMENT; Schema: public; Owner: tao
 --
 
-COMMENT ON COLUMN public.sys_dict_data.is_default IS '是否默认(True是 False否)';
+COMMENT ON COLUMN public.sys_dict_data.is_default IS '是否默认（True是 False否）';
 
 
 --
@@ -3375,17 +3375,17 @@ COPY public.sys_notice (notice_title, notice_type, notice_content, id, uuid, sta
 --
 
 COPY public.sys_param (config_name, config_key, config_value, config_type, id, uuid, status, description, created_time, updated_time) FROM stdin;
-网站名称	sys_web_title	AIXLab	t	1	c27c73a7-59b3-4942-a6a5-c1014a48ba31	0	初始化数据	2026-01-03 21:32:18.923106	2026-01-03 21:32:18.923107
-网站描述	sys_web_description	AIXLab 是完全开源的权限管理系统	t	2	83e5866f-6926-4b27-a323-c8b5457535e6	0	初始化数据	2026-01-03 21:32:18.923111	2026-01-03 21:32:18.923112
+网站名称	sys_web_title	巴莱侠-AIXLab	t	1	c27c73a7-59b3-4942-a6a5-c1014a48ba31	0	初始化数据	2026-01-03 21:32:18.923106	2026-01-03 21:32:18.923107
+网站描述	sys_web_description	巴莱侠-AIXLab 是完全开源的权限管理系统	t	2	83e5866f-6926-4b27-a323-c8b5457535e6	0	初始化数据	2026-01-03 21:32:18.923111	2026-01-03 21:32:18.923112
 网页图标	sys_web_favicon	https://service.aixlab.com/api/v1/static/image/favicon.png	t	3	32ce1f34-f4c2-4b41-9845-f937cc385017	0	初始化数据	2026-01-03 21:32:18.923115	2026-01-03 21:32:18.923115
 网站Logo	sys_web_logo	https://service.aixlab.com/api/v1/static/image/logo.png	t	4	d8b9b7e3-c501-4f3c-a71b-94e44d319069	0	初始化数据	2026-01-03 21:32:18.923118	2026-01-03 21:32:18.923118
 登录背景	sys_login_background	https://service.aixlab.com/api/v1/static/image/background.svg	t	5	92713ea5-6fa8-4adc-ac7b-5e2a6ab80704	0	初始化数据	2026-01-03 21:32:18.923121	2026-01-03 21:32:18.923122
 版权信息	sys_web_copyright	Copyright © 2025-2026 service.aixlab.com 版权所有	t	6	cbd70fb4-28c8-4e13-b9e4-44d461b5c1f1	0	初始化数据	2026-01-03 21:32:18.923125	2026-01-03 21:32:18.923125
 备案信息	sys_keep_record	陕ICP备2025069493号-1	t	7	059c93c3-82c2-4dfd-94f3-e539060d9fbc	0	初始化数据	2026-01-03 21:32:18.923128	2026-01-03 21:32:18.923128
 帮助文档	sys_help_doc	https://service.aixlab.com	t	8	96ea2556-f9f0-403c-8da6-04c01970fe66	0	初始化数据	2026-01-03 21:32:18.923131	2026-01-03 21:32:18.923132
-隐私政策	sys_web_privacy	https://github.com/aixlab/AIXLab/blob/master/LICENSE	t	9	8fc4c4ee-8309-461c-8b62-c9bdeb4586d3	0	初始化数据	2026-01-03 21:32:18.923134	2026-01-03 21:32:18.923135
-用户协议	sys_web_clause	https://github.com/aixlab/AIXLab/blob/master/LICENSE	t	10	b47bde1c-a594-4362-8a0a-85b1574f4069	0	初始化数据	2026-01-03 21:32:18.923138	2026-01-03 21:32:18.923138
-源码代码	sys_git_code	https://github.com/aixlab/AIXLab.git	t	11	8cd060d1-01f6-48da-9150-b4050341e030	0	初始化数据	2026-01-03 21:32:18.923141	2026-01-03 21:32:18.923141
+隐私政策	sys_web_privacy	https://github.com/CMSNUT/AIXLab/blob/master/LICENSE	t	9	8fc4c4ee-8309-461c-8b62-c9bdeb4586d3	0	初始化数据	2026-01-03 21:32:18.923134	2026-01-03 21:32:18.923135
+用户协议	sys_web_clause	https://github.com/CMSNUT/AIXLab/blob/master/LICENSE	t	10	b47bde1c-a594-4362-8a0a-85b1574f4069	0	初始化数据	2026-01-03 21:32:18.923138	2026-01-03 21:32:18.923138
+源码代码	sys_git_code	https://github.com/CMSNUT/AIXLab.git	t	11	8cd060d1-01f6-48da-9150-b4050341e030	0	初始化数据	2026-01-03 21:32:18.923141	2026-01-03 21:32:18.923141
 项目版本	sys_web_version	2.0.0	t	12	f4797975-4fb8-4d5e-8ea9-70330ea2b374	0	初始化数据	2026-01-03 21:32:18.923144	2026-01-03 21:32:18.923144
 演示模式启用	demo_enable	false	t	13	f9d47fb7-72a7-4acc-a61e-13f0436b7664	0	初始化数据	2026-01-03 21:32:18.923147	2026-01-03 21:32:18.923148
 演示访问IP白名单	ip_white_list	["127.0.0.1"]	t	14	9c60b05f-b473-4706-8d5d-60f1f1fc605b	0	初始化数据	2026-01-03 21:32:18.92315	2026-01-03 21:32:18.923151

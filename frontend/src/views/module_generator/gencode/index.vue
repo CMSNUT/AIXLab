@@ -256,7 +256,7 @@
 
     <!-- 创建表 -->
     <el-dialog v-model="createTableVisible" title="创建表" append-to-body>
-      <span>创建表语句(支持多个建表sql语句): </span>
+      <span>创建表语句(支持多个建表sql语句)：</span>
       <el-button type="warning" size="small" class="ml-1 mb-1" @click="loadExampleMysql">
         加载MySQL示例
       </el-button>
@@ -403,7 +403,7 @@
       </el-steps>
 
       <div class="mt-5">
-        <!-- 第一步: 基础配置 -->
+        <!-- 第一步：基础配置 -->
         <el-form
           v-show="activeStep == 0"
           ref="basicInfo"
@@ -431,7 +431,7 @@
               <el-form-item prop="package_name">
                 <template #label>
                   包名
-                  <el-tooltip content="生成在哪个python模块下, 例如 module_gencode" placement="top">
+                  <el-tooltip content="生成在哪个python模块下，例如 module_gencode" placement="top">
                     <el-icon><QuestionFilled /></el-icon>
                   </el-tooltip>
                 </template>
@@ -445,7 +445,7 @@
               <el-form-item prop="module_name">
                 <template #label>
                   模块名
-                  <el-tooltip content="可理解为子系统名, 例如 system" placement="top">
+                  <el-tooltip content="可理解为子系统名，例如 system" placement="top">
                     <el-icon><QuestionFilled /></el-icon>
                   </el-tooltip>
                 </template>
@@ -456,7 +456,7 @@
               <el-form-item prop="business_name">
                 <template #label>
                   业务名
-                  <el-tooltip content="可理解为功能英文名, 例如 user" placement="top">
+                  <el-tooltip content="可理解为功能英文名，例如 user" placement="top">
                     <el-icon><QuestionFilled /></el-icon>
                   </el-tooltip>
                 </template>
@@ -467,7 +467,7 @@
               <el-form-item prop="function_name">
                 <template #label>
                   功能名
-                  <el-tooltip content="用作类描述, 例如 用户" placement="top">
+                  <el-tooltip content="用作类描述，例如 用户" placement="top">
                     <el-icon><QuestionFilled /></el-icon>
                   </el-tooltip>
                 </template>
@@ -478,7 +478,7 @@
               <el-form-item>
                 <template #label>
                   上级菜单
-                  <el-tooltip content="分配到指定菜单下, 例如 系统管理" placement="top">
+                  <el-tooltip content="分配到指定菜单下，例如 系统管理" placement="top">
                     <el-icon><QuestionFilled /></el-icon>
                   </el-tooltip>
                 </template>
@@ -504,28 +504,28 @@
 
             <el-col :span="24">
               <el-descriptions :column="2" border>
-                <el-descriptions-item :label="info.function_name + '功能, 后端控制层'">
+                <el-descriptions-item :label="info.function_name + '功能，后端控制层'">
                   backend/app/plugin/{{ info.module_name }}/{{ info.business_name }}/controller.py
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 后端业务层'">
+                <el-descriptions-item :label="info.function_name + '功能，后端业务层'">
                   backend/app/plugin/{{ info.module_name }}/{{ info.business_name }}/service.py
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 后端数据层'">
+                <el-descriptions-item :label="info.function_name + '功能，后端数据层'">
                   backend/app/plugin/{{ info.module_name }}/{{ info.business_name }}/crud.py
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 后端实体层'">
+                <el-descriptions-item :label="info.function_name + '功能，后端实体层'">
                   backend/app/plugin/{{ info.module_name }}/{{ info.business_name }}/model.py
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 后端序列化层'">
+                <el-descriptions-item :label="info.function_name + '功能，后端序列化层'">
                   backend/app/plugin/{{ info.module_name }}/{{ info.business_name }}/schema.py
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 后端初始化'">
+                <el-descriptions-item :label="info.function_name + '功能，后端初始化'">
                   backend/app/plugin/{{ info.module_name }}/{{ info.business_name }}/__init__.py
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 前端接口层'">
+                <el-descriptions-item :label="info.function_name + '功能，前端接口层'">
                   frontend/src/api/{{ info.module_name }}/{{ info.business_name }}.ts
                 </el-descriptions-item>
-                <el-descriptions-item :label="info.function_name + '功能, 前端视图层'">
+                <el-descriptions-item :label="info.function_name + '功能，前端视图层'">
                   frontend/src/views/{{ info.module_name }}/{{ info.business_name }}/index.vue
                 </el-descriptions-item>
               </el-descriptions>
@@ -533,7 +533,7 @@
           </el-row>
         </el-form>
 
-        <!-- 第二步: 字段配置 -->
+        <!-- 第二步：字段配置 -->
         <div v-show="activeStep == 1" class="elTableCustom">
           <div class="mb-2 flex items-center gap-2">
             <el-tag size="small" type="info">批量设置</el-tag>
@@ -738,7 +738,7 @@
           </el-table>
         </div>
 
-        <!-- 第三步: 预览代码 -->
+        <!-- 第三步：预览代码 -->
         <el-row v-show="activeStep == 2">
           <el-col :span="24" class="mb-2">
             <div class="flex-y-center gap-3">
@@ -797,7 +797,7 @@
       </div>
 
       <template #footer>
-        <!-- 公共按钮: 关闭 -->
+        <!-- 公共按钮：关闭 -->
         <el-button :icon="Close" @click="close">关闭</el-button>
         <el-button v-if="activeStep != 0" type="success" :icon="Back" @click="prevStep">
           上一步
@@ -1043,9 +1043,9 @@ const filteredTreeData = computed<TreeNode[]>(() => {
 
   // 基于原树按 scope/types 过滤叶子节点
   const match = (label: string, parentPath: string[]): boolean => {
-    // scope 过滤: 根据路径初步判断
+    // scope 过滤：根据路径初步判断
     if (previewScope.value !== "all") {
-      // 根据后端返回的格式, 检查路径或文件名特征
+      // 根据后端返回的格式，检查路径或文件名特征
       const isPythonBackend =
         parentPath.some((part) => part === "backend" || part === "python") || label.includes(".py");
       const isVueFrontend =
@@ -1057,7 +1057,7 @@ const filteredTreeData = computed<TreeNode[]>(() => {
       if (previewScope.value === "frontend" && !isVueFrontend) return false;
     }
 
-    // 类型过滤: 根据文件内容特征判断类型
+    // 类型过滤：根据文件内容特征判断类型
     if (label.endsWith(".py")) return previewTypes.value.includes("python");
     if (label.endsWith(".vue")) return previewTypes.value.includes("vue");
     if (label.endsWith(".ts")) return previewTypes.value.includes("ts");
@@ -1088,7 +1088,7 @@ const canGenerate = computed(() => ids.value.length > 0);
 
 /** 一键复制代码 */
 const handleCopyCode = () => {
-  // 优先检查代码预览区域的code变量, 然后检查创建表对话框的createContent变量
+  // 优先检查代码预览区域的code变量，然后检查创建表对话框的createContent变量
   const content = code.value || createContent.value;
 
   if (content) {
@@ -1120,12 +1120,12 @@ function buildTree(data: FileData[]): TreeNode {
   const root: TreeNode = { label: "前后端代码", children: [] };
 
   data.forEach((item) => {
-    // 将路径分成数组(确保使用正斜杠)
+    // 将路径分成数组（确保使用正斜杠）
     const parts = item.path.split("/").filter((part) => part !== "");
 
     let currentNode = root;
 
-    // 遍历路径部分, 创建对应的文件夹节点
+    // 遍历路径部分，创建对应的文件夹节点
     parts.forEach((part) => {
       // 查找或创建当前部分的子节点
       let node = currentNode.children?.find((child) => child.label === part);
@@ -1256,7 +1256,7 @@ async function handleGenTable(targetGenType: string, row?: GenTableSchema): Prom
       link.download = "code.zip";
       link.click();
       URL.revokeObjectURL(url); // 释放URL对象
-      ElMessage.success("代码生成成功, 正在下载...");
+      ElMessage.success("代码生成成功，正在下载...");
     }
   } catch (error) {
     console.error("生成代码失败:", error);
@@ -1318,7 +1318,7 @@ function handleImportTableSelectionChange(selection: DBTableSchema[]): void {
   }));
 }
 
-// 修改菜单选项过滤逻辑, 添加递归过滤函数
+// 修改菜单选项过滤逻辑，添加递归过滤函数
 const filterMenuTypes = (nodes: MenuTable[]) => {
   return nodes
     .filter((node) => node.type === MenuTypeEnum.CATALOG || node.type === MenuTypeEnum.MENU)
@@ -1584,10 +1584,10 @@ async function submitForm() {
       return;
     }
 
-    // 提交表单数据, 确保columns是必需的, 并且parent_menu_id总是被包含
+    // 提交表单数据，确保columns是必需的，并且parent_menu_id总是被包含
     const tableData = {
       ...info,
-      parent_menu_id: info.parent_menu_id ?? null, // 将undefined转换为null, 确保属性被传输
+      parent_menu_id: info.parent_menu_id ?? null, // 将undefined转换为null，确保属性被传输
       columns: info.columns || [], // 确保columns存在
     };
 
@@ -1609,7 +1609,7 @@ async function nextStep(): Promise<void> {
   if (activeStep.value < 3) {
     activeStep.value++;
 
-    // 当从字段配置进入预览步骤时, 自动加载预览数据
+    // 当从字段配置进入预览步骤时，自动加载预览数据
     if (activeStep.value === 2 && info.id) {
       await handlePreview({ id: info.id, table_name: info.table_name } as GenTableSchema);
     }

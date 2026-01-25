@@ -50,7 +50,7 @@ class JobCreateSchema(BaseModel):
 
     @model_validator(mode="after")
     def _validate_dates(self):
-        """跨字段校验: 结束时间不得早于开始时间。"""
+        """跨字段校验：结束时间不得早于开始时间。"""
         if self.start_date and self.end_date:
             try:
                 start = datetime_validator(self.start_date)

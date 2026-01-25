@@ -111,7 +111,7 @@ class DemoService:
         """
         obj = await DemoCRUD(auth).get(name=data.name)
         if obj:
-            raise CustomException(msg="创建失败, 名称已存在")
+            raise CustomException(msg="创建失败，名称已存在")
         obj = await DemoCRUD(auth).create_crud(data=data)
         return DemoOutSchema.model_validate(obj).model_dump()
 
@@ -131,12 +131,12 @@ class DemoService:
         # 检查数据是否存在
         obj = await DemoCRUD(auth).get_by_id_crud(id=id)
         if not obj:
-            raise CustomException(msg="更新失败, 该数据不存在")
+            raise CustomException(msg="更新失败，该数据不存在")
 
         # 检查名称是否重复
         exist_obj = await DemoCRUD(auth).get(name=data.name)
         if exist_obj and exist_obj.id != id:
-            raise CustomException(msg="更新失败, 名称重复")
+            raise CustomException(msg="更新失败，名称重复")
 
         obj = await DemoCRUD(auth).update_crud(id=id, data=data)
         return DemoOutSchema.model_validate(obj).model_dump()
@@ -154,13 +154,13 @@ class DemoService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
 
         # 检查所有要删除的数据是否存在
         for id in ids:
             obj = await DemoCRUD(auth).get_by_id_crud(id=id)
             if not obj:
-                raise CustomException(msg=f"删除失败, ID为{id}的数据不存在")
+                raise CustomException(msg=f"删除失败，ID为{id}的数据不存在")
 
         await DemoCRUD(auth).delete_crud(ids=ids)
 
@@ -256,9 +256,9 @@ class DemoService:
                 if missing_rows:
                     field_name = next(k for k, v in header_dict.items() if v == field)
                     rows_str = "、".join([str(i + 1) for i in missing_rows])
-                    errors.append(f"{field_name}不能为空, 第{rows_str}行")
+                    errors.append(f"{field_name}不能为空，第{rows_str}行")
             if errors:
-                raise CustomException(msg=f"导入失败, 以下行缺少必要字段: \n{'; '.join(errors)}")
+                raise CustomException(msg=f"导入失败，以下行缺少必要字段：\n{'; '.join(errors)}")
 
             error_msgs = []
             success_count = 0

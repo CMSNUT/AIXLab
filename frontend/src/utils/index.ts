@@ -41,7 +41,7 @@ export function isExternal(path: string) {
 }
 
 /**
- * 格式化增长率, 保留两位小数 , 并且去掉末尾的0  取绝对值
+ * 格式化增长率，保留两位小数 ，并且去掉末尾的0  取绝对值
  *
  * @param growthRate
  * @returns

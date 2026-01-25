@@ -69,7 +69,7 @@ class PositionService:
         """
         position = await PositionCRUD(auth).get(name=data.name)
         if position:
-            raise CustomException(msg="创建失败, 该岗位已存在")
+            raise CustomException(msg="创建失败，该岗位已存在")
         new_position = await PositionCRUD(auth).create(data=data)
         return PositionOutSchema.model_validate(new_position).model_dump()
 
@@ -90,10 +90,10 @@ class PositionService:
         """
         position = await PositionCRUD(auth).get_by_id_crud(id=id)
         if not position:
-            raise CustomException(msg="更新失败, 该岗位不存在")
+            raise CustomException(msg="更新失败，该岗位不存在")
         exist_position = await PositionCRUD(auth).get(name=data.name)
         if exist_position and exist_position.id != id:
-            raise CustomException(msg="更新失败, 岗位名称重复")
+            raise CustomException(msg="更新失败，岗位名称重复")
         updated_position = await PositionCRUD(auth).update(id=id, data=data)
         return PositionOutSchema.model_validate(updated_position).model_dump()
 
@@ -110,11 +110,11 @@ class PositionService:
         - None
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         for id in ids:
             position = await PositionCRUD(auth).get_by_id_crud(id=id)
             if not position:
-                raise CustomException(msg="删除失败, 该岗位不存在")
+                raise CustomException(msg="删除失败，该岗位不存在")
         await PositionCRUD(auth).delete(ids=ids)
 
     @classmethod

@@ -36,7 +36,7 @@ class UserCRUD(CRUDBase[UserModel, UserCreateSchema, UserUpdateSchema]):
 
         参数:
         - id (int): 用户ID
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - UserModel | None: 用户信息,如果不存在则为None
@@ -54,7 +54,7 @@ class UserCRUD(CRUDBase[UserModel, UserCreateSchema, UserUpdateSchema]):
 
         参数:
         - username (str): 用户名
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - UserModel | None: 用户信息,如果不存在则为None
@@ -72,7 +72,7 @@ class UserCRUD(CRUDBase[UserModel, UserCreateSchema, UserUpdateSchema]):
 
         参数:
         - mobile (str): 手机号
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - UserModel | None: 用户信息,如果不存在则为None
@@ -94,7 +94,7 @@ class UserCRUD(CRUDBase[UserModel, UserCreateSchema, UserUpdateSchema]):
         参数:
         - search (dict | None): 查询参数对象。
         - order_by (list[dict[str, str]] | None): 排序参数列表。
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[UserModel]: 用户列表

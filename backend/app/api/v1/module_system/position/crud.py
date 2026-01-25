@@ -29,10 +29,10 @@ class PositionCRUD(CRUDBase[PositionModel, PositionCreateSchema, PositionUpdateS
 
         参数:
         - id (int): 岗位 ID。
-        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
-        - PositionModel | None: 岗位信息, 未找到返回 None。
+        - PositionModel | None: 岗位信息，未找到返回 None。
         """
         return await self.get(id=id, preload=preload)
 
@@ -48,7 +48,7 @@ class PositionCRUD(CRUDBase[PositionModel, PositionCreateSchema, PositionUpdateS
         参数:
         - search (dict | None): 搜索条件。
         - order_by (list[dict[str, Any]] | None): 排序字段列表。
-        - preload (list[str] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[PositionModel]: 岗位列表。

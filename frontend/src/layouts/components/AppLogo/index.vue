@@ -55,22 +55,22 @@ defineProps({
   }
 }
 
-// 宽屏时: openSidebar 状态下显示完整Logo+文字
+// 宽屏时：openSidebar 状态下显示完整Logo+文字
 .openSidebar {
   &.layout-top .layout__header-left .logo,
   &.layout-mix .layout__header-logo .logo {
-    width: $sidebar-width; // 210px, 显示logo+文字
+    width: $sidebar-width; // 210px，显示logo+文字
   }
 }
 
-// 窄屏时: hideSidebar 状态下只显示Logo图标
+// 窄屏时：hideSidebar 状态下只显示Logo图标
 .hideSidebar {
   &.layout-top .layout__header-left .logo,
   &.layout-mix .layout__header-logo .logo {
-    width: $sidebar-width-collapsed; // 54px, 只显示logo
+    width: $sidebar-width-collapsed; // 54px，只显示logo
   }
 
-  // 隐藏文字, 只显示图标
+  // 隐藏文字，只显示图标
   .logo .title {
     display: none;
   }

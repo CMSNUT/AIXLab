@@ -520,6 +520,6 @@ async def get_init_dict_data_controller(
     dict_data_query_result = await DictDataService.get_init_dict_service(
         redis=redis, dict_type=dict_type
     )
-    log.info(f"获取初始化字典数据成功: {dict_data_query_result}")
+    log.info(f"获取初始化字典数据成功：{dict_data_query_result}")
 
     return SuccessResponse(data=dict_data_query_result, msg="获取初始化字典数据成功")

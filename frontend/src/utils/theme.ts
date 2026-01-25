@@ -1,17 +1,17 @@
 import { ThemeMode } from "@/enums";
 
-// 辅助函数: 将十六进制颜色转换为 RGB
+// 辅助函数：将十六进制颜色转换为 RGB
 function hexToRgb(hex: string): [number, number, number] {
   const bigint = parseInt(hex.slice(1), 16);
   return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
 }
 
-// 辅助函数: 将 RGB 转换为十六进制颜色
+// 辅助函数：将 RGB 转换为十六进制颜色
 function rgbToHex(r: number, g: number, b: number): string {
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 
-// 辅助函数: 调整颜色亮度
+// 辅助函数：调整颜色亮度
 /** function adjustBrightness(hex: string, factor: number, theme: string): string {
   const rgb = hexToRgb(hex);
   // 是否是暗黑模式
@@ -25,7 +25,7 @@ function rgbToHex(r: number, g: number, b: number): string {
 /**
  * 加深颜色值
  * @param {String} color 颜色值字符串
- * @param {Number} level 加深的程度, 限0-1之间
+ * @param {Number} level 加深的程度，限0-1之间
  * @returns {String} 返回处理后的颜色值
  */
 export function getDarkColor(color: string, level: number): string {
@@ -37,7 +37,7 @@ export function getDarkColor(color: string, level: number): string {
 /**
  * 变浅颜色值
  * @param {String} color 颜色值字符串
- * @param {Number} level 加深的程度, 限0-1之间
+ * @param {Number} level 加深的程度，限0-1之间
  * @returns {String} 返回处理后的颜色值
  */
 export const getLightColor = (color: string, level: number): string => {
@@ -78,7 +78,7 @@ export function applyTheme(colors: Record<string, string>) {
     el.style.setProperty(`--el-color-${key}`, value);
   });
 
-  // 确保主题色立即生效, 强制重新渲染
+  // 确保主题色立即生效，强制重新渲染
   requestAnimationFrame(() => {
     // 触发样式重新计算
     el.style.setProperty("--theme-update-trigger", Date.now().toString());
@@ -101,7 +101,7 @@ export function toggleDarkMode(isDark: boolean) {
 /**
  * 切换浅色主题下的侧边栏颜色方案
  *
- * @param isBlue 布尔值, 表示是否开启深蓝色侧边栏颜色方案
+ * @param isBlue 布尔值，表示是否开启深蓝色侧边栏颜色方案
  */
 export function toggleSidebarColor(isBuleSidebar: boolean) {
   if (isBuleSidebar) {

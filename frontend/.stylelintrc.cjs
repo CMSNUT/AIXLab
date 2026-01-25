@@ -8,7 +8,7 @@ module.exports = {
   ],
 
   plugins: [
-    "stylelint-prettier", // 统一代码风格, 格式冲突时以 Prettier 规则为准
+    "stylelint-prettier", // 统一代码风格，格式冲突时以 Prettier 规则为准
   ],
   overrides: [
     {
@@ -21,7 +21,7 @@ module.exports = {
     },
   ],
   rules: {
-    "prettier/prettier": true, // 强制执行 Prettier 格式化规则(需配合 .prettierrc 配置文件)
+    "prettier/prettier": true, // 强制执行 Prettier 格式化规则（需配合 .prettierrc 配置文件）
     "no-empty-source": null, //  允许空的样式文件
     "declaration-property-value-no-unknown": null, // 允许非常规数值格式 ,如 height: calc(100% - 50)
     // 允许使用未知伪类

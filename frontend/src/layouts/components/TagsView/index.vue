@@ -207,7 +207,7 @@ const scrollbarRef = ref();
 // 标签切换来源跟踪
 const tagSwitchSource = ref<"menu" | "tab" | null>(null);
 
-// 路由映射缓存, 提升查找性能
+// 路由映射缓存，提升查找性能
 const routePathMap = new Map<string, TagView>();
 
 // 更新路由映射缓存
@@ -224,7 +224,7 @@ const isFirstView = (tag?: TagView) => {
     // 传入特定标签时使用传入的标签
     return tag.path === "/" || tag.fullPath === visitedViews.value[1]?.fullPath;
   } else {
-    // 未传入标签时使用当前激活标签(向后兼容)
+    // 未传入标签时使用当前激活标签（向后兼容）
     const currentTag = routePathMap.get(route.path);
     if (!currentTag) return false;
     return currentTag.path === "/" || currentTag.fullPath === visitedViews.value[1]?.fullPath;
@@ -237,7 +237,7 @@ const isLastView = (tag?: TagView) => {
     // 传入特定标签时使用传入的标签
     return tag.fullPath === visitedViews.value[visitedViews.value.length - 1]?.fullPath;
   } else {
-    // 未传入标签时使用当前激活标签(向后兼容)
+    // 未传入标签时使用当前激活标签（向后兼容）
     const currentTag = routePathMap.get(route.path);
     if (!currentTag) return false;
     return currentTag.fullPath === visitedViews.value[visitedViews.value.length - 1]?.fullPath;
@@ -254,7 +254,7 @@ const extractAffixTags = (routes: RouteRecordRaw[], basePath = "/"): TagView[] =
     routeList.forEach((route) => {
       const fullPath = resolve(currentBasePath, route.path);
 
-      // 如果是固定标签, 添加到列表
+      // 如果是固定标签，添加到列表
       if (route.meta?.affix) {
         affixTags.push({
           path: fullPath,
@@ -300,17 +300,17 @@ const addCurrentTag = () => {
   const existingTag = visitedViews.value.find((tag) => tag.path === route.path);
 
   if (existingTag) {
-    // 如果标签已存在, 根据来源决定是否移动位置
+    // 如果标签已存在，根据来源决定是否移动位置
     if (!existingTag.affix) {
       if (tagSwitchSource.value === "menu") {
-        // 通过菜单点击: 移动到最新位置
+        // 通过菜单点击：移动到最新位置
         const index = visitedViews.value.findIndex((tag) => tag.path === route.path);
         if (index !== -1) {
           const tag = visitedViews.value.splice(index, 1)[0];
           visitedViews.value.push(tag);
         }
       }
-      // 通过标签容器点击: 不移动位置, 只激活
+      // 通过标签容器点击：不移动位置，只激活
     }
   } else {
     // 添加新标签
@@ -328,12 +328,12 @@ const addCurrentTag = () => {
 
   // 根据来源决定是否滚动
   if (tagSwitchSource.value === "menu") {
-    // 通过菜单点击: 滚动到最新标签
+    // 通过菜单点击：滚动到最新标签
     nextTick(() => {
       autoScrollToLatestTag();
     });
   }
-  // 通过标签容器点击: 不滚动, 保持当前位置
+  // 通过标签容器点击：不滚动，保持当前位置
 
   // 重置来源状态
   tagSwitchSource.value = null;
@@ -371,7 +371,7 @@ const handleMiddleClick = (tag: TagView) => {
 };
 
 /**
- * 处理滚轮事件(优化后)
+ * 处理滚轮事件（优化后）
  */
 const handleScroll = (event: WheelEvent) => {
   const scrollWrapper = scrollbarRef.value?.wrapRef;
@@ -425,7 +425,7 @@ const refreshSelectedTag = (tag: TagView | null) => {
  * 关闭标签
  */
 const closeSelectedTag = (tag: TagView | null) => {
-  // 如果传入了具体的标签, 使用传入的标签；否则使用当前路由对应的标签
+  // 如果传入了具体的标签，使用传入的标签；否则使用当前路由对应的标签
   const targetTag = tag || routePathMap.get(route.path);
   if (!targetTag) return;
 
@@ -433,7 +433,7 @@ const closeSelectedTag = (tag: TagView | null) => {
     if (tagsViewStore.isActive(targetTag)) {
       tagsViewStore.toLastView(result.visitedViews, targetTag);
     }
-    // 关闭标签后重置滚动状态, 以便下次可以重新判断是否需要滚动
+    // 关闭标签后重置滚动状态，以便下次可以重新判断是否需要滚动
     nextTick(() => {
       resetScrollState();
     });
@@ -539,9 +539,9 @@ const handleAction = async (action: string) => {
       break;
     case "refreshCache":
       try {
-        // 1) 刷新服务端缓存(用户/权限/配置/公告/按需字典)并重建路由
+        // 1) 刷新服务端缓存（用户/权限/配置/公告/按需字典）并重建路由
         await refreshAppCaches();
-        // 2) 软刷新当前页面, 重新加载组件
+        // 2) 软刷新当前页面，重新加载组件
         refreshSelectedTag(currentTag);
         // 3) 提示成功
         ElMessage.success(t("navbar.refreshCache") + "完成");
@@ -577,18 +577,18 @@ const toggleQuickStart = (tag: TagView) => {
     const isExists = quickStartManager.isLinkExists(href);
 
     if (isExists) {
-      // 取消收藏: 找到对应的链接并删除
+      // 取消收藏：找到对应的链接并删除
       const links = quickStartManager.getQuickLinks();
       const targetLink = links.find((link) => link.href === href);
       if (targetLink?.id) {
         quickStartManager.removeQuickLink(targetLink.id);
-        ElMessage.success(`已取消收藏: ${tag.title}`);
+        ElMessage.success(`已取消收藏：${tag.title}`);
       }
     } else {
       // 添加收藏
       const quickLink = quickStartManager.createQuickLinkFromRoute(tag);
       quickStartManager.addQuickLink(quickLink);
-      ElMessage.success(`已收藏: ${tag.title}`);
+      ElMessage.success(`已收藏：${tag.title}`);
     }
   } catch (error) {
     console.error("Failed to toggle quick start:", error);
@@ -625,7 +625,7 @@ const scrollRight = () => {
   const newScrollLeft = Math.min(maxScrollLeft, scrollWrapper.scrollLeft + 200);
   scrollbarRef.value.setScrollLeft(newScrollLeft);
 
-  // 如果滚动到最右边, 重置滚动状态以允许下次自动滚动
+  // 如果滚动到最右边，重置滚动状态以允许下次自动滚动
   if (newScrollLeft >= maxScrollLeft - 1) {
     scrollState.value.hasScrolledToLatest = false;
   }
@@ -656,7 +656,7 @@ const autoScrollToLatestTag = () => {
   const containerWidth = scrollWrapper.clientWidth;
   const contentWidth = scrollWrapper.scrollWidth;
 
-  // 判断容器是否已满(内容宽度是否超过容器宽度)
+  // 判断容器是否已满（内容宽度是否超过容器宽度）
   const isContainerFull = contentWidth > containerWidth;
 
   // 查找当前激活的标签元素
@@ -678,7 +678,7 @@ const autoScrollToLatestTag = () => {
       tagLeft < scrollWrapper.scrollLeft ||
       tagRight > scrollWrapper.scrollLeft + containerWidth
     ) {
-      // 如果标签不在可见区域内, 滚动到使标签居中的位置
+      // 如果标签不在可见区域内，滚动到使标签居中的位置
       const targetScrollLeft = tagLeft - (containerWidth - activeHtmlElement.offsetWidth) / 2;
       const maxScrollLeft = contentWidth - containerWidth;
       const minScrollLeft = 0;
@@ -691,15 +691,15 @@ const autoScrollToLatestTag = () => {
     }
   }
 
-  // 如果没有找到激活标签或激活标签已经在可见区域内, 则使用原来的逻辑
+  // 如果没有找到激活标签或激活标签已经在可见区域内，则使用原来的逻辑
   if (isContainerFull && !scrollState.value.hasScrolledToLatest) {
-    // 计算需要滚动到的位置, 确保最新标签在右侧可见
+    // 计算需要滚动到的位置，确保最新标签在右侧可见
     const maxScrollLeft = contentWidth - containerWidth;
     scrollbarRef.value.setScrollLeft(maxScrollLeft);
     scrollState.value.hasScrolledToLatest = true;
     scrollState.value.isContainerFull = true;
   } else if (!isContainerFull) {
-    // 如果内容宽度不超过容器宽度, 滚动到最左边
+    // 如果内容宽度不超过容器宽度，滚动到最左边
     scrollbarRef.value.setScrollLeft(0);
     // 重置滚动状态
     scrollState.value.hasScrolledToLatest = false;
@@ -711,7 +711,7 @@ const autoScrollToLatestTag = () => {
 watch(
   route,
   () => {
-    // 如果没有设置来源, 则默认为菜单点击
+    // 如果没有设置来源，则默认为菜单点击
     if (tagSwitchSource.value === null) {
       tagSwitchSource.value = "menu";
     }
@@ -725,7 +725,7 @@ watch(
 // 监听容器大小变化
 let resizeObserver: ResizeObserver | null = null;
 
-// 监听标签数量变化, 自动滚动到最新标签(新标签添加时)
+// 监听标签数量变化，自动滚动到最新标签（新标签添加时）
 watch(
   () => visitedViews.value.length,
   () => {
@@ -741,7 +741,7 @@ watch(
   }
 );
 
-// 监听当前路由变化, 确保路由切换时自动滚动到当前标签
+// 监听当前路由变化，确保路由切换时自动滚动到当前标签
 watch(
   () => route.path,
   () => {

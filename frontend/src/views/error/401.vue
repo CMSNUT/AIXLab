@@ -1,10 +1,10 @@
 <template>
   <el-result
     :title="t('error.noPermission')"
-    sub-title="请确认您的权限是否满足操作要求, 或者点击下方按钮返回首页。"
+    sub-title="请确认您的权限是否满足操作要求，或者点击下方按钮返回首页。"
   >
     <template #icon>
-      <!-- 此处必须img, 如果是el-icon则无法识别 @ -->
+      <!-- 此处必须img，如果是el-icon则无法识别 @ -->
       <img class="min-w-[23.4375rem] sm:w-120" src="@/assets/images/401.svg" alt="401" />
     </template>
     <template #extra>

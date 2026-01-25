@@ -31,7 +31,7 @@
             @clear-click="handleQuery"
           />
         </el-form-item>
-        <!-- 时间范围, 收起状态下隐藏 -->
+        <!-- 时间范围，收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -128,7 +128,7 @@
         </div>
       </div>
 
-      <!-- 表格区域: 系统配置列表 -->
+      <!-- 表格区域：系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -450,7 +450,7 @@ async function loadingData() {
   }
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -549,7 +549,7 @@ const exportColumns = [
   { prop: "updated_time", label: "更新时间" },
 ];
 
-// 导入/导出配置(用于导出弹窗)
+// 导入/导出配置（用于导出弹窗）
 const curdContentConfig = {
   permPrefix: "module_system:log",
   cols: exportColumns as any,

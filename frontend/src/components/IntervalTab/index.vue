@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts" setup>
-// 定义接口, 增强类型安全
+// 定义接口，增强类型安全
 interface CrontabValue {
   second: string;
   min: string;
@@ -100,7 +100,7 @@ const crontabValueObj = ref<CrontabValue>({
   week: "*",
 });
 
-// 常量定义, 避免魔法数字
+// 常量定义，避免魔法数字
 const MAX_SECONDS = 60;
 const MAX_MINUTES = 60;
 const MAX_HOURS = 24;

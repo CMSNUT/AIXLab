@@ -15,7 +15,7 @@ class NoticeCreateSchema(BaseModel):
     """公告通知创建模型"""
 
     notice_title: str = Field(..., max_length=50, description="公告标题")
-    notice_type: str = Field(..., description="公告类型(1通知 2公告)")
+    notice_type: str = Field(..., description="公告类型（1通知 2公告）")
     notice_content: str = Field(..., description="公告内容")
     status: str = Field(default="0", description="是否启用(0:启用 1:禁用)")
     description: str | None = Field(default=None, max_length=255, description="描述")

@@ -37,7 +37,7 @@ class DeptCreateSchema(BaseModel):
         import re
 
         if not re.match(r"^[A-Za-z][A-Za-z0-9_]*$", v):
-            raise ValueError("部门编码必须以字母开头, 且仅包含字母/数字/下划线")
+            raise ValueError("部门编码必须以字母开头，且仅包含字母/数字/下划线")
         return v
 
 

@@ -2,7 +2,7 @@
   {
     "config_name": "网站名称",
     "config_key": "sys_web_title",
-    "config_value": "AIXLab",
+    "config_value": "巴莱侠-AIXLab",
     "config_type": true,
     "status": "0",
     "description": "初始化数据"
@@ -10,7 +10,7 @@
   {
     "config_name": "网站描述",
     "config_key": "sys_web_description",
-    "config_value": "AIXLab 是完全开源的权限管理系统",
+    "config_value": "巴莱侠-AIXLab 是完全开源的权限管理系统",
     "config_type": true,
     "status": "0",
     "description": "初始化数据"
@@ -66,7 +66,7 @@
   {
     "config_name": "隐私政策",
     "config_key": "sys_web_privacy",
-    "config_value": "https://github.com/aixlab/AIXLab/blob/master/LICENSE",
+    "config_value": "https://github.com/CMSNUT/AIXLab/blob/master/LICENSE",
     "config_type": true,
     "status": "0",
     "description": "初始化数据"
@@ -74,7 +74,7 @@
   {
     "config_name": "用户协议",
     "config_key": "sys_web_clause",
-    "config_value": "https://github.com/aixlab/AIXLab/blob/master/LICENSE",
+    "config_value": "https://github.com/CMSNUT/AIXLab/blob/master/LICENSE",
     "config_type": true,
     "status": "0",
     "description": "初始化数据"
@@ -82,7 +82,7 @@
   {
     "config_name": "源码代码",
     "config_key": "sys_git_code",
-    "config_value": "https://github.com/aixlab/AIXLab.git",
+    "config_value": "https://github.com/CMSNUT/AIXLab.git",
     "config_type": true,
     "status": "0",
     "description": "初始化数据"

@@ -143,11 +143,11 @@ def register_routers(app: FastAPI) -> None:
 
     from app.plugin.module_application.ai.ws import WS_AI
 
-    # 手动注册WebSocket路由, 不使用速率限制器
+    # 手动注册WebSocket路由，不使用速率限制器
     app.include_router(
         router=WS_AI, dependencies=[Depends(WebSocketRateLimiter(times=1, seconds=5))]
     )
-    # 先将动态路由注册到应用, 使用速率限制器
+    # 先将动态路由注册到应用，使用速率限制器
     from app.core.discover import get_dynamic_router
 
     # 获取动态路由实例
@@ -180,7 +180,7 @@ def register_files(app: FastAPI) -> None:
 
 def reset_api_docs(app: FastAPI) -> None:
     """
-    使用本地静态资源自定义 API 文档页面(Swagger UI 与 ReDoc)。
+    使用本地静态资源自定义 API 文档页面（Swagger UI 与 ReDoc）。
 
     参数:
     - app (FastAPI): FastAPI 应用实例。

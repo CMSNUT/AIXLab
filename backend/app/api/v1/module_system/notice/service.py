@@ -88,11 +88,11 @@ class NoticeService:
         - dict: 创建的公告详情字典。
 
         异常:
-        - CustomException: 创建失败, 该公告通知已存在。
+        - CustomException: 创建失败，该公告通知已存在。
         """
         notice = await NoticeCRUD(auth).get(notice_title=data.notice_title)
         if notice:
-            raise CustomException(msg="创建失败, 该公告通知已存在")
+            raise CustomException(msg="创建失败，该公告通知已存在")
         notice_obj = await NoticeCRUD(auth).create_crud(data=data)
         return NoticeOutSchema.model_validate(notice_obj).model_dump()
 
@@ -112,14 +112,14 @@ class NoticeService:
         - dict: 更新的公告详情字典。
 
         异常:
-        - CustomException: 更新失败, 该公告通知不存在或公告通知标题重复。
+        - CustomException: 更新失败，该公告通知不存在或公告通知标题重复。
         """
         notice = await NoticeCRUD(auth).get_by_id_crud(id=id)
         if not notice:
-            raise CustomException(msg="更新失败, 该公告通知不存在")
+            raise CustomException(msg="更新失败，该公告通知不存在")
         exist_notice = await NoticeCRUD(auth).get(notice_title=data.notice_title)
         if exist_notice and exist_notice.id != id:
-            raise CustomException(msg="更新失败, 公告通知标题重复")
+            raise CustomException(msg="更新失败，公告通知标题重复")
         notice_obj = await NoticeCRUD(auth).update_crud(id=id, data=data)
         return NoticeOutSchema.model_validate(notice_obj).model_dump()
 
@@ -133,14 +133,14 @@ class NoticeService:
         - ids (list[int]): 删除的ID列表。
 
         异常:
-        - CustomException: 删除失败, 删除对象不能为空或该公告通知不存在。
+        - CustomException: 删除失败，删除对象不能为空或该公告通知不存在。
         """
         if len(ids) < 1:
-            raise CustomException(msg="删除失败, 删除对象不能为空")
+            raise CustomException(msg="删除失败，删除对象不能为空")
         for id in ids:
             notice = await NoticeCRUD(auth).get_by_id_crud(id=id)
             if not notice:
-                raise CustomException(msg="删除失败, 该公告通知不存在")
+                raise CustomException(msg="删除失败，该公告通知不存在")
         await NoticeCRUD(auth).delete_crud(ids=ids)
 
     @classmethod
@@ -153,7 +153,7 @@ class NoticeService:
         - data (BatchSetAvailable): 批量设置可用负载模型。
 
         异常:
-        - CustomException: 批量设置失败, 该公告通知不存在。
+        - CustomException: 批量设置失败，该公告通知不存在。
         """
         await NoticeCRUD(auth).set_available_crud(ids=data.ids, status=data.status)
 
@@ -171,7 +171,7 @@ class NoticeService:
         mapping_dict = {
             "id": "编号",
             "notice_title": "公告标题",
-            "notice_type": "公告类型(1通知 2公告)",
+            "notice_type": "公告类型（1通知 2公告）",
             "notice_content": "公告内容",
             "status": "状态",
             "description": "备注",

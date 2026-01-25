@@ -102,7 +102,7 @@ class RedisCURD:
         参数:
         - key (str): 锁键名
         - expire (int): 锁过期时间,单位为秒
-        - value (str, optional): 锁值,默认值为None(自动生成UUID)。
+        - value (str, optional): 锁值,默认值为None（自动生成UUID）。
 
         返回:
         - tuple[bool, str]: (获取锁是否成功, 锁值)
@@ -110,7 +110,7 @@ class RedisCURD:
         try:
             import uuid
 
-            # 如果没有提供value, 生成唯一的UUID
+            # 如果没有提供value，生成唯一的UUID
             lock_value = value or str(uuid.uuid4())
             # 使用setnx命令实现原子性锁获取
             result = await self.redis.set(
@@ -125,11 +125,11 @@ class RedisCURD:
             return (False, "")
 
     async def unlock(self, key: str, value: str) -> bool:
-        """释放分布式锁(安全版本, 验证锁值)
+        """释放分布式锁（安全版本，验证锁值）
 
         参数:
         - key (str): 锁键名
-        - value (str): 锁值, 用于验证锁的持有者
+        - value (str): 锁值，用于验证锁的持有者
 
         返回:
         - bool: 如果释放锁成功则返回True,否则返回False
@@ -150,7 +150,7 @@ class RedisCURD:
             return False
 
     async def unlock_simple(self, key: str) -> bool:
-        """释放分布式锁(简单版本, 不验证锁值)
+        """释放分布式锁（简单版本，不验证锁值）
 
         参数:
         - key (str): 锁键名
@@ -235,7 +235,7 @@ class RedisCURD:
         参数:
         - key (str): 锁键名
         - expire (int): 新的过期时间,单位为秒
-        - value (str): 锁值, 用于验证锁的持有者
+        - value (str): 锁值，用于验证锁的持有者
 
         返回:
         - bool: 如果续约锁成功则返回True,否则返回False

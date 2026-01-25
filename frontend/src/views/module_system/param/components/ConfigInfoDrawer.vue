@@ -104,7 +104,7 @@
                     @blur="
                       {
                         if (!isValidApiPath(listItem.value) && listItem.value.trim()) {
-                          ElMessage.warning('请输入有效的接口路径格式(以/开头)');
+                          ElMessage.warning('请输入有效的接口路径格式（以/开头）');
                         }
                       }
                     "
@@ -127,7 +127,7 @@
                   添加接口路径
                 </el-button>
                 <div class="text-xs text-gray-500 mt-2">
-                  配置说明: 添加到白名单的接口路径无需登录即可访问, 支持完整路径配置。
+                  配置说明：添加到白名单的接口路径无需登录即可访问，支持完整路径配置。
                 </div>
               </div>
             </el-form-item>
@@ -178,7 +178,7 @@
                   添加IP地址
                 </el-button>
                 <div class="text-xs text-gray-500 mt-2">
-                  配置说明: 添加到黑名单的IP地址将无法访问系统, 支持单个IP配置。
+                  配置说明：添加到黑名单的IP地址将无法访问系统，支持单个IP配置。
                 </div>
               </div>
             </el-form-item>
@@ -206,7 +206,7 @@
                   "
                 />
                 <div class="text-xs text-gray-500 mt-1">
-                  配置说明: 启用后系统将进入演示模式, 部分功能可能受限。
+                  配置说明：启用后系统将进入演示模式，部分功能可能受限。
                 </div>
               </template>
               <!-- IP白名单 -->
@@ -249,7 +249,7 @@
                     添加IP地址
                   </el-button>
                   <div class="text-xs text-gray-500 mt-2">
-                    配置说明: 演示模式下, 只有白名单中的IP地址可以访问系统, 支持单个IP配置。
+                    配置说明：演示模式下，只有白名单中的IP地址可以访问系统，支持单个IP配置。
                   </div>
                 </div>
               </template>
@@ -429,7 +429,7 @@ const submitChanges = async () => {
   }
 };
 
-// 取消修改: 重置所有修改字段的状态并恢复初始值
+// 取消修改：重置所有修改字段的状态并恢复初始值
 const resetForm = () => {
   // 重置动态列表
   initializeLists();
@@ -462,12 +462,12 @@ const resetForm = () => {
 };
 
 async function handleCloseDialog() {
-  // 仅关闭抽屉, 等待关闭动画结束后再重置
+  // 仅关闭抽屉，等待关闭动画结束后再重置
   drawerVisible.value = false;
 }
 
 function onDrawerClosed() {
-  // 抽屉关闭动画结束后再执行重置, 避免打断动画
+  // 抽屉关闭动画结束后再执行重置，避免打断动画
   resetForm();
 }
 
@@ -511,7 +511,7 @@ const initializeLists = () => {
         .filter((item) => typeof item === "string" && item.trim())
         .map((item) => ({ id: generateId(), value: item.trim() }));
     } else {
-      // 如果不是数组, 回退到按换行符分割
+      // 如果不是数组，回退到按换行符分割
       apiWhitelistItems.value = apiWhitelistStr
         ? apiWhitelistStr
             .split("\n")
@@ -520,7 +520,7 @@ const initializeLists = () => {
         : [{ id: generateId(), value: "" }];
     }
   } catch {
-    // 解析失败, 回退到按换行符分割
+    // 解析失败，回退到按换行符分割
     apiWhitelistItems.value = apiWhitelistStr
       ? apiWhitelistStr
           .split("\n")
@@ -539,7 +539,7 @@ const initializeLists = () => {
         .filter((item) => typeof item === "string" && item.trim())
         .map((item) => ({ id: generateId(), value: item.trim() }));
     } else {
-      // 如果不是数组, 回退到按换行符分割
+      // 如果不是数组，回退到按换行符分割
       ipBlacklistItems.value = ipBlacklistStr
         ? ipBlacklistStr
             .split("\n")
@@ -548,7 +548,7 @@ const initializeLists = () => {
         : [{ id: generateId(), value: "" }];
     }
   } catch {
-    // 解析失败, 回退到按换行符分割
+    // 解析失败，回退到按换行符分割
     ipBlacklistItems.value = ipBlacklistStr
       ? ipBlacklistStr
           .split("\n")
@@ -567,7 +567,7 @@ const initializeLists = () => {
         .filter((item) => typeof item === "string" && item.trim())
         .map((item) => ({ id: generateId(), value: item.trim() }));
     } else {
-      // 如果不是数组, 回退到按换行符分割
+      // 如果不是数组，回退到按换行符分割
       demoIpWhitelistItems.value = demoIpWhitelistStr
         ? demoIpWhitelistStr
             .split("\n")
@@ -576,7 +576,7 @@ const initializeLists = () => {
         : [{ id: generateId(), value: "" }];
     }
   } catch {
-    // 解析失败, 回退到按换行符分割
+    // 解析失败，回退到按换行符分割
     demoIpWhitelistItems.value = demoIpWhitelistStr
       ? demoIpWhitelistStr
           .split("\n")
@@ -688,7 +688,7 @@ const handleUploadSuccess = (fileInfo: UploadFilePath, type: string) => {
 // 图片上传失败的回调处理
 const handleUploadError = (error: any) => {
   console.error("上传失败:", error.message || "未知错误");
-  ElMessage.error(`上传失败: ${error.message || "请稍后重试"}`);
+  ElMessage.error(`上传失败：${error.message || "请稍后重试"}`);
 };
 
 // 生命周期钩子

@@ -21,10 +21,10 @@ class DeptCRUD(CRUDBase[DeptModel, DeptCreateSchema, DeptUpdateSchema]):
 
         参数:
         - id (int): 部门 ID。
-        - preload (list | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系，未提供时使用模型默认项
 
         返回:
-        - DeptModel | None: 部门信息, 未找到返回 None。
+        - DeptModel | None: 部门信息，未找到返回 None。
         """
         obj = await self.get(id=id, preload=preload)
         if not obj:
@@ -43,7 +43,7 @@ class DeptCRUD(CRUDBase[DeptModel, DeptCreateSchema, DeptUpdateSchema]):
         参数:
         - search (dict | None): 搜索条件。
         - order_by (list[dict] | None): 排序字段列表。
-        - preload (list | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[DeptModel]: 部门列表。
@@ -62,7 +62,7 @@ class DeptCRUD(CRUDBase[DeptModel, DeptCreateSchema, DeptUpdateSchema]):
         参数:
         - search (dict | None): 搜索条件。
         - order_by (list[dict] | None): 排序字段列表。
-        - preload (list | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[DeptModel]: 部门树形列表。
@@ -95,7 +95,7 @@ class DeptCRUD(CRUDBase[DeptModel, DeptCreateSchema, DeptUpdateSchema]):
         - id (int): 部门 ID。
 
         返回:
-        - str | None: 部门名称, 未找到返回 None。
+        - str | None: 部门名称，未找到返回 None。
         """
         obj = await self.get(id=id)
         return obj.name if obj else None

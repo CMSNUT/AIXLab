@@ -24,7 +24,7 @@
             <el-option value="1" label="停用" />
           </el-select>
         </el-form-item>
-        <!-- 时间范围, 收起状态下隐藏 -->
+        <!-- 时间范围，收起状态下隐藏 -->
         <el-form-item v-if="isExpand" prop="start_time" label="创建时间">
           <DatePicker v-model="dateRange" @update:model-value="handleDateRangeChange" />
         </el-form-item>
@@ -167,7 +167,7 @@
         </div>
       </div>
 
-      <!-- 表格区域: 系统配置列表 -->
+      <!-- 表格区域：系统配置列表 -->
       <el-table
         ref="dataTableRef"
         v-loading="loading"
@@ -531,7 +531,7 @@ async function loadingData() {
   }
 }
 
-// 查询(重置页码后获取数据)
+// 查询（重置页码后获取数据）
 async function handleQuery() {
   queryFormData.page_no = 1;
   loadingData();
@@ -619,7 +619,7 @@ async function handleSubmit() {
         dialogVisible.visible = false;
         resetForm();
         handleResetQuery();
-        // 更新全局用户状态, 刷新岗位信息
+        // 更新全局用户状态，刷新岗位信息
         const userStore = useUserStore();
         await userStore.getUserInfo();
       } catch (error: any) {
@@ -693,7 +693,7 @@ const exportColumns = [
   { prop: "updated_time", label: "更新时间" },
 ];
 
-// 导入/导出配置(用于导出)
+// 导入/导出配置（用于导出）
 const curdContentConfig = {
   permPrefix: "module_system:position",
   cols: exportColumns as any,
@@ -724,7 +724,7 @@ onMounted(() => {
 // 导出字段 const exportColumns = [ { prop: 'name', label: '岗位名称' }, { prop: 'order', label:
 '岗位排序' }, { prop: 'status', label: '状态' }, { prop: 'description', label: '描述' }, { prop:
 'created_time', label: '创建时间' }, { prop: 'updated_time', label: '更新时间' }, ]; //
-导入/导出配置(仅用于导出) const curdContentConfig = { permPrefix: 'module_system:position', cols:
+导入/导出配置（仅用于导出） const curdContentConfig = { permPrefix: 'module_system:position', cols:
 exportColumns as any, exportsAction: async (params: any) => { const query: any = { ...params }; if
 (typeof query.status === 'string') { query.status = query.status === 'true'; } query.page_no = 1;
 query.page_size = 1000; const all: any[] = []; while (true) { const res = await

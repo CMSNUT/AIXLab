@@ -15,8 +15,8 @@ from app.core.database import async_db_session
 from app.utils.ip_local_util import IpLocalUtil
 
 """
-在 FastAPI 中, route_class 参数用于自定义路由的行为。
-通过设置 route_class, 你可以定义一个自定义的路由类, 从而在每个路由处理之前或之后执行特定的操作。
+在 FastAPI 中，route_class 参数用于自定义路由的行为。
+通过设置 route_class，你可以定义一个自定义的路由类，从而在每个路由处理之前或之后执行特定的操作。
 这对于日志记录、权限验证、性能监控等场景非常有用。
 """
 
@@ -93,7 +93,7 @@ class OperationLogRoute(APIRoute):
 
                 payload = json.dumps(oper_param, ensure_ascii=False)
 
-                # 日志表请求参数字段长度最大为2000, 因此在此处判断长度
+                # 日志表请求参数字段长度最大为2000，因此在此处判断长度
                 if len(payload) > 2000:
                     payload = "请求参数过长"
 
@@ -108,7 +108,7 @@ class OperationLogRoute(APIRoute):
             log_type = 1  # 1:登录日志 2:操作日志
             current_user_id = None
 
-            # 优化: 只在操作日志场景下获取current_user_id
+            # 优化：只在操作日志场景下获取current_user_id
             if "user_id" in request.scope:
                 current_user_id = request.scope.get("user_id")
                 log_type = 2
@@ -116,10 +116,10 @@ class OperationLogRoute(APIRoute):
             request_ip = None
             x_forwarded_for = request.headers.get("X-Forwarded-For")
             if x_forwarded_for:
-                # 取第一个 IP 地址, 通常为客户端真实 IP
+                # 取第一个 IP 地址，通常为客户端真实 IP
                 request_ip = x_forwarded_for.split(",")[0].strip()
             else:
-                # 若没有 X-Forwarded-For 头, 则使用 request.client.host
+                # 若没有 X-Forwarded-For 头，则使用 request.client.host
                 if request.client:
                     request_ip = request.client.host
 
@@ -131,7 +131,7 @@ class OperationLogRoute(APIRoute):
             request_from_redoc = referer and referer.endswith("redoc")
 
             if request_from_swagger or request_from_redoc:
-                # 如果请求来自api文档, 则不记录日志
+                # 如果请求来自api文档，则不记录日志
                 pass
             else:
                 async with async_db_session() as session:

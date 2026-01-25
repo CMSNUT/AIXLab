@@ -15,7 +15,7 @@ export function setupPermission() {
       const isLoggedIn = Auth.isLoggedIn();
 
       if (isLoggedIn) {
-        // 如果已登录但访问登录页, 重定向到首页
+        // 如果已登录但访问登录页，重定向到首页
         if (to.path === "/login") {
           next({ path: "/" });
           return;
@@ -33,7 +33,7 @@ export function setupPermission() {
         }
       }
     } catch (error) {
-      // 错误处理: 重置状态并跳转登录
+      // 错误处理：重置状态并跳转登录
       console.error("Route guard error:", error);
       await useUserStore().resetAllState();
       next("/login");
@@ -41,7 +41,7 @@ export function setupPermission() {
     }
   });
 
-  // 后置守卫, 确保进度条关闭
+  // 后置守卫，确保进度条关闭
   router.afterEach(() => {
     NProgress.done();
   });
@@ -71,12 +71,12 @@ async function handleAuthenticatedUser(
         router.addRoute(route);
       });
 
-      // 路由生成完成后, 重新导航到目标路由
+      // 路由生成完成后，重新导航到目标路由
       next({ ...to, replace: true });
       return;
     }
 
-    // 路由已加载, 检查路由是否存在
+    // 路由已加载，检查路由是否存在
     if (to.matched.length === 0) {
       next("/404");
       return;

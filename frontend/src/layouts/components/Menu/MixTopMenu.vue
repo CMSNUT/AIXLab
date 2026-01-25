@@ -59,7 +59,7 @@ const topMenus = ref<RouteRecordRaw[]>([]);
 // 处理后的顶部菜单列表 - 智能显示唯一子菜单的标题
 const processedTopMenus = computed(() => {
   return topMenus.value.map((route) => {
-    // 如果路由设置了 alwaysShow=true, 或者没有子菜单, 直接返回原路由
+    // 如果路由设置了 alwaysShow=true，或者没有子菜单，直接返回原路由
     if (route.meta?.alwaysShow || !route.children || route.children.length === 0) {
       return route;
     }
@@ -67,7 +67,7 @@ const processedTopMenus = computed(() => {
     // 过滤出非隐藏的子菜单
     const visibleChildren = route.children.filter((child) => !child.meta?.hidden);
 
-    // 如果只有一个非隐藏的子菜单, 显示子菜单的信息
+    // 如果只有一个非隐藏的子菜单，显示子菜单的信息
     if (visibleChildren.length === 1) {
       const onlyChild = visibleChildren[0];
       return {
@@ -86,7 +86,7 @@ const processedTopMenus = computed(() => {
 });
 
 /**
- * 处理菜单点击事件, 切换顶部菜单并加载对应的左侧菜单
+ * 处理菜单点击事件，切换顶部菜单并加载对应的左侧菜单
  * @param routePath 点击的菜单路径
  */
 const handleMenuSelect = (routePath: string) => {
@@ -96,16 +96,16 @@ const handleMenuSelect = (routePath: string) => {
 /**
  * 更新菜单状态 - 同时处理点击和路由变化情况
  * @param topMenuPath 顶级菜单路径
- * @param skipNavigation 是否跳过导航(路由变化时为true, 点击菜单时为false)
+ * @param skipNavigation 是否跳过导航（路由变化时为true，点击菜单时为false）
  */
 const updateMenuState = (topMenuPath: string, skipNavigation = false) => {
-  // 确保路径有效且不相同才更新, 避免重复操作
+  // 确保路径有效且不相同才更新，避免重复操作
   if (topMenuPath && appStore.activeTopMenuPath) {
     appStore.activeTopMenu(topMenuPath); // 设置激活的顶部菜单
     permissionStore.setMixLayoutSideMenus(topMenuPath); // 只有当路由映射表中存在该路径时才更新侧边菜单。 设置混合布局左侧菜单
   }
 
-  // 如果是点击菜单且状态已变更, 才进行导航
+  // 如果是点击菜单且状态已变更，才进行导航
   if (!skipNavigation) {
     navigateToFirstLeftMenu(permissionStore.mixLayoutSideMenus); // 跳转到左侧第一个菜单
   }
@@ -120,7 +120,7 @@ const navigateToFirstLeftMenu = (menus: RouteRecordRaw[]) => {
 
   const [firstMenu] = menus;
 
-  // 如果第一个菜单有子菜单, 递归跳转到第一个子菜单
+  // 如果第一个菜单有子菜单，递归跳转到第一个子菜单
   if (firstMenu.children && firstMenu.children.length > 0) {
     navigateToFirstLeftMenu(firstMenu.children as RouteRecordRaw[]);
   } else if (firstMenu.name) {
@@ -148,7 +148,7 @@ onMounted(() => {
   permissionStore.setMixLayoutSideMenus(currentTopMenuPath); // 设置混合布局左侧菜单
 });
 
-// 监听路由变化, 同步更新顶部菜单和左侧菜单的激活状态
+// 监听路由变化，同步更新顶部菜单和左侧菜单的激活状态
 watch(
   () => router.currentRoute.value.path,
   (newPath) => {
@@ -157,7 +157,7 @@ watch(
       const topMenuPath =
         newPath.split("/").filter(Boolean).length > 1 ? newPath.match(/^\/[^/]+/)?.[0] || "/" : "/";
 
-      // 使用公共方法更新菜单状态, 但跳过导航(因为路由已经变化)
+      // 使用公共方法更新菜单状态，但跳过导航（因为路由已经变化）
       updateMenuState(topMenuPath, true);
     }
   }

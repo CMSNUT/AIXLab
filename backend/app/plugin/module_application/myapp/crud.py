@@ -29,7 +29,7 @@ class ApplicationCRUD(CRUDBase[ApplicationModel, ApplicationCreateSchema, Applic
 
         参数:
         - id (int): 应用ID
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - ApplicationModel | None: 应用详情,如果不存在则为None
@@ -48,7 +48,7 @@ class ApplicationCRUD(CRUDBase[ApplicationModel, ApplicationCreateSchema, Applic
         参数:
         - search (dict[str, Any] | None): 查询参数,默认None
         - order_by (list[dict[str, str]] | None): 排序参数,默认None
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[ApplicationModel]: 应用列表

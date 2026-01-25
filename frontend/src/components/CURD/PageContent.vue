@@ -283,7 +283,7 @@
             >
               <el-icon class="el-icon--upload"><upload-filled /></el-icon>
               <div class="el-upload__text">
-                <span>将文件拖到此处, 或</span>
+                <span>将文件拖到此处，或</span>
                 <em>点击上传</em>
               </div>
               <template #tip>
@@ -373,7 +373,7 @@ const authPrefix = computed(() => props.contentConfig.permPrefix);
 
 // 获取按钮权限标识
 function getButtonPerm(action: string): string | null {
-  // 如果action已经包含完整路径(包含冒号), 则直接使用
+  // 如果action已经包含完整路径(包含冒号)，则直接使用
   if (action.includes(":")) {
     return action;
   }
@@ -384,7 +384,7 @@ function getButtonPerm(action: string): string | null {
 // 检查是否有权限
 // function hasButtonPerm(action: string): boolean {
 //   const perm = getButtonPerm(action);
-//   // 如果没有设置权限标识, 则默认具有权限
+//   // 如果没有设置权限标识，则默认具有权限
 //   if (!perm) return true;
 //   return hasAuth(perm);
 // }
@@ -722,13 +722,13 @@ function handleImports() {
             worksheet.getRow(1).eachCell((cell) => {
               fields.push(cell.value);
             });
-            // 遍历工作表的每一行(从第二行开始, 因为第一行通常是标题行)
+            // 遍历工作表的每一行（从第二行开始，因为第一行通常是标题行）
             for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
               const rowData: IObject = {};
               const row = worksheet.getRow(rowNumber);
               // 遍历当前行的每个单元格
               row.eachCell((cell, colNumber) => {
-                // 获取标题对应的键, 并将当前单元格的值存储到相应的属性名中
+                // 获取标题对应的键，并将当前单元格的值存储到相应的属性名中
                 rowData[fields[colNumber - 1]] = cell.value;
               });
               // 将当前行的数据对象添加到数组中

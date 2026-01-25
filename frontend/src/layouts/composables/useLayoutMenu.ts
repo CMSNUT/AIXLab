@@ -12,7 +12,7 @@ export function useLayoutMenu() {
   // 顶部菜单激活路径
   const activeTopMenuPath = computed(() => appStore.activeTopMenuPath);
 
-  // 常规路由(左侧菜单或顶部菜单)
+  // 常规路由（左侧菜单或顶部菜单）
   const routes = computed(() => permissionStore.routes);
 
   // 混合布局左侧菜单路由
@@ -22,7 +22,7 @@ export function useLayoutMenu() {
   const activeMenu = computed(() => {
     const { meta, path } = route;
 
-    // 如果设置了activeMenu, 则使用
+    // 如果设置了activeMenu，则使用
     if (meta?.activeMenu) {
       return meta.activeMenu;
     }

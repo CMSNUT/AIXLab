@@ -9,7 +9,7 @@ SchemaType = TypeVar("SchemaType", bound=BaseModel)
 
 class Serialize(Generic[ModelType, SchemaType]):
     """
-    序列化工具类, 提供模型、Schema 和字典之间的转换功能
+    序列化工具类，提供模型、Schema 和字典之间的转换功能
     """
 
     @classmethod

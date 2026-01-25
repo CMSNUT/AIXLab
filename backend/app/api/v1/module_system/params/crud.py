@@ -26,7 +26,7 @@ class ParamsCRUD(CRUDBase[ParamsModel, ParamsCreateSchema, ParamsUpdateSchema]):
 
         参数:
         - id (int): 配置管理型ID
-        - preload (list | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - ParamsModel | None: 配置管理型模型实例
@@ -41,7 +41,7 @@ class ParamsCRUD(CRUDBase[ParamsModel, ParamsCreateSchema, ParamsUpdateSchema]):
 
         参数:
         - key (str): 配置管理型key
-        - preload (list | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - ParamsModel | None: 配置管理型模型实例
@@ -60,7 +60,7 @@ class ParamsCRUD(CRUDBase[ParamsModel, ParamsCreateSchema, ParamsUpdateSchema]):
         参数:
         - search (dict | None): 查询参数对象。
         - order_by (list | None): 排序参数列表。
-        - preload (list | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[ParamsModel]: 配置管理型模型实例列表

@@ -34,7 +34,7 @@ class JobCRUD(CRUDBase[JobModel, JobCreateSchema, JobUpdateSchema]):
 
         参数:
         - id (int): 定时任务ID
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - JobModel | None: 定时任务模型,如果不存在则为None
@@ -53,7 +53,7 @@ class JobCRUD(CRUDBase[JobModel, JobCreateSchema, JobUpdateSchema]):
         参数:
         - search (dict | None): 查询参数字典
         - order_by (list[dict[str, str]] | None): 排序参数列表
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[JobModel]: 定时任务模型序列
@@ -135,7 +135,7 @@ class JobLogCRUD(CRUDBase[JobLogModel, JobLogCreateSchema, JobLogUpdateSchema]):
 
         参数:
         - id (int): 定时任务日志ID
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - JobLogModel | None: 定时任务日志模型,如果不存在则为None
@@ -154,7 +154,7 @@ class JobLogCRUD(CRUDBase[JobLogModel, JobLogCreateSchema, JobLogUpdateSchema]):
         参数:
         - search (dict | None): 查询参数字典
         - order_by (list[dict[str, str]] | None): 排序参数列表
-        - preload (list[str | Any] | None): 预加载关系, 未提供时使用模型默认项
+        - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:
         - Sequence[JobLogModel]: 定时任务日志模型序列
