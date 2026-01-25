@@ -1,0 +1,32 @@
+-- 文献表
+DROP TABLE IF EXISTS `resource_literature`;
+CREATE TABLE `resource_literature` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '文献ID',
+  `uuid` varchar(64) NOT NULL COMMENT 'UUID全局唯一标识',
+  `status` varchar(10) NOT NULL COMMENT '是否启用(0:启用 1:禁用)',
+  `title` varchar(200) NOT NULL COMMENT '文献标题',
+  `abstract` text COMMENT '摘要',
+  `keywords` varchar(200) DEFAULT NULL COMMENT '关键词',
+  `doi` varchar(200) DEFAULT NULL COMMENT 'DOI标识',
+  `publish_year` year DEFAULT NULL COMMENT '发表年份',
+  `journal_name` varchar(200) DEFAULT NULL COMMENT '期刊/会议名称',
+  `volume` varchar(20) DEFAULT NULL COMMENT '卷',
+  `issue` varchar(20) DEFAULT NULL COMMENT '期',
+  `pages` varchar(20) DEFAULT NULL COMMENT '页码',
+  `description` text COMMENT '备注/描述',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  `updated_time` datetime NOT NULL COMMENT '更新时间',
+  `created_id` int DEFAULT NULL COMMENT '创建人ID',
+  `updated_id` int DEFAULT NULL COMMENT '更新人ID',
+  PRIMARY KEY (`id`),
+  KEY `idx_doi` (`doi`),
+  UNIQUE KEY `uuid` (`uuid`),
+  KEY `idx_resource_literature_publish_year` (`publish_year`),
+  KEY `idx_resource_literature_journal_name` (`journal_name`(100)),
+  KEY `idx_resource_literature_title` (`title`(100)),
+  KEY `idx_resource_literature_keywords` (`keywords`(100)),
+  KEY `ix_resource_literature_created_id` (`created_id`),
+  KEY `ix_resource_literature_updated_id` (`updated_id`),
+  CONSTRAINT `resource_literature_ibfk_1` FOREIGN KEY (`created_id`) REFERENCES `sys_user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `resource_literature_ibfk_2` FOREIGN KEY (`updated_id`) REFERENCES `sys_user` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文献表';
