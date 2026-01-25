@@ -8,7 +8,7 @@
       size="large"
       :validate-on-rule-change="false"
     >
-      <!-- 工号/学号 -->
+      <!-- 账号 -->
       <el-form-item prop="username">
         <el-input v-model.trim="loginForm.username" :placeholder="t('login.username')" clearable>
           <template #prefix>
@@ -128,7 +128,7 @@ const userStore = useUserStore();
 const appStore = useAppStore();
 const settingsStore = useSettingsStore();
 
-// 来自父容器的预填工号/学号和密码
+// 来自父容器的预填账号和密码
 const props = defineProps<{ presetUsername?: string; presetPassword?: string }>();
 
 const route = useRoute();

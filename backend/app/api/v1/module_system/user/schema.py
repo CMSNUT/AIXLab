@@ -1,4 +1,5 @@
 from urllib.parse import urlparse
+import re
 
 from fastapi import Query
 from pydantic import (
@@ -14,6 +15,27 @@ from app.api.v1.module_system.menu.schema import MenuOutSchema
 from app.api.v1.module_system.role.schema import RoleOutSchema
 from app.core.base_schema import BaseSchema, CommonSchema, UserBySchema
 from app.core.validator import DateTimeStr, email_validator, mobile_validator
+
+# 抽离通用的username验证逻辑，避免重复代码
+def validate_username_common(value: str) -> str:
+    """通用的账号（学号/工号）验证函数"""
+    v = value.strip()
+    if not v:
+        raise ValueError("账号不能为空")
+    
+    # 🌟 超管账号白名单：需要豁免数字校验的账号加在这里！
+    ADMIN_WHITELIST = {"admin"}  # 可添加其他超管，如{"admin", "root", "super"}
+    if v in ADMIN_WHITELIST:
+        return v  # 白名单账号直接通过，跳过后续数字校验
+    
+    # 普通账号：严格校验6-12位纯数字、以0/1/2开头
+    pattern = r"^[0-2]\d{5,11}$"
+    if not re.fullmatch(pattern, v):
+        if not re.fullmatch(r"^\d+$", v):
+            raise ValueError("账号是学号或工号，仅允许输入数字（不能包含汉字、字母、符号等）")
+        else:
+            raise ValueError("账号是学号或工号，需6-12位数字且以0/1/2开头")
+    return v
 
 
 class CurrentUserUpdateSchema(BaseModel):
@@ -49,19 +71,19 @@ class CurrentUserUpdateSchema(BaseModel):
 
     @model_validator(mode="after")
     def check_model(self):
-        if self.name and len(self.name) > 32:
-            raise ValueError("名称长度不能超过32个字符")
+        if self.name and len(self.name) > 20:
+            raise ValueError("名称长度不能超过20个字符")
         return self
 
 
 class UserRegisterSchema(BaseModel):
     """注册"""
 
-    name: str | None = Field(default=None, description="名称")
+    name: str | None = Field(default=None, description="真实姓名")
     mobile: str | None = Field(default=None, description="手机号")
-    username: str = Field(..., description="账号")
+    username: str = Field(..., description="账号，工号或学号")
     password: str = Field(..., description="密码哈希值")
-    role_ids: list[int] | None = Field(default=[1], description="角色ID")
+    role_ids: list[int] | None = Field(default=[2], description="角色ID，默认普通用户(role_id=2)")
     created_id: int | None = Field(default=1, description="创建人ID")
     description: str | None = Field(default=None, max_length=255, description="备注")
 
@@ -73,17 +95,7 @@ class UserRegisterSchema(BaseModel):
     @field_validator("username")
     @classmethod
     def validate_username(cls, value: str):
-        v = value.strip()
-        if not v:
-            raise ValueError("账号不能为空")
-        # 字母开头，允许字母数字_.-
-        import re
-
-        # if not re.match(r"^[A-Za-z][A-Za-z0-9_.-]{2,31}$", v):
-        #     raise ValueError("账号需字母开头，3-32位，仅含字母/数字/_ . -")
-        if not re.match(r"^[0-2][0-9]{5,11}$", v):
-            raise ValueError("账号是学号或工号，6-12位，仅数字")
-        return v
+        return validate_username_common(value)  # 复用通用验证逻辑
 
     @model_validator(mode="after")
     def check_model(self):
@@ -101,8 +113,7 @@ class UserRegisterSchema(BaseModel):
 class UserForgetPasswordSchema(BaseModel):
     """忘记密码"""
 
-    # username: str = Field(..., max_length=20, description="真实姓名")
-    username: str = Field(..., max_length=20, description="真实姓名")
+    username: str = Field(..., max_length=12, description="账号，工号或学号")
     new_password: str = Field(..., max_length=128, description="新密码")
     mobile: str | None = Field(default=None, description="手机号")
 
@@ -110,6 +121,11 @@ class UserForgetPasswordSchema(BaseModel):
     @classmethod
     def validate_mobile(cls, value: str | None):
         return mobile_validator(value)
+    
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value: str):
+        return validate_username_common(value)
 
 
 class UserChangePasswordSchema(BaseModel):
@@ -131,14 +147,21 @@ class UserCreateSchema(CurrentUserUpdateSchema):
 
     model_config = ConfigDict(from_attributes=True)
 
-    username: str | None = Field(default=None, max_length=20, description="真实姓名")
+    username: str | None = Field(default=None, max_length=12, description="账号，工号或学号")
     password: str | None = Field(default=None, max_length=128, description="密码哈希值")
     status: str = Field(default="0", description="是否可用")
     description: str | None = Field(default=None, max_length=255, description="备注")
     is_superuser: bool | None = Field(default=False, description="是否超管")
     dept_id: int | None = Field(default=None, description="部门ID")
-    role_ids: list[int] | None = Field(default=[], description="角色ID")
+    role_ids: list[int] | None = Field(default=[2], description="角色ID，默认普通用户(role_id=2)")
     position_ids: list[int] | None = Field(default=[], description="岗位ID")
+
+    @field_validator("username")
+    @classmethod
+    def validate_username(cls, value: str | None):
+        if not value:  # 允许None（因为字段是可选的），但有值时必须验证
+            return value
+        return validate_username_common(value)
 
 
 class UserUpdateSchema(UserCreateSchema):
@@ -169,8 +192,8 @@ class UserQueryParam:
 
     def __init__(
         self,
-        username: str | None = Query(None, description="真实姓名"),
-        name: str | None = Query(None, description="名称"),
+        username: str | None = Query(None, description="账号，工号或学号"),
+        name: str | None = Query(None, description="真实姓名"),
         mobile: str | None = Query(None, description="手机号", pattern=r"^1[3-9]\d{9}$"),
         email: str | None = Query(
             None,

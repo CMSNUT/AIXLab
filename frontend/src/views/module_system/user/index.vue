@@ -18,7 +18,7 @@
             label-suffix=":"
             @submit.prevent="handleQuery"
           >
-            <el-form-item prop="username" label="工号/学号">
+            <el-form-item prop="username" label="账号">
               <el-input v-model="queryFormData.username" placeholder="请输入工号或学号" clearable />
             </el-form-item>
             <el-form-item prop="name" label="真实姓名">
@@ -214,7 +214,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column label="工号/学号" prop="username" min-width="100" />
+            <el-table-column label="账号" prop="username" min-width="100" />
             <el-table-column label="真实姓名" prop="name" min-width="100" />
             <el-table-column label="状态" prop="status" min-width="100">
               <template #default="scope">
@@ -341,7 +341,7 @@
               <el-avatar icon="UserFilled" size="small"></el-avatar>
             </template>
           </el-descriptions-item>
-          <el-descriptions-item label="工号/学号" :span="2">
+          <el-descriptions-item label="账号" :span="2">
             {{ detailFormData.username }}
           </el-descriptions-item>
           <el-descriptions-item label="真实姓名" :span="2">
@@ -413,7 +413,7 @@
           label-width="auto"
           label-position="right"
         >
-          <el-form-item label="工号/学号" prop="username">
+          <el-form-item label="账号" prop="username">
             <el-input
               v-model="formData.username"
               :disabled="!!formData.id"
@@ -670,7 +670,7 @@ const dateRange = ref<[Date, Date] | []>([]);
 
 // 仅用于导出字段的列（排除非数据列及嵌套对象列）
 const exportColumns = [
-  { prop: "username", label: "工号/学号" },
+  { prop: "username", label: "账号" },
   { prop: "name", label: "名称" },
   { prop: "status", label: "状态" },
   { prop: "gender", label: "性别" },

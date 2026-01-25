@@ -14,8 +14,7 @@
           <el-input v-model="queryFormData.ipaddr" placeholder="请输入IP地址" clearable />
         </el-form-item>
         <el-form-item prop="name" label="用户名">
-          <!-- <el-input v-model="queryFormData.name" placeholder="请输入用户名" clearable /> -->
-           <el-input v-model="queryFormData.username" placeholder="请输入用户名" clearable />
+          <el-input v-model="queryFormData.name" placeholder="请输入用户名" clearable />
         </el-form-item>
         <el-form-item prop="login_location" label="登录位置">
           <el-input v-model="queryFormData.login_location" placeholder="请输入登录位置" clearable />
@@ -276,7 +275,7 @@ const tableColumns = ref([
 const queryFormData = reactive<OnlineUserPageQuery>({
   page_no: 1,
   page_size: 10,
-  username: undefined,
+  name: undefined,
   login_location: undefined,
   ipaddr: undefined,
 });

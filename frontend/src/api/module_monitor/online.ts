@@ -34,7 +34,7 @@ export default OnlineAPI;
 
 export interface OnlineUserPageQuery extends PageQuery {
   ipaddr?: string;
-  username?: string;
+  name?: string;
   login_location?: string;
 }
 
