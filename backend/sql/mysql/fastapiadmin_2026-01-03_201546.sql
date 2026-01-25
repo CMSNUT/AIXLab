@@ -781,7 +781,7 @@ DROP TABLE IF EXISTS `sys_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sys_user` (
-  `username` varchar(64) NOT NULL COMMENT '用户名/登录账号',
+  `username` varchar(64) NOT NULL COMMENT '真实姓名/登录账号',
   `password` varchar(255) NOT NULL COMMENT '密码哈希',
   `name` varchar(32) NOT NULL COMMENT '昵称',
   `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',

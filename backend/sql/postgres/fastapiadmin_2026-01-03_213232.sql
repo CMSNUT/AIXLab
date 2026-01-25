@@ -2719,7 +2719,7 @@ COMMENT ON TABLE public.sys_user IS '用户表';
 -- Name: COLUMN sys_user.username; Type: COMMENT; Schema: public; Owner: tao
 --
 
-COMMENT ON COLUMN public.sys_user.username IS '用户名/登录账号';
+COMMENT ON COLUMN public.sys_user.username IS '真实姓名/登录账号';
 
 
 --

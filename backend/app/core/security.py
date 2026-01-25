@@ -59,7 +59,7 @@ class CustomOAuth2PasswordRequestForm(OAuth2PasswordRequestForm):
     - scope (str): 作用域,默认值为空字符串。
     - client_id (str | None): 客户端ID,默认值为None。
     - client_secret (str | None): 客户端密钥,默认值为None。
-    - username (str): 用户名。
+    - username (str): 真实姓名。
     - password (str): 密码。
     - captcha_key (str | None): 验证码键,默认值为空字符串。
     - captcha (str | None): 验证码值,默认值为空字符串。

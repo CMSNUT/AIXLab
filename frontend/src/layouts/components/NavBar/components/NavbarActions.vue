@@ -152,7 +152,7 @@ function handleConfigClick() {
  * 项目文档
  */
 function handleDocumentClick() {
-  window.open("https://service.aixlab.com", "_blank");
+  window.open("https://github.com/CMSNUT/AIXLab/README.md", "_blank");
 }
 
 /**

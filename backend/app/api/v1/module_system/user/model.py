@@ -76,7 +76,7 @@ class UserModel(ModelMixin, UserMixin):
     ]
 
     username: Mapped[str] = mapped_column(
-        String(64), nullable=False, unique=True, comment="用户名/登录账号"
+        String(64), nullable=False, unique=True, comment="真实姓名/登录账号"
     )
     password: Mapped[str] = mapped_column(String(255), nullable=False, comment="密码哈希")
     name: Mapped[str] = mapped_column(String(32), nullable=False, comment="昵称")

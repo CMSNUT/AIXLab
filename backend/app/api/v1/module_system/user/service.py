@@ -99,14 +99,14 @@ class UserService:
         - dict: 创建后的用户详情字典
         """
         if not data.username:
-            raise CustomException(msg="用户名不能为空")
+            raise CustomException(msg="真实姓名不能为空")
         # 检查是否试图创建超级管理员
         if data.is_superuser:
             raise CustomException(msg="不允许创建超级管理员")
-        # 检查用户名是否存在
+        # 检查真实姓名是否存在
         user = await UserCRUD(auth).get_by_username_crud(username=data.username)
         if user:
-            raise CustomException(msg="已存在相同用户名称的账号")
+            raise CustomException(msg="已存在相同真实姓名称的账号")
 
         # 检查部门是否存在
         if data.dept_id:
@@ -156,7 +156,7 @@ class UserService:
         if user.is_superuser:
             raise CustomException(msg="超级管理员不允许修改")
 
-        # 检查用户名是否重复
+        # 检查真实姓名是否重复
         exist_user = await UserCRUD(auth).get_by_username_crud(username=data.username)
         if exist_user and exist_user.id != id:
             raise CustomException(msg="已存在相同的账号")
@@ -451,7 +451,7 @@ class UserService:
         返回:
         - Dict: 注册后的用户详情字典
         """
-        # 检查用户名是否存在
+        # 检查真实姓名是否存在
         username_ok = await UserCRUD(auth).get_by_username_crud(username=data.username)
         if username_ok:
             raise CustomException(msg="账号已存在")
@@ -517,7 +517,7 @@ class UserService:
 
         header_dict = {
             "部门编号": "dept_id",
-            "用户名": "username",
+            "真实姓名": "username",
             "名称": "name",
             "邮箱": "email",
             "手机号": "mobile",
@@ -623,7 +623,7 @@ class UserService:
         """
         header_list = [
             "部门编号",
-            "用户名",
+            "真实姓名",
             "名称",
             "邮箱",
             "手机号",
@@ -659,7 +659,7 @@ class UserService:
         mapping_dict = {
             "id": "用户编号",
             "avatar": "头像",
-            "username": "用户名称",
+            "username": "真实姓名称",
             "name": "用户昵称",
             "dept_name": "部门",
             "email": "邮箱",

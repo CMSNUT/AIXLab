@@ -1,7 +1,7 @@
 -- 用户表 - 存储用户基本信息
 CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '用户ID',
-    username VARCHAR(50) UNIQUE NOT NULL COMMENT '用户名',
+    username VARCHAR(50) UNIQUE NOT NULL COMMENT '真实姓名',
     email VARCHAR(100) UNIQUE NOT NULL COMMENT '邮箱',
     password_hash VARCHAR(255) NOT NULL COMMENT '密码哈希',
     display_name VARCHAR(100) COMMENT '显示名称',

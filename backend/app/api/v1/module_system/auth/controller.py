@@ -87,7 +87,7 @@ async def get_new_token_controller(
     异常:
     - CustomException: 刷新令牌失败时抛出异常。
     """
-    # 解析当前的访问Token以获取用户名
+    # 解析当前的访问Token以获取真实姓名
     new_token = await LoginService.refresh_token_service(
         db=db, request=request, redis=redis, refresh_token=payload
     )

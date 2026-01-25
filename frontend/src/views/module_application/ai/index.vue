@@ -39,9 +39,9 @@
             </p>
 
             <div class="example-prompts">
-              <div class="prompt-card" @click="setPrompt('请介绍一下巴莱侠-AIXLab系统')">
+              <div class="prompt-card" @click="setPrompt('请介绍一下AIXLab系统')">
                 <h4>系统介绍</h4>
-                <p>请介绍一下巴莱侠-AIXLab系统</p>
+                <p>请介绍一下AIXLab系统</p>
               </div>
               <div class="prompt-card" @click="setPrompt('如何在系统中创建新的模块？')">
                 <h4>开发指导</h4>

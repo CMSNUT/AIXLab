@@ -79,16 +79,18 @@ class UserRegisterSchema(BaseModel):
         # 字母开头，允许字母数字_.-
         import re
 
-        if not re.match(r"^[A-Za-z][A-Za-z0-9_.-]{2,31}$", v):
-            raise ValueError("账号需字母开头，3-32位，仅含字母/数字/_ . -")
+        # if not re.match(r"^[A-Za-z][A-Za-z0-9_.-]{2,31}$", v):
+        #     raise ValueError("账号需字母开头，3-32位，仅含字母/数字/_ . -")
+        if not re.match(r"^[0-2][0-9]{5,11}$", v):
+            raise ValueError("账号是学号或工号，6-12位，仅数字")
         return v
 
     @model_validator(mode="after")
     def check_model(self):
-        if self.name and len(self.name) > 32:
-            raise ValueError("名称长度不能超过32个字符")
-        if self.username and len(self.username) > 32:
-            raise ValueError("账号长度不能超过32个字符")
+        if self.name and len(self.name) > 20:
+            raise ValueError("名称长度不能超过20个字符")
+        if self.username and len(self.username) > 12:
+            raise ValueError("账号长度不能超过12个字符")
         if self.description and len(self.description) > 255:
             raise ValueError("备注长度不能超过255个字符")
         if self.password and len(self.password) > 128:
@@ -99,7 +101,8 @@ class UserRegisterSchema(BaseModel):
 class UserForgetPasswordSchema(BaseModel):
     """忘记密码"""
 
-    username: str = Field(..., max_length=32, description="用户名")
+    # username: str = Field(..., max_length=20, description="真实姓名")
+    username: str = Field(..., max_length=20, description="真实姓名")
     new_password: str = Field(..., max_length=128, description="新密码")
     mobile: str | None = Field(default=None, description="手机号")
 
@@ -128,7 +131,7 @@ class UserCreateSchema(CurrentUserUpdateSchema):
 
     model_config = ConfigDict(from_attributes=True)
 
-    username: str | None = Field(default=None, max_length=32, description="用户名")
+    username: str | None = Field(default=None, max_length=20, description="真实姓名")
     password: str | None = Field(default=None, max_length=128, description="密码哈希值")
     status: str = Field(default="0", description="是否可用")
     description: str | None = Field(default=None, max_length=255, description="备注")
@@ -166,7 +169,7 @@ class UserQueryParam:
 
     def __init__(
         self,
-        username: str | None = Query(None, description="用户名"),
+        username: str | None = Query(None, description="真实姓名"),
         name: str | None = Query(None, description="名称"),
         mobile: str | None = Query(None, description="手机号", pattern=r"^1[3-9]\d{9}$"),
         email: str | None = Query(

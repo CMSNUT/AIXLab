@@ -50,10 +50,10 @@ class UserCRUD(CRUDBase[UserModel, UserCreateSchema, UserUpdateSchema]):
         self, username: str, preload: list[str | Any] | None = None
     ) -> UserModel | None:
         """
-        根据用户名获取用户信息
+        根据真实姓名获取用户信息
 
         参数:
-        - username (str): 用户名
+        - username (str): 真实姓名
         - preload (list[str | Any] | None): 预加载关系，未提供时使用模型默认项
 
         返回:

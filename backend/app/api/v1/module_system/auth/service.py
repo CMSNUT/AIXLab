@@ -146,7 +146,7 @@ class LoginService:
         login_location = await IpLocalUtil.get_ip_location(request_ip)
         request.scope["login_location"] = login_location
 
-        # 确保在请求上下文中设置用户名和会话ID
+        # 确保在请求上下文中设置真实姓名和会话ID
         request.scope["user_username"] = user.username
 
         access_expires = timedelta(seconds=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -155,7 +155,7 @@ class LoginService:
         now = datetime.now()
 
         # 记录租户信息到日志
-        log.info(f"用户ID: {user.id}, 用户名: {user.username} 正在生成JWT令牌")
+        log.info(f"用户ID: {user.id}, 真实姓名: {user.username} 正在生成JWT令牌")
 
         # 生成会话信息
         session_info = OnlineOutSchema(
@@ -248,7 +248,7 @@ class LoginService:
             raise CustomException(msg="刷新token失败，用户不存在")
 
         # 记录刷新令牌时的租户信息
-        log.info(f"用户ID: {user.id}, 用户名: {user.username} 正在刷新JWT令牌")
+        log.info(f"用户ID: {user.id}, 真实姓名: {user.username} 正在刷新JWT令牌")
 
         # 设置新的 token
         access_expires = timedelta(seconds=settings.ACCESS_TOKEN_EXPIRE_MINUTES)

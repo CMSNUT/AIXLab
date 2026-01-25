@@ -11,10 +11,10 @@ class OnlineOutSchema(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-    name: str = Field(..., description="用户名称")
+    name: str = Field(..., description="真实姓名称")
     session_id: str = Field(..., description="会话编号")
     user_id: int = Field(..., description="用户ID")
-    user_name: str = Field(..., description="用户名")
+    user_name: str = Field(..., description="真实姓名")
     ipaddr: str | None = Field(default=None, description="登陆IP地址")
     login_location: str | None = Field(default=None, description="登录所属地")
     os: str | None = Field(default=None, description="操作系统")
