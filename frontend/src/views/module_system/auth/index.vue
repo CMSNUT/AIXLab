@@ -16,7 +16,7 @@
     <!-- 登录页主体 -->
     <div class="auth-view__wrapper">
       <!-- 可选：左侧产品介绍区域，如不需要可整段删除，右侧登录表单会自动居中展示 -->
-      <section class="auth-feature">
+      <!-- <section class="auth-feature">
         <div class="auth-feature__badge">
           <span class="auth-feature__dot" />
           Enterprise Ready
@@ -43,7 +43,7 @@
             灵活扩展与高可用架构
           </li>
         </ul>
-      </section>
+      </section> -->
 
       <!-- 登录页主体容器 -->
       <section class="auth-panel">
@@ -61,19 +61,19 @@
               <span class="auth-panel__title">
                 {{ configStore.configData?.sys_web_title?.config_value || "" }}
               </span>
-              <el-tooltip
+              <!-- <el-tooltip
                 :content="configStore.configData?.sys_web_description?.config_value || ''"
                 placement="bottom"
               >
                 <el-icon class="cursor-help"><QuestionFilled /></el-icon>
-              </el-tooltip>
+              </el-tooltip> -->
             </div>
-            <div class="auth-panel__version-row">
+            <!-- <div class="auth-panel__version-row">
               <span class="auth-panel__version-label">Version</span>
               <span class="auth-panel__version-pill">
                 v{{ configStore.configData?.sys_web_version?.config_value || "" }}
               </span>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- 组件切换 -->
@@ -90,10 +90,10 @@
         <!-- 登录页底部版权 -->
         <footer class="auth-panel__footer">
           <el-text size="small">
-            <a :href="configStore.configData?.sys_git_code?.config_value || ''" target="_blank">
-              {{ configStore.configData?.sys_web_copyright?.config_value || "" }}
+            <a :href="configStore.configData?.sys_git_code?.config_value" target="_blank">
+              {{ configStore.configData?.sys_web_copyright?.config_value }}
             </a>
-            |
+            <!-- |
             <a :href="configStore.configData?.sys_help_doc?.config_value || ''" target="_blank">
               帮助
             </a>
@@ -105,7 +105,7 @@
             <a :href="configStore.configData?.sys_web_clause?.config_value || ''" target="_blank">
               条款
             </a>
-            {{ configStore.configData?.sys_keep_record?.config_value || "" }}
+            {{ configStore.configData?.sys_keep_record?.config_value || "" }} -->
           </el-text>
         </footer>
       </section>
@@ -150,25 +150,25 @@ const loginPreset = reactive<{ username: string; password: string }>({
 
 let notificationInstance: ReturnType<typeof ElNotification> | null = null;
 
-const showVoteNotification = () => {
-  notificationInstance = ElNotification({
-    title: "⭐ AIXLab 完全开源 · 期待您的 Star 支持 🙏",
-    message: `项目持续迭代中，若对您有所帮助，欢迎点亮 Star 支持！
-    <br/><a href="https://github.com/CMSNUT/AIXLab" target="_blank" style="color: var(--el-color-primary); text-decoration: none; font-weight: 500;">Github仓库 →</a>
-    <br/><a href="https://gitee.com/CMSNUT/AIXLab" target="_blank" style="color: var(--el-color-warning); text-decoration: none; font-weight: 500;">Gitee仓库 →</a>`,
-    type: "success",
-    position: "bottom-left",
-    duration: 0,
-    dangerouslyUseHTMLString: true,
-  });
-};
+// const showVoteNotification = () => {
+//   notificationInstance = ElNotification({
+//     title: "⭐ AIXLab 完全开源 · 期待您的 Star 支持 🙏",
+//     message: `项目持续迭代中，若对您有所帮助，欢迎点亮 Star 支持！
+//     <br/><a href="https://github.com/CMSNUT/AIXLab" target="_blank" style="color: var(--el-color-primary); text-decoration: none; font-weight: 500;">Github仓库 →</a>
+//     <br/><a href="https://gitee.com/CMSNUT/AIXLab" target="_blank" style="color: var(--el-color-warning); text-decoration: none; font-weight: 500;">Gitee仓库 →</a>`,
+//     type: "success",
+//     position: "bottom-left",
+//     duration: 0,
+//     dangerouslyUseHTMLString: true,
+//   });
+// };
 
 // 组件初始化时就加载配置，而不是在onMounted中
 configStore.getConfig();
 
-onMounted(() => {
-  setTimeout(showVoteNotification, 500);
-});
+// onMounted(() => {
+//   setTimeout(showVoteNotification, 500);
+// });
 
 onBeforeUnmount(() => {
   if (notificationInstance) {
@@ -404,8 +404,8 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 100px;
+  height: 100px;
   background: radial-gradient(circle at 30% 20%, #ffffff, #e6efff);
   border-radius: 18px;
   box-shadow:
@@ -422,13 +422,14 @@ onBeforeUnmount(() => {
 
 .auth-panel__logo {
   flex-shrink: 0;
-  width: 52px;
-  height: 52px;
+  width: 100px;
+  height: 100px;
 }
 
 .auth-panel__meta {
   display: flex;
   flex: 1;
+  align-items: center;
   flex-direction: column;
   gap: 0.35rem;
   min-width: 0;
@@ -443,7 +444,7 @@ onBeforeUnmount(() => {
 .auth-panel__title {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1.2rem;
+  font-size: 2.5rem;
   font-weight: 650;
   line-height: 1.4;
   color: var(--el-text-color-primary);
