@@ -21,7 +21,7 @@
       class="layout__main"
     >
       <NavBar />
-      <TagsView v-if="isShowTagsView && userStore.isAdmin" />
+      <TagsView v-if="isShowTagsView" />
       <AppMain />
     </div>
   </BaseLayout>
