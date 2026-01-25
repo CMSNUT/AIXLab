@@ -32,6 +32,12 @@ class MappedBase(AsyncAttrs, DeclarativeBase):
 
     __abstract__: bool = True
 
+    # 异步安全关系加载策略配置
+    __relationship_options__: dict = {
+        "lazy": "selectin",  # 🔥 默认使用selectin加载
+        "cascade": "all, delete-orphan",
+    }
+
 
 class ModelMixin(MappedBase):
     """

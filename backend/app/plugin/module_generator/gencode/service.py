@@ -63,7 +63,18 @@ class GenTableService:
         返回:
         - dict: 包含业务表详细信息的字典。
         """
-        gen_table = await cls.get_gen_table_by_id_service(auth, table_id)
+        # gen_table = await cls.get_gen_table_by_id_service(auth, table_id)
+        # 🔥 修复：确保预加载columns关系
+        gen_table = await GenTableCRUD(auth=auth).get_gen_table_by_id(
+            table_id, 
+            preload=["columns"]  # 🔥 明确指定预加载
+        )
+
+        # return GenTableOutSchema.model_validate(gen_table).model_dump()
+        if not gen_table:
+            raise CustomException(msg="业务表不存在")
+        
+        # 🔥 修复：直接转换模型，不触发异步加载
         return GenTableOutSchema.model_validate(gen_table).model_dump()
 
     @classmethod
@@ -81,7 +92,12 @@ class GenTableService:
         返回:
         - list[dict]: 包含业务表列表信息的字典列表。
         """
-        gen_table_list_result = await GenTableCRUD(auth=auth).get_gen_table_list(search)
+        # gen_table_list_result = await GenTableCRUD(auth=auth).get_gen_table_list(search)
+         # 🔥 修复：确保预加载columns关系
+        gen_table_list_result = await GenTableCRUD(auth=auth).get_gen_table_list(
+            search, 
+            preload=["columns"]  # 🔥 明确指定预加载
+        )
         return [GenTableOutSchema.model_validate(obj).model_dump() for obj in gen_table_list_result]
 
     @classmethod

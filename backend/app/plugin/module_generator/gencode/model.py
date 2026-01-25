@@ -50,11 +50,15 @@ class GenTableModel(ModelMixin, UserMixin):
 
     parent_menu_id: Mapped[int | None] = mapped_column(Integer, nullable=True, comment="父菜单ID")
 
+    # 🔥 修复：明确指定异步安全的加载策略
     # 关联关系
     columns: Mapped[list["GenTableColumnModel"]] = relationship(
+        "GenTableColumnModel", # 增加
         order_by="GenTableColumnModel.sort",
         back_populates="table",
         cascade="all, delete-orphan",
+        lazy="selectin",  # 🔥 关键修复：使用异步安全的selectin加载
+        primaryjoin="GenTableModel.id == GenTableColumnModel.table_id"
     )
 
     @validates("table_name")
@@ -186,7 +190,14 @@ class GenTableColumnModel(ModelMixin, UserMixin):
     )
 
     # 关联关系
-    table: Mapped["GenTableModel"] = relationship(back_populates="columns")
+    # table: Mapped["GenTableModel"] = relationship(back_populates="columns")
+    # 🔥 修复：明确指定异步安全的加载策略
+    table: Mapped["GenTableModel"] = relationship(
+        "GenTableModel",
+        back_populates="columns",
+        lazy="selectin",  # 🔥 关键修复：使用异步安全的selectin加载
+        primaryjoin="GenTableColumnModel.table_id == GenTableModel.id",
+    )
 
     @validates("column_name")
     def validate_column_name(self, key: str, column_name: str) -> str:

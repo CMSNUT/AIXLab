@@ -452,25 +452,51 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         options = []
         # 获取模型定义的默认加载选项
         model_loader_options = getattr(self.model, "__loader_options__", [])
+     
+        # # 合并所有需要预加载的选项
+        # all_preloads = set(model_loader_options)
+        # if preload:
+        #     for opt in preload:
+        #         if isinstance(opt, str):
+        #             all_preloads.add(opt)
+        # elif preload == []:
+        #     # 如果明确指定空列表，则不使用任何预加载
+        #     all_preloads = set()
 
-        # 合并所有需要预加载的选项
-        all_preloads = set(model_loader_options)
+        # # 处理所有预加载选项
+        # for opt in all_preloads:
+        #     if isinstance(opt, str):
+        #         # 使用selectinload来避免在异步环境中的MissingGreenlet错误
+        #         if hasattr(self.model, opt):
+        #             options.append(selectinload(getattr(self.model, opt)))
+        #     else:
+        #         # 直接使用非字符串的加载选项
+        #         options.append(opt)
+
+         # 合并所有需要预加载的选项
+        all_preloads = set()
+        
+        # 1. 添加模型默认的预加载选项
+        for opt in model_loader_options:
+            if isinstance(opt, str):
+                all_preloads.add(opt)
+            else:
+                options.append(opt)  # 直接添加非字符串的loader选项
+        
+        # 2. 添加调用方指定的预加载选项
         if preload:
             for opt in preload:
                 if isinstance(opt, str):
                     all_preloads.add(opt)
-        elif preload == []:
-            # 如果明确指定空列表，则不使用任何预加载
-            all_preloads = set()
-
-        # 处理所有预加载选项
+                else:
+                    options.append(opt)
+        
+        # 🔥 修复：确保所有字符串类型的关系都使用selectinload
         for opt in all_preloads:
-            if isinstance(opt, str):
-                # 使用selectinload来避免在异步环境中的MissingGreenlet错误
-                if hasattr(self.model, opt):
-                    options.append(selectinload(getattr(self.model, opt)))
-            else:
-                # 直接使用非字符串的加载选项
-                options.append(opt)
+            if hasattr(self.model, opt):
+                # 获取关系的属性
+                rel_attr = getattr(self.model, opt)
+                # 使用selectinload，这是异步环境中最安全的选择
+                options.append(selectinload(rel_attr))
 
         return options
