@@ -21,7 +21,7 @@
       class="layout__main"
     >
       <NavBar />
-      <TagsView v-if="isShowTagsView" />
+      <TagsView v-if="isShowTagsView && userStore.isAdmin" />
       <AppMain />
     </div>
   </BaseLayout>
@@ -36,9 +36,12 @@ import NavBar from "../components/NavBar/index.vue";
 import TagsView from "../components/TagsView/index.vue";
 import AppMain from "../components/AppMain/index.vue";
 import BasicMenu from "../components/Menu/BasicMenu.vue";
+import { useUserStore} from "@/store";
 
 // 布局相关参数
 const { isShowTagsView, isShowLogo, isSidebarOpen } = useLayout();
+
+const userStore = useUserStore();
 
 // 菜单相关
 const { routes } = useLayoutMenu();

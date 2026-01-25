@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <!-- github 角标 -->
-    <GithubCorner class="github-corner" />
+    <GithubCorner v-if="userStore.isAdmin" class="github-corner" />
 
     <el-card shadow="hover">
       <div class="flex flex-wrap">
@@ -20,7 +20,7 @@
         </div>
 
         <!-- 右侧图标区域 - PC端 -->
-        <div class="hidden sm:block">
+        <div v-if="userStore.isAdmin" class="hidden sm:block">
           <div class="flex items-end space-x-6">
             <!-- 文档 -->
             <div class="flex flex-col items-center">
@@ -63,7 +63,7 @@
         </div>
 
         <!-- 移动端图标区域 -->
-        <div class="w-full sm:hidden mt-3">
+        <div v-if="userStore.isAdmin" class="w-full sm:hidden mt-3">
           <div class="flex justify-end space-x-4 overflow-x-auto">
             <!-- 仓库图标 -->
             <el-link href="https://gitee.com/CMSNUT/AIXLab" target="_blank">

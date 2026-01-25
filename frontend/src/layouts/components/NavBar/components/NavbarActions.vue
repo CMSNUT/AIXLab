@@ -29,7 +29,7 @@
 
       <!-- 系统设置按钮 -->
       <div
-        v-if="settingStore.showSettings"
+        v-if="settingStore.showSettings && userStore.isAdmin"
         class="navbar-actions__item"
         @click="handleSettingsClick"
       >
@@ -58,19 +58,19 @@
               <el-icon><User /></el-icon>
               {{ t("navbar.profile") }}
             </el-dropdown-item>
-            <el-dropdown-item @click="handleConfigClick">
+            <el-dropdown-item v-if="userStore.isAdmin" @click="handleConfigClick">
               <el-icon><Setting /></el-icon>
               {{ t("navbar.config") }}
             </el-dropdown-item>
-            <el-dropdown-item @click="handleDocumentClick">
+            <el-dropdown-item v-if="userStore.isAdmin" @click="handleDocumentClick">
               <el-icon><Document /></el-icon>
               {{ t("navbar.document") }}
             </el-dropdown-item>
-            <el-dropdown-item @click="handleGiteeClick">
+            <el-dropdown-item v-if="userStore.isAdmin" @click="handleGiteeClick">
               <el-icon><Reading /></el-icon>
               {{ t("navbar.gitee") }}
             </el-dropdown-item>
-            <el-dropdown-item @click="handleTourClick">
+            <el-dropdown-item v-if="userStore.isAdmin" @click="handleTourClick">
               <el-icon><Position /></el-icon>
               {{ t("navbar.tour") }}
             </el-dropdown-item>
@@ -127,6 +127,7 @@ const { t } = useI18n();
 const appStore = useAppStore();
 const settingStore = useSettingsStore();
 const userStore = useUserStore();
+// console.log("管理员状态：", userStore.isAdmin)
 
 const router = useRouter();
 

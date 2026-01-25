@@ -22,6 +22,14 @@ export const useUserStore = defineStore("user", {
     getRouteList: (state) => state.routeList,
     getPerms: (state) => state.prems,
     getHasGetRoute: (state) => state.hasGetRoute,
+
+    // 新增：判断是否是管理员的getter
+    isAdmin: (state) => {
+      if (!state.basicInfo || !Array.isArray(state.basicInfo.roles) || state.basicInfo.roles.length === 0) {
+        return false;
+      }
+      return state.basicInfo.roles.some((role) => role.code === "ADMIN");
+    },
   },
 
   actions: {

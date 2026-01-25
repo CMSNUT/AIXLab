@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from sqlalchemy import Text, BigInteger, String, DateTime, Integer
+from sqlalchemy import BigInteger, String, Integer, DateTime, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.base_model import ModelMixin, UserMixin
