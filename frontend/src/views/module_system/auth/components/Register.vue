@@ -171,7 +171,7 @@ const submit = async () => {
     loading.value = true;
 
     await UserAPI.registerUser(model.value);
-    // 注册成功后，双向绑定回写父容器的用户名和密码，并切回登录
+    // 注册成功后，双向绑定回写父容器的工号/学号和密码，并切回登录
     presetUsername.value = model.value.username;
     presetPassword.value = model.value.password;
     toLogin();

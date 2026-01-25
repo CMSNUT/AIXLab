@@ -9,7 +9,7 @@
     <div class="lock-dialog-content">
       <!-- 头像 -->
       <img :src="userStore.basicInfo.avatar" alt="" class="lock-dialog-avatar" />
-      <!-- 用户名 -->
+      <!-- 真实姓名 -->
       <!-- <span class="lock-dialog-name">{{ t('navbar.lock') }}</span> -->
       <span class="lock-dialog-name">{{ userStore.basicInfo.name }}</span>
     </div>

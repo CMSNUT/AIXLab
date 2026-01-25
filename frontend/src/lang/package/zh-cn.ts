@@ -76,7 +76,7 @@ export default {
     dark: "暗黑",
     light: "明亮",
     auto: "自动",
-    username: "请输入账号",
+    username: "请输入工号或学号",
     password: "请输入密码",
     newPassword: "请输入新密码",
     login: "登 录",
@@ -86,7 +86,7 @@ export default {
     forgetPassword: "忘记密码？",
     message: {
       username: {
-        required: "请输入账号",
+        required: "请输入工号或学号",
       },
       password: {
         required: "请输入密码",
