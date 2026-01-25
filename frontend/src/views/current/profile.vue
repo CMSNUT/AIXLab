@@ -141,10 +141,10 @@
                   label-width="80px"
                   label-suffix=":"
                 >
-                  <el-form-item label="用户名" prop="name">
+                  <el-form-item label="真实姓名" prop="name">
                     <el-input
                       v-model="infoFormState.name"
-                      placeholder="请输入用户名"
+                      placeholder="请输入真实姓名"
                       prefix-icon="User"
                       clearable
                       style="width: 240px"
@@ -441,7 +441,7 @@ const updateAvatar = (fileUrl: string) => {
 
 // 邮箱校验规则优化
 const rules = {
-  name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+  name: [{ required: true, message: "请输入真实姓名", trigger: "blur" }],
   mobile: [
     {
       pattern: /^1[3-9]\d{9}$/,
