@@ -13,7 +13,7 @@
         <el-form-item prop="name" label="名称">
           <el-input v-model="queryFormData.name" placeholder="请输入名称" clearable />
         </el-form-item>
-        <el-form-item prop="status" label="状态">
+        <!-- <el-form-item prop="status" label="状态">
           <el-select
             v-model="queryFormData.status"
             placeholder="请选择状态"
@@ -23,7 +23,7 @@
             <el-option value="0" label="启用" />
             <el-option value="1" label="停用" />
           </el-select>
-        </el-form-item>
+        </el-form-item>  -->
         <el-form-item v-if="isExpand" prop="created_id" label="创建人">
           <UserTableSelect
             v-model="queryFormData.created_id"

@@ -391,7 +391,7 @@ async function handleQuery() {
 async function handleResetQuery() {
   queryFormRef.value.resetFields();
   queryFormData.page_no = 1;
-  queryFormData.status = undefined;
+  queryformData.status = "0";
   queryFormData.created_time = undefined;
   dateRange.value = [];
   loadingData();

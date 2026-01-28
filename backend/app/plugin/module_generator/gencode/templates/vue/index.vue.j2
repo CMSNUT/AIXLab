@@ -17,7 +17,7 @@
         {% set parentheseIndex = column_comment.find("（") %}
         {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
         {% if column.column_name == "status" %}
-        <el-form-item prop="status" label="状态">
+        <!-- <el-form-item prop="status" label="状态">
           <el-select
             v-model="queryFormData.status"
             placeholder="请选择状态"
@@ -27,7 +27,7 @@
             <el-option value="0" label="启用" />
             <el-option value="1" label="停用" />
           </el-select>
-        </el-form-item>
+        </el-form-item>  -->
         {% elif column.column_name == "created_id"%}
         <el-form-item v-if="isExpand" prop="created_id" label="创建人">
           <UserTableSelect
@@ -412,12 +412,12 @@
           {% set required = 'true' if column.is_nullable == '1' else 'false' %}
           {% if column.column_name not in ['id', 'uuid', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
           {% if column.column_name == "status" %}
-          <el-form-item label="状态" prop="status" :required="true">
+          <el-form-item label="状态" prop="status" :required="false">
             <el-radio-group v-model="formData.status">
               <el-radio value="0">启用</el-radio>
               <el-radio value="1">停用</el-radio>
             </el-radio-group>
-          </el-form-item>
+          </el-form-item>  
           {% elif column.column_name == "description" %}
           <el-form-item label="描述" prop="description">
             <el-input
