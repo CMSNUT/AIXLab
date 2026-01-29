@@ -1,4 +1,4 @@
-<!-- {{ function_name }} -->
+<!-- 文献管理 -->
 <template>
   <div class="app-container">
     <!-- 搜索区域 -->
@@ -10,13 +10,6 @@
         :inline="true"
         @submit.prevent="handleQuery"
       >
-        {% for column in columns %}
-        {% if column.is_query == 1 %}
-        {% set dict_type = column.dict_type %}
-        {% set column_comment = column.column_comment if column.column_comment else '' %}
-        {% set parentheseIndex = column_comment.find("（") %}
-        {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-        {% if column.column_name == "status" %}
         <!-- <el-form-item prop="status" label="状态">
           <el-select
             v-model="queryFormData.status"
@@ -28,7 +21,62 @@
             <el-option value="1" label="停用" />
           </el-select>
         </el-form-item>  -->
-        {% elif column.column_name == "created_id"%}
+        <el-form-item label="文章类型" prop="type">
+          <!-- <el-input v-model="queryFormData.type" placeholder="请输入文章类型，如期刊论文、会议论文等" clearable /> -->
+           <el-select
+            v-model="queryFormData.type"
+            placeholder="请选择文章类型"
+            clearable 
+            style="width: 132px;"
+          >
+            <!-- 循环渲染所有下拉选项 -->
+            <el-option
+              v-for="option in typeOptions"
+              :key="option.value"
+              :label="option.label"
+              :value="option.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="queryFormData.title" placeholder="请输入标题" clearable />
+        </el-form-item>
+        <el-form-item label="来源" prop="source">
+          <el-input v-model="queryFormData.source" placeholder="请输入来源" clearable />
+        </el-form-item>
+        <el-form-item label="年份" prop="year">
+          <el-input v-model="queryFormData.year" placeholder="请输入年份" clearable />
+        </el-form-item>
+        <el-form-item label="卷" prop="volume">
+          <el-input v-model="queryFormData.volume" placeholder="请输入卷" clearable />
+        </el-form-item>
+        <el-form-item label="期" prop="issue">
+          <el-input v-model="queryFormData.issue" placeholder="请输入期" clearable />
+        </el-form-item>
+        <el-form-item label="页码" prop="pages">
+          <el-input v-model="queryFormData.pages" placeholder="请输入页码" clearable />
+        </el-form-item>
+        <el-form-item label="DOI标识" prop="doi">
+          <el-input v-model="queryFormData.doi" placeholder="请输入DOI标识" clearable />
+        </el-form-item>
+        <el-form-item label="PubMed ID" prop="pmid">
+          <el-input v-model="queryFormData.pmid" placeholder="请输入PubMed ID" clearable />
+        </el-form-item>
+        <el-form-item label="备注/描述" prop="description">
+          <el-input v-model="queryFormData.description" placeholder="请输入备注/描述" clearable />
+        </el-form-item>
+        <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
+          <DatePicker
+            v-model="createdDateRange"
+            @update:model-value="handleCreatedDateRangeChange"
+          />
+        </el-form-item>
+        <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
+          <DatePicker
+            v-model="updatedDateRange"
+            @update:model-value="handleUpdatedDateRangeChange"
+          />
+        </el-form-item>
         <el-form-item v-if="isExpand" prop="created_id" label="创建人">
           <UserTableSelect
             v-model="queryFormData.created_id"
@@ -36,7 +84,6 @@
             @clear-click="handleQuery"
           />
         </el-form-item>
-        {% elif column.column_name == "updated_id"%}
         <el-form-item v-if="isExpand" prop="updated_id" label="更新人">
           <UserTableSelect
             v-model="queryFormData.updated_id"
@@ -44,47 +91,10 @@
             @clear-click="handleQuery"
           />
         </el-form-item>
-        {% elif column.column_name == "created_time"%}
-        <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
-          <DatePicker
-            v-model="createdDateRange"
-            @update:model-value="handleCreatedDateRangeChange"
-          />
-        </el-form-item>
-        {% elif column.column_name == "updated_time"%}
-        <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
-          <DatePicker
-            v-model="updatedDateRange"
-            @update:model-value="handleUpdatedDateRangeChange"
-          />
-        </el-form-item>
-        {% elif column.html_type == "input" %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-input v-model="queryFormData.{{ column.column_name }}" placeholder="请输入{{ comment }}" clearable />
-        </el-form-item>
-        {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type != "" %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-select v-model="queryFormData.{{ column.column_name }}" placeholder="请选择{{ comment }}" style="width: 180px" clearable>
-            <el-option v-for="dict in dictStore.getDictArray('{{ dict_type }}')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
-          </el-select>
-        </el-form-item>
-        {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-select v-model="queryFormData.{{ column.column_name }}" placeholder="请选择{{ comment }}" clearable>
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        {% elif column.html_type == "datetime" and column.query_type != "BETWEEN" %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-date-picker v-model="queryFormData.{{ column.column_name }}" type="date" value-format="YYYY-MM-DD" clearable placeholder="请选择{{ comment }}" />
-        </el-form-item>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
         <!-- 查询、重置、展开/收起按钮 -->
         <el-form-item>
           <el-button
-            v-hasPerm="['{{ module_name }}:{{ business_name }}:query']"
+            v-hasPerm="['module_rsc:literature:query']"
             type="primary"
             icon="search"
             @click="handleQuery"
@@ -92,7 +102,7 @@
             查询
           </el-button>
           <el-button
-            v-hasPerm="['{{ module_name }}:{{ business_name }}:query']"
+            v-hasPerm="['module_rsc:literature:query']"
             icon="refresh"
             @click="handleResetQuery"
           >
@@ -101,7 +111,7 @@
           <!-- 展开/收起 -->
           <template v-if="isExpandable">
             <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
-              {{ '{{' }} isExpand ? "收起" : "展开" {{ '}}' }}
+              {{ isExpand ? "收起" : "展开" }}
               <el-icon>
                 <template v-if="isExpand">
                   <ArrowUp />
@@ -121,8 +131,8 @@
       <template #header>
         <div class="card-header">
           <span>
-            {{ function_name }}列表
-            <el-tooltip content="{{ function_name }}列表">
+            文献管理列表
+            <el-tooltip content="文献管理列表">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
           </span>
@@ -135,7 +145,7 @@
           <el-row :gutter="10">
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['{{ module_name }}:{{ business_name }}:create']"
+                v-hasPerm="['module_rsc:literature:create']"
                 type="success"
                 icon="plus"
                 @click="handleOpenDialog('create')"
@@ -145,7 +155,7 @@
             </el-col>
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['{{ module_name }}:{{ business_name }}:delete']"
+                v-hasPerm="['module_rsc:literature:delete']"
                 type="danger"
                 icon="delete"
                 :disabled="selectIds.length === 0"
@@ -155,7 +165,7 @@
               </el-button>
             </el-col>
             <el-col :span="1.5">
-              <el-dropdown v-hasPerm="['{{ module_name }}:{{ business_name }}:batch']" trigger="click">
+              <el-dropdown v-hasPerm="['module_rsc:literature:batch']" trigger="click">
                 <el-button type="default" :disabled="selectIds.length === 0" icon="ArrowDown">
                   更多
                 </el-button>
@@ -178,7 +188,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导入">
                 <el-button
-                  v-hasPerm="['{{ module_name }}:{{ business_name }}:import']"
+                  v-hasPerm="['module_rsc:literature:import']"
                   type="success"
                   icon="upload"
                   circle
@@ -189,7 +199,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导出">
                 <el-button
-                  v-hasPerm="['{{ module_name }}:{{ business_name }}:export']"
+                  v-hasPerm="['module_rsc:literature:export']"
                   type="warning"
                   icon="download"
                   circle
@@ -211,7 +221,7 @@
             <el-col :span="1.5">
               <el-tooltip content="刷新">
                 <el-button
-                  v-hasPerm="['{{ module_name }}:{{ business_name }}:query']"
+                  v-hasPerm="['module_rsc:literature:query']"
                   type="primary"
                   icon="refresh"
                   circle
@@ -263,47 +273,132 @@
           min-width="60"
         >
           <template #default="scope">
-            {{ '{{' }} (queryFormData.page_no - 1) * queryFormData.page_size + scope.$index + 1 {{ '}}' }}
+            {{ (queryFormData.page_no - 1) * queryFormData.page_size + scope.$index + 1 }}
           </template>
         </el-table-column>
-        {% for column in columns %}
-        {% set python_field = column.column_name %}
-        {% set column_comment = column.column_comment if column.column_comment else '' %}
-        {% set parentheseIndex = column_comment.find("（") %}
-        {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-        {% if column.is_list == 1 %}
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
-          label="{{ comment }}"
-          prop="{{ python_field }}"
+          v-if="tableColumns.find((col) => col.prop === 'status')?.show"
+          label="是否启用"
+          prop="status"
           min-width="140"
         />
-        {% if python_field in ['status', 'created_id', 'updated_id'] %}
+        <!-- <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'status')?.show"
+          label="是否启用"
+          prop="status"
+          min-width="140"
+        > 
+          <template #default="scope">
+            <el-tag :type="scope.row.status == '0' ? 'success' : 'info'">
+              {{ scope.row.status == "0" ? "启用" : "停用" }}
+            </el-tag>
+          </template>
+        </el-table-column> -->
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
-          label="{{ comment }}"
-          prop="{{ python_field }}"
+          v-if="tableColumns.find((col) => col.prop === 'type')?.show"
+          label="文章类型"
+          prop="type"
+          min-width="140"
+        />      
+
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'title')?.show"
+          label="标题"
+          prop="title"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'source')?.show"
+          label="来源"
+          prop="source"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'year')?.show"
+          label="年份"
+          prop="year"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'volume')?.show"
+          label="卷"
+          prop="volume"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'issue')?.show"
+          label="期"
+          prop="issue"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'pages')?.show"
+          label="页码"
+          prop="pages"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'doi')?.show"
+          label="DOI标识"
+          prop="doi"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'pmid')?.show"
+          label="PubMed ID"
+          prop="pmid"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'description')?.show"
+          label="备注/描述"
+          prop="description"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'created_time')?.show"
+          label="创建时间"
+          prop="created_time"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'updated_time')?.show"
+          label="更新时间"
+          prop="updated_time"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'created_id')?.show"
+          label="创建人ID"
+          prop="created_id"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'created_id')?.show"
+          label="创建人ID"
+          prop="created_id"
           min-width="140"
         >
-          {% if python_field == "status" %}
-          <!-- <template #default="scope">
-            <el-tag :type="scope.row.status == '0' ? 'success' : 'info'">
-              {{ '{{' }} scope.row.status == "0" ? "启用" : "停用" {{ '}}' }}
-            </el-tag>
-          </template> -->
-          {% elif python_field == "created_id" %}
           <template #default="scope">
-            <el-tag>{{ '{{' }} scope.row.created_by?.name {{ '}}' }}</el-tag>
+            <el-tag>{{ scope.row.created_by?.name }}</el-tag>
           </template>
-          {% elif python_field == "updated_id" %}
-          <template #default="scope">
-            <el-tag>{{ '{{' }} scope.row.updated_by?.name {{ '}}' }}</el-tag>
-          </template>
-          {% endif %}
         </el-table-column>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'updated_id')?.show"
+          label="更新人ID"
+          prop="updated_id"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'updated_id')?.show"
+          label="更新人ID"
+          prop="updated_id"
+          min-width="140"
+        >
+          <template #default="scope">
+            <el-tag>{{ scope.row.updated_by?.name }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'operation')?.show"
           fixed="right"
@@ -313,7 +408,7 @@
         >
           <template #default="scope">
             <el-button
-              v-hasPerm="['{{ module_name }}:{{ business_name }}:detail']"
+              v-hasPerm="['module_rsc:literature:detail']"
               type="info"
               size="small"
               link
@@ -323,7 +418,7 @@
               详情
             </el-button>
             <el-button
-              v-hasPerm="['{{ module_name }}:{{ business_name }}:update']"
+              v-hasPerm="['module_rsc:literature:update']"
               type="primary"
               size="small"
               link
@@ -333,7 +428,7 @@
               编辑
             </el-button>
             <el-button
-              v-hasPerm="['{{ module_name }}:{{ business_name }}:delete']"
+              v-hasPerm="['module_rsc:literature:delete']"
               type="danger"
               size="small"
               link
@@ -366,30 +461,59 @@
       <!-- 详情 -->
       <template v-if="dialogVisible.type === 'detail'">
         <el-descriptions :column="4" border>
-          {% for column in columns %}
-          {% set column_comment = column.column_comment if column.column_comment else '' %}
-          {% set parentheseIndex = column_comment.find("（") %}
-          {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-          {% if column.column_name == 'status' %}
+          <el-descriptions-item label="" :span="2">
+            {{ detailFormData.id }}
+          </el-descriptions-item>
+          <el-descriptions-item label="UUID全局唯一标识" :span="2">
+            {{ detailFormData.uuid }}
+          </el-descriptions-item>
           <el-descriptions-item label="状态" :span="2">
             <el-tag :type="detailFormData.status == '0' ? 'success' : 'danger'">
-              {{ '{{' }} detailFormData.status == "0" ? "启用" : "停用" {{ '}}' }}
+              {{ detailFormData.status == "0" ? "启用" : "停用" }}
             </el-tag>
           </el-descriptions-item>
-          {% elif column.column_name == 'created_id' %}
+          <el-descriptions-item label="文章类型" :span="2">
+            {{ detailFormData.type }}
+          </el-descriptions-item>
+          <el-descriptions-item label="标题" :span="2">
+            {{ detailFormData.title }}
+          </el-descriptions-item>
+          <el-descriptions-item label="来源" :span="2">
+            {{ detailFormData.source }}
+          </el-descriptions-item>
+          <el-descriptions-item label="年份" :span="2">
+            {{ detailFormData.year }}
+          </el-descriptions-item>
+          <el-descriptions-item label="卷" :span="2">
+            {{ detailFormData.volume }}
+          </el-descriptions-item>
+          <el-descriptions-item label="期" :span="2">
+            {{ detailFormData.issue }}
+          </el-descriptions-item>
+          <el-descriptions-item label="页码" :span="2">
+            {{ detailFormData.pages }}
+          </el-descriptions-item>
+          <el-descriptions-item label="DOI标识" :span="2">
+            {{ detailFormData.doi }}
+          </el-descriptions-item>
+          <el-descriptions-item label="PubMed ID" :span="2">
+            {{ detailFormData.pmid }}
+          </el-descriptions-item>
+          <el-descriptions-item label="备注/描述" :span="2">
+            {{ detailFormData.description }}
+          </el-descriptions-item>
+          <el-descriptions-item label="创建时间" :span="2">
+            {{ detailFormData.created_time }}
+          </el-descriptions-item>
+          <el-descriptions-item label="更新时间" :span="2">
+            {{ detailFormData.updated_time }}
+          </el-descriptions-item>
           <el-descriptions-item label="创建人" :span="2">
-            {{ '{{' }} detailFormData.created_by?.name {{ '}}' }}
+            {{ detailFormData.created_by?.name }}
           </el-descriptions-item>
-          {% elif column.column_name == 'updated_id' %}
           <el-descriptions-item label="更新人" :span="2">
-            {{ '{{' }} detailFormData.updated_by?.name {{ '}}' }}
+            {{ detailFormData.updated_by?.name }}
           </el-descriptions-item>
-          {% else %}
-          <el-descriptions-item label="{{ comment }}" :span="2">
-            {{ '{{' }} detailFormData.{{ column.column_name }} {{ '}}' }}
-          </el-descriptions-item>
-          {% endif %}
-          {% endfor %}
         </el-descriptions>
       </template>
 
@@ -403,22 +527,49 @@
           label-width="auto"
           label-position="right"
         >
-          {% for column in columns %}
-          {% if column.is_insert == 1 or column.is_edit == 1 %}
-          {% set dict_type = column.dict_type %}
-          {% set column_comment = column.column_comment if column.column_comment else '' %}
-          {% set parentheseIndex = column_comment.find("（") %}
-          {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-          {% set required = 'true' if column.is_nullable == '1' else 'false' %}
-          {% if column.column_name not in ['id', 'uuid', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
-          {% if column.column_name == "status" %}
-          <el-form-item label="状态" prop="status" :required="false">
+          <el-form-item label="状态" prop="status" :required="true">
             <el-radio-group v-model="formData.status">
               <el-radio value="0">启用</el-radio>
               <el-radio value="1">停用</el-radio>
             </el-radio-group>
           </el-form-item>  
-          {% elif column.column_name == "description" %}
+          <el-form-item label="文章类型" prop="type" :required="true">
+            <!-- <el-input v-model="formData.type" placeholder="请输入文章类型，如期刊论文、会议论文等" /> -->
+              <el-radio-group v-model="formData.type">
+              <el-radio value="期刊论文">期刊论文</el-radio>
+              <el-radio value="博士论文">博士论文</el-radio>
+              <el-radio value="硕士论文">硕士论文</el-radio>
+              <el-radio value="会议论文">会议论文</el-radio>
+              <el-radio value="书籍章节">书籍章节</el-radio>
+              <el-radio value="专利技术">专利技术</el-radio>
+              <el-radio value="其他文献">其他文献</el-radio>
+            </el-radio-group>
+
+          </el-form-item> 
+          <el-form-item label="标题" prop="title" :required="true">
+            <el-input v-model="formData.title" placeholder="请输入标题" />
+          </el-form-item>
+          <el-form-item label="来源" prop="source" :required="true">
+            <el-input v-model="formData.source" placeholder="请输入来源M期刊、书籍、学位授予单位、会议、专利库等" />
+          </el-form-item>
+          <el-form-item label="年份" prop="year" :required="true">
+            <el-input v-model="formData.year" placeholder="请输入年份" />
+          </el-form-item>
+          <el-form-item label="卷" prop="volume" :required="true">
+            <el-input v-model="formData.volume" placeholder="请输入卷，若无则空格" />
+          </el-form-item>
+          <el-form-item label="期" prop="issue" :required="true">
+            <el-input v-model="formData.issue" placeholder="请输入期，若无则空格" />
+          </el-form-item>
+          <el-form-item label="页码" prop="pages" :required="true">
+            <el-input v-model="formData.pages" placeholder="请输入页码，若无则空格" />
+          </el-form-item>
+          <el-form-item label="DOI标识" prop="doi" :required="true">
+            <el-input v-model="formData.doi" placeholder="请输入DOI标识，若无则空格" />
+          </el-form-item>
+          <el-form-item label="PubMed ID" prop="pmid" :required="true">
+            <el-input v-model="formData.pmid" placeholder="请输入PubMed ID，若无则空格" />
+          </el-form-item>
           <el-form-item label="描述" prop="description">
             <el-input
               v-model="formData.description"
@@ -426,49 +577,9 @@
               :maxlength="100"
               show-word-limit
               type="textarea"
-              placeholder="请输入描述"
+              placeholder="请输入描述，若无则空格"
             />
           </el-form-item>
-          {% elif column.html_type == "input" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-input v-model="formData.{{ column.column_name }}" placeholder="请输入{{ comment }}" />
-          </el-form-item>
-          {% elif column.html_type == "textarea" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-input v-model="formData.{{ column.column_name }}" type="textarea" placeholder="请输入{{ comment }}" rows="4" :maxlength="100" show-word-limit />
-          </el-form-item>
-          {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type != "" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-select v-model="formData.{{ column.column_name }}" placeholder="请选择{{ comment }}">
-              <el-option v-for="dict in dictStore.getDictArray('{{ dict_type }}')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
-            </el-select>
-          </el-form-item>
-          {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-select v-model="formData.{{ column.column_name }}" placeholder="请选择{{ comment }}">
-              <el-option label="请选择字典生成" value="" />
-            </el-select>
-          </el-form-item>
-          {% elif column.html_type == "date" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-date-picker v-model="formData.{{ column.column_name }}" type="date" value-format="YYYY-MM-DD" placeholder="请选择{{ comment }}" />
-          </el-form-item>
-          {% elif column.html_type == "datetime" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-date-picker v-model="formData.{{ column.column_name }}" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择{{ comment }}" />
-          </el-form-item>
-          {% elif column.html_type == "checkbox" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-            <el-checkbox v-model="formData.{{ column.column_name }}">{{ comment }}</el-checkbox>
-          </el-form-item>
-          {% elif column.html_type == "imageUpload" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-            <SingleImageUpload v-model="formData.{{ column.column_name }}" />
-          </el-form-item>
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endfor %}
         </el-form>
       </template>
 
@@ -504,7 +615,7 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: "{{ class_name }}",
+  name: "RscLiterature",
   inheritAttrs: false,
 });
 
@@ -518,11 +629,11 @@ import DatePicker from "@/components/DatePicker/index.vue";
 import type { IContentConfig } from "@/components/CURD/types";
 import ImportModal from "@/components/CURD/ImportModal.vue";
 import ExportModal from "@/components/CURD/ExportModal.vue";
-import {{ class_name }}API, {
-  {{ class_name }}PageQuery,
-  {{ class_name }}Table,
-  {{ class_name }}Form,
-} from "@/api/{{ module_name }}/{{ business_name }}";
+import RscLiteratureAPI, {
+  RscLiteraturePageQuery,
+  RscLiteratureTable,
+  RscLiteratureForm,
+} from "@/api/module_rsc/literature";
 
 const visible = ref(true);
 const isExpand = ref(false);
@@ -531,48 +642,63 @@ const queryFormRef = ref();
 const dataFormRef = ref();
 const total = ref(0);
 const selectIds = ref<number[]>([]);
-const selectionRows = ref<{{ class_name }}Table[]>([]);
+const selectionRows = ref<RscLiteratureTable[]>([]);
 const loading = ref(false);
 
 // 字典仓库与需要加载的字典类型
 const dictStore = useDictStore();
 const dictTypes: any = [
-  {% for column in columns %}
-  {% if column.dict_type %}
-  "{{ column.dict_type }}",
-  {% endif %}
-  {% endfor %}
 ];
 
 // 分页表单
-const pageTableData = ref<{{ class_name }}Table[]>([]);
+const pageTableData = ref<RscLiteratureTable[]>([]);
 
 // 表格列配置
 const tableColumns = ref([
   { prop: "selection", label: "选择框", show: true },
   { prop: "index", label: "序号", show: true },
-  {% for column in columns %}
-  {% if column.is_list == 1 %}
-  { prop: "{{ column.column_name }}", label: "{{ column.column_comment or column.column_name }}", show: true },
-  {% endif %}
-  {% endfor %}
+  { prop: "status", label: "是否启用", show: false },
+  { prop: "type", label: "文章类型", show: true },
+  { prop: "title", label: "标题", show: true },
+  { prop: "source", label: "来源", show: true },
+  { prop: "year", label: "年份", show: true },
+  { prop: "volume", label: "卷", show: true },
+  { prop: "issue", label: "期", show: true },
+  { prop: "pages", label: "页码", show: true },
+  { prop: "doi", label: "DOI标识", show: true },
+  { prop: "pmid", label: "PubMed ID", show: true },
+  { prop: "description", label: "备注/描述", show: true },
+  { prop: "created_time", label: "创建时间", show: true },
+  { prop: "updated_time", label: "更新时间", show: true },
+  { prop: "created_id", label: "创建人ID", show: true },
+  { prop: "updated_id", label: "更新人ID", show: true },
   { prop: "operation", label: "操作", show: true },
 ]);
 
 // 导出列（不含选择/序号/操作）
 const exportColumns = [
-  {% for column in columns %}
-  {% if column.is_list == 1 %}
-  { prop: "{{ column.column_name }}", label: "{{ column.column_comment or column.column_name }}" },
-  {% endif %}
-  {% endfor %}
+  { prop: "status", label: "是否启用" },
+  { prop: "type", label: "文章类型，如期刊论文、会议论文等" },
+  { prop: "title", label: "标题" },
+  { prop: "source", label: "来源" },
+  { prop: "year", label: "年份" },
+  { prop: "volume", label: "卷" },
+  { prop: "issue", label: "期" },
+  { prop: "pages", label: "页码" },
+  { prop: "doi", label: "DOI标识" },
+  { prop: "pmid", label: "PubMed ID" },
+  { prop: "description", label: "备注/描述" },
+  { prop: "created_time", label: "创建时间" },
+  { prop: "updated_time", label: "更新时间" },
+  { prop: "created_id", label: "创建人ID" },
+  { prop: "updated_id", label: "更新人ID" },
 ];
 
 // 导入/导出配置
 const curdContentConfig = {
-  permPrefix: "{{ module_name }}:{{ business_name }}",
+  permPrefix: "module_rsc:literature",
   cols: exportColumns as any,
-  importTemplate: () => {{ class_name }}API.downloadTemplate{{ class_name }}(),
+  importTemplate: () => RscLiteratureAPI.downloadTemplateRscLiterature(),
   exportsAction: async (params: any) => {
     const query: any = { ...params };
     query.status = "0";
@@ -580,7 +706,7 @@ const curdContentConfig = {
     query.page_size = 9999;
     const all: any[] = [];
     while (true) {
-      const res = await {{ class_name }}API.list{{ class_name }}(query);
+      const res = await RscLiteratureAPI.listRscLiterature(query);
       const items = res.data?.data?.items || [];
       const total = res.data?.data?.total || 0;
       all.push(...items);
@@ -592,7 +718,7 @@ const curdContentConfig = {
 } as unknown as IContentConfig;
 
 // 详情表单
-const detailFormData = ref<{{ class_name }}Table>({});
+const detailFormData = ref<RscLiteratureTable>({});
 // 日期范围临时变量
 const createdDateRange = ref<[Date, Date] | []>([]);
 // 更新时间范围临时变量
@@ -619,25 +745,40 @@ function handleUpdatedDateRangeChange(range: [Date, Date]) {
 }
 
 // 分页查询参数
-const queryFormData = reactive<{{ class_name }}PageQuery>({
+const queryFormData = reactive<RscLiteraturePageQuery>({
   page_no: 1,
   page_size: 10,
-  {% for column in columns %}
-  {% if column.is_query == 1 %}
-  {{ column.column_name }}: undefined,
-  {% endif %}
-  {% endfor %}
+  status: undefined,
+  type: undefined,
+  title: undefined,
+  source: undefined,
+  year: undefined,
+  volume: undefined,
+  issue: undefined,
+  pages: undefined,
+  doi: undefined,
+  pmid: undefined,
+  description: undefined,
+  created_time: undefined,
+  updated_time: undefined,
+  created_id: undefined,
+  updated_id: undefined,
 });
 
 // 编辑表单
-const formData = reactive<{{ class_name }}Form>({
-  {% for column in columns %}
-  {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% if column.column_name not in ['uuid', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
-  {{ column.column_name }}: undefined,
-  {% endif %}
-  {% endif %}
-  {% endfor %}
+const formData = reactive<RscLiteratureForm>({
+  id: undefined,
+  status: '0',
+  type: '期刊论文',
+  title: undefined,
+  source: undefined,
+  year: undefined,
+  volume: undefined,
+  issue: undefined,
+  pages: undefined,
+  doi: undefined,
+  pmid: undefined,
+  description: undefined,
 });
 
 // 弹窗状态
@@ -649,12 +790,23 @@ const dialogVisible = reactive({
 
 // 表单验证规则
 const rules = reactive({
-  {% for column in columns %}
-  {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% set required = 'true' if column.is_nullable == 1 else 'false' %}
-  {{ column.column_name }}: [{ required: {{ required }}, message: "请输入{{ column.column_comment or column.column_name }}", trigger: "blur" }],
-  {% endif %}
-  {% endfor %}
+  id: [{ required: false, message: "请输入id", trigger: "blur" }],
+  uuid: [{ required: false, message: "请输入UUID全局唯一标识", trigger: "blur" }],
+  status: [{ required: true, message: "请输入是否启用", trigger: "blur" }],
+  type: [{ required: true, message: "请输入文章类型，如期刊论文、会议论文等", trigger: "blur" }],
+  title: [{ required: true, message: "请输入标题", trigger: "blur" }],
+  source: [{ required: true, message: "请输入来源", trigger: "blur" }],
+  year: [{ required: true, message: "请输入年份", trigger: "blur" }],
+  volume: [{ required: true, message: "请输入卷", trigger: "blur" }],
+  issue: [{ required: true, message: "请输入期", trigger: "blur" }],
+  pages: [{ required: true, message: "请输入页码", trigger: "blur" }],
+  doi: [{ required: true, message: "请输入DOI标识", trigger: "blur" }],
+  pmid: [{ required: true, message: "请输入PubMed ID", trigger: "blur" }],
+  description: [{ required: true, message: "请输入备注/描述", trigger: "blur" }],
+  created_time: [{ required: false, message: "请输入创建时间", trigger: "blur" }],
+  updated_time: [{ required: false, message: "请输入更新时间", trigger: "blur" }],
+  created_id: [{ required: false, message: "请输入创建人ID", trigger: "blur" }],
+  updated_id: [{ required: false, message: "请输入更新人ID", trigger: "blur" }],
 });
 
 // 导入弹窗显示状态
@@ -682,7 +834,7 @@ async function handleRefresh() {
 async function loadingData() {
   loading.value = true;
   try {
-    const response = await {{ class_name }}API.list{{ class_name }}(queryFormData);
+    const response = await RscLiteratureAPI.listRscLiterature(queryFormData);
     pageTableData.value = response.data.data.items;
     total.value = response.data.data.total;
   } catch (error: any) {
@@ -716,14 +868,19 @@ async function handleResetQuery() {
 }
 
 // 定义初始表单数据常量
-const initialFormData: {{ class_name }}Form = {
-  {% for column in columns %}
-  {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% if column.column_name not in ['uuid', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
-  {{ column.column_name }}: undefined,
-  {% endif %}
-  {% endif %}
-  {% endfor %}
+const initialFormData: RscLiteratureForm = {
+  id: undefined,
+  status: '0',
+  type: '期刊论文',
+  title: undefined,
+  source: undefined,
+  year: undefined,
+  volume: undefined,
+  issue: undefined,
+  pages: undefined,
+  doi: undefined,
+  pmid: undefined,
+  description: undefined,
 };
 
 // 重置表单
@@ -752,7 +909,7 @@ async function handleCloseDialog() {
 async function handleOpenDialog(type: "create" | "update" | "detail", id?: number) {
   dialogVisible.type = type;
   if (id) {
-    const response = await {{ class_name }}API.detail{{ class_name }}(id);
+    const response = await RscLiteratureAPI.detailRscLiterature(id);
     if (type === "detail") {
       dialogVisible.title = "详情";
       Object.assign(detailFormData.value, response.data.data);
@@ -761,17 +918,32 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
       Object.assign(formData, response.data.data);
     }
   } else {
-    dialogVisible.title = "新增{{ class_name }}";
-    {% for column in columns %}
-    {% if column.is_insert == 1 or column.is_edit == 1 %}
-    {% if column.column_name not in ['uuid', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
-    formData.{{ column.column_name }} = undefined;
-    {% endif %}
-    {% endif %}
-    {% endfor %}
+    dialogVisible.title = "新增文献";
+    formData.id = undefined;
+    formData.status = '0';
+    formData.type = '期刊论文';
+    formData.title = undefined;
+    formData.source = undefined;
+    formData.year = undefined;
+    formData.volume = undefined;
+    formData.issue = undefined;
+    formData.pages = undefined;
+    formData.doi = undefined;
+    formData.pmid = undefined;
+    formData.description = undefined;
   }
   dialogVisible.visible = true;
 }
+
+const typeOptions = reactive([
+  { label: '期刊论文', value: '期刊论文' },
+  { label: '博士论文', value: '博士论文' },
+  { label: '硕士论文', value: '硕士论文' },
+  { label: '会议论文', value: '会议论文' },
+  { label: '书籍章节', value: '书籍章节' },
+  { label: '专利技术', value: '专利技术' },
+  { label: '其他文献', value: '其他文献' }
+]);
 
 // 提交表单（防抖）
 async function handleSubmit() {
@@ -783,7 +955,7 @@ async function handleSubmit() {
       const id = formData.id;
       if (id) {
         try {
-          await {{ class_name }}API.update{{ class_name }}(id, { id, ...formData });
+          await RscLiteratureAPI.updateRscLiterature(id, { id, ...formData });
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -795,7 +967,7 @@ async function handleSubmit() {
         }
       } else {
         try {
-          await {{ class_name }}API.create{{ class_name }}(formData);
+          await RscLiteratureAPI.createRscLiterature(formData);
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -820,7 +992,7 @@ async function handleDelete(ids: number[]) {
     .then(async () => {
       try {
         loading.value = true;
-        await {{ class_name }}API.delete{{ class_name }}(ids);
+        await RscLiteratureAPI.deleteRscLiterature(ids);
         handleResetQuery();
       } catch (error: any) {
         console.error(error);
@@ -844,7 +1016,7 @@ async function handleMoreClick(status: string) {
       .then(async () => {
         try {
           loading.value = true;
-          await {{ class_name }}API.batch{{ class_name }}({ ids: selectIds.value, status });
+          await RscLiteratureAPI.batchRscLiterature({ ids: selectIds.value, status });
           handleResetQuery();
         } catch (error: any) {
           console.error(error);
@@ -861,7 +1033,7 @@ async function handleMoreClick(status: string) {
 // 处理上传
 const handleUpload = async (formData: FormData) => {
   try {
-    const response = await {{ class_name }}API.import{{ class_name }}(formData);
+    const response = await RscLiteratureAPI.importRscLiterature(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
       ElMessage.success(`${response.data.msg}，${response.data.data}`);
       importDialogVisible.value = false;
