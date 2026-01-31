@@ -2,7 +2,8 @@
 <template>
   <div class="app-container">
     <!-- 搜索区域 -->
-    <div v-show="visible" class="search-container">
+    <transition name="search-fade">
+    <div v-show="visible" && !isSearchGlobalCollapsed" class="search-container">
       <el-form
         ref="queryFormRef"
         :model="queryFormData"
@@ -103,17 +104,37 @@
         </el-form-item>
       </el-form>
     </div>
+    </transition>
 
     <!-- 内容区域 -->
     <el-card class="data-table">
       <template #header>
         <div class="card-header">
-          <span>
+          <!-- 左侧：测试列表 + 提示 tooltip -->
+          <span class="card-header__title">
             {{ function_name }}列表
             <el-tooltip content="{{ function_name }}列表">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
           </span>
+          <!-- 右侧：全局折叠/展开触发栏 -->
+          <div class="search-collapse-trigger">
+            <el-link 
+              type="primary" 
+              underline="never" 
+              @click="isSearchGlobalCollapsed = !isSearchGlobalCollapsed"
+            >
+              {{ isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }}
+              <el-icon>
+                <template v-if="isSearchGlobalCollapsed">
+                  <ArrowDown />
+                </template>
+                <template v-else>
+                  <ArrowUp />
+                </template>
+              </el-icon>
+            </el-link>
+          </div>
         </div>
       </template>
 
@@ -558,6 +579,7 @@ const total = ref(0);
 const selectIds = ref<number[]>([]);
 const selectionRows = ref<{{ class_name }}Table[]>([]);
 const loading = ref(false);
+const isSearchGlobalCollapsed = ref(true);
 
 // 字典仓库与需要加载的字典类型
 const dictStore = useDictStore();
