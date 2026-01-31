@@ -15,7 +15,7 @@
         {% set dict_type = column.dict_type %}
         {% set column_comment = column.column_comment if column.column_comment else '' %}
         {% set parentheseIndex = column_comment.find("（") %}
-        {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}       
+        {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
         {% if column.column_name == "created_id"%}
         <el-form-item v-if="isExpand" prop="created_id" label="创建人">
           <UserTableSelect
@@ -142,6 +142,13 @@
                 批量删除
               </el-button>
             </el-col>
+            <el-col :span="1.5">
+              <el-dropdown v-hasPerm="['{{ module_name }}:{{ business_name }}:batch']" trigger="click">
+                <el-button type="default" :disabled="selectIds.length === 0" icon="ArrowDown">
+                  更多
+                </el-button>
+              </el-dropdown>
+            </el-col>
           </el-row>
         </div>
         <div class="data-table__toolbar--right">
@@ -243,12 +250,6 @@
         {% set parentheseIndex = column_comment.find("（") %}
         {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
         {% if column.is_list == 1 %}
-        <el-table-column
-          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
-          label="{{ comment }}"
-          prop="{{ python_field }}"
-          min-width="140"
-        />
         {% if python_field in ['created_id', 'updated_id'] %}
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
@@ -266,6 +267,52 @@
           </template>
           {% endif %}
         </el-table-column>
+        {% elif column.html_type ==  "fileUpload" %}
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
+          label="{{ comment }}"
+          prop="{{ python_field }}"
+          min-width="140"
+        >
+          <template #default="scope">
+            <a
+              v-if="scope.row && scope.row.{{ python_field }}"
+              :href="scope.row.{{ python_field }}"
+              target="_blank"  
+              :download="getFileName(scope.row.{{ python_field }})" 
+              class="file-link"
+              @click.stop  
+            >
+              {{ '{{' }} getFileName(scope.row.{{ python_field }}) {{ '}}' }} 
+            </a>
+          </template>
+        </el-table-column>
+        {% elif column.html_type == "imageUpload" %}
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
+          label="{{ comment }}"
+          prop="{{ python_field }}"
+          min-width="70"
+        >
+          <template #default="scope">                               
+            <el-image
+              v-if="scope.row.{{ python_field }}" 
+              :src="scope.row.{{ python_field }}"  
+              style="width: 50px; height: 50px;"  
+              fit="cover"
+              lazy
+              :preview-src-list="[scope.row.{{ python_field }}]"
+              :preview-teleported="true"
+            />
+          </template>
+        </el-table-column>
+        {% else %}
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
+          label="{{ comment }}"
+          prop="{{ python_field }}"
+          min-width="140"
+        />
         {% endif %}
         {% endif %}
         {% endfor %}
@@ -332,10 +379,10 @@
       <template v-if="dialogVisible.type === 'detail'">
         <el-descriptions :column="4" border>
           {% for column in columns %}
+          {% if column.column_name != 'editor' %}
           {% set column_comment = column.column_comment if column.column_comment else '' %}
           {% set parentheseIndex = column_comment.find("（") %}
           {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-          
           {% if column.column_name == 'created_id' %}
           <el-descriptions-item label="创建人" :span="2">
             {{ '{{' }} detailFormData.created_by?.name {{ '}}' }}
@@ -344,10 +391,36 @@
           <el-descriptions-item label="更新人" :span="2">
             {{ '{{' }} detailFormData.updated_by?.name {{ '}}' }}
           </el-descriptions-item>
+          {% elif column.html_type ==  "fileUpload" %}
+          <el-descriptions-item label="{{ comment }}" :span="2">
+            <a
+              v-if="detailFormData.{{ column.column_name }}"
+              :href="detailFormData.{{ column.column_name }}"
+              target="_blank"  
+              :download="getFileName(detailFormData.{{ column.column_name }})" 
+              class="file-link"
+              @click.stop  
+            >
+              {{ '{{' }} getFileName(detailFormData.{{ column.column_name }}) {{ '}}' }} 
+            </a>
+          </el-descriptions-item>
+          {% elif column.html_type == "imageUpload" %}
+          <el-descriptions-item label="{{ comment }}" :span="2">                            
+            <el-image
+              v-if="detailFormData.{{ column.column_name }}" 
+              :src="detailFormData.{{ column.column_name }}"  
+              style="width: 50px; height: 50px;"  
+              fit="cover"
+              lazy
+              :preview-src-list="[detailFormData.{{ column.column_name }}]"
+              :preview-teleported="true"
+            />
+          </el-descriptions-item>
           {% else %}
           <el-descriptions-item label="{{ comment }}" :span="2">
-            {{ '{{' }} detailFormData.{{ column.column_name }} {{ '}}' }}
-          </el-descriptions-item>
+              {{ '{{' }} detailFormData.{{ column.column_name }} {{ '}}' }}
+            </el-descriptions-item>
+          {% endif %}
           {% endif %}
           {% endfor %}
         </el-descriptions>
@@ -467,7 +540,9 @@ import { ResultEnum } from "@/enums/api/result.enum";
 import DatePicker from "@/components/DatePicker/index.vue";
 import type { IContentConfig } from "@/components/CURD/types";
 import ImportModal from "@/components/CURD/ImportModal.vue";
-import ExportModal from "@/components/CURD/ExportModal.vue";
+import SingleFileUpload from "@/components/Upload/SingleFileUpload.vue";
+import SingleImageUpload from "@/components/Upload/SingleImageUpload.vue";
+import WangEditor from "@/components/WangEditor/index.vue";
 import {{ class_name }}API, {
   {{ class_name }}PageQuery,
   {{ class_name }}Table,
@@ -668,7 +743,7 @@ async function handleResetQuery() {
 const initialFormData: {{ class_name }}Form = {
   {% for column in columns %}
   {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% if column.column_name not in ['created_time', 'updated_time', 'created_id', 'updated_id'] %}
+  {% if column.column_name not in ['uuid', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
   {{ column.column_name }}: undefined,
   {% endif %}
   {% endif %}
@@ -795,6 +870,16 @@ const handleUpload = async (formData: FormData) => {
   } catch (error: any) {
     console.error(error);
   }
+};
+
+const getFileName = (fullPath: string): string => {
+  if (!fullPath || typeof fullPath !== 'string') return '未知文件';
+  
+  // 匹配最后一个 "/" 后面的内容（兼容 http 路径和本地路径）
+  const fileName = fullPath.split('/').pop() || '未知文件';
+  
+  // 若路径包含 "\"（Windows 路径，可选兼容）
+  return fileName.split('\\').pop() || fileName;
 };
 
 onMounted(async () => {

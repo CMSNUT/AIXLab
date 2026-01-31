@@ -8,37 +8,37 @@ from app.core.base_schema import BaseSchema, UserBySchema
 
 class TeamTestCreateSchema(BaseModel):
     """
-    团队测试新增模型
+    测试新增模型
     """
     name: str = Field(default=..., description='课题名称')
-    content: str = Field(default=..., description='课题简介(富文本)')
-    file_path: str = Field(default=..., description='本地文件路径')
-    imgage_path: str = Field(default=..., description='本地图片路径')
+    content: str = Field(default=..., description='课题简介')
+    file_path: str = Field(default=..., description='本地文件')
+    image_path: str = Field(default=..., description='本地图片')
 
 
 class TeamTestUpdateSchema(TeamTestCreateSchema):
     """
-    团队测试更新模型
+    测试更新模型
     """
     ...
 
 
 class TeamTestOutSchema(TeamTestCreateSchema, BaseSchema, UserBySchema):
     """
-    团队测试响应模型
+    测试响应模型
     """
     model_config = ConfigDict(from_attributes=True)
 
 
 class TeamTestQueryParam:
-    """团队测试查询参数"""
+    """测试查询参数"""
 
     def __init__(
         self,
         name: str | None = Query(None, description="课题名称"),
-        content: str | None = Query(None, description="课题简介(富文本)"),
-        file_path: str | None = Query(None, description="本地文件路径"),
-        imgage_path: str | None = Query(None, description="本地图片路径"),
+        content: str | None = Query(None, description="课题简介"),
+        file_path: str | None = Query(None, description="本地文件"),
+        image_path: str | None = Query(None, description="本地图片"),
         created_id: int | None = Query(None, description="创建人ID"),
         updated_id: int | None = Query(None, description="更新人ID"),
         created_time: list[DateTimeStr] | None = Query(None, description="创建时间范围", examples=["2025-01-01 00:00:00", "2025-12-31 23:59:59"]),
@@ -51,7 +51,7 @@ class TeamTestQueryParam:
         # 精确查询字段
         self.file_path = file_path
         # 精确查询字段
-        self.imgage_path = imgage_path
+        self.image_path = image_path
         # 精确查询字段
         self.created_id = created_id
         # 精确查询字段

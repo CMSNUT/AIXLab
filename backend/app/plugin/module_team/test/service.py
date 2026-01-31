@@ -15,7 +15,7 @@ from .crud import TeamTestCRUD
 
 class TeamTestService:
     """
-    团队测试服务层
+    测试服务层
     """
     
     @classmethod
@@ -89,11 +89,11 @@ class TeamTestService:
         mapping_dict = {
             'id': '主键ID',
             'name': '课题名称',
-            'content': '课题简介(富文本)',
-            'file_path': '本地文件路径',
-            'imgage_path': '本地图片路径',
-            'created_time': '创建时间（自动填充）',
-            'updated_time': '更新时间（自动刷新）',
+            'content': '课题简介',
+            'file_path': '本地文件',
+            'image_path': '本地图片',
+            'created_time': '创建时间',
+            'updated_time': '更新时间',
             'created_id': '创建人ID',
             'updated_id': '更新人ID',
             'updated_id': '更新者ID',
@@ -116,11 +116,11 @@ class TeamTestService:
         header_dict = {
             '主键ID': 'id',
             '课题名称': 'name',
-            '课题简介(富文本)': 'content',
-            '本地文件路径': 'file_path',
-            '本地图片路径': 'imgage_path',
-            '创建时间（自动填充）': 'created_time',
-            '更新时间（自动刷新）': 'updated_time',
+            '课题简介': 'content',
+            '本地文件': 'file_path',
+            '本地图片': 'image_path',
+            '创建时间': 'created_time',
+            '更新时间': 'updated_time',
             '创建人ID': 'created_id',
             '更新人ID': 'updated_id',
         }
@@ -153,7 +153,7 @@ class TeamTestService:
                         "name": row['name'],
                         "content": row['content'],
                         "file_path": row['file_path'],
-                        "imgage_path": row['imgage_path'],
+                        "image_path": row['image_path'],
                         "created_time": row['created_time'],
                         "updated_time": row['updated_time'],
                         "created_id": row['created_id'],
@@ -185,11 +185,11 @@ class TeamTestService:
         header_list = [
             '主键ID',
             '课题名称',
-            '课题简介(富文本)',
-            '本地文件路径',
-            '本地图片路径',
-            '创建时间（自动填充）',
-            '更新时间（自动刷新）',
+            '课题简介',
+            '本地文件',
+            '本地图片',
+            '创建时间',
+            '更新时间',
             '创建人ID',
             '更新人ID',
         ]

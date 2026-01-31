@@ -107,7 +107,7 @@ export interface TeamTestTable extends BaseType {
   name?: string;
   content?: string;
   file_path?: string;
-  imgage_path?: string;
+  image_path?: string;
   created_id?: string;
   updated_id?: string;
   created_by?: CommonType;
@@ -119,5 +119,5 @@ export interface TeamTestForm extends BaseFormType {
   name?: string;
   content?: string;
   file_path?: string;
-  imgage_path?: string;
+  image_path?: string;
 }

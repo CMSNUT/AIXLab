@@ -1,95 +1,111 @@
-<!-- 团队测试 -->
+<!-- 测试 -->
 <template>
   <div class="app-container">
-    <!-- 搜索区域 -->
-    <div v-show="visible" class="search-container">
-      <el-form
-        ref="queryFormRef"
-        :model="queryFormData"
-        label-suffix=":"
-        :inline="true"
-        @submit.prevent="handleQuery"
-      >
-       
-        <el-form-item label="课题名称" prop="name">
-          <el-input v-model="queryFormData.name" placeholder="请输入课题名称" clearable />
-        </el-form-item>
-       
-       
-        <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
-          <DatePicker
-            v-model="createdDateRange"
-            @update:model-value="handleCreatedDateRangeChange"
-          />
-        </el-form-item>
-       
-        <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
-          <DatePicker
-            v-model="updatedDateRange"
-            @update:model-value="handleUpdatedDateRangeChange"
-          />
-        </el-form-item>
-       
-        <el-form-item v-if="isExpand" prop="created_id" label="创建人">
-          <UserTableSelect
-            v-model="queryFormData.created_id"
-            @confirm-click="handleConfirm"
-            @clear-click="handleQuery"
-          />
-        </el-form-item>
-       
-        <el-form-item v-if="isExpand" prop="updated_id" label="更新人">
-          <UserTableSelect
-            v-model="queryFormData.updated_id"
-            @confirm-click="handleConfirm"
-            @clear-click="handleQuery"
-          />
-        </el-form-item>
-        <!-- 查询、重置、展开/收起按钮 -->
-        <el-form-item>
-          <el-button
-            v-hasPerm="['module_team:test:query']"
-            type="primary"
-            icon="search"
-            @click="handleQuery"
-          >
-            查询
-          </el-button>
-          <el-button
-            v-hasPerm="['module_team:test:query']"
-            icon="refresh"
-            @click="handleResetQuery"
-          >
-            重置
-          </el-button>
-          <!-- 展开/收起 -->
-          <template v-if="isExpandable">
-            <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
-              {{ isExpand ? "收起" : "展开" }}
-              <el-icon>
-                <template v-if="isExpand">
-                  <ArrowUp />
-                </template>
-                <template v-else>
-                  <ArrowDown />
-                </template>
-              </el-icon>
-            </el-link>
-          </template>
-        </el-form-item>
-      </el-form>
-    </div>
+
+    <!-- 搜索区域：添加 transition 过渡动画 + 全局折叠变量控制 -->
+    <transition name="search-fade">
+      <div v-show="visible && !isSearchGlobalCollapsed" class="search-container">
+        <el-form
+          ref="queryFormRef"
+          :model="queryFormData"
+          label-suffix=":"
+          :inline="true"
+          @submit.prevent="handleQuery"
+        >
+          <el-form-item label="课题名称" prop="name">
+            <el-input v-model="queryFormData.name" placeholder="请输入课题名称" clearable />
+          </el-form-item>
+          <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
+            <DatePicker
+              v-model="createdDateRange"
+              @update:model-value="handleCreatedDateRangeChange"
+            />
+          </el-form-item>
+          <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
+            <DatePicker
+              v-model="updatedDateRange"
+              @update:model-value="handleUpdatedDateRangeChange"
+            />
+          </el-form-item>
+          <el-form-item v-if="isExpand" prop="created_id" label="创建人">
+            <UserTableSelect
+              v-model="queryFormData.created_id"
+              @confirm-click="handleConfirm"
+              @clear-click="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item v-if="isExpand" prop="updated_id" label="更新人">
+            <UserTableSelect
+              v-model="queryFormData.updated_id"
+              @confirm-click="handleConfirm"
+              @clear-click="handleQuery"
+            />
+          </el-form-item>
+          <!-- 查询、重置、展开/收起按钮 -->
+          <el-form-item>
+            <el-button
+              v-hasPerm="['module_team:test:query']"
+              type="primary"
+              icon="search"
+              @click="handleQuery"
+            >
+              查询
+            </el-button>
+            <el-button
+              v-hasPerm="['module_team:test:query']"
+              icon="refresh"
+              @click="handleResetQuery"
+            >
+              重置
+            </el-button>
+            <!-- 展开/收起（内部表单项，保留原有逻辑） -->
+            <template v-if="isExpandable">
+              <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
+                {{ isExpand ? "收起" : "展开" }}
+                <el-icon>
+                  <template v-if="isExpand">
+                    <ArrowUp />
+                  </template>
+                  <template v-else>
+                    <ArrowDown />
+                  </template>
+                </el-icon>
+              </el-link>
+            </template>
+          </el-form-item>
+        </el-form>
+      </div>
+    </transition>
 
     <!-- 内容区域 -->
     <el-card class="data-table">
       <template #header>
         <div class="card-header">
-          <span>
-            团队测试列表
-            <el-tooltip content="团队测试列表">
+          <!-- 左侧：测试列表 + 提示 tooltip -->
+          <span class="card-header__title">
+            测试列表
+            <el-tooltip content="测试列表">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
           </span>
+          <!-- 右侧：全局折叠/展开触发栏 -->
+          <div class="search-collapse-trigger">
+            <el-link 
+              type="primary" 
+              underline="never" 
+              @click="isSearchGlobalCollapsed = !isSearchGlobalCollapsed"
+            >
+              {{ isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }}
+              <el-icon>
+                <template v-if="isSearchGlobalCollapsed">
+                  <ArrowDown />
+                </template>
+                <template v-else>
+                  <ArrowUp />
+                </template>
+              </el-icon>
+            </el-link>
+          </div>
         </div>
       </template>
 
@@ -117,6 +133,13 @@
               >
                 批量删除
               </el-button>
+            </el-col>
+            <el-col :span="1.5">
+              <el-dropdown v-hasPerm="['module_team:test:batch']" trigger="click">
+                <el-button type="default" :disabled="selectIds.length === 0" icon="ArrowDown">
+                  更多
+                </el-button>
+              </el-dropdown>
             </el-col>
           </el-row>
         </div>
@@ -221,44 +244,39 @@
         />
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'file_path')?.show"
-          label="本地文件路径"
+          label="本地文件"
           prop="file_path"
           min-width="140"
         >
           <template #default="scope">
-            <!-- 有文件路径才显示超链接，否则显示占位文本 -->
             <a
-              v-if="scope.row.file_path"
+              v-if="scope.row && scope.row.file_path"
               :href="scope.row.file_path"
               target="_blank"  
               :download="getFileName(scope.row.file_path)" 
               class="file-link"
               @click.stop  
             >
-              {{ getFileName(scope.row.file_path) }}  
+              {{ getFileName(scope.row.file_path) }} 
             </a>
-            <span v-else class="no-file-tip">无文件</span>
           </template>
         </el-table-column>
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === 'imgage_path')?.show"
-          label="本地图片路径"
-          prop="imgage_path"
-          min-width="140"
+          v-if="tableColumns.find((col) => col.prop === 'image_path')?.show"
+          label="本地图片"
+          prop="image_path"
+          min-width="70"
         >
-          <template #default="scope">
-            <!-- scope.row.image_path 就是当前行的图片路径 -->
+          <template #default="scope">                               
             <el-image
-              v-if="scope.row.imgage_path" 
-              :src="scope.row.imgage_path"  
+              v-if="scope.row.image_path" 
+              :src="scope.row.image_path"  
               style="width: 50px; height: 50px;"  
               fit="cover"
               lazy
-              :preview-src-list="[scope.row.imgage_path]"
+              :preview-src-list="[scope.row.image_path]"
               :preview-teleported="true"
             />
-            <!-- 无图片时显示占位文本 -->
-            <!-- <span v-else class="no-image-tip">无图片</span> -->
           </template>
         </el-table-column>
         <el-table-column
@@ -278,23 +296,11 @@
           label="创建人ID"
           prop="created_id"
           min-width="140"
-        />
-        <el-table-column
-          v-if="tableColumns.find((col) => col.prop === 'created_id')?.show"
-          label="创建人ID"
-          prop="created_id"
-          min-width="140"
         >
           <template #default="scope">
             <el-tag>{{ scope.row.created_by?.name }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column
-          v-if="tableColumns.find((col) => col.prop === 'updated_id')?.show"
-          label="更新人ID"
-          prop="updated_id"
-          min-width="140"
-        />
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'updated_id')?.show"
           label="更新人ID"
@@ -367,39 +373,47 @@
       <!-- 详情 -->
       <template v-if="dialogVisible.type === 'detail'">
         <el-descriptions :column="4" border>
-          
-          <el-descriptions-item label="主键ID" :span="2">
+        <el-descriptions-item label="主键ID" :span="2">
             {{ detailFormData.id }}
           </el-descriptions-item>
-          
-          <el-descriptions-item label="课题名称" :span="2">
+        <el-descriptions-item label="课题名称" :span="2">
             {{ detailFormData.name }}
           </el-descriptions-item>
-          
-          <el-descriptions-item label="课题简介(富文本)" :span="2">
+        <el-descriptions-item label="课题简介" :span="2">
             {{ detailFormData.content }}
-          </el-descriptions-item>
-          
-          <el-descriptions-item label="本地文件路径" :span="2">
-            {{ detailFormData.file_path }}
-          </el-descriptions-item>
-          
-          <el-descriptions-item label="本地图片路径" :span="2">
-            {{ detailFormData.imgage_path }}
-          </el-descriptions-item>
-          
-          <el-descriptions-item label="创建时间" :span="2">
+        </el-descriptions-item>
+        <el-descriptions-item label="本地文件" :span="2">
+            <a
+              v-if="detailFormData.file_path"
+              :href="detailFormData.file_path"
+              target="_blank"  
+              :download="getFileName(detailFormData.file_path)" 
+              class="file-link"
+              @click.stop  
+            >
+              {{ getFileName(detailFormData.file_path) }} 
+            </a>
+        </el-descriptions-item>
+        <el-descriptions-item label="本地图片" :span="2">          
+          <el-image
+            v-if="detailFormData.image_path" 
+            :src="detailFormData.image_path"  
+            style="width: 50px; height: 50px;"  
+            fit="cover"
+            lazy
+            :preview-src-list="[detailFormData.image_path]"
+            :preview-teleported="true"
+          />
+        </el-descriptions-item>
+        <el-descriptions-item label="创建时间" :span="2">
             {{ detailFormData.created_time }}
           </el-descriptions-item>
-          
-          <el-descriptions-item label="更新时间" :span="2">
+        <el-descriptions-item label="更新时间" :span="2">
             {{ detailFormData.updated_time }}
           </el-descriptions-item>
-          
           <el-descriptions-item label="创建人" :span="2">
             {{ detailFormData.created_by?.name }}
           </el-descriptions-item>
-          
           <el-descriptions-item label="更新人" :span="2">
             {{ detailFormData.updated_by?.name }}
           </el-descriptions-item>
@@ -419,19 +433,14 @@
           <el-form-item label="课题名称" prop="name" :required="false">
             <el-input v-model="formData.name" placeholder="请输入课题名称" />
           </el-form-item>
-          <el-form-item label="课题简介(富文本)" prop="content">
+          <el-form-item label="课题简介" prop="content">
             <WangEditor v-model="formData.content" />
           </el-form-item>
-          <el-form-item label="本地文件路径" prop="file_path">
-            <!-- <SingleFileUpload v-model="formData.file_path" /> -->
-            <SingleFileUpload
-              v-model="formData.file_path"
-              :maxFileSize="200"
-              showTip
-            />
+          <el-form-item label="本地文件" prop="file_path">
+            <SingleFileUpload v-model="formData.file_path" />
           </el-form-item>
-          <el-form-item label="本地图片路径" prop="imgage_path">
-            <SingleImageUpload v-model="formData.imgage_path" />
+          <el-form-item label="本地图片" prop="image_path">
+            <SingleImageUpload v-model="formData.image_path" />
           </el-form-item>
         </el-form>
       </template>
@@ -481,7 +490,9 @@ import { ResultEnum } from "@/enums/api/result.enum";
 import DatePicker from "@/components/DatePicker/index.vue";
 import type { IContentConfig } from "@/components/CURD/types";
 import ImportModal from "@/components/CURD/ImportModal.vue";
-import ExportModal from "@/components/CURD/ExportModal.vue";
+import SingleFileUpload from "@/components/Upload/SingleFileUpload.vue";
+import SingleImageUpload from "@/components/Upload/SingleImageUpload.vue";
+import WangEditor from "@/components/WangEditor/index.vue";
 import TeamTestAPI, {
   TeamTestPageQuery,
   TeamTestTable,
@@ -497,6 +508,7 @@ const total = ref(0);
 const selectIds = ref<number[]>([]);
 const selectionRows = ref<TeamTestTable[]>([]);
 const loading = ref(false);
+const isSearchGlobalCollapsed = ref(true);
 
 // 字典仓库与需要加载的字典类型
 const dictStore = useDictStore();
@@ -511,10 +523,10 @@ const tableColumns = ref([
   { prop: "selection", label: "选择框", show: true },
   { prop: "index", label: "序号", show: true },
   { prop: "name", label: "课题名称", show: true },
-  { prop: "file_path", label: "本地文件路径", show: true },
-  { prop: "imgage_path", label: "本地图片路径", show: true },
-  { prop: "created_time", label: "创建时间（自动填充）", show: true },
-  { prop: "updated_time", label: "更新时间（自动刷新）", show: true },
+  { prop: "file_path", label: "本地文件", show: true },
+  { prop: "image_path", label: "本地图片", show: true },
+  { prop: "created_time", label: "创建时间", show: true },
+  { prop: "updated_time", label: "更新时间", show: true },
   { prop: "created_id", label: "创建人ID", show: true },
   { prop: "updated_id", label: "更新人ID", show: true },
   { prop: "operation", label: "操作", show: true },
@@ -523,10 +535,10 @@ const tableColumns = ref([
 // 导出列（不含选择/序号/操作）
 const exportColumns = [
   { prop: "name", label: "课题名称" },
-  { prop: "file_path", label: "本地文件路径" },
-  { prop: "imgage_path", label: "本地图片路径" },
-  { prop: "created_time", label: "创建时间（自动填充）" },
-  { prop: "updated_time", label: "更新时间（自动刷新）" },
+  { prop: "file_path", label: "本地文件" },
+  { prop: "image_path", label: "本地图片" },
+  { prop: "created_time", label: "创建时间" },
+  { prop: "updated_time", label: "更新时间" },
   { prop: "created_id", label: "创建人ID" },
   { prop: "updated_id", label: "更新人ID" },
 ];
@@ -598,7 +610,7 @@ const formData = reactive<TeamTestForm>({
   name: undefined,
   content: undefined,
   file_path: undefined,
-  imgage_path: undefined,
+  image_path: undefined,
 });
 
 // 弹窗状态
@@ -612,11 +624,11 @@ const dialogVisible = reactive({
 const rules = reactive({
   id: [{ required: false, message: "请输入主键ID", trigger: "blur" }],
   name: [{ required: false, message: "请输入课题名称", trigger: "blur" }],
-  content: [{ required: true, message: "请输入课题简介(富文本)", trigger: "blur" }],
-  file_path: [{ required: true, message: "请输入本地文件路径", trigger: "blur" }],
-  imgage_path: [{ required: true, message: "请输入本地图片路径", trigger: "blur" }],
-  created_time: [{ required: false, message: "请输入创建时间（自动填充）", trigger: "blur" }],
-  updated_time: [{ required: false, message: "请输入更新时间（自动刷新）", trigger: "blur" }],
+  content: [{ required: true, message: "请输入课题简介", trigger: "blur" }],
+  file_path: [{ required: true, message: "请输入本地文件", trigger: "blur" }],
+  image_path: [{ required: true, message: "请输入本地图片", trigger: "blur" }],
+  created_time: [{ required: false, message: "请输入创建时间", trigger: "blur" }],
+  updated_time: [{ required: false, message: "请输入更新时间", trigger: "blur" }],
   created_id: [{ required: true, message: "请输入创建人ID", trigger: "blur" }],
   updated_id: [{ required: true, message: "请输入更新人ID", trigger: "blur" }],
 });
@@ -685,7 +697,7 @@ const initialFormData: TeamTestForm = {
   name: undefined,
   content: undefined,
   file_path: undefined,
-  imgage_path: undefined,
+  image_path: undefined,
 };
 
 // 重置表单
@@ -728,7 +740,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
     formData.name = undefined;
     formData.content = undefined;
     formData.file_path = undefined;
-    formData.imgage_path = undefined;
+    formData.image_path = undefined;
   }
   dialogVisible.visible = true;
 }
@@ -808,11 +820,6 @@ const handleUpload = async (formData: FormData) => {
   }
 };
 
-/**
- * 从完整文件路径中提取文件名
- * @param fullPath 完整文件路径（如 http://xxx.com/uploads/test.pdf 或 /uploads/doc/xxx.docx）
- * @returns 提取后的文件名（如 test.pdf）
- */
 const getFileName = (fullPath: string): string => {
   if (!fullPath || typeof fullPath !== 'string') return '未知文件';
   
@@ -832,5 +839,4 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

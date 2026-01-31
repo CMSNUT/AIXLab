@@ -158,7 +158,7 @@ class Settings(BaseSettings):
         ".tiff",
         ".webp",
         ".eps",
-        ".csv"
+        ".csv",
         ".xls",
         ".xlsx",
         ".txt",

@@ -9,7 +9,7 @@ from .schema import TeamTestCreateSchema, TeamTestUpdateSchema, TeamTestOutSchem
 
 
 class TeamTestCRUD(CRUDBase[TeamTestModel, TeamTestCreateSchema, TeamTestUpdateSchema]):
-    """团队测试数据层"""
+    """测试数据层"""
 
     def __init__(self, auth: AuthSchema) -> None:
         """
