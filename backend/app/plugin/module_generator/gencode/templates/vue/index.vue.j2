@@ -124,7 +124,7 @@
               underline="never" 
               @click="isSearchGlobalCollapsed = !isSearchGlobalCollapsed"
             >
-              {{ isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }}
+              {{ '{{' }}  isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" {{ '}}' }} 
               <el-icon>
                 <template v-if="isSearchGlobalCollapsed">
                   <ArrowDown />
