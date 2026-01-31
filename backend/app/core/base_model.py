@@ -111,6 +111,61 @@ class ModelMixin(MappedBase):
         index=True,
     )
 
+# 修改
+class ModelMixinModify(MappedBase):
+    """
+    模型混入类 - 提供通用字段和功能
+
+    基础模型混合类 Mixin: 一种面向对象编程概念, 使结构变得更加清晰
+
+    数据隔离设计原则：
+    ==================
+    数据权限 (created_id/updated_id):
+        - 配合角色的data_scope字段实现精细化权限控制
+        - 1:仅本人
+        - 2:本部门
+        - 3:本部门及以下
+        - 4:全部数据
+        - 5:自定义
+
+    SQLAlchemy加载策略说明:
+    - select(默认): 延迟加载,访问时单独查询
+    - joined: 使用LEFT JOIN预加载
+    - selectin: 使用IN查询批量预加载(推荐用于一对多)
+    - subquery: 使用子查询预加载
+    - raise/raise_on_sql: 禁止加载
+    - noload: 不加载,返回None
+    - immediate: 立即加载
+    - write_only: 只写不读
+    - dynamic: 返回查询对象,支持进一步过滤
+    """
+
+    __abstract__: bool = True
+
+    # 基础字段
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True,
+        comment="主键ID",
+        index=True,
+    )
+    created_time: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.now,
+        nullable=False,
+        comment="创建时间",
+        index=True,
+    )
+    updated_time: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.now,
+        onupdate=datetime.now,
+        nullable=False,
+        comment="更新时间",
+        index=True,
+    )
+
 
 class UserMixin(MappedBase):
     """

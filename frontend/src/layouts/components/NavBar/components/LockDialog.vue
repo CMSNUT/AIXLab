@@ -1,5 +1,5 @@
 <template>
-  <el-dialog
+  <el-drawer
     v-model="dialogVisible"
     width="500px"
     max-height="170px"
@@ -27,7 +27,7 @@
     <template #footer>
       <el-button type="primary" @click="handleLock">{{ t("navbar.lock") }}</el-button>
     </template>
-  </el-dialog>
+  </el-drawer>
 </template>
 
 <script setup lang="ts">

@@ -75,6 +75,31 @@ class BaseQueryParam:
         if updated_time and len(updated_time) == 2:
             self.updated_time = ("between", (updated_time[0], updated_time[1]))
 
+# 修改
+class BaseQueryParamModify:
+    """公共查询参数"""
+
+    def __init__(
+        self,
+        created_time: list[DateTimeStr] | None = Query(
+            None,
+            description="创建时间范围",
+            examples=["2025-01-01 00:00:00", "2025-12-31 23:59:59"],
+        ),
+        updated_time: list[DateTimeStr] | None = Query(
+            None,
+            description="更新时间范围",
+            examples=["2025-01-01 00:00:00", "2025-12-31 23:59:59"],
+        ),
+        *args,
+        **kwargs,
+    ) -> None:
+        # 时间范围查询
+        if created_time and len(created_time) == 2:
+            self.created_time = ("between", (created_time[0], created_time[1]))
+        if updated_time and len(updated_time) == 2:
+            self.updated_time = ("between", (updated_time[0], updated_time[1]))
+
 
 class CommonQueryParam:
     """根据用户查询参数"""

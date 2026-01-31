@@ -55,7 +55,7 @@
     </template>
   </el-dropdown>
 
-  <el-dialog
+  <el-drawer
     v-model="noticeDialogVisible"
     :title="noticeDetail?.notice_title ?? '通知详情'"
     width="800px"
@@ -81,7 +81,7 @@
         <div v-html="noticeDetail.notice_content"></div>
       </div>
     </div>
-  </el-dialog>
+  </el-drawer>
 </template>
 
 <script setup lang="ts">

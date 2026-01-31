@@ -24,6 +24,16 @@ class BaseSchema(BaseModel):
     created_time: DateTimeStr | None = Field(default=None, description="创建时间")
     updated_time: DateTimeStr | None = Field(default=None, description="更新时间")
 
+# 修改
+class BaseSchemaModify(BaseModel):
+    """通用输出模型，包含基础字段和审计字段"""
+
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int | None = Field(default=None, description="主键ID")
+    created_time: DateTimeStr | None = Field(default=None, description="创建时间")
+    updated_time: DateTimeStr | None = Field(default=None, description="更新时间")
+
 
 class UserBySchema(BaseModel):
     """通用创建模型，包含基础字段和审计字段"""

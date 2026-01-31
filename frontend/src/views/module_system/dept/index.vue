@@ -288,7 +288,7 @@
     </el-card>
 
     <!-- 弹窗区域 -->
-    <el-dialog
+    <el-drawer
       v-model="dialogVisible.visible"
       :title="dialogVisible.title"
       @close="handleCloseDialog"
@@ -387,7 +387,7 @@
           <el-button @click="handleCloseDialog">取消</el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

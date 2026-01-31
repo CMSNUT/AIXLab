@@ -266,7 +266,7 @@
     </el-card>
 
     <!-- 上传对话框 -->
-    <el-dialog
+    <el-drawer
       v-model="uploadDialogVisible"
       title="上传文件"
       width="500px"
@@ -302,10 +302,10 @@
           确定上传
         </el-button>
       </template>
-    </el-dialog>
+    </el-drawer>
 
     <!-- 新建文件夹对话框 -->
-    <el-dialog v-model="createDirDialogVisible" title="新建文件夹" width="400px">
+    <el-drawer v-model="createDirDialogVisible" title="新建文件夹" width="400px">
       <el-form :model="createDirForm" label-width="80px">
         <el-form-item label="文件夹名" required>
           <el-input
@@ -325,10 +325,10 @@
           确定
         </el-button>
       </template>
-    </el-dialog>
+    </el-drawer>
 
     <!-- 重命名对话框 -->
-    <el-dialog v-model="renameDialogVisible" title="重命名" width="400px">
+    <el-drawer v-model="renameDialogVisible" title="重命名" width="400px">
       <el-form :model="renameForm" label-width="80px">
         <el-form-item label="新名称" required>
           <el-input
@@ -348,7 +348,7 @@
           确定
         </el-button>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

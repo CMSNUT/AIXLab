@@ -1,7 +1,7 @@
 <template>
   <div @click="openSearchModal">
     <div class="i-svg:search" />
-    <el-dialog
+    <el-drawer
       v-model="isModalVisible"
       width="30%"
       :append-to-body="true"
@@ -119,7 +119,7 @@
           </div>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -530,7 +530,7 @@ function loadRoutes(routes: RouteRecordRaw[], parentPath = "") {
 }
 
 // 适配Element Plus对话框
-:deep(.el-dialog__footer) {
+:deep(.el-drawer__footer) {
   box-sizing: border-box;
   padding-top: 10px;
   text-align: right;

@@ -233,7 +233,7 @@
     </el-card>
 
     <!-- 弹窗区域 -->
-    <el-dialog
+    <el-drawer
       v-model="dialogVisible.visible"
       :title="dialogVisible.title"
       @close="handleCloseDialog"
@@ -377,7 +377,7 @@
           <el-button v-else type="primary" @click="handleCloseDialog">确定</el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </el-drawer>
   <ExportModal
     v-model="exportsDialogVisible"

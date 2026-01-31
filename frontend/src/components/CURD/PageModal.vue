@@ -66,7 +66,7 @@
     </template>
     <!-- dialog -->
     <template v-else>
-      <el-dialog
+      <el-drawer
         v-model="modalVisible"
         v-bind="{ destroyOnClose: true, alignCenter: true, ...modalConfig.dialog }"
         @close="handleClose"
@@ -127,7 +127,7 @@
           <el-button v-if="!formDisable" type="primary" @click="handleSubmit">确 定</el-button>
           <el-button @click="handleClose">{{ !formDisable ? "取 消" : "关闭" }}</el-button>
         </template>
-      </el-dialog>
+      </el-drawer>
     </template>
   </div>
 </template>

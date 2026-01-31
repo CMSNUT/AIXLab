@@ -346,7 +346,7 @@
     </el-card>
 
     <!-- 角色表单弹窗 -->
-    <el-dialog
+    <el-drawer
       v-model="dialogVisible.visible"
       :title="dialogVisible.title"
       @close="handleCloseDialog"
@@ -441,7 +441,7 @@
           <el-button type="primary" @click="handleSubmit">确 定</el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
 
     <PermissonDrawer
       v-if="drawerVisible"

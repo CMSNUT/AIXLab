@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导出弹窗 -->
-    <el-dialog
+    <el-drawer
       v-model="exportsModalVisible"
       :align-center="true"
       title="导出数据"
@@ -14,7 +14,7 @@
         <!-- 表单 -->
         <el-form
           ref="exportsFormRef"
-          style="padding-right: var(--el-dialog-padding-primary)"
+          style="padding-right: var(--el-drawer-padding-primary)"
           :model="exportsFormData"
           :rules="exportsFormRules"
         >
@@ -54,12 +54,12 @@
       </el-scrollbar>
       <!-- 弹窗底部操作按钮 -->
       <template #footer>
-        <div style="padding-right: var(--el-dialog-padding-primary)">
+        <div style="padding-right: var(--el-drawer-padding-primary)">
           <el-button type="primary" @click="handleExportsSubmit">确 定</el-button>
           <el-button @click="handleCloseExportsModal">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

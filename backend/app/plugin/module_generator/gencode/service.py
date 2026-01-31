@@ -454,7 +454,7 @@ class GenTableService:
                     MenuCreateSchema(
                         name=gen_table_schema.package_name,
                         type=1,
-                        order=9999,
+                        order=1,
                         permission=None,
                         icon="menu",
                         route_name=CamelCaseUtil.snake_to_camel(gen_table_schema.package_name),
@@ -485,7 +485,7 @@ class GenTableService:
             MenuCreateSchema(
                 name=gen_table_schema.function_name,
                 type=2,
-                order=9999,
+                order=1,
                 permission=f"{permission_prefix}:query",
                 icon="menu",
                 route_name=CamelCaseUtil.snake_to_camel(gen_table_schema.business_name),

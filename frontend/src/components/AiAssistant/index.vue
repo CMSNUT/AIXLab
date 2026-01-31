@@ -26,7 +26,7 @@
     </div>
 
     <!-- AI 对话框 -->
-    <el-dialog
+    <el-drawer
       v-model="dialogVisible"
       title="AI 智能助手"
       width="600px"
@@ -114,7 +114,7 @@
           </el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

@@ -1,18 +1,18 @@
 $border: 1px solid var(--el-border-color-light);
 
-/* el-dialog */
-.el-dialog {
-  .el-dialog__header {
+/* el-drawer */
+.el-drawer {
+  .el-drawer__header {
     padding: 15px 20px;
     margin: 0;
     border-bottom: $border;
   }
 
-  .el-dialog__body {
+  .el-drawer__body {
     padding: 20px;
   }
 
-  .el-dialog__footer {
+  .el-drawer__footer {
     padding: 15px;
     border-top: $border;
   }

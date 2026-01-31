@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导入弹窗 -->
-    <el-dialog
+    <el-drawer
       v-model="importModalVisible"
       :align-center="true"
       :title="props.title"
@@ -14,7 +14,7 @@
         <!-- 表单 -->
         <el-form
           ref="importFormRef"
-          style="padding-right: var(--el-dialog-padding-primary)"
+          style="padding-right: var(--el-drawer-padding-primary)"
           :model="importFormData"
           :rules="importFormRules"
         >
@@ -57,7 +57,7 @@
         </el-form>
       </el-scrollbar>
       <template #footer>
-        <div style="padding-right: var(--el-dialog-padding-primary)">
+        <div style="padding-right: var(--el-drawer-padding-primary)">
           <el-button @click="handleClose">{{ props.cancelButtonText || "取 消" }}</el-button>
           <el-button
             type="primary"
@@ -69,7 +69,7 @@
           </el-button>
         </div>
       </template>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

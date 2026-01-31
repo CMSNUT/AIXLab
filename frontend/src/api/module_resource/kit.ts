@@ -1,0 +1,129 @@
+import request from "@/utils/request";
+
+const API_PATH = "/resource/kit";
+
+const ResourceKitAPI = {
+  // 列表查询
+  listResourceKit(query: ResourceKitPageQuery) {
+    return request<ApiResponse<PageResult<ResourceKitTable[]>>>({
+      url: `${API_PATH}/list`,
+      method: "get",
+      params: query,
+    });
+  },
+
+  // 详情查询
+  detailResourceKit(id: number) {
+    return request<ApiResponse<ResourceKitTable>>({
+      url: `${API_PATH}/detail/${id}`,
+      method: "get",
+    });
+  },
+
+  // 新增
+  createResourceKit(body: ResourceKitForm) {
+    return request<ApiResponse>({
+      url: `${API_PATH}/create`,
+      method: "post",
+      data: body,
+    });
+  },
+
+  // 修改（带主键）
+  updateResourceKit(id: number, body: ResourceKitForm) {
+    return request<ApiResponse>({
+      url: `${API_PATH}/update/${id}`,
+      method: "put",
+      data: body,
+    });
+  },
+
+  // 删除（支持批量）
+  deleteResourceKit(ids: number[]) {
+    return request<ApiResponse>({
+      url: `${API_PATH}/delete`,
+      method: "delete",
+      data: ids,
+    });
+  },
+
+  // 批量启用/停用
+  batchResourceKit(body: BatchType) {
+    return request<ApiResponse>({
+      url: `${API_PATH}/available/setting`,
+      method: "patch",
+      data: body,
+    });
+  },
+
+  // 导出
+  exportResourceKit(query: ResourceKitPageQuery) {
+    return request<Blob>({
+      url: `${API_PATH}/export`,
+      method: "post",
+      data: query,
+      responseType: "blob",
+    });
+  },
+
+  // 下载导入模板
+  downloadTemplateResourceKit() {
+    return request<Blob>({
+      url: `${API_PATH}/download/template`,
+      method: "post",
+      responseType: "blob",
+    });
+  },
+
+  // 导入
+  importResourceKit(body: FormData) {
+    return request<ApiResponse>({
+      url: `${API_PATH}/import`,
+      method: "post",
+      data: body,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  },
+};
+
+export default ResourceKitAPI;
+
+// ------------------------------
+// TS 类型声明
+// ------------------------------
+
+// 列表查询参数
+export interface ResourceKitPageQuery extends PageQuery {
+  name?: string;
+  type?: string;
+  language?: string;
+  description?: string;
+  created_id?: number;
+  updated_id?: number;
+  created_time?: string[];
+  updated_time?: string[];
+}
+
+// 列表展示项
+export interface ResourceKitTable extends BaseType {
+  name?: string;
+  type?: string;
+  language?: string;
+  local_path?: string;
+  network_url?: string;
+  cloud_url?: string;
+  created_id?: string;
+  updated_id?: string;
+  created_by?: CommonType;
+  updated_by?: CommonType;
+}
+
+// 新增/修改/详情表单参数
+export interface ResourceKitForm extends BaseFormType {
+  name?: string;
+  type?: string;
+  language?: string;
+  local_path?: string;
+  network_url?: string;
+  cloud_url?: string;
+}
