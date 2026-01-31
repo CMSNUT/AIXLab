@@ -1,4 +1,4 @@
-<!-- {{ function_name }} -->
+<!-- 团队测试 -->
 <template>
   <div class="app-container">
     <!-- 搜索区域 -->
@@ -10,13 +10,26 @@
         :inline="true"
         @submit.prevent="handleQuery"
       >
-        {% for column in columns %}
-        {% if column.is_query == 1 %}
-        {% set dict_type = column.dict_type %}
-        {% set column_comment = column.column_comment if column.column_comment else '' %}
-        {% set parentheseIndex = column_comment.find("（") %}
-        {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}       
-        {% if column.column_name == "created_id"%}
+       
+        <el-form-item label="课题名称" prop="name">
+          <el-input v-model="queryFormData.name" placeholder="请输入课题名称" clearable />
+        </el-form-item>
+       
+       
+        <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
+          <DatePicker
+            v-model="createdDateRange"
+            @update:model-value="handleCreatedDateRangeChange"
+          />
+        </el-form-item>
+       
+        <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
+          <DatePicker
+            v-model="updatedDateRange"
+            @update:model-value="handleUpdatedDateRangeChange"
+          />
+        </el-form-item>
+       
         <el-form-item v-if="isExpand" prop="created_id" label="创建人">
           <UserTableSelect
             v-model="queryFormData.created_id"
@@ -24,7 +37,7 @@
             @clear-click="handleQuery"
           />
         </el-form-item>
-        {% elif column.column_name == "updated_id"%}
+       
         <el-form-item v-if="isExpand" prop="updated_id" label="更新人">
           <UserTableSelect
             v-model="queryFormData.updated_id"
@@ -32,47 +45,10 @@
             @clear-click="handleQuery"
           />
         </el-form-item>
-        {% elif column.column_name == "created_time"%}
-        <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
-          <DatePicker
-            v-model="createdDateRange"
-            @update:model-value="handleCreatedDateRangeChange"
-          />
-        </el-form-item>
-        {% elif column.column_name == "updated_time"%}
-        <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
-          <DatePicker
-            v-model="updatedDateRange"
-            @update:model-value="handleUpdatedDateRangeChange"
-          />
-        </el-form-item>
-        {% elif column.html_type == "input" %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-input v-model="queryFormData.{{ column.column_name }}" placeholder="请输入{{ comment }}" clearable />
-        </el-form-item>
-        {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type != "" %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-select v-model="queryFormData.{{ column.column_name }}" placeholder="请选择{{ comment }}" style="width: 180px" clearable>
-            <el-option v-for="dict in dictStore.getDictArray('{{ dict_type }}')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
-          </el-select>
-        </el-form-item>
-        {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-select v-model="queryFormData.{{ column.column_name }}" placeholder="请选择{{ comment }}" clearable>
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        {% elif column.html_type == "datetime" and column.query_type != "BETWEEN" %}
-        <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-          <el-date-picker v-model="queryFormData.{{ column.column_name }}" type="date" value-format="YYYY-MM-DD" clearable placeholder="请选择{{ comment }}" />
-        </el-form-item>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
         <!-- 查询、重置、展开/收起按钮 -->
         <el-form-item>
           <el-button
-            v-hasPerm="['{{ module_name }}:{{ business_name }}:query']"
+            v-hasPerm="['module_team:test:query']"
             type="primary"
             icon="search"
             @click="handleQuery"
@@ -80,7 +56,7 @@
             查询
           </el-button>
           <el-button
-            v-hasPerm="['{{ module_name }}:{{ business_name }}:query']"
+            v-hasPerm="['module_team:test:query']"
             icon="refresh"
             @click="handleResetQuery"
           >
@@ -89,7 +65,7 @@
           <!-- 展开/收起 -->
           <template v-if="isExpandable">
             <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
-              {{ '{{' }} isExpand ? "收起" : "展开" {{ '}}' }}
+              {{ isExpand ? "收起" : "展开" }}
               <el-icon>
                 <template v-if="isExpand">
                   <ArrowUp />
@@ -109,8 +85,8 @@
       <template #header>
         <div class="card-header">
           <span>
-            {{ function_name }}列表
-            <el-tooltip content="{{ function_name }}列表">
+            团队测试列表
+            <el-tooltip content="团队测试列表">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
           </span>
@@ -123,7 +99,7 @@
           <el-row :gutter="10">
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['{{ module_name }}:{{ business_name }}:create']"
+                v-hasPerm="['module_team:test:create']"
                 type="success"
                 icon="plus"
                 @click="handleOpenDialog('create')"
@@ -133,7 +109,7 @@
             </el-col>
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['{{ module_name }}:{{ business_name }}:delete']"
+                v-hasPerm="['module_team:test:delete']"
                 type="danger"
                 icon="delete"
                 :disabled="selectIds.length === 0"
@@ -149,7 +125,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导入">
                 <el-button
-                  v-hasPerm="['{{ module_name }}:{{ business_name }}:import']"
+                  v-hasPerm="['module_team:test:import']"
                   type="success"
                   icon="upload"
                   circle
@@ -160,7 +136,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导出">
                 <el-button
-                  v-hasPerm="['{{ module_name }}:{{ business_name }}:export']"
+                  v-hasPerm="['module_team:test:export']"
                   type="warning"
                   icon="download"
                   circle
@@ -182,7 +158,7 @@
             <el-col :span="1.5">
               <el-tooltip content="刷新">
                 <el-button
-                  v-hasPerm="['{{ module_name }}:{{ business_name }}:query']"
+                  v-hasPerm="['module_team:test:query']"
                   type="primary"
                   icon="refresh"
                   circle
@@ -234,41 +210,101 @@
           min-width="60"
         >
           <template #default="scope">
-            {{ '{{' }} (queryFormData.page_no - 1) * queryFormData.page_size + scope.$index + 1 {{ '}}' }}
+            {{ (queryFormData.page_no - 1) * queryFormData.page_size + scope.$index + 1 }}
           </template>
         </el-table-column>
-        {% for column in columns %}
-        {% set python_field = column.column_name %}
-        {% set column_comment = column.column_comment if column.column_comment else '' %}
-        {% set parentheseIndex = column_comment.find("（") %}
-        {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-        {% if column.is_list == 1 %}
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
-          label="{{ comment }}"
-          prop="{{ python_field }}"
+          v-if="tableColumns.find((col) => col.prop === 'name')?.show"
+          label="课题名称"
+          prop="name"
           min-width="140"
         />
-        {% if python_field in ['created_id', 'updated_id'] %}
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === '{{ python_field }}')?.show"
-          label="{{ comment }}"
-          prop="{{ python_field }}"
+          v-if="tableColumns.find((col) => col.prop === 'file_path')?.show"
+          label="本地文件路径"
+          prop="file_path"
           min-width="140"
         >
-          {% if python_field == "created_id" %}
           <template #default="scope">
-            <el-tag>{{ '{{' }} scope.row.created_by?.name {{ '}}' }}</el-tag>
+            <!-- 有文件路径才显示超链接，否则显示占位文本 -->
+            <a
+              v-if="scope.row.file_path"
+              :href="scope.row.file_path"
+              target="_blank"  
+              :download="getFileName(scope.row.file_path)" 
+              class="file-link"
+              @click.stop  
+            >
+              {{ getFileName(scope.row.file_path) }}  
+            </a>
+            <span v-else class="no-file-tip">无文件</span>
           </template>
-          {% elif python_field == "updated_id" %}
-          <template #default="scope">
-            <el-tag>{{ '{{' }} scope.row.updated_by?.name {{ '}}' }}</el-tag>
-          </template>
-          {% endif %}
         </el-table-column>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'imgage_path')?.show"
+          label="本地图片路径"
+          prop="imgage_path"
+          min-width="140"
+        >
+          <template #default="scope">
+            <!-- scope.row.image_path 就是当前行的图片路径 -->
+            <el-image
+              v-if="scope.row.imgage_path" 
+              :src="scope.row.imgage_path"  
+              style="width: 50px; height: 50px;"  
+              fit="cover"
+              lazy
+              :preview-src-list="[scope.row.imgage_path]"
+              :preview-teleported="true"
+            />
+            <!-- 无图片时显示占位文本 -->
+            <!-- <span v-else class="no-image-tip">无图片</span> -->
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'created_time')?.show"
+          label="创建时间"
+          prop="created_time"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'updated_time')?.show"
+          label="更新时间"
+          prop="updated_time"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'created_id')?.show"
+          label="创建人ID"
+          prop="created_id"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'created_id')?.show"
+          label="创建人ID"
+          prop="created_id"
+          min-width="140"
+        >
+          <template #default="scope">
+            <el-tag>{{ scope.row.created_by?.name }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'updated_id')?.show"
+          label="更新人ID"
+          prop="updated_id"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'updated_id')?.show"
+          label="更新人ID"
+          prop="updated_id"
+          min-width="140"
+        >
+          <template #default="scope">
+            <el-tag>{{ scope.row.updated_by?.name }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'operation')?.show"
           fixed="right"
@@ -278,7 +314,7 @@
         >
           <template #default="scope">
             <el-button
-              v-hasPerm="['{{ module_name }}:{{ business_name }}:detail']"
+              v-hasPerm="['module_team:test:detail']"
               type="info"
               size="small"
               link
@@ -288,7 +324,7 @@
               详情
             </el-button>
             <el-button
-              v-hasPerm="['{{ module_name }}:{{ business_name }}:update']"
+              v-hasPerm="['module_team:test:update']"
               type="primary"
               size="small"
               link
@@ -298,7 +334,7 @@
               编辑
             </el-button>
             <el-button
-              v-hasPerm="['{{ module_name }}:{{ business_name }}:delete']"
+              v-hasPerm="['module_team:test:delete']"
               type="danger"
               size="small"
               link
@@ -331,25 +367,42 @@
       <!-- 详情 -->
       <template v-if="dialogVisible.type === 'detail'">
         <el-descriptions :column="4" border>
-          {% for column in columns %}
-          {% set column_comment = column.column_comment if column.column_comment else '' %}
-          {% set parentheseIndex = column_comment.find("（") %}
-          {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
           
-          {% if column.column_name == 'created_id' %}
+          <el-descriptions-item label="主键ID" :span="2">
+            {{ detailFormData.id }}
+          </el-descriptions-item>
+          
+          <el-descriptions-item label="课题名称" :span="2">
+            {{ detailFormData.name }}
+          </el-descriptions-item>
+          
+          <el-descriptions-item label="课题简介(富文本)" :span="2">
+            {{ detailFormData.content }}
+          </el-descriptions-item>
+          
+          <el-descriptions-item label="本地文件路径" :span="2">
+            {{ detailFormData.file_path }}
+          </el-descriptions-item>
+          
+          <el-descriptions-item label="本地图片路径" :span="2">
+            {{ detailFormData.imgage_path }}
+          </el-descriptions-item>
+          
+          <el-descriptions-item label="创建时间" :span="2">
+            {{ detailFormData.created_time }}
+          </el-descriptions-item>
+          
+          <el-descriptions-item label="更新时间" :span="2">
+            {{ detailFormData.updated_time }}
+          </el-descriptions-item>
+          
           <el-descriptions-item label="创建人" :span="2">
-            {{ '{{' }} detailFormData.created_by?.name {{ '}}' }}
+            {{ detailFormData.created_by?.name }}
           </el-descriptions-item>
-          {% elif column.column_name == 'updated_id' %}
+          
           <el-descriptions-item label="更新人" :span="2">
-            {{ '{{' }} detailFormData.updated_by?.name {{ '}}' }}
+            {{ detailFormData.updated_by?.name }}
           </el-descriptions-item>
-          {% else %}
-          <el-descriptions-item label="{{ comment }}" :span="2">
-            {{ '{{' }} detailFormData.{{ column.column_name }} {{ '}}' }}
-          </el-descriptions-item>
-          {% endif %}
-          {% endfor %}
         </el-descriptions>
       </template>
 
@@ -363,62 +416,23 @@
           label-width="auto"
           label-position="right"
         >
-          {% for column in columns %}
-          {% if column.is_insert == 1 or column.is_edit == 1 %}
-          {% set dict_type = column.dict_type %}
-          {% set column_comment = column.column_comment if column.column_comment else '' %}
-          {% set parentheseIndex = column_comment.find("（") %}
-          {% set comment = column_comment[:parentheseIndex] if parentheseIndex != -1 else column_comment %}
-          {% set required = 'true' if column.is_nullable == '1' else 'false' %}
-          {% if column.column_name not in ['id', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
-          {% if column.html_type == "input" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-input v-model="formData.{{ column.column_name }}" placeholder="请输入{{ comment }}" />
+          <el-form-item label="课题名称" prop="name" :required="false">
+            <el-input v-model="formData.name" placeholder="请输入课题名称" />
           </el-form-item>
-          {% elif column.html_type == "textarea" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-input v-model="formData.{{ column.column_name }}" type="textarea" placeholder="请输入{{ comment }}" rows="4" :maxlength="100" show-word-limit />
+          <el-form-item label="课题简介(富文本)" prop="content">
+            <WangEditor v-model="formData.content" />
           </el-form-item>
-          {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type != "" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-select v-model="formData.{{ column.column_name }}" placeholder="请选择{{ comment }}">
-              <el-option v-for="dict in dictStore.getDictArray('{{ dict_type }}')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
-            </el-select>
+          <el-form-item label="本地文件路径" prop="file_path">
+            <!-- <SingleFileUpload v-model="formData.file_path" /> -->
+            <SingleFileUpload
+              v-model="formData.file_path"
+              :maxFileSize="200"
+              showTip
+            />
           </el-form-item>
-          {% elif (column.html_type == "select" or column.html_type == "radio") and dict_type %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-select v-model="formData.{{ column.column_name }}" placeholder="请选择{{ comment }}">
-              <el-option label="请选择字典生成" value="" />
-            </el-select>
+          <el-form-item label="本地图片路径" prop="imgage_path">
+            <SingleImageUpload v-model="formData.imgage_path" />
           </el-form-item>
-          {% elif column.html_type == "date" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-date-picker v-model="formData.{{ column.column_name }}" type="date" value-format="YYYY-MM-DD" placeholder="请选择{{ comment }}" />
-          </el-form-item>
-          {% elif column.html_type == "datetime" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}" :required="{{ required }}">
-            <el-date-picker v-model="formData.{{ column.column_name }}" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择{{ comment }}" />
-          </el-form-item>
-          {% elif column.html_type == "checkbox" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-            <el-checkbox v-model="formData.{{ column.column_name }}">{{ comment }}</el-checkbox>
-          </el-form-item>
-          {% elif column.html_type == "imageUpload" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-            <SingleImageUpload v-model="formData.{{ column.column_name }}" />
-          </el-form-item>
-          {% elif column.html_type == "fileUpload" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-            <SingleFileUpload v-model="formData.{{ column.column_name }}" />
-          </el-form-item>
-          {% elif column.html_type == "editor" %}
-          <el-form-item label="{{ comment }}" prop="{{ column.column_name }}">
-            <WangEditor v-model="formData.{{ column.column_name }}" />
-          </el-form-item>
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endfor %}
         </el-form>
       </template>
 
@@ -454,7 +468,7 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: "{{ class_name }}",
+  name: "TeamTest",
   inheritAttrs: false,
 });
 
@@ -468,11 +482,11 @@ import DatePicker from "@/components/DatePicker/index.vue";
 import type { IContentConfig } from "@/components/CURD/types";
 import ImportModal from "@/components/CURD/ImportModal.vue";
 import ExportModal from "@/components/CURD/ExportModal.vue";
-import {{ class_name }}API, {
-  {{ class_name }}PageQuery,
-  {{ class_name }}Table,
-  {{ class_name }}Form,
-} from "@/api/{{ module_name }}/{{ business_name }}";
+import TeamTestAPI, {
+  TeamTestPageQuery,
+  TeamTestTable,
+  TeamTestForm,
+} from "@/api/module_team/test";
 
 const visible = ref(true);
 const isExpand = ref(false);
@@ -481,55 +495,54 @@ const queryFormRef = ref();
 const dataFormRef = ref();
 const total = ref(0);
 const selectIds = ref<number[]>([]);
-const selectionRows = ref<{{ class_name }}Table[]>([]);
+const selectionRows = ref<TeamTestTable[]>([]);
 const loading = ref(false);
 
 // 字典仓库与需要加载的字典类型
 const dictStore = useDictStore();
 const dictTypes: any = [
-  {% for column in columns %}
-  {% if column.dict_type %}
-  "{{ column.dict_type }}",
-  {% endif %}
-  {% endfor %}
 ];
 
 // 分页表单
-const pageTableData = ref<{{ class_name }}Table[]>([]);
+const pageTableData = ref<TeamTestTable[]>([]);
 
 // 表格列配置
 const tableColumns = ref([
   { prop: "selection", label: "选择框", show: true },
   { prop: "index", label: "序号", show: true },
-  {% for column in columns %}
-  {% if column.is_list == 1 %}
-  { prop: "{{ column.column_name }}", label: "{{ column.column_comment or column.column_name }}", show: true },
-  {% endif %}
-  {% endfor %}
+  { prop: "name", label: "课题名称", show: true },
+  { prop: "file_path", label: "本地文件路径", show: true },
+  { prop: "imgage_path", label: "本地图片路径", show: true },
+  { prop: "created_time", label: "创建时间（自动填充）", show: true },
+  { prop: "updated_time", label: "更新时间（自动刷新）", show: true },
+  { prop: "created_id", label: "创建人ID", show: true },
+  { prop: "updated_id", label: "更新人ID", show: true },
   { prop: "operation", label: "操作", show: true },
 ]);
 
 // 导出列（不含选择/序号/操作）
 const exportColumns = [
-  {% for column in columns %}
-  {% if column.is_list == 1 %}
-  { prop: "{{ column.column_name }}", label: "{{ column.column_comment or column.column_name }}" },
-  {% endif %}
-  {% endfor %}
+  { prop: "name", label: "课题名称" },
+  { prop: "file_path", label: "本地文件路径" },
+  { prop: "imgage_path", label: "本地图片路径" },
+  { prop: "created_time", label: "创建时间（自动填充）" },
+  { prop: "updated_time", label: "更新时间（自动刷新）" },
+  { prop: "created_id", label: "创建人ID" },
+  { prop: "updated_id", label: "更新人ID" },
 ];
 
 // 导入/导出配置
 const curdContentConfig = {
-  permPrefix: "{{ module_name }}:{{ business_name }}",
+  permPrefix: "module_team:test",
   cols: exportColumns as any,
-  importTemplate: () => {{ class_name }}API.downloadTemplate{{ class_name }}(),
+  importTemplate: () => TeamTestAPI.downloadTemplateTeamTest(),
   exportsAction: async (params: any) => {
     const query: any = { ...params };
     query.page_no = 1;
     query.page_size = 9999;
     const all: any[] = [];
     while (true) {
-      const res = await {{ class_name }}API.list{{ class_name }}(query);
+      const res = await TeamTestAPI.listTeamTest(query);
       const items = res.data?.data?.items || [];
       const total = res.data?.data?.total || 0;
       all.push(...items);
@@ -541,7 +554,7 @@ const curdContentConfig = {
 } as unknown as IContentConfig;
 
 // 详情表单
-const detailFormData = ref<{{ class_name }}Table>({});
+const detailFormData = ref<TeamTestTable>({});
 // 日期范围临时变量
 const createdDateRange = ref<[Date, Date] | []>([]);
 // 更新时间范围临时变量
@@ -568,25 +581,24 @@ function handleUpdatedDateRangeChange(range: [Date, Date]) {
 }
 
 // 分页查询参数
-const queryFormData = reactive<{{ class_name }}PageQuery>({
+const queryFormData = reactive<TeamTestPageQuery>({
   page_no: 1,
   page_size: 10,
-  {% for column in columns %}
-  {% if column.is_query == 1 %}
-  {{ column.column_name }}: undefined,
-  {% endif %}
-  {% endfor %}
+  name: undefined,
+  content: undefined,
+  created_time: undefined,
+  updated_time: undefined,
+  created_id: undefined,
+  updated_id: undefined,
 });
 
 // 编辑表单
-const formData = reactive<{{ class_name }}Form>({
-  {% for column in columns %}
-  {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% if column.column_name not in ['created_time', 'updated_time', 'created_id', 'updated_id'] %}
-  {{ column.column_name }}: undefined,
-  {% endif %}
-  {% endif %}
-  {% endfor %}
+const formData = reactive<TeamTestForm>({
+  id: undefined,
+  name: undefined,
+  content: undefined,
+  file_path: undefined,
+  imgage_path: undefined,
 });
 
 // 弹窗状态
@@ -598,12 +610,15 @@ const dialogVisible = reactive({
 
 // 表单验证规则
 const rules = reactive({
-  {% for column in columns %}
-  {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% set required = 'true' if column.is_nullable == 1 else 'false' %}
-  {{ column.column_name }}: [{ required: {{ required }}, message: "请输入{{ column.column_comment or column.column_name }}", trigger: "blur" }],
-  {% endif %}
-  {% endfor %}
+  id: [{ required: false, message: "请输入主键ID", trigger: "blur" }],
+  name: [{ required: false, message: "请输入课题名称", trigger: "blur" }],
+  content: [{ required: true, message: "请输入课题简介(富文本)", trigger: "blur" }],
+  file_path: [{ required: true, message: "请输入本地文件路径", trigger: "blur" }],
+  imgage_path: [{ required: true, message: "请输入本地图片路径", trigger: "blur" }],
+  created_time: [{ required: false, message: "请输入创建时间（自动填充）", trigger: "blur" }],
+  updated_time: [{ required: false, message: "请输入更新时间（自动刷新）", trigger: "blur" }],
+  created_id: [{ required: true, message: "请输入创建人ID", trigger: "blur" }],
+  updated_id: [{ required: true, message: "请输入更新人ID", trigger: "blur" }],
 });
 
 // 导入弹窗显示状态
@@ -631,7 +646,7 @@ async function handleRefresh() {
 async function loadingData() {
   loading.value = true;
   try {
-    const response = await {{ class_name }}API.list{{ class_name }}(queryFormData);
+    const response = await TeamTestAPI.listTeamTest(queryFormData);
     pageTableData.value = response.data.data.items;
     total.value = response.data.data.total;
   } catch (error: any) {
@@ -665,14 +680,12 @@ async function handleResetQuery() {
 }
 
 // 定义初始表单数据常量
-const initialFormData: {{ class_name }}Form = {
-  {% for column in columns %}
-  {% if column.is_insert == 1 or column.is_edit == 1 %}
-  {% if column.column_name not in ['created_time', 'updated_time', 'created_id', 'updated_id'] %}
-  {{ column.column_name }}: undefined,
-  {% endif %}
-  {% endif %}
-  {% endfor %}
+const initialFormData: TeamTestForm = {
+  id: undefined,
+  name: undefined,
+  content: undefined,
+  file_path: undefined,
+  imgage_path: undefined,
 };
 
 // 重置表单
@@ -701,7 +714,7 @@ async function handleCloseDialog() {
 async function handleOpenDialog(type: "create" | "update" | "detail", id?: number) {
   dialogVisible.type = type;
   if (id) {
-    const response = await {{ class_name }}API.detail{{ class_name }}(id);
+    const response = await TeamTestAPI.detailTeamTest(id);
     if (type === "detail") {
       dialogVisible.title = "详情";
       Object.assign(detailFormData.value, response.data.data);
@@ -710,14 +723,12 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
       Object.assign(formData, response.data.data);
     }
   } else {
-    dialogVisible.title = "新增{{ class_name }}";
-    {% for column in columns %}
-    {% if column.is_insert == 1 or column.is_edit == 1 %}
-    {% if column.column_name not in ['created_time', 'updated_time', 'created_id', 'updated_id'] %}
-    formData.{{ column.column_name }} = undefined;
-    {% endif %}
-    {% endif %}
-    {% endfor %}
+    dialogVisible.title = "新增TeamTest";
+    formData.id = undefined;
+    formData.name = undefined;
+    formData.content = undefined;
+    formData.file_path = undefined;
+    formData.imgage_path = undefined;
   }
   dialogVisible.visible = true;
 }
@@ -732,7 +743,7 @@ async function handleSubmit() {
       const id = formData.id;
       if (id) {
         try {
-          await {{ class_name }}API.update{{ class_name }}(id, { id, ...formData });
+          await TeamTestAPI.updateTeamTest(id, { id, ...formData });
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -744,7 +755,7 @@ async function handleSubmit() {
         }
       } else {
         try {
-          await {{ class_name }}API.create{{ class_name }}(formData);
+          await TeamTestAPI.createTeamTest(formData);
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -769,7 +780,7 @@ async function handleDelete(ids: number[]) {
     .then(async () => {
       try {
         loading.value = true;
-        await {{ class_name }}API.delete{{ class_name }}(ids);
+        await TeamTestAPI.deleteTeamTest(ids);
         handleResetQuery();
       } catch (error: any) {
         console.error(error);
@@ -786,7 +797,7 @@ async function handleDelete(ids: number[]) {
 // 处理上传
 const handleUpload = async (formData: FormData) => {
   try {
-    const response = await {{ class_name }}API.import{{ class_name }}(formData);
+    const response = await TeamTestAPI.importTeamTest(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
       ElMessage.success(`${response.data.msg}，${response.data.data}`);
       importDialogVisible.value = false;
@@ -795,6 +806,21 @@ const handleUpload = async (formData: FormData) => {
   } catch (error: any) {
     console.error(error);
   }
+};
+
+/**
+ * 从完整文件路径中提取文件名
+ * @param fullPath 完整文件路径（如 http://xxx.com/uploads/test.pdf 或 /uploads/doc/xxx.docx）
+ * @returns 提取后的文件名（如 test.pdf）
+ */
+const getFileName = (fullPath: string): string => {
+  if (!fullPath || typeof fullPath !== 'string') return '未知文件';
+  
+  // 匹配最后一个 "/" 后面的内容（兼容 http 路径和本地路径）
+  const fileName = fullPath.split('/').pop() || '未知文件';
+  
+  // 若路径包含 "\"（Windows 路径，可选兼容）
+  return fileName.split('\\').pop() || fileName;
 };
 
 onMounted(async () => {
@@ -806,4 +832,5 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

@@ -95,7 +95,7 @@ class {{ class_name }}Service:
     @classmethod
     async def set_available_{{ business_name }}_service(cls, auth: AuthSchema, data: BatchSetAvailable) -> None:
         """批量设置状态"""
-        await {{ class_name }}CRUD(auth).set_available_{{ business_name }}_crud(ids=data.ids, status=data.status)
+        await {{ class_name }}CRUD(auth).set_available_{{ business_name }}_crud(ids=data.ids)
     
     @classmethod
     async def batch_export_{{ business_name }}_service(cls, obj_list: list[dict]) -> bytes:
@@ -109,9 +109,6 @@ class {{ class_name }}Service:
 
         data = obj_list.copy()
         for item in data:
-            # 状态转换
-            if 'status' in item:
-                item['status'] = '启用' if item.get('status') == '0' else '停用'
             # 创建者转换
             creator_info = item.get('creator')
             if isinstance(creator_info, dict):

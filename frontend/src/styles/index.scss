@@ -124,3 +124,20 @@ html.sidebar-color-blue .layout-mix .layout__sidebar--left .el-menu {
     // margin-top: 16px;
   }
 }
+
+.file-link {
+  color: #409eff;  /* Element Plus 主题蓝，贴合风格 */
+  text-decoration: none;
+  font-size: 14px;
+  word-break: break-all;  /* 文件名过长时自动换行，避免撑乱表格 */
+}
+
+.file-link:hover {
+  color: #66b1ff;
+  text-decoration: underline;  /*  hover 时显示下划线，提升交互体验 */
+}
+
+.no-file-tip {
+  font-size: 12px;
+  color: #909399;
+}

@@ -8,8 +8,8 @@ from sqlalchemy.orm import relationship
 {% endif %}
 from sqlalchemy.orm import Mapped, mapped_column
 
-# from app.core.base_model import ModelMixin, UserMixin
 from app.core.base_model import ModelMixinModify, UserMixin
+
 
 class {{ class_name }}Model(ModelMixinModify, UserMixin):
     """
@@ -20,7 +20,6 @@ class {{ class_name }}Model(ModelMixinModify, UserMixin):
     __loader_options__: list[str] = ["created_by", "updated_by"]
 
     {% for column in columns %}
-    # {% if column.column_name not in ['id', 'uuid', 'status', 'description', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
     {% if column.column_name not in ['id', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
     {% set sqlalchemy_type = column|get_sqlalchemy_type %}
     {{ column.column_name }}: Mapped[{{ column.python_type }} | None] = mapped_column({{ sqlalchemy_type }}, {% if column.pk %}primary_key=True, {% endif %}{% if column.increment %}autoincrement=True, {% endif %}{% if column.required or column.pk %}nullable=False{% else %}nullable=True{% endif %}, comment='{{ column.column_comment }}')

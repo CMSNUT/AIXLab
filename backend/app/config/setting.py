@@ -163,7 +163,7 @@ class Settings(BaseSettings):
         ".xlsx",
         ".txt",
         ".md",
-        "pdf",
+        ".pdf",
         ".doc",
         ".docx",
         ".zip",

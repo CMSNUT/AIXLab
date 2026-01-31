@@ -1,6 +1,8 @@
 import re
 from datetime import date, datetime, time
-from typing import Annotated, Any
+from typing import Annotated, Any, Optional
+
+import bleach
 
 from pydantic import AfterValidator, PlainSerializer, WithJsonSchema
 
@@ -217,3 +219,46 @@ def role_permission_request_validator(data: Any) -> Any:
         raise CustomException(code=RET.ERROR.code, msg="角色不能为空")
 
     return data
+
+# 定义富文本允许的合法标签和属性（可按需扩展，对应wangEditor的编辑功能）
+ALLOWED_TAGS = [
+    # 基础格式
+    "p", "b", "i", "u", "em", "strong", "strike", "br", "hr",
+    # 标题
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    # 列表
+    "ul", "ol", "li",
+    # 链接和图片
+    "a", "img",
+    # 引用和代码
+    "blockquote", "code",
+    # 表格（wangEditor支持表格的话添加）
+    "table", "thead", "tbody", "tr", "th", "td",
+    # 其他wangEditor支持的标签
+]
+
+ALLOWED_ATTRIBUTES = {
+    "a": ["href", "title", "target"],
+    "img": ["src", "alt", "width", "height"],
+    "table": ["border", "cellspacing", "cellpadding"],
+}
+
+def clean_xss(html_content: Optional[str], strip_unsafe: bool = True) -> str:
+    """
+    通用XSS清洗函数，专门处理HTML格式的富文本内容
+    :param html_content: 待清洗的HTML字符串（可能为None/空）
+    :param strip_unsafe: 是否移除不安全的标签及内容（而非转义）
+    :return: 清洗后的安全HTML字符串
+    """
+    # 处理空值，避免报错
+    if not html_content or not isinstance(html_content, str):
+        return ""
+    
+    # 执行清洗
+    return bleach.clean(
+        html_content,
+        tags=ALLOWED_TAGS,
+        attributes=ALLOWED_ATTRIBUTES,
+        strip=strip_unsafe,
+        strip_comments=True  # 移除HTML注释，避免恶意注释攻击
+    )

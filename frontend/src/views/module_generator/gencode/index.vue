@@ -255,7 +255,7 @@
     </el-card>
 
     <!-- 创建表 -->
-    <el-drawer v-model="createTableVisible" title="创建表" append-to-body>
+    <el-dialog v-model="createTableVisible" title="创建表" append-to-body>
       <span>创建表语句(支持多个建表sql语句)：</span>
       <el-button type="warning" size="small" class="ml-1 mb-1" @click="loadExampleMysql">
         加载MySQL示例
@@ -290,10 +290,10 @@
           <el-button @click="handleCreateTableCancel()">取 消</el-button>
         </div>
       </template>
-    </el-drawer>
+    </el-dialog>
 
     <!-- 导入表 -->
-    <el-drawer v-model="importVisible" title="导入表" width="800px" top="5vh" append-to-body>
+    <el-dialog v-model="importVisible" title="导入表" width="800px" top="5vh" append-to-body>
       <el-form ref="queryRef" :model="importQueryFormData" :inline="true">
         <el-form-item label="表名称" prop="table_name">
           <el-input
@@ -387,7 +387,7 @@
           <el-button @click="importVisible = false">取 消</el-button>
         </div>
       </template>
-    </el-drawer>
+    </el-dialog>
 
     <!-- 代码生成抽屉 -->
     <el-drawer

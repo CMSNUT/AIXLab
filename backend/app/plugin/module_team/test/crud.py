@@ -4,12 +4,12 @@ from typing import Sequence
 
 from app.core.base_crud import CRUDBase
 from app.api.v1.module_system.auth.schema import AuthSchema
-from .model import {{ class_name }}Model
-from .schema import {{ class_name }}CreateSchema, {{ class_name }}UpdateSchema, {{ class_name }}OutSchema
+from .model import TeamTestModel
+from .schema import TeamTestCreateSchema, TeamTestUpdateSchema, TeamTestOutSchema
 
 
-class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}CreateSchema, {{ class_name }}UpdateSchema]):
-    """{{ function_name }}数据层"""
+class TeamTestCRUD(CRUDBase[TeamTestModel, TeamTestCreateSchema, TeamTestUpdateSchema]):
+    """团队测试数据层"""
 
     def __init__(self, auth: AuthSchema) -> None:
         """
@@ -18,9 +18,9 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         参数:
         - auth (AuthSchema): 认证信息模型
         """
-        super().__init__(model={{ class_name }}Model, auth=auth)
+        super().__init__(model=TeamTestModel, auth=auth)
 
-    async def get_by_id_{{ business_name }}_crud(self, id: int, preload: list | None = None) -> {{ class_name }}Model | None:
+    async def get_by_id_test_crud(self, id: int, preload: list | None = None) -> TeamTestModel | None:
         """
         详情
         
@@ -29,11 +29,11 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         - preload (list | None): 预加载关系，未提供时使用模型默认项
         
         返回:
-        - {{ class_name }}Model | None: 模型实例或None
+        - TeamTestModel | None: 模型实例或None
         """
         return await self.get(id=id, preload=preload)
     
-    async def list_{{ business_name }}_crud(self, search: dict | None = None, order_by: list[dict] | None = None, preload: list | None = None) -> Sequence[{{ class_name }}Model]:
+    async def list_test_crud(self, search: dict | None = None, order_by: list[dict] | None = None, preload: list | None = None) -> Sequence[TeamTestModel]:
         """
         列表查询
         
@@ -43,36 +43,36 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         - preload (list | None): 预加载关系，未提供时使用模型默认项
         
         返回:
-        - Sequence[{{ class_name }}Model]: 模型实例序列
+        - Sequence[TeamTestModel]: 模型实例序列
         """
         return await self.list(search=search, order_by=order_by, preload=preload)
     
-    async def create_{{ business_name }}_crud(self, data: {{ class_name }}CreateSchema) -> {{ class_name }}Model | None:
+    async def create_test_crud(self, data: TeamTestCreateSchema) -> TeamTestModel | None:
         """
         创建
         
         参数:
-        - data ({{ class_name }}CreateSchema): 创建模型
+        - data (TeamTestCreateSchema): 创建模型
         
         返回:
-        - {{ class_name }}Model | None: 模型实例或None
+        - TeamTestModel | None: 模型实例或None
         """
         return await self.create(data=data)
     
-    async def update_{{ business_name }}_crud(self, id: int, data: {{ class_name }}UpdateSchema) -> {{ class_name }}Model | None:
+    async def update_test_crud(self, id: int, data: TeamTestUpdateSchema) -> TeamTestModel | None:
         """
         更新
         
         参数:
         - id (int): 对象ID
-        - data ({{ class_name }}UpdateSchema): 更新模型
+        - data (TeamTestUpdateSchema): 更新模型
         
         返回:
-        - {{ class_name }}Model | None: 模型实例或None
+        - TeamTestModel | None: 模型实例或None
         """
         return await self.update(id=id, data=data)
     
-    async def delete_{{ business_name }}_crud(self, ids: list[int]) -> None:
+    async def delete_test_crud(self, ids: list[int]) -> None:
         """
         批量删除
         
@@ -84,7 +84,7 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         """
         return await self.delete(ids=ids)
     
-    async def set_available_{{ business_name }}_crud(self, ids: list[int]) -> None:
+    async def set_available_test_crud(self, ids: list[int]) -> None:
         """
         批量设置可用状态
         
@@ -96,7 +96,7 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
         """
         return await self.set(ids=ids)
     
-    async def page_{{ business_name }}_crud(self, offset: int, limit: int, order_by: list[dict] | None = None, search: dict | None = None, preload: list | None = None) -> dict:
+    async def page_test_crud(self, offset: int, limit: int, order_by: list[dict] | None = None, search: dict | None = None, preload: list | None = None) -> dict:
         """
         分页查询
         
@@ -117,6 +117,6 @@ class {{ class_name }}CRUD(CRUDBase[{{ class_name }}Model, {{ class_name }}Creat
             limit=limit,
             order_by=order_by_list,
             search=search_dict,
-            out_schema={{ class_name }}OutSchema,
+            out_schema=TeamTestOutSchema,
             preload=preload
         )
