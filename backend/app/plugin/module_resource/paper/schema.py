@@ -10,17 +10,17 @@ class ResourcePaperCreateSchema(BaseModel):
     """
     文献新增模型
     """
-    type: str = Field(default=..., description='文章类型')
-    field: str = Field(default=..., description='文章领域')
-    title: str = Field(default=..., description='标题')
-    source: str = Field(default=..., description='期刊/会议名称')
-    year: int = Field(default=..., description='年份')
-    volume: str = Field(default=..., description='卷')
-    issue: str = Field(default=..., description='期')
-    pages: str = Field(default=..., description='页码')
-    doi: str = Field(default=..., description='DOI')
-    pmid: str = Field(default=..., description='PubMed ID')
-    description: str = Field(default=..., description='备注/描述')
+    type: str  | None = Field(default=None, description='文章类型')
+    field: str  | None = Field(default=None, description='文章领域')
+    title: str  | None = Field(default=None, description='标题')
+    source: str  | None = Field(default=None, description='期刊/会议名称')
+    year: int  | None = Field(default=None, description='年份')
+    volume: str  | None = Field(default=None, description='卷')
+    issue: str  | None = Field(default=None, description='期')
+    pages: str  | None = Field(default=None, description='页码')
+    doi: str  | None = Field(default=None, description='DOI')
+    pmid: str  | None = Field(default=None, description='PubMed ID')
+    description: str  | None = Field(default=None, description='备注/描述')
 
 
 class ResourcePaperUpdateSchema(ResourcePaperCreateSchema):

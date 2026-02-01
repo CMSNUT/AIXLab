@@ -1,7 +1,7 @@
-<!-- 测试 -->
+<!-- 测试22 -->
 <template>
   <div class="app-container">
-    <!-- 搜索区域：添加 transition 过渡动画 + 全局折叠变量控制 -->
+    <!-- 搜索区域 -->
     <transition name="search-fade">
       <div v-show="visible && !isSearchGlobalCollapsed" class="search-container">
         <el-form
@@ -43,7 +43,7 @@
           <!-- 查询、重置、展开/收起按钮 -->
           <el-form-item>
             <el-button
-              v-hasPerm="['module_team:test:query']"
+              v-hasPerm="['module_team:test22:query']"
               type="primary"
               icon="search"
               @click="handleQuery"
@@ -51,13 +51,13 @@
               查询
             </el-button>
             <el-button
-              v-hasPerm="['module_team:test:query']"
+              v-hasPerm="['module_team:test22:query']"
               icon="refresh"
               @click="handleResetQuery"
             >
               重置
             </el-button>
-            <!-- 展开/收起（内部表单项，保留原有逻辑） -->
+            <!-- 展开/收起 -->
             <template v-if="isExpandable">
               <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
                 {{ isExpand ? "收起" : "展开" }}
@@ -82,8 +82,8 @@
         <div class="card-header">
           <!-- 左侧：测试列表 + 提示 tooltip -->
           <span class="card-header__title">
-            测试列表
-            <el-tooltip content="测试列表">
+            测试22列表
+            <el-tooltip content="测试22列表">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
           </span>
@@ -94,7 +94,7 @@
               underline="never" 
               @click="isSearchGlobalCollapsed = !isSearchGlobalCollapsed"
             >
-              {{ isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }}
+              {{  isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }} 
               <el-icon>
                 <template v-if="isSearchGlobalCollapsed">
                   <ArrowDown />
@@ -114,7 +114,7 @@
           <el-row :gutter="10">
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['module_team:test:create']"
+                v-hasPerm="['module_team:test22:create']"
                 type="success"
                 icon="plus"
                 @click="handleOpenDialog('create')"
@@ -124,7 +124,7 @@
             </el-col>
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['module_team:test:delete']"
+                v-hasPerm="['module_team:test22:delete']"
                 type="danger"
                 icon="delete"
                 :disabled="selectIds.length === 0"
@@ -134,7 +134,7 @@
               </el-button>
             </el-col>
             <el-col :span="1.5">
-              <el-dropdown v-hasPerm="['module_team:test:batch']" trigger="click">
+              <el-dropdown v-hasPerm="['module_team:test22:batch']" trigger="click">
                 <el-button type="default" :disabled="selectIds.length === 0" icon="ArrowDown">
                   更多
                 </el-button>
@@ -147,7 +147,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导入">
                 <el-button
-                  v-hasPerm="['module_team:test:import']"
+                  v-hasPerm="['module_team:test22:import']"
                   type="success"
                   icon="upload"
                   circle
@@ -158,7 +158,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导出">
                 <el-button
-                  v-hasPerm="['module_team:test:export']"
+                  v-hasPerm="['module_team:test22:export']"
                   type="warning"
                   icon="download"
                   circle
@@ -180,7 +180,7 @@
             <el-col :span="1.5">
               <el-tooltip content="刷新">
                 <el-button
-                  v-hasPerm="['module_team:test:query']"
+                  v-hasPerm="['module_team:test22:query']"
                   type="primary"
                   icon="refresh"
                   circle
@@ -319,7 +319,7 @@
         >
           <template #default="scope">
             <el-button
-              v-hasPerm="['module_team:test:detail']"
+              v-hasPerm="['module_team:test22:detail']"
               type="info"
               size="small"
               link
@@ -329,7 +329,7 @@
               详情
             </el-button>
             <el-button
-              v-hasPerm="['module_team:test:update']"
+              v-hasPerm="['module_team:test22:update']"
               type="primary"
               size="small"
               link
@@ -339,7 +339,7 @@
               编辑
             </el-button>
             <el-button
-              v-hasPerm="['module_team:test:delete']"
+              v-hasPerm="['module_team:test22:delete']"
               type="danger"
               size="small"
               link
@@ -372,16 +372,16 @@
       <!-- 详情 -->
       <template v-if="dialogVisible.type === 'detail'">
         <el-descriptions :column="4" border>
-        <el-descriptions-item label="主键ID" :span="2">
-            {{ detailFormData.id }}
-          </el-descriptions-item>
-        <el-descriptions-item label="课题名称" :span="2">
-            {{ detailFormData.name }}
-          </el-descriptions-item>
-        <el-descriptions-item label="课题简介" :span="2">
-            {{ detailFormData.content }}
-        </el-descriptions-item>
-        <el-descriptions-item label="本地文件" :span="2">
+          <el-descriptions-item label="主键ID" :span="2">
+              {{ detailFormData.id }}
+            </el-descriptions-item>
+          <el-descriptions-item label="课题名称" :span="2">
+              {{ detailFormData.name }}
+            </el-descriptions-item>
+          <el-descriptions-item label="课题简介" :span="2">
+              {{ detailFormData.content }}
+            </el-descriptions-item>
+          <el-descriptions-item label="本地文件" :span="2">
             <a
               v-if="detailFormData.file_path"
               :href="detailFormData.file_path"
@@ -392,24 +392,24 @@
             >
               {{ getFileName(detailFormData.file_path) }} 
             </a>
-        </el-descriptions-item>
-        <el-descriptions-item label="本地图片" :span="2">          
-          <el-image
-            v-if="detailFormData.image_path" 
-            :src="detailFormData.image_path"  
-            style="width: 50px; height: 50px;"  
-            fit="cover"
-            lazy
-            :preview-src-list="[detailFormData.image_path]"
-            :preview-teleported="true"
-          />
-        </el-descriptions-item>
-        <el-descriptions-item label="创建时间" :span="2">
-            {{ detailFormData.created_time }}
           </el-descriptions-item>
-        <el-descriptions-item label="更新时间" :span="2">
-            {{ detailFormData.updated_time }}
+          <el-descriptions-item label="本地图片" :span="2">                            
+            <el-image
+              v-if="detailFormData.image_path" 
+              :src="detailFormData.image_path"  
+              style="width: 50px; height: 50px;"  
+              fit="cover"
+              lazy
+              :preview-src-list="[detailFormData.image_path]"
+              :preview-teleported="true"
+            />
           </el-descriptions-item>
+          <el-descriptions-item label="创建时间" :span="2">
+              {{ detailFormData.created_time }}
+            </el-descriptions-item>
+          <el-descriptions-item label="更新时间" :span="2">
+              {{ detailFormData.updated_time }}
+            </el-descriptions-item>
           <el-descriptions-item label="创建人" :span="2">
             {{ detailFormData.created_by?.name }}
           </el-descriptions-item>
@@ -476,7 +476,7 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: "TeamTest",
+  name: "TeamTest22",
   inheritAttrs: false,
 });
 
@@ -492,11 +492,11 @@ import ImportModal from "@/components/CURD/ImportModal.vue";
 import SingleFileUpload from "@/components/Upload/SingleFileUpload.vue";
 import SingleImageUpload from "@/components/Upload/SingleImageUpload.vue";
 import WangEditor from "@/components/WangEditor/index.vue";
-import TeamTestAPI, {
-  TeamTestPageQuery,
-  TeamTestTable,
-  TeamTestForm,
-} from "@/api/module_team/test";
+import TeamTest22API, {
+  TeamTest22PageQuery,
+  TeamTest22Table,
+  TeamTest22Form,
+} from "@/api/module_team/test22";
 
 const visible = ref(true);
 const isExpand = ref(false);
@@ -505,7 +505,7 @@ const queryFormRef = ref();
 const dataFormRef = ref();
 const total = ref(0);
 const selectIds = ref<number[]>([]);
-const selectionRows = ref<TeamTestTable[]>([]);
+const selectionRows = ref<TeamTest22Table[]>([]);
 const loading = ref(false);
 const isSearchGlobalCollapsed = ref(true);
 
@@ -515,7 +515,7 @@ const dictTypes: any = [
 ];
 
 // 分页表单
-const pageTableData = ref<TeamTestTable[]>([]);
+const pageTableData = ref<TeamTest22Table[]>([]);
 
 // 表格列配置
 const tableColumns = ref([
@@ -544,16 +544,16 @@ const exportColumns = [
 
 // 导入/导出配置
 const curdContentConfig = {
-  permPrefix: "module_team:test",
+  permPrefix: "module_team:test22",
   cols: exportColumns as any,
-  importTemplate: () => TeamTestAPI.downloadTemplateTeamTest(),
+  importTemplate: () => TeamTest22API.downloadTemplateTeamTest22(),
   exportsAction: async (params: any) => {
     const query: any = { ...params };
     query.page_no = 1;
     query.page_size = 9999;
     const all: any[] = [];
     while (true) {
-      const res = await TeamTestAPI.listTeamTest(query);
+      const res = await TeamTest22API.listTeamTest22(query);
       const items = res.data?.data?.items || [];
       const total = res.data?.data?.total || 0;
       all.push(...items);
@@ -565,7 +565,7 @@ const curdContentConfig = {
 } as unknown as IContentConfig;
 
 // 详情表单
-const detailFormData = ref<TeamTestTable>({});
+const detailFormData = ref<TeamTest22Table>({});
 // 日期范围临时变量
 const createdDateRange = ref<[Date, Date] | []>([]);
 // 更新时间范围临时变量
@@ -592,7 +592,7 @@ function handleUpdatedDateRangeChange(range: [Date, Date]) {
 }
 
 // 分页查询参数
-const queryFormData = reactive<TeamTestPageQuery>({
+const queryFormData = reactive<TeamTest22PageQuery>({
   page_no: 1,
   page_size: 10,
   name: undefined,
@@ -604,7 +604,7 @@ const queryFormData = reactive<TeamTestPageQuery>({
 });
 
 // 编辑表单
-const formData = reactive<TeamTestForm>({
+const formData = reactive<TeamTest22Form>({
   id: undefined,
   name: undefined,
   content: undefined,
@@ -657,7 +657,7 @@ async function handleRefresh() {
 async function loadingData() {
   loading.value = true;
   try {
-    const response = await TeamTestAPI.listTeamTest(queryFormData);
+    const response = await TeamTest22API.listTeamTest22(queryFormData);
     pageTableData.value = response.data.data.items;
     total.value = response.data.data.total;
   } catch (error: any) {
@@ -691,7 +691,7 @@ async function handleResetQuery() {
 }
 
 // 定义初始表单数据常量
-const initialFormData: TeamTestForm = {
+const initialFormData: TeamTest22Form = {
   id: undefined,
   name: undefined,
   content: undefined,
@@ -725,7 +725,7 @@ async function handleCloseDialog() {
 async function handleOpenDialog(type: "create" | "update" | "detail", id?: number) {
   dialogVisible.type = type;
   if (id) {
-    const response = await TeamTestAPI.detailTeamTest(id);
+    const response = await TeamTest22API.detailTeamTest22(id);
     if (type === "detail") {
       dialogVisible.title = "详情";
       Object.assign(detailFormData.value, response.data.data);
@@ -734,7 +734,7 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
       Object.assign(formData, response.data.data);
     }
   } else {
-    dialogVisible.title = "新增TeamTest";
+    dialogVisible.title = "新增TeamTest22";
     formData.id = undefined;
     formData.name = undefined;
     formData.content = undefined;
@@ -754,7 +754,7 @@ async function handleSubmit() {
       const id = formData.id;
       if (id) {
         try {
-          await TeamTestAPI.updateTeamTest(id, { id, ...formData });
+          await TeamTest22API.updateTeamTest22(id, { id, ...formData });
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -766,7 +766,7 @@ async function handleSubmit() {
         }
       } else {
         try {
-          await TeamTestAPI.createTeamTest(formData);
+          await TeamTest22API.createTeamTest22(formData);
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -791,7 +791,7 @@ async function handleDelete(ids: number[]) {
     .then(async () => {
       try {
         loading.value = true;
-        await TeamTestAPI.deleteTeamTest(ids);
+        await TeamTest22API.deleteTeamTest22(ids);
         handleResetQuery();
       } catch (error: any) {
         console.error(error);
@@ -808,7 +808,7 @@ async function handleDelete(ids: number[]) {
 // 处理上传
 const handleUpload = async (formData: FormData) => {
   try {
-    const response = await TeamTestAPI.importTeamTest(formData);
+    const response = await TeamTest22API.importTeamTest22(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
       ElMessage.success(`${response.data.msg}，${response.data.data}`);
       importDialogVisible.value = false;

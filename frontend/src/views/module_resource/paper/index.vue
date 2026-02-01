@@ -11,16 +11,6 @@
         :inline="true"
         @submit.prevent="handleQuery"
       >
-        <el-form-item label="文章类型" prop="type">
-          <el-select v-model="queryFormData.type" placeholder="请选择文章类型" style="width: 180px" clearable>
-            <el-option v-for="dict in dictStore.getDictArray('sys_paper_type')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="文章领域" prop="field">
-          <el-select v-model="queryFormData.field" placeholder="请选择文章领域" style="width: 180px" clearable>
-            <el-option v-for="dict in dictStore.getDictArray('sys_research_field')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
-          </el-select>
-        </el-form-item>
         <el-form-item label="标题" prop="title">
           <el-input v-model="queryFormData.title" placeholder="请输入标题" clearable />
         </el-form-item>
@@ -29,12 +19,6 @@
         </el-form-item>
         <el-form-item label="年份" prop="year">
           <el-input v-model="queryFormData.year" placeholder="请输入年份" clearable />
-        </el-form-item>
-        <el-form-item label="DOI" prop="doi">
-          <el-input v-model="queryFormData.doi" placeholder="请输入DOI" clearable />
-        </el-form-item>
-        <el-form-item label="PubMed ID" prop="pmid">
-          <el-input v-model="queryFormData.pmid" placeholder="请输入PubMed ID" clearable />
         </el-form-item>
         <el-form-item label="备注/描述" prop="description">
           <el-input v-model="queryFormData.description" placeholder="请输入备注/描述" clearable />
@@ -566,9 +550,9 @@ import { ResultEnum } from "@/enums/api/result.enum";
 import DatePicker from "@/components/DatePicker/index.vue";
 import type { IContentConfig } from "@/components/CURD/types";
 import ImportModal from "@/components/CURD/ImportModal.vue";
-// import SingleFileUpload from "@/components/Upload/SingleFileUpload.vue";
-// import SingleImageUpload from "@/components/Upload/SingleImageUpload.vue";
-// import WangEditor from "@/components/WangEditor/index.vue";
+import SingleFileUpload from "@/components/Upload/SingleFileUpload.vue";
+import SingleImageUpload from "@/components/Upload/SingleImageUpload.vue";
+import WangEditor from "@/components/WangEditor/index.vue";
 import ResourcePaperAPI, {
   ResourcePaperPageQuery,
   ResourcePaperTable,
@@ -690,13 +674,9 @@ function handleUpdatedDateRangeChange(range: [Date, Date]) {
 const queryFormData = reactive<ResourcePaperPageQuery>({
   page_no: 1,
   page_size: 10,
-  type: undefined,
-  field: undefined,
   title: undefined,
   source: undefined,
   year: undefined,
-  doi: undefined,
-  pmid: undefined,
   description: undefined,
   created_time: undefined,
   updated_time: undefined,

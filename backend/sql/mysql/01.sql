@@ -176,3 +176,4 @@ CREATE TABLE `project_method_kits` (
   CONSTRAINT `fk_project_method_kits_method_id` FOREIGN KEY (`method_id`) REFERENCES `project_method` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_project_method_kits_kit_id` FOREIGN KEY (`kit_id`) REFERENCES `resource_kit` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='方法功能关联表';
+

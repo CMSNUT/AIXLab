@@ -1,79 +1,92 @@
-<!-- 测试 -->
+<!-- 模块 -->
 <template>
   <div class="app-container">
-    <!-- 搜索区域：添加 transition 过渡动画 + 全局折叠变量控制 -->
+    <!-- 搜索区域 -->
     <transition name="search-fade">
-      <div v-show="visible && !isSearchGlobalCollapsed" class="search-container">
-        <el-form
-          ref="queryFormRef"
-          :model="queryFormData"
-          label-suffix=":"
-          :inline="true"
-          @submit.prevent="handleQuery"
-        >
-          <el-form-item label="课题名称" prop="name">
-            <el-input v-model="queryFormData.name" placeholder="请输入课题名称" clearable />
-          </el-form-item>
-          <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
-            <DatePicker
-              v-model="createdDateRange"
-              @update:model-value="handleCreatedDateRangeChange"
-            />
-          </el-form-item>
-          <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
-            <DatePicker
-              v-model="updatedDateRange"
-              @update:model-value="handleUpdatedDateRangeChange"
-            />
-          </el-form-item>
-          <el-form-item v-if="isExpand" prop="created_id" label="创建人">
-            <UserTableSelect
-              v-model="queryFormData.created_id"
-              @confirm-click="handleConfirm"
-              @clear-click="handleQuery"
-            />
-          </el-form-item>
-          <el-form-item v-if="isExpand" prop="updated_id" label="更新人">
-            <UserTableSelect
-              v-model="queryFormData.updated_id"
-              @confirm-click="handleConfirm"
-              @clear-click="handleQuery"
-            />
-          </el-form-item>
-          <!-- 查询、重置、展开/收起按钮 -->
-          <el-form-item>
-            <el-button
-              v-hasPerm="['module_team:test:query']"
-              type="primary"
-              icon="search"
-              @click="handleQuery"
-            >
-              查询
-            </el-button>
-            <el-button
-              v-hasPerm="['module_team:test:query']"
-              icon="refresh"
-              @click="handleResetQuery"
-            >
-              重置
-            </el-button>
-            <!-- 展开/收起（内部表单项，保留原有逻辑） -->
-            <template v-if="isExpandable">
-              <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
-                {{ isExpand ? "收起" : "展开" }}
-                <el-icon>
-                  <template v-if="isExpand">
-                    <ArrowUp />
-                  </template>
-                  <template v-else>
-                    <ArrowDown />
-                  </template>
-                </el-icon>
-              </el-link>
-            </template>
-          </el-form-item>
-        </el-form>
-      </div>
+    <div v-show="visible && !isSearchGlobalCollapsed" class="search-container">
+      <el-form
+        ref="queryFormRef"
+        :model="queryFormData"
+        label-suffix=":"
+        :inline="true"
+        @submit.prevent="handleQuery"
+      >
+        <el-form-item label="模块名称" prop="name">
+          <el-input v-model="queryFormData.name" placeholder="请输入模块名称" clearable />
+        </el-form-item>
+        <el-form-item label="模块类型" prop="type">
+          <el-select v-model="queryFormData.type" placeholder="请选择模块类型" style="width: 180px" clearable>
+            <el-option v-for="dict in dictStore.getDictArray('sys_module_type')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="编程语言" prop="language">
+          <el-select v-model="queryFormData.language" placeholder="请选择编程语言" style="width: 180px" clearable>
+            <el-option v-for="dict in dictStore.getDictArray('sys_coding_language')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注/描述" prop="description">
+          <el-input v-model="queryFormData.description" placeholder="请输入备注/描述" clearable />
+        </el-form-item>
+        <el-form-item v-if="isExpand" prop="created_time" label="创建时间">
+          <DatePicker
+            v-model="createdDateRange"
+            @update:model-value="handleCreatedDateRangeChange"
+          />
+        </el-form-item>
+        <el-form-item v-if="isExpand" prop="updated_time" label="更新时间">
+          <DatePicker
+            v-model="updatedDateRange"
+            @update:model-value="handleUpdatedDateRangeChange"
+          />
+        </el-form-item>
+        <el-form-item v-if="isExpand" prop="created_id" label="创建人">
+          <UserTableSelect
+            v-model="queryFormData.created_id"
+            @confirm-click="handleConfirm"
+            @clear-click="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item v-if="isExpand" prop="updated_id" label="更新人">
+          <UserTableSelect
+            v-model="queryFormData.updated_id"
+            @confirm-click="handleConfirm"
+            @clear-click="handleQuery"
+          />
+        </el-form-item>
+        <!-- 查询、重置、展开/收起按钮 -->
+        <el-form-item>
+          <el-button
+            v-hasPerm="['module_resource:kit:query']"
+            type="primary"
+            icon="search"
+            @click="handleQuery"
+          >
+            查询
+          </el-button>
+          <el-button
+            v-hasPerm="['module_resource:kit:query']"
+            icon="refresh"
+            @click="handleResetQuery"
+          >
+            重置
+          </el-button>
+          <!-- 展开/收起 -->
+          <template v-if="isExpandable">
+            <el-link class="ml-3" type="primary" underline="never" @click="isExpand = !isExpand">
+              {{ isExpand ? "收起" : "展开" }}
+              <el-icon>
+                <template v-if="isExpand">
+                  <ArrowUp />
+                </template>
+                <template v-else>
+                  <ArrowDown />
+                </template>
+              </el-icon>
+            </el-link>
+          </template>
+        </el-form-item>
+      </el-form>
+    </div>
     </transition>
 
     <!-- 内容区域 -->
@@ -82,8 +95,8 @@
         <div class="card-header">
           <!-- 左侧：测试列表 + 提示 tooltip -->
           <span class="card-header__title">
-            测试列表
-            <el-tooltip content="测试列表">
+            模块列表
+            <el-tooltip content="模块列表">
               <QuestionFilled class="w-4 h-4 mx-1" />
             </el-tooltip>
           </span>
@@ -94,7 +107,7 @@
               underline="never" 
               @click="isSearchGlobalCollapsed = !isSearchGlobalCollapsed"
             >
-              {{ isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }}
+              {{  isSearchGlobalCollapsed ? "展开搜索区域" : "折叠搜索区域" }} 
               <el-icon>
                 <template v-if="isSearchGlobalCollapsed">
                   <ArrowDown />
@@ -114,7 +127,7 @@
           <el-row :gutter="10">
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['module_team:test:create']"
+                v-hasPerm="['module_resource:kit:create']"
                 type="success"
                 icon="plus"
                 @click="handleOpenDialog('create')"
@@ -124,7 +137,7 @@
             </el-col>
             <el-col :span="1.5">
               <el-button
-                v-hasPerm="['module_team:test:delete']"
+                v-hasPerm="['module_resource:kit:delete']"
                 type="danger"
                 icon="delete"
                 :disabled="selectIds.length === 0"
@@ -134,7 +147,7 @@
               </el-button>
             </el-col>
             <el-col :span="1.5">
-              <el-dropdown v-hasPerm="['module_team:test:batch']" trigger="click">
+              <el-dropdown v-hasPerm="['module_resource:kit:batch']" trigger="click">
                 <el-button type="default" :disabled="selectIds.length === 0" icon="ArrowDown">
                   更多
                 </el-button>
@@ -147,7 +160,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导入">
                 <el-button
-                  v-hasPerm="['module_team:test:import']"
+                  v-hasPerm="['module_resource:kit:import']"
                   type="success"
                   icon="upload"
                   circle
@@ -158,7 +171,7 @@
             <el-col :span="1.5">
               <el-tooltip content="导出">
                 <el-button
-                  v-hasPerm="['module_team:test:export']"
+                  v-hasPerm="['module_resource:kit:export']"
                   type="warning"
                   icon="download"
                   circle
@@ -180,7 +193,7 @@
             <el-col :span="1.5">
               <el-tooltip content="刷新">
                 <el-button
-                  v-hasPerm="['module_team:test:query']"
+                  v-hasPerm="['module_resource:kit:query']"
                   type="primary"
                   icon="refresh"
                   circle
@@ -237,47 +250,46 @@
         </el-table-column>
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'name')?.show"
-          label="课题名称"
+          label="模块名称"
           prop="name"
           min-width="140"
         />
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === 'file_path')?.show"
-          label="本地文件"
-          prop="file_path"
+          v-if="tableColumns.find((col) => col.prop === 'type')?.show"
+          label="模块类型"
+          prop="type"
           min-width="140"
-        >
-          <template #default="scope">
-            <a
-              v-if="scope.row && scope.row.file_path"
-              :href="scope.row.file_path"
-              target="_blank"  
-              :download="getFileName(scope.row.file_path)" 
-              class="file-link"
-              @click.stop  
-            >
-              {{ getFileName(scope.row.file_path) }} 
-            </a>
-          </template>
-        </el-table-column>
+        />
         <el-table-column
-          v-if="tableColumns.find((col) => col.prop === 'image_path')?.show"
-          label="本地图片"
-          prop="image_path"
-          min-width="70"
-        >
-          <template #default="scope">                               
-            <el-image
-              v-if="scope.row.image_path" 
-              :src="scope.row.image_path"  
-              style="width: 50px; height: 50px;"  
-              fit="cover"
-              lazy
-              :preview-src-list="[scope.row.image_path]"
-              :preview-teleported="true"
-            />
-          </template>
-        </el-table-column>
+          v-if="tableColumns.find((col) => col.prop === 'language')?.show"
+          label="编程语言"
+          prop="language"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'description')?.show"
+          label="备注/描述"
+          prop="description"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'local_path')?.show"
+          label="本地文件"
+          prop="local_path"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'network_url')?.show"
+          label="网络地址"
+          prop="network_url"
+          min-width="140"
+        />
+        <el-table-column
+          v-if="tableColumns.find((col) => col.prop === 'cloud_url')?.show"
+          label="网盘地址"
+          prop="cloud_url"
+          min-width="140"
+        />
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'created_time')?.show"
           label="创建时间"
@@ -319,7 +331,7 @@
         >
           <template #default="scope">
             <el-button
-              v-hasPerm="['module_team:test:detail']"
+              v-hasPerm="['module_resource:kit:detail']"
               type="info"
               size="small"
               link
@@ -329,7 +341,7 @@
               详情
             </el-button>
             <el-button
-              v-hasPerm="['module_team:test:update']"
+              v-hasPerm="['module_resource:kit:update']"
               type="primary"
               size="small"
               link
@@ -339,7 +351,7 @@
               编辑
             </el-button>
             <el-button
-              v-hasPerm="['module_team:test:delete']"
+              v-hasPerm="['module_resource:kit:delete']"
               type="danger"
               size="small"
               link
@@ -372,44 +384,36 @@
       <!-- 详情 -->
       <template v-if="dialogVisible.type === 'detail'">
         <el-descriptions :column="4" border>
-        <el-descriptions-item label="主键ID" :span="2">
-            {{ detailFormData.id }}
-          </el-descriptions-item>
-        <el-descriptions-item label="课题名称" :span="2">
-            {{ detailFormData.name }}
-          </el-descriptions-item>
-        <el-descriptions-item label="课题简介" :span="2">
-            {{ detailFormData.content }}
-        </el-descriptions-item>
-        <el-descriptions-item label="本地文件" :span="2">
-            <a
-              v-if="detailFormData.file_path"
-              :href="detailFormData.file_path"
-              target="_blank"  
-              :download="getFileName(detailFormData.file_path)" 
-              class="file-link"
-              @click.stop  
-            >
-              {{ getFileName(detailFormData.file_path) }} 
-            </a>
-        </el-descriptions-item>
-        <el-descriptions-item label="本地图片" :span="2">          
-          <el-image
-            v-if="detailFormData.image_path" 
-            :src="detailFormData.image_path"  
-            style="width: 50px; height: 50px;"  
-            fit="cover"
-            lazy
-            :preview-src-list="[detailFormData.image_path]"
-            :preview-teleported="true"
-          />
-        </el-descriptions-item>
-        <el-descriptions-item label="创建时间" :span="2">
-            {{ detailFormData.created_time }}
-          </el-descriptions-item>
-        <el-descriptions-item label="更新时间" :span="2">
-            {{ detailFormData.updated_time }}
-          </el-descriptions-item>
+          <el-descriptions-item label="自增主键ID" :span="2">
+              {{ detailFormData.id }}
+            </el-descriptions-item>
+          <el-descriptions-item label="模块名称" :span="2">
+              {{ detailFormData.name }}
+            </el-descriptions-item>
+          <el-descriptions-item label="模块类型" :span="2">
+              {{ detailFormData.type }}
+            </el-descriptions-item>
+          <el-descriptions-item label="编程语言" :span="2">
+              {{ detailFormData.language }}
+            </el-descriptions-item>
+          <el-descriptions-item label="备注/描述" :span="2">
+              {{ detailFormData.description }}
+            </el-descriptions-item>
+          <el-descriptions-item label="本地文件" :span="2">
+              {{ detailFormData.local_path }}
+            </el-descriptions-item>
+          <el-descriptions-item label="网络地址" :span="2">
+              {{ detailFormData.network_url }}
+            </el-descriptions-item>
+          <el-descriptions-item label="网盘地址" :span="2">
+              {{ detailFormData.cloud_url }}
+            </el-descriptions-item>
+          <el-descriptions-item label="创建时间" :span="2">
+              {{ detailFormData.created_time }}
+            </el-descriptions-item>
+          <el-descriptions-item label="更新时间" :span="2">
+              {{ detailFormData.updated_time }}
+            </el-descriptions-item>
           <el-descriptions-item label="创建人" :span="2">
             {{ detailFormData.created_by?.name }}
           </el-descriptions-item>
@@ -429,17 +433,30 @@
           label-width="auto"
           label-position="right"
         >
-          <el-form-item label="课题名称" prop="name" :required="false">
-            <el-input v-model="formData.name" placeholder="请输入课题名称" />
+          <el-form-item label="模块名称" prop="name" :required="false">
+            <el-input v-model="formData.name" placeholder="请输入模块名称" />
           </el-form-item>
-          <el-form-item label="课题简介" prop="content">
-            <WangEditor v-model="formData.content" />
+          <el-form-item label="模块类型" prop="type" :required="false">
+            <el-select v-model="formData.type" placeholder="请选择模块类型">
+              <el-option v-for="dict in dictStore.getDictArray('sys_module_type')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
+            </el-select>
           </el-form-item>
-          <el-form-item label="本地文件" prop="file_path">
-            <SingleFileUpload v-model="formData.file_path" />
+          <el-form-item label="编程语言" prop="language" :required="false">
+            <el-select v-model="formData.language" placeholder="请选择编程语言">
+              <el-option v-for="dict in dictStore.getDictArray('sys_coding_language')" :key="dict.dict_value" :label="dict.dict_label" :value="dict.dict_value" />
+            </el-select>
           </el-form-item>
-          <el-form-item label="本地图片" prop="image_path">
-            <SingleImageUpload v-model="formData.image_path" />
+          <el-form-item label="备注/描述" prop="description" :required="false">
+            <el-input v-model="formData.description" placeholder="请输入备注/描述" />
+          </el-form-item>
+          <el-form-item label="本地文件" prop="local_path" :required="false">
+            <el-input v-model="formData.local_path" placeholder="请输入本地文件" />
+          </el-form-item>
+          <el-form-item label="网络地址" prop="network_url" :required="false">
+            <el-input v-model="formData.network_url" placeholder="请输入网络地址" />
+          </el-form-item>
+          <el-form-item label="网盘地址" prop="cloud_url" :required="false">
+            <el-input v-model="formData.cloud_url" placeholder="请输入网盘地址" />
           </el-form-item>
         </el-form>
       </template>
@@ -476,7 +493,7 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: "TeamTest",
+  name: "ResourceKit",
   inheritAttrs: false,
 });
 
@@ -492,11 +509,11 @@ import ImportModal from "@/components/CURD/ImportModal.vue";
 import SingleFileUpload from "@/components/Upload/SingleFileUpload.vue";
 import SingleImageUpload from "@/components/Upload/SingleImageUpload.vue";
 import WangEditor from "@/components/WangEditor/index.vue";
-import TeamTestAPI, {
-  TeamTestPageQuery,
-  TeamTestTable,
-  TeamTestForm,
-} from "@/api/module_team/test";
+import ResourceKitAPI, {
+  ResourceKitPageQuery,
+  ResourceKitTable,
+  ResourceKitForm,
+} from "@/api/module_resource/kit";
 
 const visible = ref(true);
 const isExpand = ref(false);
@@ -505,25 +522,31 @@ const queryFormRef = ref();
 const dataFormRef = ref();
 const total = ref(0);
 const selectIds = ref<number[]>([]);
-const selectionRows = ref<TeamTestTable[]>([]);
+const selectionRows = ref<ResourceKitTable[]>([]);
 const loading = ref(false);
 const isSearchGlobalCollapsed = ref(true);
 
 // 字典仓库与需要加载的字典类型
 const dictStore = useDictStore();
 const dictTypes: any = [
+  "sys_module_type",
+  "sys_coding_language",
 ];
 
 // 分页表单
-const pageTableData = ref<TeamTestTable[]>([]);
+const pageTableData = ref<ResourceKitTable[]>([]);
 
 // 表格列配置
 const tableColumns = ref([
   { prop: "selection", label: "选择框", show: true },
   { prop: "index", label: "序号", show: true },
-  { prop: "name", label: "课题名称", show: true },
-  { prop: "file_path", label: "本地文件", show: true },
-  { prop: "image_path", label: "本地图片", show: true },
+  { prop: "name", label: "模块名称", show: true },
+  { prop: "type", label: "模块类型", show: true },
+  { prop: "language", label: "编程语言", show: true },
+  { prop: "description", label: "备注/描述", show: true },
+  { prop: "local_path", label: "本地文件", show: true },
+  { prop: "network_url", label: "网络地址", show: true },
+  { prop: "cloud_url", label: "网盘地址", show: true },
   { prop: "created_time", label: "创建时间", show: true },
   { prop: "updated_time", label: "更新时间", show: true },
   { prop: "created_id", label: "创建人ID", show: true },
@@ -533,9 +556,13 @@ const tableColumns = ref([
 
 // 导出列（不含选择/序号/操作）
 const exportColumns = [
-  { prop: "name", label: "课题名称" },
-  { prop: "file_path", label: "本地文件" },
-  { prop: "image_path", label: "本地图片" },
+  { prop: "name", label: "模块名称" },
+  { prop: "type", label: "模块类型" },
+  { prop: "language", label: "编程语言" },
+  { prop: "description", label: "备注/描述" },
+  { prop: "local_path", label: "本地文件" },
+  { prop: "network_url", label: "网络地址" },
+  { prop: "cloud_url", label: "网盘地址" },
   { prop: "created_time", label: "创建时间" },
   { prop: "updated_time", label: "更新时间" },
   { prop: "created_id", label: "创建人ID" },
@@ -544,16 +571,16 @@ const exportColumns = [
 
 // 导入/导出配置
 const curdContentConfig = {
-  permPrefix: "module_team:test",
+  permPrefix: "module_resource:kit",
   cols: exportColumns as any,
-  importTemplate: () => TeamTestAPI.downloadTemplateTeamTest(),
+  importTemplate: () => ResourceKitAPI.downloadTemplateResourceKit(),
   exportsAction: async (params: any) => {
     const query: any = { ...params };
     query.page_no = 1;
     query.page_size = 9999;
     const all: any[] = [];
     while (true) {
-      const res = await TeamTestAPI.listTeamTest(query);
+      const res = await ResourceKitAPI.listResourceKit(query);
       const items = res.data?.data?.items || [];
       const total = res.data?.data?.total || 0;
       all.push(...items);
@@ -565,7 +592,7 @@ const curdContentConfig = {
 } as unknown as IContentConfig;
 
 // 详情表单
-const detailFormData = ref<TeamTestTable>({});
+const detailFormData = ref<ResourceKitTable>({});
 // 日期范围临时变量
 const createdDateRange = ref<[Date, Date] | []>([]);
 // 更新时间范围临时变量
@@ -592,11 +619,13 @@ function handleUpdatedDateRangeChange(range: [Date, Date]) {
 }
 
 // 分页查询参数
-const queryFormData = reactive<TeamTestPageQuery>({
+const queryFormData = reactive<ResourceKitPageQuery>({
   page_no: 1,
   page_size: 10,
   name: undefined,
-  content: undefined,
+  type: undefined,
+  language: undefined,
+  description: undefined,
   created_time: undefined,
   updated_time: undefined,
   created_id: undefined,
@@ -604,12 +633,15 @@ const queryFormData = reactive<TeamTestPageQuery>({
 });
 
 // 编辑表单
-const formData = reactive<TeamTestForm>({
+const formData = reactive<ResourceKitForm>({
   id: undefined,
   name: undefined,
-  content: undefined,
-  file_path: undefined,
-  image_path: undefined,
+  type: undefined,
+  language: undefined,
+  description: undefined,
+  local_path: undefined,
+  network_url: undefined,
+  cloud_url: undefined,
 });
 
 // 弹窗状态
@@ -621,11 +653,14 @@ const dialogVisible = reactive({
 
 // 表单验证规则
 const rules = reactive({
-  id: [{ required: false, message: "请输入主键ID", trigger: "blur" }],
-  name: [{ required: false, message: "请输入课题名称", trigger: "blur" }],
-  content: [{ required: true, message: "请输入课题简介", trigger: "blur" }],
-  file_path: [{ required: true, message: "请输入本地文件", trigger: "blur" }],
-  image_path: [{ required: true, message: "请输入本地图片", trigger: "blur" }],
+  id: [{ required: false, message: "请输入自增主键ID", trigger: "blur" }],
+  name: [{ required: false, message: "请输入模块名称", trigger: "blur" }],
+  type: [{ required: true, message: "请输入模块类型", trigger: "blur" }],
+  language: [{ required: true, message: "请输入编程语言", trigger: "blur" }],
+  description: [{ required: true, message: "请输入备注/描述", trigger: "blur" }],
+  local_path: [{ required: true, message: "请输入本地文件", trigger: "blur" }],
+  network_url: [{ required: true, message: "请输入网络地址", trigger: "blur" }],
+  cloud_url: [{ required: true, message: "请输入网盘地址", trigger: "blur" }],
   created_time: [{ required: false, message: "请输入创建时间", trigger: "blur" }],
   updated_time: [{ required: false, message: "请输入更新时间", trigger: "blur" }],
   created_id: [{ required: true, message: "请输入创建人ID", trigger: "blur" }],
@@ -657,7 +692,7 @@ async function handleRefresh() {
 async function loadingData() {
   loading.value = true;
   try {
-    const response = await TeamTestAPI.listTeamTest(queryFormData);
+    const response = await ResourceKitAPI.listResourceKit(queryFormData);
     pageTableData.value = response.data.data.items;
     total.value = response.data.data.total;
   } catch (error: any) {
@@ -691,12 +726,15 @@ async function handleResetQuery() {
 }
 
 // 定义初始表单数据常量
-const initialFormData: TeamTestForm = {
+const initialFormData: ResourceKitForm = {
   id: undefined,
   name: undefined,
-  content: undefined,
-  file_path: undefined,
-  image_path: undefined,
+  type: undefined,
+  language: undefined,
+  description: undefined,
+  local_path: undefined,
+  network_url: undefined,
+  cloud_url: undefined,
 };
 
 // 重置表单
@@ -725,7 +763,7 @@ async function handleCloseDialog() {
 async function handleOpenDialog(type: "create" | "update" | "detail", id?: number) {
   dialogVisible.type = type;
   if (id) {
-    const response = await TeamTestAPI.detailTeamTest(id);
+    const response = await ResourceKitAPI.detailResourceKit(id);
     if (type === "detail") {
       dialogVisible.title = "详情";
       Object.assign(detailFormData.value, response.data.data);
@@ -734,12 +772,15 @@ async function handleOpenDialog(type: "create" | "update" | "detail", id?: numbe
       Object.assign(formData, response.data.data);
     }
   } else {
-    dialogVisible.title = "新增TeamTest";
+    dialogVisible.title = "新增ResourceKit";
     formData.id = undefined;
     formData.name = undefined;
-    formData.content = undefined;
-    formData.file_path = undefined;
-    formData.image_path = undefined;
+    formData.type = undefined;
+    formData.language = undefined;
+    formData.description = undefined;
+    formData.local_path = undefined;
+    formData.network_url = undefined;
+    formData.cloud_url = undefined;
   }
   dialogVisible.visible = true;
 }
@@ -754,7 +795,7 @@ async function handleSubmit() {
       const id = formData.id;
       if (id) {
         try {
-          await TeamTestAPI.updateTeamTest(id, { id, ...formData });
+          await ResourceKitAPI.updateResourceKit(id, { id, ...formData });
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -766,7 +807,7 @@ async function handleSubmit() {
         }
       } else {
         try {
-          await TeamTestAPI.createTeamTest(formData);
+          await ResourceKitAPI.createResourceKit(formData);
           dialogVisible.visible = false;
           resetForm();
           handleCloseDialog();
@@ -791,7 +832,7 @@ async function handleDelete(ids: number[]) {
     .then(async () => {
       try {
         loading.value = true;
-        await TeamTestAPI.deleteTeamTest(ids);
+        await ResourceKitAPI.deleteResourceKit(ids);
         handleResetQuery();
       } catch (error: any) {
         console.error(error);
@@ -808,7 +849,7 @@ async function handleDelete(ids: number[]) {
 // 处理上传
 const handleUpload = async (formData: FormData) => {
   try {
-    const response = await TeamTestAPI.importTeamTest(formData);
+    const response = await ResourceKitAPI.importResourceKit(formData);
     if (response.data.code === ResultEnum.SUCCESS) {
       ElMessage.success(`${response.data.msg}，${response.data.data}`);
       importDialogVisible.value = false;

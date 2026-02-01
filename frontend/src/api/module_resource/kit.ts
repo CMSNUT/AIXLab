@@ -1,11 +1,11 @@
 import request from "@/utils/request";
 
-const API_PATH = "/resource/paper";
+const API_PATH = "/resource/kit";
 
-const ResourcePaperAPI = {
+const ResourceKitAPI = {
   // 列表查询
-  listResourcePaper(query: ResourcePaperPageQuery) {
-    return request<ApiResponse<PageResult<ResourcePaperTable[]>>>({
+  listResourceKit(query: ResourceKitPageQuery) {
+    return request<ApiResponse<PageResult<ResourceKitTable[]>>>({
       url: `${API_PATH}/list`,
       method: "get",
       params: query,
@@ -13,15 +13,15 @@ const ResourcePaperAPI = {
   },
 
   // 详情查询
-  detailResourcePaper(id: number) {
-    return request<ApiResponse<ResourcePaperTable>>({
+  detailResourceKit(id: number) {
+    return request<ApiResponse<ResourceKitTable>>({
       url: `${API_PATH}/detail/${id}`,
       method: "get",
     });
   },
 
   // 新增
-  createResourcePaper(body: ResourcePaperForm) {
+  createResourceKit(body: ResourceKitForm) {
     return request<ApiResponse>({
       url: `${API_PATH}/create`,
       method: "post",
@@ -30,7 +30,7 @@ const ResourcePaperAPI = {
   },
 
   // 修改（带主键）
-  updateResourcePaper(id: number, body: ResourcePaperForm) {
+  updateResourceKit(id: number, body: ResourceKitForm) {
     return request<ApiResponse>({
       url: `${API_PATH}/update/${id}`,
       method: "put",
@@ -39,7 +39,7 @@ const ResourcePaperAPI = {
   },
 
   // 删除（支持批量）
-  deleteResourcePaper(ids: number[]) {
+  deleteResourceKit(ids: number[]) {
     return request<ApiResponse>({
       url: `${API_PATH}/delete`,
       method: "delete",
@@ -48,7 +48,7 @@ const ResourcePaperAPI = {
   },
 
   // 批量启用/停用
-  batchResourcePaper(body: BatchType) {
+  batchResourceKit(body: BatchType) {
     return request<ApiResponse>({
       url: `${API_PATH}/available/setting`,
       method: "patch",
@@ -57,7 +57,7 @@ const ResourcePaperAPI = {
   },
 
   // 导出
-  exportResourcePaper(query: ResourcePaperPageQuery) {
+  exportResourceKit(query: ResourceKitPageQuery) {
     return request<Blob>({
       url: `${API_PATH}/export`,
       method: "post",
@@ -67,7 +67,7 @@ const ResourcePaperAPI = {
   },
 
   // 下载导入模板
-  downloadTemplateResourcePaper() {
+  downloadTemplateResourceKit() {
     return request<Blob>({
       url: `${API_PATH}/download/template`,
       method: "post",
@@ -76,7 +76,7 @@ const ResourcePaperAPI = {
   },
 
   // 导入
-  importResourcePaper(body: FormData) {
+  importResourceKit(body: FormData) {
     return request<ApiResponse>({
       url: `${API_PATH}/import`,
       method: "post",
@@ -86,17 +86,17 @@ const ResourcePaperAPI = {
   },
 };
 
-export default ResourcePaperAPI;
+export default ResourceKitAPI;
 
 // ------------------------------
 // TS 类型声明
 // ------------------------------
 
 // 列表查询参数
-export interface ResourcePaperPageQuery extends PageQuery {
-  title?: string;
-  source?: string;
-  year?: string;
+export interface ResourceKitPageQuery extends PageQuery {
+  name?: string;
+  type?: string;
+  language?: string;
   description?: string;
   created_id?: number;
   updated_id?: number;
@@ -105,17 +105,13 @@ export interface ResourcePaperPageQuery extends PageQuery {
 }
 
 // 列表展示项
-export interface ResourcePaperTable extends BaseType {
+export interface ResourceKitTable extends BaseType {
+  name?: string;
   type?: string;
-  field?: string;
-  title?: string;
-  source?: string;
-  year?: string;
-  volume?: string;
-  issue?: string;
-  pages?: string;
-  doi?: string;
-  pmid?: string;
+  language?: string;
+  local_path?: string;
+  network_url?: string;
+  cloud_url?: string;
   created_id?: string;
   updated_id?: string;
   created_by?: CommonType;
@@ -123,15 +119,11 @@ export interface ResourcePaperTable extends BaseType {
 }
 
 // 新增/修改/详情表单参数
-export interface ResourcePaperForm extends BaseFormType {
+export interface ResourceKitForm extends BaseFormType {
+  name?: string;
   type?: string;
-  field?: string;
-  title?: string;
-  source?: string;
-  year?: string;
-  volume?: string;
-  issue?: string;
-  pages?: string;
-  doi?: string;
-  pmid?: string;
+  language?: string;
+  local_path?: string;
+  network_url?: string;
+  cloud_url?: string;
 }
