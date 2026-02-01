@@ -11,7 +11,7 @@ from fastapi import Query
 {% if table.created_time %}
 from app.core.validator import DateTimeStr
 {% endif %}
-from app.core.base_schema import BaseSchema, UserBySchema
+from app.core.base_schema import BaseSchemaModify, UserBySchema
 
 class {{ class_name }}CreateSchema(BaseModel):
     """
@@ -19,7 +19,7 @@ class {{ class_name }}CreateSchema(BaseModel):
     """
     {% for column in columns %}
     {% if column.column_name not in ['id', 'created_time', 'updated_time', 'created_id', 'updated_id'] %}
-    {{ column.column_name }}: {{ column.python_type }} = Field(default=..., description='{{ column.column_comment }}')
+    {{ column.column_name }}: {{ column.python_type }}  | None = Field(default=None, description='{{ column.column_comment }}')
     {% endif %}
     {% endfor %}
 
@@ -31,7 +31,7 @@ class {{ class_name }}UpdateSchema({{ class_name }}CreateSchema):
     ...
 
 
-class {{ class_name }}OutSchema({{ class_name }}CreateSchema, BaseSchema, UserBySchema):
+class {{ class_name }}OutSchema({{ class_name }}CreateSchema, BaseSchemaModify, UserBySchema):
     """
     {{ function_name }}响应模型
     """

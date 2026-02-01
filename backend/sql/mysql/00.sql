@@ -6,7 +6,7 @@ CREATE TABLE `resource_paper` (
   `type` varchar(10) DEFAULT NULL COMMENT '文章类型',
   `field` varchar(20) DEFAULT NULL COMMENT '文章领域',
   `title` varchar(255) NOT NULL COMMENT '标题',
-  `source` varchar(255) DEFAULT NULL COMMENT '期刊/会议名称',
+  `source` varchar(255) DEFAULT NULL COMMENT '来源(期刊/会议等)',
   `year` int DEFAULT NULL COMMENT '年份',
   `volume` varchar(20) DEFAULT NULL COMMENT '卷',
   `issue` varchar(20) DEFAULT NULL COMMENT '期',
@@ -287,6 +287,7 @@ DROP TABLE IF EXISTS `resource_chart`;
 CREATE TABLE `resource_chart` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `paper_id` int DEFAULT NULL COMMENT '文献ID',
+  `type` varchar(10) DEFAULT NULL COMMENT '图表类型',
   `name` varchar(200) DEFAULT NULL COMMENT '图表名称',
   `code` varchar(10) DEFAULT NULL COMMENT '图表编号',
   `local_path` varchar(1000) DEFAULT NULL COMMENT '本地文件',
