@@ -4,6 +4,9 @@ import { store, useUserStore } from "@/store";
 import { MenuTable } from "@/api/module_system/menu";
 
 const modules = import.meta.glob("../../views/**/**.vue");
+
+// console.log("模块：", modules)
+
 const Layout = () => import("@/layouts/index.vue");
 
 export interface Meta {

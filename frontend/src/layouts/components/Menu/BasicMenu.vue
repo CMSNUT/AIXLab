@@ -215,6 +215,8 @@ function updateParentMenuStyles() {
           // 对于水平菜单，使用路径匹配来找到父菜单
           const currentPath = activeMenuPath.value;
 
+          // console.log("路径匹配:",currentPath)
+
           // 查找所有父菜单项，检查哪个包含当前路径
           allSubMenus.forEach((subMenu) => {
             const subMenuEl = subMenu as HTMLElement;
