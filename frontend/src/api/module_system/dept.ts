@@ -27,7 +27,7 @@ const DeptAPI = {
   },
 
   updateDept(id: number, body: DeptForm) {
-    return request<ApiResponse>({
+      return request<ApiResponse>({
       url: `${API_PATH}/update/${id}`,
       method: "put",
       data: body,

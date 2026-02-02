@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteLocationNormalized, type RouteRecordRaw } from "vue-router";
 export const Layout = () => import("@/layouts/index.vue");
 /**
  * 静态路由
@@ -80,6 +80,48 @@ export const constantRoutes: RouteRecordRaw[] = [
       },
     ],
   },
+  // {
+  //   path: "/plot/basic",
+  //   name: "BasicPlot",
+  //   component: () => import("@/views/module_plot/basic_plot/index.vue"), // 你的列表页路径
+  //   meta: { title: "基础绘图" }
+  // },
+  // // 新增：详情页路由（带动态id参数）
+  // {
+  //   path: "/plot/basic/:id",
+  //   name: "BasicPlotDetail",
+  //   component: () => import("@/views/module_plot/basic_plot/detail.vue"), // 你的详情页路径
+  //   meta: { title: "基础绘图模块" },
+  //   props: true // 支持路由参数注入（可选，详情页已通过useRoute获取参数）
+  // },
+
+  // 动态路由（适合模块数量不固定，推荐）
+  // {
+  //   path: "/plot/:cate/index", 
+  //   component: async (route) => {
+  //     // 动态加载对应 code 的 index.vue
+  //     const cate = route.params.cate as string;
+  //     try {
+  //       return await import(`@/views/module_plot/${cate}/index.vue`);
+  //     } catch {
+  //       return await import("@/views/error/404.vue");
+  //     }
+  //   },
+  // },
+
+  {
+    path: "/plot/:category/:code",
+    name: "PlotModule",  // 确保这个 name 存在
+    meta: {
+      title: "绘图模块",
+      affix: false,
+      keepAlive: true,
+    },
+    // component: () => import("@/views/module_plot/${category}/PlotModule.vue")
+    component: () => import("@/views/module_plot/ModuleContainer.vue")
+  }
+
+    
 ];
 
 /**

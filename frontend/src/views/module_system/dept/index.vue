@@ -6,8 +6,8 @@
       <el-form
         ref="queryFormRef"
         :model="queryFormData"
-        :inline="true"
         label-suffix=":"
+        :inline="true"
         @submit.prevent="handleQuery"
       >
         <el-form-item prop="name" label="部门名称">
@@ -149,6 +149,7 @@
         v-loading="loading"
         row-key="id"
         :data="pageTableData"
+        highlight-current-row
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
         class="data-table__content"
         height="540"
@@ -188,7 +189,6 @@
           prop="code"
           min-width="120"
         />
-        ')
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'status')?.show"
           key="status"
@@ -233,7 +233,6 @@
           min-width="120"
           sortable
         />
-
         <el-table-column
           v-if="tableColumns.find((col) => col.prop === 'operation')?.show"
           fixed="right"
