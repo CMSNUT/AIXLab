@@ -20,6 +20,7 @@ export * from "./modules/user.store";
 export * from "./modules/dict.store";
 export * from "./modules/config.store";
 export * from "./modules/notice.store";
+export * from "./modules/plot.store"; // 新增 plot.store 导出
 export { store };
 
 // ------------------------------
@@ -32,6 +33,7 @@ import { useDictStoreHook } from "./modules/dict.store";
 import { useConfigStoreHook } from "./modules/config.store";
 import { useNoticeStoreHook } from "./modules/notice.store";
 import { useTagsViewStore } from "./modules/tags-view.store";
+import { usePlotStoreHook } from "./modules/plot.store"; // 新增 plot store
 
 export interface RefreshCacheOptions {
   /** 需要刷新的字典类型列表，不传则不刷新字典 */
@@ -46,6 +48,8 @@ export interface RefreshCacheOptions {
   refreshNotice?: boolean; // 默认 true
   /** 是否清空标签视图（避免路由变化后出现不一致） */
   clearTags?: boolean; // 默认 false
+  /** 是否清空绘图数据 */
+  clearPlotData?: boolean; // 新增：默认 false
   /** 刷新字典前是否先清空本地字典缓存 */
   clearDictBefore?: boolean; // 默认 false
 }
@@ -62,6 +66,7 @@ export async function refreshAppCaches(opts: RefreshCacheOptions = {}) {
     refreshConfig = true,
     refreshNotice = true,
     clearTags = false,
+    clearPlotData = false, // 新增
     clearDictBefore = false,
   } = opts;
 
@@ -70,6 +75,7 @@ export async function refreshAppCaches(opts: RefreshCacheOptions = {}) {
   const dictStore = useDictStoreHook();
   const noticeStore = useNoticeStoreHook();
   const configStore = useConfigStoreHook();
+  const plotStore = usePlotStoreHook(); // 新增
   const tagsViewStore = useTagsViewStore(store);
 
   const tasks: Promise<any>[] = [];
@@ -97,6 +103,11 @@ export async function refreshAppCaches(opts: RefreshCacheOptions = {}) {
     const dynamicRoutes = await permStore.generateRoutes();
     // 将新生成的动态路由注册到路由器，确保可用
     dynamicRoutes.forEach((route) => router.addRoute(route));
+  }
+
+  // 可选：清空绘图数据
+  if (clearPlotData) {
+    plotStore.clearPlotData();
   }
 
   // 可选：清空标签视图，避免路由变更后的不一致

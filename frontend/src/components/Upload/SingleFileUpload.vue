@@ -2,10 +2,11 @@
 <template>
   <div class="single-file-upload">
     <el-upload
-      v-model:file-list="internalFileList"
+      :file-list="uploadFileList"
       class="single-upload"
       list-type="text"
-      :show-file-list="false"
+      :auto-upload="false"
+      :show-file-list="true"
       :accept="props.accept"
       :before-upload="handleBeforeUpload"
       :http-request="handleUpload"
@@ -14,20 +15,21 @@
       :on-remove="handleDelete"
       :disabled="props.disabled"
       :drag="true" 
+      @change="handleUploadChange"
     >
       <template #default>
         <!-- 拖拽/点击上传区域 -->
         <div class="single-upload__upload-area" :style="props.style">
           <!-- 已上传文件展示 -->
-          <template v-if="internalFileList && internalFileList.length > 0 && internalFileList[0].url">
+          <template v-if="uploadFileList && uploadFileList.length > 0 && uploadFileList[0].url">
             <div class="single-upload__file-info">
               <el-icon class="single-upload__file-icon"><Document /></el-icon>
               <div class="single-upload__file-detail">
-                <p class="single-upload__file-name" :title="internalFileList[0].name">
-                  {{ internalFileList[0].name }}
+                <p class="single-upload__file-name" :title="uploadFileList[0].name">
+                  {{ uploadFileList[0].name }}
                 </p>
                 <p class="single-upload__file-size">
-                  {{ formatFileSize(internalFileList[0].size || 0) }}
+                  {{ formatFileSize(uploadFileList[0].size || 0) }}
                 </p>
               </div>
               <!-- 删除按钮 -->
@@ -46,6 +48,8 @@
             <p class="single-upload__upload-tip">点击或拖拽文件到此处上传</p>
             <p class="single-upload__format-tip">支持 {{ props.accept || "所有" }} 格式，最大 {{ props.maxFileSize }}MB</p>
           </template>
+          <template #footer>
+      </template>
         </div>
       </template>
     </el-upload>
@@ -142,14 +146,14 @@ const modelValue = defineModel<string>({
 });
 
 // 内部使用的文件列表
-const internalFileList = ref<UploadUserFile[]>([]);
+const uploadFileList = ref<UploadUserFile[]>([]);
 
-// 监听modelValue变化，同步到internalFileList
+// 监听modelValue变化，同步到uploadFileList
 watch(
   () => modelValue.value,
   (newVal) => {
     if (newVal) {
-      internalFileList.value = [
+      uploadFileList.value = [
         {
           name: newVal.split("/").pop() || "file",
           url: newVal,
@@ -157,15 +161,15 @@ watch(
         },
       ];
     } else {
-      internalFileList.value = [];
+      uploadFileList.value = [];
     }
   },
   { immediate: true }
 );
 
-// 监听internalFileList变化，同步到modelValue
+// 监听uploadFileList变化，同步到modelValue
 watch(
-  () => internalFileList.value,
+  () => uploadFileList.value,
   (newVal) => {
     if (newVal && newVal.length > 0 && newVal[0].url) {
       modelValue.value = newVal[0].url;
@@ -232,8 +236,13 @@ function handleBeforeUpload(file: UploadRawFile) {
   }
 
   // 缓存文件大小到内部列表，用于展示
-  internalFileList.value = [{ name: file.name, size: file.size, url: "" }];
+  uploadFileList.value = [{ name: file.name, size: file.size, url: "" }];
   return true;
+}
+
+// 上传文件变化处理
+function handleUploadChange(file: any, fileList: any[]) {
+  uploadFileList.value = fileList;
 }
 
 /**
@@ -272,7 +281,7 @@ async function handleUpload(options: UploadRequestOptions) {
  * 删除文件（复用原组件逻辑）
  */
 function handleDelete() {
-  internalFileList.value = [];
+  uploadFileList.value = [];
   ElMessage.success("文件已删除");
 }
 
@@ -285,11 +294,11 @@ const onSuccess = (fileInfo: UploadFilePath) => {
     {
       name: fileInfo.file_name,
       url: fileInfo.file_url,
-      size: internalFileList.value[0]?.size || 0,
+      size: uploadFileList.value[0]?.size || 0,
     },
   ];
 
-  internalFileList.value = newFileList;
+  uploadFileList.value = newFileList;
 
   // 触发事件
   emit("success", fileInfo);
@@ -304,7 +313,7 @@ const onSuccess = (fileInfo: UploadFilePath) => {
 const onError = (error: any) => {
   console.error("文件上传失败:", error);
   ElMessage.error("文件上传失败，请重试");
-  internalFileList.value = [];
+  uploadFileList.value = [];
   emit("error", error);
 };
 </script>

@@ -2,6 +2,10 @@
 
 # 运行R分析服务
 library(plumber)
+library(jsonlite)
+
+# 设置全局选项，自动unbox标量值
+options(jsonlite.auto_unbox = TRUE)
 
 # ==================== 核心: 添加跨域过滤器 ====================
 # 定义跨域过滤器(所有请求都会经过这个过滤器)
@@ -30,6 +34,14 @@ pr <- plumber::plumb("app.R")
 
 # 注册跨域过滤器
 pr$registerHook("preroute", cors_filter)
+
+# 添加自定义序列化器
+pr$setSerializer(plumber::serializer_json(
+  auto_unbox = TRUE,  # 自动unbox标量
+  digits = NA,        # 不限制小数位数
+  null = "null",      # 保持null值
+  force = TRUE        # 强制使用JSON格式
+))
 
 # 启动服务
 cat("========================================\n")

@@ -198,3 +198,16 @@ class CustomGZipMiddleware(GZipMiddleware):
             minimum_size=settings.GZIP_MIN_SIZE,
             compresslevel=settings.GZIP_COMPRESS_LEVEL,
         )
+
+# 新增：安全头部中间件（核心加X-Content-Type-Options等）
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """自定义安全头部中间件，添加X-Content-Type-Options等安全响应头"""
+    async def dispatch(self, request: Request, call_next) -> Response:
+        # 执行后续中间件/接口逻辑，获取响应对象
+        response: Response = await call_next(request)
+        # 核心添加：X-Content-Type-Options（解决你的提示）
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        # 推荐顺带添加：另外2个常用安全头部，一次性解决同类安全提示
+        response.headers["X-Frame-Options"] = "DENY"  # 禁止嵌入iframe，防点击劫持
+        response.headers["X-XSS-Protection"] = "1; mode=block"  # 开启浏览器XSS防护
+        return response

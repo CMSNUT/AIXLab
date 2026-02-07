@@ -150,14 +150,6 @@ class ModelMixinModify(MappedBase):
         comment="主键ID",
         index=True,
     )
-    uuid: Mapped[str] = mapped_column(
-        String(64),
-        default=uuid4_str,
-        nullable=False,
-        unique=True,
-        comment="UUID全局唯一标识",
-        index=True,
-    )
     created_time: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.now,

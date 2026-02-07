@@ -32,11 +32,11 @@ export const ResourceAPI = {
    * 下载文件
    * @param path 文件路径
    */
-  downloadFile(path: string) {
+  downloadFile(path: string, parent_path: string | null = null) {
     return request<Blob>({
       url: `${API_PATH}/download`,
       method: "get",
-      params: { path },
+      params: {path, parent_path},
       responseType: "blob",
     });
   },

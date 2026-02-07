@@ -31,7 +31,6 @@ class BaseSchemaModify(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int | None = Field(default=None, description="主键ID")
-    uuid: str | None = Field(default=None, description="UUID")
     created_time: DateTimeStr | None = Field(default=None, description="创建时间")
     updated_time: DateTimeStr | None = Field(default=None, description="更新时间")
 

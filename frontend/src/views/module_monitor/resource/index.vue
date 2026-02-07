@@ -660,6 +660,7 @@ function handleShowHiddenChange() {
 async function handleDownload(item: ResourceItem) {
   try {
     // 使用file_url字段
+    // console.log("file_url: ",item.file_url)
     const response = await ResourceAPI.downloadFile(item.file_url);
     const blob = response.data;
     const url = window.URL.createObjectURL(blob);

@@ -95,25 +95,25 @@ export const constantRoutes: RouteRecordRaw[] = [
   //   component: () => import("@/views/module_plot/ModuleContainer.vue")
   // }
 
-  {
-    path: '/plot', // 父路由路径
-    redirect: "/plot/basic",
-    // 内联组件：无需新建ParentPlot.vue，直接渲染router-view，避免路径错误
-    component: Layout,
-    // 子路由（必须嵌套在children数组中，路径不要加/）
-    children: [
-      {
-        path: ':category/:code', // 子路由相对路径（不要写 /:category/:code）
-        name: 'PlotModule', // 唯一名称，确保全局无重复
-        meta:{
-          title: '绘图模块',
-          hidden: true, 
-          keepAlive: true
-        },
-        component: () => import('@/views/module_plot/ModuleContainer.vue') // 确认这个文件存在
-      }
-    ]
-  }
+  // {
+  //   path: '/plot', // 父路由路径
+  //   redirect: "/plot/basic",
+  //   // 内联组件：无需新建ParentPlot.vue，直接渲染router-view，避免路径错误
+  //   component: Layout,
+  //   // 子路由（必须嵌套在children数组中，路径不要加/）
+  //   children: [
+  //     {
+  //       path: ':category/:code', // 子路由相对路径（不要写 /:category/:code）
+  //       name: 'PlotModule', // 唯一名称，确保全局无重复
+  //       meta:{
+  //         title: '绘图模块',
+  //         hidden: true, 
+  //         keepAlive: true
+  //       },
+  //       component: () => import('@/views/module_plot/ModuleContainer.vue') // 确认这个文件存在
+  //     }
+  //   ]
+  // }
 ];
 
 /**

@@ -34,7 +34,8 @@
     "src/**/*.vue",
     "vite.config.ts",
     "eslint.config.ts",
-    "uno.config.ts"
+    "uno.config.ts",
+    "./typed-router.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

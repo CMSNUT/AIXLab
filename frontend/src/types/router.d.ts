@@ -40,7 +40,7 @@ declare module "vue-router" {
     /**
      * 是否缓存页面
      * true 缓存, false 不缓存
-     * @default false
+     * @default true
      */
     keepAlive?: boolean;
 

@@ -88,6 +88,8 @@ class MenuModel(ModelMixin):
         foreign_keys="MenuModel.parent_id",
         order_by="MenuModel.order",
     )
+
+    # 角色-菜单关系
     roles: Mapped[list["RoleModel"]] = relationship(
         secondary="sys_role_menus", back_populates="menus", lazy="selectin"
     )

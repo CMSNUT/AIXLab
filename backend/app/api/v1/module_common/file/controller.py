@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Optional
 
 from fastapi import (
     APIRouter,
@@ -16,6 +16,7 @@ from app.core.dependencies import AuthPermission
 from app.core.logger import log
 from app.core.router_class import OperationLogRoute
 from app.utils.upload_util import UploadUtil
+from app.config.setting import settings
 
 from .service import FileService
 
@@ -56,7 +57,9 @@ async def upload_controller(
 async def download_controller(
     background_tasks: BackgroundTasks,
     file_path: Annotated[str, Body(description="文件路径")],
+    parent_path: Annotated[Optional[str],  Body(description="父路径,默认没有")] = None,
     delete: Annotated[bool, Body(description="是否删除文件")] = False,
+    
 ) -> FileResponse:
     """
     下载文件
@@ -64,13 +67,20 @@ async def download_controller(
     参数:
     - background_tasks (BackgroundTasks): 后台任务对象
     - file_path (str): 文件路径
+    - parent_path(str): 文件父路径，如 "static/upload/sample/plot" 
     - delete (bool): 是否删除文件
 
     返回:
     - FileResponse: 包含下载文件的响应
     """
-    result = await FileService.download_service(file_path=file_path)
+
+    if parent_path is not None:
+        path: str =  f"{settings.FILE_BASE_URL}/{parent_path}/{file_path}"
+    else:
+        path: str = file_path
+       
+    result = await FileService.download_service(path)
     if delete:
-        background_tasks.add_task(UploadUtil.delete_file, Path(file_path))
+        background_tasks.add_task(UploadUtil.delete_file, Path(path))
     log.info("下载文件成功")
     return UploadFileResponse(file_path=result.file_path, filename=result.file_name)

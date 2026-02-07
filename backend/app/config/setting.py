@@ -31,6 +31,9 @@ class Settings(BaseSettings):
     SERVER_HOST: str = "127.0.0.1"  # 允许访问的IP地址
     SERVER_PORT: int = 8000  # 服务端口
 
+    R_API_BASE_URL: str = "http://127.0.0.1:8002"
+    R_API_TIMEOUT: float = 30.0  # 秒
+
     # ================================================= #
     # ******************* API文档配置 ****************** #
     # ================================================= #
@@ -44,6 +47,8 @@ class Settings(BaseSettings):
     DOCS_URL: str = "/docs"  # Swagger UI路径
     REDOC_URL: str = "/redoc"  # ReDoc路径
     ROOT_PATH: str = "/api/v1"  # API路由前缀
+
+    FILE_BASE_URL: str = f"http://{SERVER_HOST}:{SERVER_PORT}{ROOT_PATH}"
 
     # ================================================= #
     # ******************** 日志配置 ******************** #
@@ -59,6 +64,9 @@ class Settings(BaseSettings):
     ALLOW_HEADERS: list[str] = ["*"]  # 允许的请求头
     ALLOW_CREDENTIALS: bool = True  # 是否允许携带cookie
     CORS_EXPOSE_HEADERS: list[str] = ["X-Request-ID"]
+
+    # 新增：安全头部中间件开关（默认开启，解决X-Content-Type-Options提示）
+    SECURITY_HEADERS_ENABLE: bool = True
 
     # ================================================= #
     # ******************* 登录认证配置 ****************** #
@@ -148,6 +156,7 @@ class Settings(BaseSettings):
     UPLOAD_FILE_PATH: Path = Path("static/upload")  # 上传目录
     UPLOAD_MACHINE: str = "A"  # 上传机器标识
     ALLOWED_EXTENSIONS: list[str] = [  # 允许的文件类型
+        # 图片
         ".gif",
         ".jpg",
         ".jpeg",
@@ -158,17 +167,33 @@ class Settings(BaseSettings):
         ".tiff",
         ".webp",
         ".eps",
-        ".csv",
+        # 文档
+        ".doc",
+        ".docx",
         ".xls",
         ".xlsx",
+        '.ppt',
+        '.pptx',
+        ".csv",
         ".txt",
         ".md",
         ".pdf",
-        ".doc",
-        ".docx",
+        '.html',
+        '.htm',
+        # 压缩文件
         ".zip",
         ".rar",
-        ".7z"
+        ".7z",
+        '.gz',
+        '.bz2',
+
+        # 视频格式
+        '.mp4',
+        '.avi',
+        '.rmvb',
+        # R数据
+        '.rdata',
+        '.rds',
     ]
     MAX_FILE_SIZE: int = 200 * 1024 * 1024  # 最大文件大小(200MB)
 
@@ -203,8 +228,10 @@ class Settings(BaseSettings):
             "app.core.middlewares.CustomCORSMiddleware" if self.CORS_ORIGIN_ENABLE else None,
             "app.core.middlewares.RequestLogMiddleware" if self.OPERATION_LOG_RECORD else None,
             "app.core.middlewares.CustomGZipMiddleware" if self.GZIP_ENABLE else None,
+            "app.core.middlewares.SecurityHeadersMiddleware" if self.SECURITY_HEADERS_ENABLE else None,
         ]
-        return MIDDLEWARES
+        # return MIDDLEWARES
+        return [middleware for middleware in MIDDLEWARES if middleware is not None]
 
     @property
     def EVENT_LIST(self) -> list[str | None]:
